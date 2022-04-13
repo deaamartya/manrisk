@@ -357,3 +357,8 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
+
+
+
+//LOGIN MANRISK
+Route::view('login', 'login')->name('login');
