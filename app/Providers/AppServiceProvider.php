@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Providers;
-
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mapUserRoutes();
+        $this->mapWebRoutes();
     }
 
     /**
@@ -24,5 +25,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    protected function mapWebRoutes()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/web.php'));
+    }
+
+    protected function mapUserRoutes()
+    {
+        Route::prefix('user')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/divisi.php'));
     }
 }

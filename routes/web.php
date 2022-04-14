@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
-    return redirect()->route('index');
+    return view('dashboard.index');
 })->name('/');
 
 //Language Change
@@ -18,6 +18,8 @@ Route::get('lang/{locale}', function ($locale) {
     Session::get('locale');
     return redirect()->back();
 })->name('lang');
+
+Route::view('index', 'dashboard.index')->name('index');
     
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
