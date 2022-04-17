@@ -12,17 +12,14 @@
  */
 
 // *** utils ***
-
-
 @import "utils/variables";
-
 :root {
     --theme-deafult: #7366ff;
     --theme-secondary: #f73164;
 }
 
 $primary-color: #3949ab;
-$secondary-color : #4fc3f7;
+$secondary-color: #4fc3f7;
 $gradient-primary: linear-gradient($secondary-color, $primary-color);
 $gradient-primary-direction: linear-gradient(to right, lighten($primary-color, 10%), darken($primary-color, 8%));
 $gradient-secondary-direction: linear-gradient(to right, lighten($secondary-color, 10%), darken($secondary-color, 5%));
@@ -31,16 +28,14 @@ $code-tag-color: $primary-color;
 $list-group-active-bg-color: $primary-color;
 $list-group-active-border-color: $primary-color;
 $tour-color: $primary-color;
-$main-header-right-toggle-color : $primary-color;
-$main-header-right-nav-icon-color : $primary-color;
+$main-header-right-toggle-color: $primary-color;
+$main-header-right-nav-icon-color: $primary-color;
 $light-body-bg-color: rgba($primary-color, 0.10);
 $page-body-bg-color: $light-color;
 $pre-tag-bg-color: rgba($primary-color, 0.05);
 // *** base ***
 @import "base/reset";
 @import "base/typography";
-
-
 //  *** components ***
 @import "components/according.scss";
 @import "components/alert.scss";
@@ -49,9 +44,7 @@ $pre-tag-bg-color: rgba($primary-color, 0.05);
 @import "components/bookmark.scss";
 @import "components/breadcrumb.scss";
 @import "components/builders.scss";
-
 @import "components/buttons.scss";
-
 @import "components/card.scss";
 @import "components/color.scss";
 @import "components/datatable.scss";
@@ -76,11 +69,7 @@ $pre-tag-bg-color: rgba($primary-color, 0.05);
 @import "components/tour.scss";
 @import "components/tree.scss";
 @import "components/typeahead-search.scss";
-
-
-
 //	*** pages ***
-
 @import "pages/blog.scss";
 @import "pages/bookmark-app.scss";
 @import "pages/cart.scss";
@@ -119,16 +108,14 @@ $pre-tag-bg-color: rgba($primary-color, 0.05);
 @import "pages/user-profile.scss";
 @import "pages/wishlist.scss";
 
-
 /* ---------------------
 	*** themes ***
 -----------------------*/
+
 @import "themes/dark.scss";
 @import "themes/dark-sidebar.scss";
 @import "themes/theme-customizer.scss";
-
 // *** layout *** 
-
 @import "layout/footer.scss";
 @import "layout/grid.scss";
 @import "layout/header.scss";

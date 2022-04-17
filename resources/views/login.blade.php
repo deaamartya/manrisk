@@ -10,12 +10,12 @@
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <div class="col-xl-7">
+      <!-- <div class="col-xl-7">
          <img class="bg-img-cover bg-center" src="{{asset('assets/images/indhan.png')}}" alt="looginpage">
-      </div>
-      <!-- <div class="col-xl-7" style="padding: 0;">
-         <img src="{{asset('assets/images/indhan.png')}}" height="100%" width="100%" alt="looginpage">
       </div> -->
+      <div class="col-xl-7" style="padding: 0;">
+         <img src="{{asset('assets/images/indhan.png')}}" height="100%" width="100%" alt="looginpage">
+      </div>
       <div class="col-xl-5 p-0">
          <div class="login-card">
             <div>
