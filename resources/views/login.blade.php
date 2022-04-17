@@ -5,20 +5,35 @@
 @endsection
 
 @section('style')
+<style>
+   .login-image {
+      padding: 0;
+      background-color: #185089;
+   }
+   .login-image img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+   }
+   .login-card-content,
+   .login-main {
+      width: 100% !important;
+   }
+</style>
 @endsection
 
 @section('content')
 <div class="container-fluid">
    <div class="row">
-      <!-- <div class="col-xl-7">
+      {{-- <div class="col-xl-7">
          <img class="bg-img-cover bg-center" src="{{asset('assets/images/indhan.png')}}" alt="looginpage">
-      </div> -->
-      <div class="col-xl-7" style="padding: 0;">
-         <img src="{{asset('assets/images/indhan.png')}}" height="100%" width="100%" alt="looginpage">
+      </div> --}}
+      <div class="col-lg-7 login-image">
+         <img src="{{asset('assets/images/indhan.png')}}" alt="looginpage">
       </div>
-      <div class="col-xl-5 p-0">
-         <div class="login-card">
-            <div>
+      <div class="col-lg-5 p-0">
+         <div class="login-card p-4">
+            <div class="login-card-content">
                <div class="text-center">
                   <img src="{{asset('assets/images/logo.png')}}" alt="logo" width="60%" height="auto" class="mb-3">
                   <h4 class="mb-3" style="color: #185089;">RISK MANAGEMENT INTEGRATED SYSTEM</h4>
