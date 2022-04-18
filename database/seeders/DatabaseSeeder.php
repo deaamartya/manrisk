@@ -14,5 +14,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // User::factory(10)->create();
+        $this->call(DefendidPengukurTableSeeder::class);
+        $this->call(DefendidUserTableSeeder::class);
+        $this->call(DivisiTableSeeder::class);
+        $this->call(KonteksTableSeeder::class);
+        $this->call(MitigasiTableSeeder::class);
+        $this->call(OfficerTableSeeder::class);
+        $this->call(PengukuranTableSeeder::class);
+        $this->call(PengukuranKorporasiTableSeeder::class);
+        $this->call(RespondenTableSeeder::class);
+        $this->call(RiskTableSeeder::class);
+        $this->call(RiskDetailTableSeeder::class);
+        $this->call(RiskHeaderTableSeeder::class);
+        $this->call(RiskHeaderKorporasiTableSeeder::class);
+        $this->call(SRisikoTableSeeder::class);
     }
 }
