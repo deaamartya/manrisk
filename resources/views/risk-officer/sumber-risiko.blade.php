@@ -10,28 +10,6 @@
 @endsection
 
 @section('content')
-@if(Session::has('created-alert') || Session::has('updated-alert') || Session::has('deleted-alert') || Session::has('error-alert'))
-    <div class="alert 
-        @if(Session::has('created-alert') || Session::has('updated-alert'))
-        alert-success
-        @elseif(Session::has('deleted-alert'))
-        alert-info
-        @elseif(Session::has('error-alert'))
-        alert-danger
-        @endif">
-        @if(Session::has('created-alert'))
-        {{ Session::get('created-alert') }}
-        @elseif(Session::has('updated-alert'))
-        {{ Session::get('updated-alert') }}
-        @elseif(Session::has('deleted-alert'))
-        {{ Session::get('deleted-alert') }}
-        @elseif(Session::has('error-alert'))
-        {{ Session::get('error-alert') }}
-        @endif
-    </div>
-@endif
-
-<div class="container-fluid">
 <div class="container-fluid">
     <div class="row">
     <!-- Zero Configuration  Starts-->
@@ -85,7 +63,6 @@
             </div>
             </div>
         </div>
-        </div>
     </div>
 </div>
 
@@ -98,7 +75,7 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form method="POST" enctype="multipart/form-data" action="{{route('risk-officer.sumber-risiko.store')}}">
+            <form method="POST" action="{{route('risk-officer.sumber-risiko.store')}}">
                 @csrf 
                 <div class="row mb-3">
                 <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Tahun <span class="required"></span></label>
@@ -149,7 +126,7 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data" action="{{route('risk-officer.sumber-risiko.update', $s->id_s_risiko) }}">
+                <form method="POST" action="{{route('risk-officer.sumber-risiko.update', $s->id_s_risiko) }}">
                     @method('PUT')
                     @csrf    
                     <div class="row mb-3">
@@ -173,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>
                 </form>
             </div>
@@ -184,35 +161,21 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title">Edit Sumber Risiko</h5>
+                <h5 class="modal-title">Hapus Sumber Risiko</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data" action="{{route('risk-officer.sumber-risiko.delete', $s->id_s_risiko) }}">
+                <form method="POST" action="{{route('risk-officer.sumber-risiko.destroy', $s->id_s_risiko) }}">
                     @method('DELETE')
                     @csrf    
-                    <div class="row mb-3">
-                        <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Risiko <span class="required"></span></label>
-                        <div class='col-md-9 col-sm-9 col-xs-12'>
-                            <input type="text" name="s_risiko" required="required" value="{{ $s->s_risiko }}" class="form-control ">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" name="id_konteks">
-                                @foreach($risiko as $r)
-                                <option value="{{ $r->id_konteks }}" @if($s->id_konteks == $r->id_konteks) selected @endif>
-                                    {{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    <!-- <div> -->
+                    Apakah Anda yakin ingin menghapus data Sumber Risiko <b>{{ $s->s_risiko}}</b> ?
+                    <br>
+                    <div class="text-red">Data yang dihapus tidak dapat dikembalikan.</div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Ya, hapus!</button>
                 </div>
                 </form>
             </div>
