@@ -21,7 +21,7 @@ class SumberRisikoController extends Controller
         ->where('tahun_konteks', '=', '2021')
         ->orderBy('risk.id_risk')
         ->get();
-      return view('users.sumber-risiko', compact('sumber_risiko', 'risiko'));
+      return view('risk-officer.sumber-risiko', compact('sumber_risiko', 'risiko'));
     }
 
     /**
@@ -45,18 +45,7 @@ class SumberRisikoController extends Controller
         'status_s_risiko' => 0
       ]);
 
-      return redirect()->route('user.sumber-risiko.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+      return redirect()->route('risk-officer.sumber-risiko.index')->with('created-alert', 'Data sumber risiko berhasil disimpan.');
     }
 
 
@@ -69,7 +58,17 @@ class SumberRisikoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $request->validate([
+        'id_konteks' => 'required',
+        's_risiko' => 'required',
+      ]);
+
+      SRisiko::find($id)->update([
+        's_risiko' => $request->s_risiko,
+        'id_konteks' => $request->id_konteks,
+      ]);
+
+      return redirect()->route('risk-officer.sumber-risiko.index')->with('updated-alert', 'Data sumber risiko berhasil diubah.');
     }
 
     /**
@@ -80,6 +79,7 @@ class SumberRisikoController extends Controller
      */
     public function destroy($id)
     {
-        //
+      SRisiko::find($id)->delete();
+      return redirect()->route('risk-officer.sumber-risiko.index')->with('deleted-alert', 'Data sumber risiko telah dihapus.');
     }
 }
