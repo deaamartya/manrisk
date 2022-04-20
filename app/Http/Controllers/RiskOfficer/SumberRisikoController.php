@@ -28,7 +28,6 @@ class SumberRisikoController extends Controller
         ->where('tahun_konteks', '=', '2021')
         ->orderBy('risk.id_risk')
         ->get();
-      
       return view('risk-officer.sumber-risiko', compact('sumber_risiko', 'risiko'));
     }
 
