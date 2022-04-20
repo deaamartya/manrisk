@@ -7,6 +7,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class DefendidUser
@@ -21,8 +24,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class DefendidUser extends Model
+class DefendidUser extends Authenticatable
 {
+	use HasFactory, Notifiable;
+	
 	protected $table = 'defendid_user';
 	protected $primaryKey = 'id_user';
 	public $timestamps = false;

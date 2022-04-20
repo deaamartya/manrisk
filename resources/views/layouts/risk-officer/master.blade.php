@@ -7,8 +7,8 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('assets/images/logo/logo_company/logo2.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('assets/images/logo/logo_company/logo2.png')}}" type="image/x-icon">
     <title>Manrisk - Indhan</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-6">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('/') }}"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/') }}"> <i data-feather="home"></i></a></li>
                     @yield('breadcrumb-items')
                   </ol>
                 </div>

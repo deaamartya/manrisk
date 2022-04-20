@@ -19,7 +19,7 @@ class CreateDefendidUserTable extends Migration
             $table->string('instansi', 200);
             $table->integer('kat_user');
             $table->string('username', 100);
-            $table->string('password', 100);
+            $table->string('password');
             $table->integer('status_user')->nullable();
         });
     }

@@ -26,7 +26,7 @@ class DefendidUserTableSeeder extends Seeder
             'instansi' => 'PT PAL INDONESIA (PERSERO)',
                 'kat_user' => 1,
                 'username' => 'ptpal',
-                'password' => '0eb3c0274ad9fd39d12785c7a85fc2ff',
+                'password' => bcrypt('ptpal'),
                 'status_user' => 0,
             ),
             1 => 
@@ -36,7 +36,7 @@ class DefendidUserTableSeeder extends Seeder
                 'instansi' => 'PT. LEN',
                 'kat_user' => 1,
                 'username' => 'ptlen',
-                'password' => 'b983a373f8e6e1228e0b1782b9137347',
+                'password' => bcrypt('ptlen'),
                 'status_user' => 0,
             ),
             2 => 
@@ -46,7 +46,7 @@ class DefendidUserTableSeeder extends Seeder
                 'instansi' => 'PT. DIRGANTARA INDONESIA',
                 'kat_user' => 1,
                 'username' => 'ptdi',
-                'password' => '095d08bc2cd1a7fecde712580e4b5dd5',
+                'password' => bcrypt('ptdi'),
                 'status_user' => 0,
             ),
             3 => 
@@ -56,7 +56,7 @@ class DefendidUserTableSeeder extends Seeder
                 'instansi' => 'PT. DAHANA',
                 'kat_user' => 1,
                 'username' => 'ptdahana',
-                'password' => '2d9ca5d247537adec975dafdde8ffc66',
+                'password' => bcrypt('ptdahana'),
                 'status_user' => 0,
             ),
             4 => 
@@ -66,7 +66,7 @@ class DefendidUserTableSeeder extends Seeder
                 'instansi' => 'PT. PINDAD',
                 'kat_user' => 1,
                 'username' => 'ptpindad',
-                'password' => '1d77ded52be346de5a2df149a748ed7c',
+                'password' => bcrypt('ptpindad'),
                 'status_user' => 0,
             ),
             5 => 
@@ -76,7 +76,7 @@ class DefendidUserTableSeeder extends Seeder
                 'instansi' => 'INDUSTRI PERTAHANAN',
                 'kat_user' => 2,
                 'username' => 'inhan',
-                'password' => '047210cc3826bb4d820789ba58268976',
+                'password' => bcrypt('inhan'),
                 'status_user' => 0,
             ),
         ));

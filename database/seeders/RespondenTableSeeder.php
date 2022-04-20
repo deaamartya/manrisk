@@ -24,14 +24,14 @@ class RespondenTableSeeder extends Seeder
                 'id_responden' => 2,
                 'id_divisi' => 1,
                 'nama_responden' => 'linda',
-                'tanggal' => '0000-00-00 00:00:00',
+                'tanggal' => null,
             ),
             1 => 
             array (
                 'id_responden' => 3,
                 'id_divisi' => 1,
                 'nama_responden' => 'll',
-                'tanggal' => '0000-00-00 00:00:00',
+                'tanggal' => null,
             ),
             2 => 
             array (

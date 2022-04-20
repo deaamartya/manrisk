@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
 
-Route::get('/', function () {
-    return view('risk-officer.index');
-})->name('/');
+Route::mixin(new \Laravel\Ui\AuthRouteMethods());
+Route::auth(['verify' => true]);
+
+Auth::routes();
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -250,7 +252,7 @@ Route::prefix('others')->group(function () {
 });
 
 Route::prefix('authentication')->group(function () {
-    Route::view('login', 'authentication.login')->name('login');
+    // Route::view('login', 'authentication.login')->name('login');
     Route::view('login-one', 'authentication.login-one')->name('login-one');
     Route::view('login-two', 'authentication.login-two')->name('login-two');
     Route::view('login-bs-validation', 'authentication.login-bs-validation')->name('login-bs-validation');
@@ -359,8 +361,3 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
-
-
-
-//LOGIN MANRISK
-Route::view('login', 'login')->name('login');
