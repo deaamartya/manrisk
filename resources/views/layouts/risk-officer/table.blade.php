@@ -1,4 +1,4 @@
-@extends('layouts.user.master')
+@extends('layouts.risk-officer.master')
 @section('title')
 @yield('title')
 @endsection

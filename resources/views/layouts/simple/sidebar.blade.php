@@ -26,43 +26,43 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.sumber-resiko' ? 'active' : '' }}" href="{{route('user.sumber-resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-resiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-resiko')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Resiko</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.pengukuran-resiko' ? 'active' : '' }}" href="{{route('user.pengukuran-resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-resiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-resiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Resiko</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.pengukuran-korporasi' ? 'active' : '' }}" href="{{route('user.pengukuran-korporasi')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-korporasi' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-korporasi')}}">
 							<i data-feather="edit"></i>
 							<span>Pengukuran Korposari</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.resiko' ? 'active' : '' }}" href="{{route('user.resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.resiko' ? 'active' : '' }}" href="{{route('risk-officer.resiko')}}">
 							<i data-feather="list"></i>
 							<span>View All Risk</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.mitigasi-plan' ? 'active' : '' }}" href="{{route('user.mitigasi-plan')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.mitigasi-plan' ? 'active' : '' }}" href="{{route('risk-officer.mitigasi-plan')}}">
 							<i data-feather="sidebar"></i>
 							<span>Mitigasi Plan</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.kuesioner' ? 'active' : '' }}" href="{{route('user.kuesioner')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.kuesioner' ? 'active' : '' }}" href="{{route('risk-officer.kuesioner')}}">
 							<i data-feather="file-text"></i>
 							<span>Kuesioner</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='user.table' ? 'active' : '' }}" href="{{route('user.table')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.table' ? 'active' : '' }}" href="{{route('risk-officer.table')}}">
 							<i data-feather="list"></i>
 							<span>Table</span>
 						</a>

@@ -1,4 +1,4 @@
-@extends('layouts.user.modalform')
+@extends('layouts.risk-officer.modalform')
 @section('content')
 <div class="container-fluid">
   <div class="row">

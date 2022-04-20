@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\User\{
+use \App\Http\Controllers\RiskOfficer\{
   HomeController,
 };
 
 
-Route::prefix('user')->name('user.')->group(function () {
+Route::name('risk-officer.')->group(function () {
   Route::get('sumber-resiko', [HomeController::class, 'index'])->name('sumber-resiko');
   Route::get('pengukuran-resiko', [HomeController::class, 'index'])->name('pengukuran-resiko');
   Route::get('pengukuran-korporasi', [HomeController::class, 'index'])->name('pengukuran-korporasi');

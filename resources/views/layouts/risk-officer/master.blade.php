@@ -13,7 +13,7 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
-    @include('layouts.user.css')
+    @include('layouts.risk-officer.css')
     @yield('style')
   </head>
   <body>
@@ -23,12 +23,12 @@
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
-      @include('layouts.user.header')
+      @include('layouts.risk-officer.header')
       <!-- Page Header Ends  -->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-        @include('layouts.user.sidebar')
+        @include('layouts.risk-officer.sidebar')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">        
@@ -51,11 +51,11 @@
           <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
-        @include('layouts.user.footer') 
+        @include('layouts.risk-officer.footer') 
       </div>
     </div>
     <!-- latest jquery-->
-    @include('layouts.user.script')  
+    @include('layouts.risk-officer.script')  
     <!-- Plugin used-->
 
     <script type="text/javascript">
