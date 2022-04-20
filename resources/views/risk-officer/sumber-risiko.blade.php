@@ -10,28 +10,6 @@
 @endsection
 
 @section('content')
-@if(Session::has('created-alert') || Session::has('updated-alert') || Session::has('deleted-alert') || Session::has('error-alert'))
-    <div class="alert 
-        @if(Session::has('created-alert') || Session::has('updated-alert'))
-        alert-success
-        @elseif(Session::has('deleted-alert'))
-        alert-info
-        @elseif(Session::has('error-alert'))
-        alert-danger
-        @endif">
-        @if(Session::has('created-alert'))
-        {{ Session::get('created-alert') }}
-        @elseif(Session::has('updated-alert'))
-        {{ Session::get('updated-alert') }}
-        @elseif(Session::has('deleted-alert'))
-        {{ Session::get('deleted-alert') }}
-        @elseif(Session::has('error-alert'))
-        {{ Session::get('error-alert') }}
-        @endif
-    </div>
-@endif
-
-<div class="container-fluid">
 <div class="container-fluid">
     <div class="row">
     <!-- Zero Configuration  Starts-->
