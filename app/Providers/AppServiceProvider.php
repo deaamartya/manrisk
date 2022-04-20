@@ -36,8 +36,9 @@ class AppServiceProvider extends ServiceProvider
 
     protected function mapRiskOfficerRoutes()
     {
-        Route::prefix('risk-officer')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/risk-officer.php'));
+        Route::middleware('web')
+            ->prefix('risk-officer')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/risk-officer.php'));
     }
 }
