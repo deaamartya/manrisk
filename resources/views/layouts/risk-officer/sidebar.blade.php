@@ -26,29 +26,29 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-resiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}"> 
 							<i data-feather="list"></i>
-							<span>Sumber Resiko</span>
+							<span>Sumber Risiko</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-resiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
-							<span>Pengukuran Resiko</span>
+							<span>Pengukuran Risiko</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-korporasi' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-korporasi')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko-indhan')}}">
 							<i data-feather="edit"></i>
-							<span>Pengukuran Korposari</span>
+							<span>Pengukuran Risiko Indhan</span>
 						</a>
 					</li>
-					<li class="sidebar-list">
+					{{--<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>View All Risk</span>
 						</a>
-					</li>
+					</li> --}}
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.mitigasi-plan' ? 'active' : '' }}" href="{{route('risk-officer.mitigasi-plan')}}">
 							<i data-feather="sidebar"></i>
