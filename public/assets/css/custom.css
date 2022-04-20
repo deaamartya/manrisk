@@ -115,12 +115,19 @@ label {
 }
 
 .text-red {
-    color: red;
+    <<<<<<< HEAD color: red;
 }
 
 .btn-sm .small-icon {
     width: auto;
     height: 14px;
+    =======color: red;
+}
+
+.btn-xs .small-icon {
+    width: 14px;
+    height: 14px;
+    >>>>>>>daa6360 (M10: risk header crud implementation)
 }
 
 .card .card-header,
