@@ -45,6 +45,26 @@
                 </div>
               </div>
             </div>
+            @if(Session::has('created-alert') || Session::has('updated-alert') || Session::has('deleted-alert') || Session::has('error-alert'))
+            <div class="alert 
+              @if(Session::has('created-alert') || Session::has('updated-alert'))
+              alert-success
+              @elseif(Session::has('deleted-alert'))
+              alert-info
+              @elseif(Session::has('error-alert'))
+              alert-danger
+              @endif">
+              @if(Session::has('created-alert'))
+              {{ Session::get('created-alert') }}
+              @elseif(Session::has('updated-alert'))
+              {{ Session::get('updated-alert') }}
+              @elseif(Session::has('deleted-alert'))
+              {{ Session::get('deleted-alert') }}
+              @elseif(Session::has('error-alert'))
+              {{ Session::get('error-alert') }}
+              @endif
+            </div>
+            @endif
           </div>
           <!-- Container-fluid starts-->
           @yield('content')
@@ -54,10 +74,28 @@
         @include('layouts.risk-officer.footer') 
       </div>
     </div>
+    @if(Session::has('success-swal') || Session::has('warning-swal') || Session::has('error-swal'))
+    <script src="{{asset('assets/js/sweet-alert/sweetalert.min.js')}}"></script>
+      @if(Session::has('success-swal'))
+      <script type="text/javascript">
+        console.log('success')
+        swal("Berhasil!", "{{ Session::get('success-swal') }}", "success");
+      </script>
+      @elseif(Session::has('warning-swal'))
+      <script type="text/javascript">
+        console.log('warning')
+        swal("Warning!", "{{ Session::get('warning-swal') }}", "warning");
+      </script>
+      @elseif(Session::has('error-swal'))
+      <script type="text/javascript">
+        console.log('error')
+        swal("Oops!", "{{ Session::get('error-swal') }}", "error");
+      </script>
+      @endif
+    @endif
     <!-- latest jquery-->
     @include('layouts.risk-officer.script')  
     <!-- Plugin used-->
-
     <script type="text/javascript">
       if ($(".page-wrapper").hasClass("horizontal-wrapper")) {
         $(".according-menu.other" ).css( "display", "none" );

@@ -25,7 +25,7 @@
 							</div>
 						</div>
 					</li>
-					<li class="sidebar-list">
+					{{-- <li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-resiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-resiko')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Resiko</span>
@@ -66,7 +66,7 @@
 							<i data-feather="list"></i>
 							<span>Table</span>
 						</a>
-					</li>
+					</li> --}}
 				</ul>
 			</div>
 			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
