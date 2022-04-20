@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('risk-officer.index');
 })->name('/');
 
 //Language Change
