@@ -1,36 +1,46 @@
 .sidebar-main-title .welcome-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
+
 .sidebar-main-title .welcome-card .logo-circle {
-  border-radius: 50%;
-  background-color: white;
-  width: 48px;
-  height: 48px;
-  padding: 5px;
+    border-radius: 50%;
+    background-color: white;
+    width: 48px;
+    height: 48px;
+    padding: 5px;
 }
+
 .sidebar-main-title .logo-circle img {
-  height: 100%;
+    height: 100%;
 }
 
 .page-wrapper .page-header .header-wrapper {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .dataTables_wrapper {
-  padding: 2px;
+    padding: 2px;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-  padding-top: 5px;
+    padding-top: 5px;
 }
 
 .selection .select2-selection .select2-search__field {
-  margin: 2px;
-  padding-left: 8px;
+    margin: 2px;
+    padding-left: 8px;
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li {
-  margin-bottom: 4px;
+    margin-bottom: 4px;
+}
+
+label {
+    font-size: 16px;
+}
+
+.text-red {
+    color: red;
 }
