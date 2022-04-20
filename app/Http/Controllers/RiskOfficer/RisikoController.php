@@ -5,16 +5,10 @@ namespace App\Http\Controllers\RiskOfficer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
-use App\Models\DefendidUser;
-use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
-use Auth;
-use PDF;
 
 class RisikoController extends Controller
 {
     private $id_user = 1;
-    private $instansi = 'PT PAL INDONESIA (PERSERO)';
-
     /**
      * Display a listing of the resource.
      *

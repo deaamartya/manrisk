@@ -105,11 +105,11 @@ label {
 }
 
 .text-red {
-    color: red;
+  color: red;
 }
 
-.btn-sm .small-icon {
-  width: auto;
+.btn-xs .small-icon {
+  width: 14px;
   height: 14px;
 }
 
