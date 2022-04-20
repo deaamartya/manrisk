@@ -4,56 +4,6 @@ if (localStorage.getItem("dark"))
     $("body").attr("class", "dark-only");
 //live customizer js
 $(document).ready(function () {
-    $(".close-customizer-btn").on('click', function () {
-        $(".floated-customizer-panel").removeClass("active");
-    });
-
-    $(".customizer-contain .icon-close").on('click', function () {
-        $(".customizer-contain").removeClass("open");
-        $(".customizer-links").removeClass("open");
-    });
-
-    $(".color-apply-btn").click(function(){
-        location.reload(true);
-    });
-
-    var primary = document.getElementById("ColorPicker1").value;
-    document.getElementById("ColorPicker1").onchange = function () {
-      primary = this.value;
-      localStorage.setItem("primary", primary);
-      document.documentElement.style.setProperty('--theme-primary', primary);
-    };
-
-    var secondary = document.getElementById("ColorPicker2").value;
-    document.getElementById("ColorPicker2").onchange = function () {
-      secondary = this.value;
-      localStorage.setItem("secondary", secondary);
-      document.documentElement.style.setProperty('--theme-secondary', secondary);
-    };
-
-
-    $(".customizer-mix li").on('click', function () {
-        $(".customizer-mix li").removeClass('active');
-        $(this).addClass("active");
-        var mixLayout = $(this).attr("data-attr");
-        $("body").attr("class", mixLayout);
-    });
-
-
-    $('.sidebar-setting li').on('click', function () {
-        $(".sidebar-setting li").removeClass('active');
-        $(this).addClass("active");
-        var sidebar = $(this).attr("data-attr");
-        $(".sidebar-wrapper").attr("sidebar-layout", sidebar);
-    });
-
-    $('.sidebar-main-bg-setting li').on('click', function () {
-        $(".sidebar-main-bg-setting li").removeClass('active')
-        $(this).addClass("active")
-        var bg = $(this).attr("data-attr");
-        $(".sidebar-wrapper").attr("class", "sidebar-wrapper " + bg);
-    });
-
     $('.sidebar-type li').on('click', function () {
 
         $("body").append('');
