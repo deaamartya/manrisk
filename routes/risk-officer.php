@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RiskOfficer\{
   HomeController,
-  SumberRisikoController,
-  PengukuranRisikoController,
-  PengukuranRisikoIndhanController
+  SumberRisikoController
 };
 
 Route::name('risk-officer.')->group(function () {
