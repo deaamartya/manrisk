@@ -3,14 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RiskOfficer\{
   HomeController,
+  SumberRisikoController,
+  PengukuranRisikoController,
+  PengukuranRisikoIndhanController
 };
 
-
 Route::name('risk-officer.')->group(function () {
-  Route::get('sumber-resiko', [HomeController::class, 'index'])->name('sumber-resiko');
-  Route::get('pengukuran-resiko', [HomeController::class, 'index'])->name('pengukuran-resiko');
-  Route::get('pengukuran-korporasi', [HomeController::class, 'index'])->name('pengukuran-korporasi');
-  Route::get('resiko', [HomeController::class, 'index'])->name('resiko');
+  Route::resource('sumber-risiko',SumberRisikoController::class);
+  Route::get('pengukuran-risiko', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko');
+  Route::get('pengukuran-risiko-indhan', [PengukuranRisikoIndhanController::class, 'index'])->name('pengukuran-risiko-indhan');
+  Route::get('risiko', [HomeController::class, 'index'])->name('risiko');
   Route::get('mitigasi-plan', [HomeController::class, 'index'])->name('mitigasi-plan');
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');
   Route::get('table', [HomeController::class, 'table'])->name('table');
