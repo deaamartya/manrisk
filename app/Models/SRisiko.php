@@ -40,4 +40,9 @@ class SRisiko extends Model
 		'catatan',
 		'status_s_risiko'
 	];
+
+	// public function konteks()
+	// {
+	// 	return $this->hasMany(Kontek::class, 'id_konteks');
+	// }
 }
