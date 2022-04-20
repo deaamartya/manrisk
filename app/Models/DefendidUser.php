@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class DefendidUser
@@ -23,13 +24,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DefendidUser extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'defendid_user';
 	protected $primaryKey = 'id_user';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'kat_user' => 'int',
-		'status_user' => 'int'
+		'status_user' => 'int',
+		'tipe_user' => 'int',
 	];
 
 	protected $hidden = [

@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Kontek
@@ -21,9 +22,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Kontek extends Model
 {
+	use SoftDeletes;
+	
 	protected $table = 'konteks';
 	protected $primaryKey = 'id_konteks';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'no_k' => 'int'

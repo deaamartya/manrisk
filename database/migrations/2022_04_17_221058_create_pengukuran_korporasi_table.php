@@ -21,6 +21,8 @@ class CreatePengukuranKorporasiTable extends Migration
             $table->dateTime('tgl_penilaian')->useCurrent();
             $table->integer('nilai_L');
             $table->integer('nilai_C');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

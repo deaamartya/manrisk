@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class PengukuranKorporasi
@@ -24,9 +25,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PengukuranKorporasi extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'pengukuran_korporasi';
 	protected $primaryKey = 'id_p';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_riskh' => 'int',
@@ -36,7 +38,8 @@ class PengukuranKorporasi extends Model
 	];
 
 	protected $dates = [
-		'tgl_penilaian'
+		'tgl_penilaian',
+		'deleted_at'
 	];
 
 	protected $fillable = [

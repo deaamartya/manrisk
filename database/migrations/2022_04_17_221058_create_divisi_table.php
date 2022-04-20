@@ -19,6 +19,8 @@ class CreateDivisiTable extends Migration
             $table->string('username', 100);
             $table->string('password', 100);
             $table->string('kode_divisi');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

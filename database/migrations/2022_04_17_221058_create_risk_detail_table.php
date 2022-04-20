@@ -42,6 +42,8 @@ class CreateRiskDetailTable extends Migration
             $table->string('u_file', 500)->nullable();
             $table->integer('status_mitigasi')->nullable();
             $table->integer('status_korporasi')->nullable()->default(0);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
