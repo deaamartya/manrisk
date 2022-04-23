@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RiskOfficer\{
   HomeController,
   SumberRisikoController,
-  PengukuranRisikoController
   UserController,
   PengukuranRisikoController,
   RisikoController,

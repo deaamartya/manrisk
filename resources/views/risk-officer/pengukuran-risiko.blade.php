@@ -31,13 +31,11 @@
                                 </tr>
                             </thead>
                         <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                            @if(count($pengukuran) > 0)
+                        @if(count($pengukuran) > 0)
+                            @if(count($pengukuran) == 1)
                                 @foreach($pengukuran as $p)
                                     <tr>
-                                        <td class="text-center">{{ $no++; }}</td>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
                                         <td>{{ $p->tahun}}</td>
