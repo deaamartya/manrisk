@@ -10,6 +10,8 @@ use \App\Http\Controllers\RiskOfficer\{
 Route::name('risk-officer.')->group(function () {
   Route::resource('sumber-risiko',SumberRisikoController::class);
   Route::get('pengukuran-risiko', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko');
+  Route::get('pengukuran-risiko/input-anggota', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko-input-anggota');
+  Route::get('generate-pdf', [PengukuranRisikoController::class, 'generatePDF'])->name('pengukuran-generatePDF');
   Route::get('pengukuran-risiko-indhan', [PengukuranRisikoIndhanController::class, 'index'])->name('pengukuran-risiko-indhan');
   Route::resource('risiko', HomeController::class);
   Route::get('mitigasi-plan', [HomeController::class, 'index'])->name('mitigasi-plan');
