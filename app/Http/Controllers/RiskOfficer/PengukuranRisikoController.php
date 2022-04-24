@@ -68,16 +68,17 @@ class PengukuranRisikoController extends Controller
     }
 
 
-    public function generatePDF($id)
+    public function generatePDF()
     {
         // $data = [
         //     'title' => 'Cetak Penilaian',
         //     'date' => date('d/m/Y')
         // ];
           
-        // $pdf = PDF::loadView('myPDF', $data);
+        // $pdf = PDF::loadView('risk-officer.form_kompilasi', $data);
     
         // return $pdf->download('cetak penilaian.pdf');
+        
         // if(isset($_GET['id'])){
         //     $id = $_GET['id'];
         
@@ -117,7 +118,7 @@ class PengukuranRisikoController extends Controller
         //         $html2pdf->Output('Wifi_'.$area.'_Sesi'.$sesi.'.pdf');//output laporan setelah di download
         //     }
         //     catch(HTML2PDF_exception $e) { echo $e; }
-        }
+        // }
     }
 
 }

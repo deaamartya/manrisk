@@ -95,6 +95,7 @@
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
                                         <td>{{ $p->tahun}}</td>
+                                        <td></td>
                                         <td class="text-center"><a href="#modal-insert" data-target=".insert-anggota{{ $loop->iteration}}" role="button" data-toggle="modal" class="btn btn-success btn-sm disabled"> Sudah Dinilai</a>
                                     </tr>
 
@@ -147,9 +148,6 @@
                         @endif
                         
                         @foreach($jabatan as $j)
-                            <script type="text/javascript">
-                            
-                            </script>
                             @if(count($cek_pengukuran) == 0)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -229,7 +227,7 @@
         <div class="card-body">
             <center>
                 <h5>Sumber Risiko</h5>
-                <h6 style="color:blue;">PT. PAL Indonesia</h6>
+                <h6 style="color:#3C88F7">PT. PAL Indonesia</h6>
             </center>
             <br>
             <div class="table-responsive">
@@ -288,8 +286,7 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- <embed src="{{asset('../uploads/')}} " width="100%" height="700px"></embed> -->
-                    <iframe src="../../uploads/Daftar Klasifikasi Kriteria kemungkinan dan dampak.pdf#toolbar=0" width="100%" height="700px"></iframe>
+                    <embed src="{{asset('/uploads/Daftar Klasifikasi Kriteria kemungkinan dan dampak.pdf')}} " width="100%" height="700px"></embed>
                 </div>
                 <!-- <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
