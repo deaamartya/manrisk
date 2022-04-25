@@ -11,6 +11,10 @@
 <script src="{{asset('assets/js/config.js')}}"></script>
 <!-- Plugins JS start-->
 <script id="menu" src="{{asset('assets/js/sidebar-menu.js')}}"></script>
+<!-- Select2 js-->
+<script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/js/select2/select2-custom.js')}}"></script>
+
 @yield('script')
 
 @if(Route::current()->getName() != 'popover') 

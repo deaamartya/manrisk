@@ -16,11 +16,18 @@ class SumberRisikoController extends Controller
      */
     public function index()
     {
-      $sumber_risiko = SRisiko::join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')->get();
+      $sumber_risiko = SRisiko::join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                      ->join('defendid_user', 's_risiko.id_user', 'defendid_user.id_user')
+                      ->join('risk','konteks.id_risk', 'risk.id_risk')
+                      ->where('s_risiko.id_user', '1') // user yg login
+                      ->orderByDesc('s_risiko.tahun')
+                      ->orderBy('s_risiko.id_s_risiko')
+                      ->get();
       $risiko = Risk::join('konteks', 'risk.id_risk', 'konteks.id_risk')
         ->where('tahun_konteks', '=', '2021')
         ->orderBy('risk.id_risk')
         ->get();
+      
       return view('risk-officer.sumber-risiko', compact('sumber_risiko', 'risiko'));
     }
 

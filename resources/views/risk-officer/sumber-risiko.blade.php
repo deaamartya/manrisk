@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         <div class="card">
         <div class="card-header">
-            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#tambahSumberRisiko"><i class="fa fa-plus"></i>Tambah Sumber Risiko</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#tambahSumberRisiko"><i class="fa fa-plus"></i> Tambah Sumber Risiko</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -33,20 +33,21 @@
                         </tr>
                     </thead>
                 <tbody>
+
                 @foreach($sumber_risiko as $s)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td>{{ $s->konteks }}</td>
+                        <td><b>{{ $s->id_risk }} - {{ $s->risk }}</b> ({{ $s->konteks }})</td>
                         <td>{{ $s->s_risiko }}</td>
                         <td>{{ $s->tahun}}</td>
                         <td>{{ $s->catatan }}</td>
                         <td>
                         @if( $s->status_s_risiko == 0)
-                            <span class="badge badge-warning">Belum Disetujui</span>
+                            <span class="badge badge-warning"><i class="fa fa-warning"></i> Belum Disetujui</span>
                         @elseif($s->status_s_risiko == 1)
-                            <span class="badge badge-success">Disetujui</span>
+                            <span class="badge badge-success"><i class="fa fa-check"></i> Disetujui</span>
                         @elseif($s->status_s_risiko == 2)
-                            <span class="badge badge-danger">Tidak Disetujui</span>
+                            <span class="badge badge-danger"><i class="fa fa-times"></i> Tidak Disetujui</span>
                         @endif
                         </td>
                         <td>
@@ -66,7 +67,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="tambahSumberRisiko" tabindex="-1" role="dialog" aria-labelledby="tambahSumberRisiko" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -78,34 +78,34 @@
             <form method="POST" action="{{route('risk-officer.sumber-risiko.store')}}">
                 @csrf 
                 <div class="row mb-3">
-                <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Tahun <span class="required"></span></label>
-                <div class='col-md-9 col-sm-9 col-xs-12'>
-                    <select class="form-control" name="tahun">
-                    <?php
-                        $tahun = "2019";
-                        $bts_tahun = date("Y") + 4;
-                        for ($i=$tahun; $i <= $bts_tahun ; $i++) { 
-                        echo "<option value=".$i.">".$i."</option>";
-                        }
-                    ?>
-                    </select>
-                </div>
-                </div>
-                <div class="row mb-3">
-                <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Risiko <span class="required"></span></label>
-                <div class='col-md-9 col-sm-9 col-xs-12'>
-                    <input type="text" name="s_risiko" required="required" class="form-control ">
-                </div>
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Tahun <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <select class="form-control" name="tahun">
+                        <?php
+                            $tahun = "2019";
+                            $bts_tahun = date("Y") + 4;
+                            for ($i=$tahun; $i <= $bts_tahun ; $i++) { 
+                            echo "<option value=".$i.">".$i."</option>";
+                            }
+                        ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="row mb-3">
-                <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
-                <div class="col-md-9 col-sm-9 col-xs-12">
-                    <select class="form-control" name="id_konteks">
-                        @foreach($risiko as $r)
-                        <option value="{{ $r->id_konteks }}">{{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})</option>
-                        @endforeach
-                    </select>
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Risiko <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="s_risiko" required="required" class="form-control ">
+                    </div>
                 </div>
+                <div class="row mb-3">
+                    <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select id="select-formtambah" class="js-example-basic-single col-sm-12" name="id_konteks" >
+                            @foreach($risiko as $r)
+                            <option value="{{ $r->id_konteks }}">{{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -184,8 +184,12 @@
 
 
 @endforeach
+@endsection
 
-
-
-            
+@section('script')
+<script type="text/javascript">
+    $('#select-formtambah').select2({
+        dropdownParent: $('#tambahSumberRisiko')
+    });
+</script>
 @endsection
