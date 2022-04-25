@@ -5,10 +5,16 @@ namespace App\Http\Controllers\RiskOfficer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
+use App\Models\DefendidUser;
+use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
+use Auth;
+use PDF;
 
 class RisikoController extends Controller
 {
     private $id_user = 1;
+    private $instansi = 'PT PAL INDONESIA (PERSERO)';
+
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +63,8 @@ class RisikoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        RiskHeader::where('id_riskh', '=', $id)->update([
+        $riskheader = RiskHeader::where('id_riskh', '=', $id)->first();
+        $riskheader->update([
             'tahun' => $request->tahun,
             'target' => $request->target
         ]);
@@ -74,5 +81,12 @@ class RisikoController extends Controller
     {
         RiskHeader::destroy($id);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil dihapus!']);
+    }
+
+    public function print($id) {
+        $header = RiskHeader::where('id_riskh', '=', $id)->first();
+        $user = DefendidUser::where('id_user', '=', $this->id_user)->first();
+        $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user'))->setPaper('a4', 'landscape');
+        return $pdf->stream('Laporan Manajemen Risiko Divisi '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 }

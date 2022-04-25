@@ -1,7 +1,8 @@
 @extends('layouts.risk-officer.table')
 
 @section('style')
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/simple-mde.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote.min.css')}}">
 @endsection
 
 @section('page-title')
@@ -20,7 +21,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header">
-            <button class="btn btn-lg btn-primary d-flex" data-bs-toggle="modal" data-bs-target="#create-header">
+            <button class="btn btn-lg btn-primary d-flex btn-add" data-bs-toggle="modal" data-bs-target="#create-header">
               <i data-feather="plus" class="me-2"></i>
               Tambah Risiko Header
             </button>
@@ -48,21 +49,25 @@
                     <td>{!! $d->target !!}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
-                    <td>{{ count($d->risk_detail) }}</td>
                     <td>
-                      <button class="btn btn-xs btn-primary d-flex align-items-center">
-                        <i data-feather="eye" class="me-2 small-icon"></i>
-                        Detail
+                      <button class="btn btn-pill btn-success">
+                        {{ count($d->risk_detail) }}
                       </button>
                     </td>
                     <td>
-                      <button class="btn btn-xs btn-success">
+                      <a href="{{ route('risk-officer.risiko.show', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
+                        <i data-feather="eye" class="me-2 small-icon"></i>
+                        Detail
+                      </a>
+                    </td>
+                    <td>
+                      <a href="{{ route('risk-officer.risiko.print', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success">
                         <i data-feather="printer" class="small-icon"></i>
-                      </button>
-                      <button class="btn btn-xs btn-warning" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}">
+                      </a>
+                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
-                      <button class="btn btn-xs btn-danger">
+                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}">
                         <i data-feather="trash-2" class="small-icon"></i>
                       </button>
                     </td>
@@ -107,7 +112,8 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea id="editable-create" name="target"></textarea>
+                    <textarea id="summernote" name="target"></textarea>
+                    <input type="hidden" id="summernote-value" name="target"/>
 									</div>
 								</div>
               </div>
@@ -129,14 +135,16 @@
           <h5 class="modal-title">Edit Risk Header</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <form>
+        <form action="{{ route('risk-officer.risiko.update', $data->id_riskh) }}" method="POST">
+          @method('PUT')
+          @csrf
+          <div class="modal-body">
             <div class="row">
 							<div class="col-12">
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Tahun</label>
 									<div class="col-sm-9">
-                    <select class="form-select" name="tahun" id="edit-tahun-header">
+                    <select class="select2" name="tahun" id="edit-tahun-header">
                       @for($i=0;$i<10;$i++)
                       @php $tahun = intval(date('Y') - 5 + $i) @endphp
                       <option value="{{ $tahun }}" @if($data->tahun == $tahun) selected @endif>
@@ -151,31 +159,78 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea id="editable-edit" name="target">{{ $data->target }}</textarea>
+                    <textarea class="summernote" id="summernote-{{ $data->id_riskh }}">{{ $data->target }}</textarea>
+                    <input type="hidden" id="summernote-value-{{ $data->id_riskh }}" name="target"/>
 									</div>
 								</div>
               </div>
             </div>
-          </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Simpan</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="delete-header-{{ $data->id_riskh }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Risk Header</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary" type="button">Simpan</button>
-        </div>
+        <form action="{{ route('risk-officer.risiko.destroy',  $data->id_riskh) }}" method="POST">
+          @method('DELETE')
+          @csrf
+          <div class="modal-body">
+            <p>Apakah Anda yakin ingin menghapus risk header dengan target : </p>
+            {!! $d->target !!}
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Hapus</button>
+          </div>
+        </form>
     </div>
   </div>
 </div>
 @endforeach
 @endsection
 @section('custom-script')
-<script src="{{asset('assets/js/editor/simple-mde/simplemde.min.js')}}"></script>
+<script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
+<script src="{{asset('assets/summernote/summernote.min.js')}}"></script>
 <script>
   $(document).ready(function(){
-    new SimpleMDE({
-      element: $("textarea#editable-create")[0]
+    const headers = @json($headers);
+    $(".select2").select2();
+    $('#summernote').summernote({
+      toolbar: [
+        ['para', ['ul', 'ol']],
+      ],
+      height: 300,
+      tabsize: 2,
+      callbacks: {
+        onChange: function(contents, $editable) {
+          $("#summernote-value").val($editable[0].innerHTML);
+        }
+      }
     });
-    new SimpleMDE({
-      element: $("textarea#editable-edit")[0]
+    $('.btn-edit').on('click', function() {
+      const id = $(this).attr('data-id');
+      $('#summernote-' + id).summernote({
+        toolbar: [
+          ['para', ['ul', 'ol']],
+        ],
+        height: 300,
+        tabsize: 2,
+        callbacks: {
+          onChange: function(contents, $editable) {
+            $("#summernote-value-" + id).val($editable[0].innerHTML);
+          }
+        }
+      });
     });
   })
 </script>
