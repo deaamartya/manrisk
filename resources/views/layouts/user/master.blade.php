@@ -94,7 +94,7 @@
         swal("Oops!", "{{ Session::get('error-swal') }}", "error");
       </script>
       @endif
-    @endif
+    @endif 
     <!-- latest jquery-->
     @include('layouts.user.script')
     <!-- Plugin used-->

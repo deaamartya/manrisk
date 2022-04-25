@@ -17,6 +17,7 @@ Route::name('risk-officer.')->group(function () {
   Route::get('pengukuran-risiko', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko');
   Route::get('pengukuran-risiko-indhan', [PengukuranRisikoIndhanController::class, 'index'])->name('pengukuran-risiko-indhan');
   Route::resource('risiko', RisikoController::class);
+  Route::get('risiko/print/{id}', [RisikoController::class, 'print'])->name('risiko.print');
   Route::get('mitigasi-plan', [HomeController::class, 'index'])->name('mitigasi-plan');
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');
   Route::get('table', [HomeController::class, 'table'])->name('table');
