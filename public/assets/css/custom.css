@@ -108,8 +108,8 @@ label {
   color: red;
 }
 
-.btn-xs .small-icon {
-  width: 14px;
+.btn-sm .small-icon {
+  width: auto;
   height: 14px;
 }
 
