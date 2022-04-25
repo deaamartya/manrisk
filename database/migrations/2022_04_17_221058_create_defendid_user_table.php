@@ -21,7 +21,7 @@ class CreateDefendidUserTable extends Migration
             $table->string('username', 100);
             $table->string('password', 100);
             $table->integer('status_user')->nullable();
-            $table->integer('tipe_user')->comment('1: Penilai, 2: Penilai Indhan, 3: Risk Owner');
+            $table->integer('tipe_user')->default(0)->comment('1: Penilai, 2: Penilai Indhan, 3: Risk Owner');
             $table->timestamps();
             $table->softDeletes();
         });
