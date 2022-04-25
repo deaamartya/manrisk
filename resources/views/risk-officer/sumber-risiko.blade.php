@@ -80,7 +80,7 @@
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Tahun <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
-                        <select class="form-control" name="tahun">
+                        <select class="form-select" name="tahun">
                         <?php
                             $tahun = "2019";
                             $bts_tahun = date("Y") + 4;
@@ -100,7 +100,7 @@
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select id="select-formtambah" class="js-example-basic-single col-sm-12" name="id_konteks" >
+                        <select class="js-example-basic-single col-sm-12" name="id_konteks" >
                             @foreach($risiko as $r)
                             <option value="{{ $r->id_konteks }}">{{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})</option>
                             @endforeach
@@ -138,7 +138,7 @@
                     <div class="row mb-3">
                         <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="form-control" name="id_konteks">
+                            <select class="js-example-basic-single col-sm-12" name="id_konteks">
                                 @foreach($risiko as $r)
                                 <option value="{{ $r->id_konteks }}" @if($s->id_konteks == $r->id_konteks) selected @endif>
                                     {{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})
@@ -168,7 +168,6 @@
                 <form method="POST" action="{{route('risk-officer.sumber-risiko.destroy', $s->id_s_risiko) }}">
                     @method('DELETE')
                     @csrf    
-                    <!-- <div> -->
                     Apakah Anda yakin ingin menghapus data Sumber Risiko <b>{{ $s->s_risiko}}</b> ?
                     <br>
                     <div class="text-red">Data yang dihapus tidak dapat dikembalikan.</div>
@@ -184,12 +183,4 @@
 
 
 @endforeach
-@endsection
-
-@section('script')
-<script type="text/javascript">
-    $('#select-formtambah').select2({
-        dropdownParent: $('#tambahSumberRisiko')
-    });
-</script>
 @endsection
