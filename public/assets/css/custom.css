@@ -48,6 +48,10 @@
     z-index: 1050;
 }
 
+.select2-container {
+    z-index: 1050;
+}
+
 .selection .select2-selection .select2-search__field {
     margin: 2px;
     padding-left: 8px;
