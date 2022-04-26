@@ -31,11 +31,14 @@
                                 </tr>
                             </thead>
                         <tbody>
+                        @php
+                        $no = 1;
+                        @endphp
                         @if(count($pengukuran) > 0)
                             @if(count($pengukuran) == 1)
                                 @foreach($pengukuran as $p)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $no++; }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
                                         <td>{{ $p->tahun}}</td>
@@ -91,7 +94,7 @@
                             @else
                                 @foreach($pengukuran as $p)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $no++; }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
                                         <td>{{ $p->tahun}}</td>
@@ -146,12 +149,10 @@
                                 @endforeach
                             @endif
                         @endif
-                        
-                        @foreach($jabatan as $j)
-                            @if(count($cek_pengukuran) == 0)
+                            @foreach($arr_pengukur as $p)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $j->jabatan }}</td>
+                                    <td class="text-center">{{ $no++; }}</td>
+                                    <td>{{ $p->jabatan }}</td>
                                     <td></td>
                                     <td></td>
                                     <td>{{ $jml_risk }}</td>
@@ -171,8 +172,8 @@
                                                 <div class="row mb-3">
                                                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
                                                     <div class='col-md-9 col-sm-9 col-xs-12'>
-                                                    <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ $j->jabatan}}">
-                                                    <input type="hidden" name="id_responden" required="required" value="{{ $j->id_pengukur }}">
+                                                    <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ $p->jabatan}}">
+                                                    <input type="hidden" name="id_responden" required="required" value="{{ $p->id_pengukur }}">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -204,8 +205,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endforeach
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
