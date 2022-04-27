@@ -21,6 +21,11 @@ class CreateDefendidUserTable extends Migration
             $table->string('username', 100);
             $table->string('password');
             $table->integer('status_user')->nullable();
+            $table->boolean('is_risk_officer')->default(0);
+            $table->boolean('is_penilai')->default(0);
+            $table->boolean('is_penilai_indhan')->default(0);
+            $table->boolean('is_risk_owner')->default(0);
+            $table->boolean('is_admin')->default(0);
         });
     }
 

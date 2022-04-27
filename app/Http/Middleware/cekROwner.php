@@ -17,7 +17,7 @@ class cekROwner
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->kat_user == 2){
+        if(Auth::user()->is_risk_owner){
             return $next($request);
         }
         else {

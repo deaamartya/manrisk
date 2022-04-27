@@ -17,7 +17,7 @@ class cekAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->kat_user == 3){
+        if(Auth::user()->is_admin){
             return $next($request);
         }
         else {

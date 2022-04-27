@@ -17,7 +17,7 @@ class cekROfficer
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->kat_user == 1){
+        if(Auth::user()->is_risk_officer){
             return $next($request);
         }
         else {

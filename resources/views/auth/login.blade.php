@@ -29,7 +29,7 @@
          <img class="bg-img-cover bg-center" src="{{asset('assets/images/indhan.png')}}" alt="looginpage">
       </div> --}}
       <div class="col-lg-7 login-image">
-         <img src="{{asset('assets/images/indhan.png')}}" alt="looginpage">
+         <img src="{{ asset('assets/images/indhan.png') }}" alt="looginpage">
       </div>
       <div class="col-lg-5 p-0">
          <div class="login-card p-4">
@@ -39,23 +39,23 @@
                   <h4 class="mb-3" style="color: #185089;">RISK MANAGEMENT INTEGRATED SYSTEM</h4>
                </div>
                <div class="login-main">
-                  <form class="theme-form" action="{{ route('login') }}" method="POST">
+                  <form class="theme-form" action="{{ url('login') }}" method="POST">
                      @csrf
                      <h5>Sign in to account</h5>
                      <p>Enter your username & password to login</p>
                      <div class="form-group">
                         <label class="col-form-label">Username</label>
-                        <input class="form-control" type="text" required="" name="username" placeholder="username">
+                        <input class="form-control" type="text" required name="username" placeholder="Username" autocomplete="username">
                      </div>
                      <div class="form-group">
                         <label class="col-form-label">Password</label>
-                        <input class="form-control" type="password" name="password" required="" placeholder="*********">
+                        <input class="form-control" type="password" name="password" required="" placeholder="*********" autocomplete="current-password">
                      </div>
                      <div class="form-group mb-0">
                         <button class="btn btn-danger btn-block w-100" type="submit">Sign in</button>
                      </div>
                      <div class="social mt-4">
-                        <img class="img-fluid" src="{{asset('assets/images/aindhan.png')}}" alt="looginpage">
+                        <img class="img-fluid" src="{{ asset('assets/images/aindhan.png') }}" alt="looginpage">
                      </div>
                   </form>
                </div>

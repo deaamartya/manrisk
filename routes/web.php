@@ -4,12 +4,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
+use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\Auth\{
+    LoginController,
+};
 
-Route::mixin(new \Laravel\Ui\AuthRouteMethods());
-Route::auth(['verify' => true]);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
