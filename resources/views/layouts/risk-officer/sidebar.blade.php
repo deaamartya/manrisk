@@ -19,19 +19,7 @@
 					<li class="sidebar-main-title">
 						<div class="welcome-card @if(Auth::user()->company_id === 'LN' || Auth::user()->company_id === 'DI' || Auth::user()->company_id === 'INHAN') flex @endif">
 							<div class="logo-circle text-center">
-								@if(Auth::user()->company_id === 'PI')
-									<img src="{{ asset('assets/images/logo/logo_company/logo_pal.png') }}" height="48" />
-								@elseif(Auth::user()->company_id === 'LN')
-									<img src="{{ asset('assets/images/logo/logo_company/logo_len.png') }}" height="48" />
-								@elseif(Auth::user()->company_id === 'DI')
-									<img src="{{ asset('assets/images/logo/logo_company/logo_dirgantara.png') }}" height="48" />
-								@elseif(Auth::user()->company_id === 'DH')
-									<img src="{{ asset('assets/images/logo/logo_company/logo_dahana.png') }}" height="48" />
-								@elseif(Auth::user()->company_id === 'PD')
-									<img src="{{ asset('assets/images/logo/logo_company/logo_pindad.png') }}" height="48" />
-								@elseif(Auth::user()->company_id === 'INHAN')
-									<img src="{{ asset('assets/images/logo/logo_company/logo2.png') }}" height="48" />
-								@endif
+								<img src="{{ asset('assets/images/logo/logo_company/logo_'.Auth::user()->company_id.'.png') }}" height="48" />
 							</div>
 							<div class="welcome-text">
 								<h6 class="lan-1">Welcome,</h6>
