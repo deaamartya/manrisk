@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use App\Models\Risk;
+use Auth;
 
 class SumberRisikoController extends Controller
 {
@@ -19,7 +20,7 @@ class SumberRisikoController extends Controller
       $sumber_risiko = SRisiko::join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                       ->join('defendid_user', 's_risiko.id_user', 'defendid_user.id_user')
                       ->join('risk','konteks.id_risk', 'risk.id_risk')
-                      ->where('s_risiko.id_user', '1') // user yg login
+                      ->where('s_risiko.id_user',  Auth::user()->id_user) // user yg login
                       ->orderByDesc('s_risiko.tahun')
                       ->orderBy('s_risiko.id_s_risiko')
                       ->get();
