@@ -167,7 +167,7 @@
         <div class="card-body">
             <center>
                 <h5>Sumber Risiko</h5>
-                <h6 style="color:#3C88F7">PT. PAL Indonesia</h6>
+                <h6 style="color:#3C88F7">{{  Auth::user()->instansi }}</h6>
             </center>
             <br>
             <div class="table-responsive">
