@@ -48,7 +48,7 @@ class SumberRisikoController extends Controller
       SRisiko::insert([
         's_risiko' => $request->s_risiko,
         'id_konteks' => $request->id_konteks,
-        'id_user' => 1,
+        'id_user' => Auth::user()->id_user,
         'tahun' => $request->tahun,
         'status_s_risiko' => 0
       ]);
