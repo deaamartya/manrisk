@@ -10,6 +10,7 @@ use App\Models\SRisiko;
 use App\Models\Risk;
 use PDF;
 use DB;
+use Auth;
 
 class PengukuranRisikoController extends Controller
 {
