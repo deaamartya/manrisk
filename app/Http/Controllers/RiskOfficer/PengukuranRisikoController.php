@@ -15,9 +15,7 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        //ID USER GANTI PAKE AUTH SESSION LOGIN !!!!!!!!
-        // $user =  Auth::user()->id_user
-        $user = 1;
+        $user =  Auth::user()->id_user;
         $jml_risk = Srisiko::where('id_user', $user)->where('tahun', '2022')->where('status_s_risiko', 1)->count();
         $data_sr = Srisiko::where('id_user', $user)->where('tahun', '2022')
                             ->where('status_s_risiko', 1)->limit(1)->get();
@@ -27,8 +25,7 @@ class PengukuranRisikoController extends Controller
             $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('pengukuran.id_s_risiko', $d->id_s_risiko)->get();
                
-            //Company ID GANTI PAKE AUTH SESSION LOGIN !!!!!!!!
-            $company_id = 'PI';
+            $company_id = Auth::user()->company_id;
             $jabatan = DefendidPengukur::where('company_id', $company_id)->get();
 
             $arr_pengukur = [];
