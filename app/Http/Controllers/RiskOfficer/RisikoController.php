@@ -73,6 +73,7 @@ class RisikoController extends Controller
             'tahun' => $request->tahun,
             'target' => $request->target
         ]);
+        dd($riskheader);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil diubah!']);
     }
 
