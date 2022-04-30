@@ -15,26 +15,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * Class DefendidUser
  * 
  * @property int $id_user
- * @property string $company_id
- * @property string $instansi
- * @property int $kat_user
+ * @property int $company_id
  * @property string $username
  * @property string $password
  * @property int|null $status_user
+ * @property bool $is_risk_officer
+ * @property bool $is_penilai
+ * @property bool $is_penilai_indhan
+ * @property bool $is_risk_owner
+ * @property bool $is_admin
+ * 
+ * @property Perusahaan $perusahaan
  *
  * @package App\Models
  */
 class DefendidUser extends Authenticatable
 {
 	use HasFactory, Notifiable;
-	
 	protected $table = 'defendid_user';
 	protected $primaryKey = 'id_user';
 	public $timestamps = false;
 
 	protected $casts = [
-		'kat_user' => 'int',
-		'status_user' => 'int'
+		'company_id' => 'int',
+		'status_user' => 'int',
+		'is_risk_officer' => 'bool',
+		'is_penilai' => 'bool',
+		'is_penilai_indhan' => 'bool',
+		'is_risk_owner' => 'bool',
+		'is_admin' => 'bool'
 	];
 
 	protected $hidden = [
@@ -43,10 +52,18 @@ class DefendidUser extends Authenticatable
 
 	protected $fillable = [
 		'company_id',
-		'instansi',
-		'kat_user',
 		'username',
 		'password',
-		'status_user'
+		'status_user',
+		'is_risk_officer',
+		'is_penilai',
+		'is_penilai_indhan',
+		'is_risk_owner',
+		'is_admin'
 	];
+
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
+	}
 }

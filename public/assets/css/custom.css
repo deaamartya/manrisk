@@ -65,6 +65,24 @@
   width: 48px;
 }
 
+.media.profile-media {
+  align-items: center;
+}
+
+.logo-header {
+  max-width: 170px;
+}
+
+.logo-wrapper {
+  display: flex;
+}
+
+.logo-wrapper a {
+  height: fit-content;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 @media only screen and (max-width: 768px) {
   .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper {
     height: 56px;

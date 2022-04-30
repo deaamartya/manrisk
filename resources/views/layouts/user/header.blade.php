@@ -47,24 +47,8 @@
           <div class="media profile-media">
             <img class="b-r-10" src="{{asset('assets/images/dashboard/profile.jpg')}}" alt="">
             <div class="media-body">
-              <span>
-                @php
-                  $kat = Auth::user()->kat_user;
-                  switch($kat) {
-                    case 1:
-                      echo 'Risk Officer';
-                      break;
-                    case 2:
-                      echo 'Risk Owner';
-                      break;
-                    case 3:
-                      echo 'Admin';
-                      break;
-                  }
-                @endphp
-              </span>
               <p class="mb-0 font-roboto">
-                {{ Auth::user()->instansi }}
+                {{ Auth::user()->perusahaan->instansi }}
                 <i class="middle fa fa-angle-down"></i>
               </p>
             </div>

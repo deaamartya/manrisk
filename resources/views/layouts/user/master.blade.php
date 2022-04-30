@@ -13,7 +13,7 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
-    @include('layouts.risk-officer.css')
+    @include('layouts.user.css')
     @yield('style')
   </head>
   <body>
@@ -23,12 +23,12 @@
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
       <!-- Page Header Start-->
-      @include('layouts.risk-officer.header')
+      @include('layouts.user.header')
       <!-- Page Header Ends  -->
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
         <!-- Page Sidebar Start-->
-        @include('layouts.risk-officer.sidebar')
+        @include('layouts.user.sidebar')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
           <div class="container-fluid">        
@@ -71,7 +71,7 @@
           <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
-        @include('layouts.risk-officer.footer') 
+        @include('layouts.user.footer') 
       </div>
     </div>
     @if(Session::has('success-swal') || Session::has('warning-swal') || Session::has('error-swal'))
@@ -94,7 +94,7 @@
       @endif
     @endif
     <!-- latest jquery-->
-    @include('layouts.risk-officer.script')  
+    @include('layouts.user.script')  
     <!-- Plugin used-->
     <script type="text/javascript">
       if ($(".page-wrapper").hasClass("horizontal-wrapper")) {

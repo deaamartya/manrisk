@@ -25,14 +25,20 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $kat = Auth::user()->kat_user;
-            switch($kat) {
-                case 1:
-                    return view('risk-officer.index');
-                case 2:
-                    return view('risk-owner.index');
-                case 3:
-                    return view('admin.index');
+            if (Auth::user()->is_risk_officer) {
+                return view('risk-officer.index');
+            }
+            if (Auth::user()->is_risk_owner) {
+                return view('risk-owner.index');
+            }
+            if (Auth::user()->is_penilai) {
+                return view('risk-owner.index');
+            }
+            if (Auth::user()->is_penilai_indhan) {
+                return view('risk-owner.index');
+            }
+            if (Auth::user()->is_admin) {
+                return view('admin.index');
             }
         } else {
             return redirect()->route('login');

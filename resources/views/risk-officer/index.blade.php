@@ -1,4 +1,4 @@
-@extends('layouts.risk-officer.master')
+@extends('layouts.user.master')
 
 @section('title', 'Default')
 

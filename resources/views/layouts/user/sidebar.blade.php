@@ -1,7 +1,9 @@
 <div class="sidebar-wrapper">
 	<div>
 		<div class="logo-wrapper">
-			<a href="{{ url('/') }}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo_company/logo1.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
+			<a href="{{ url('/') }}">
+				<img class="img-fluid for-light logo-header" src="{{asset('assets/images/logo/logo_company/logo_INHAN.png')}}" alt="">
+			</a>
 			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
 		</div>
 		<div class="logo-icon-wrapper">
@@ -19,26 +21,12 @@
 					<li class="sidebar-main-title">
 						<div class="welcome-card @if(Auth::user()->company_id === 'LN' || Auth::user()->company_id === 'DI' || Auth::user()->company_id === 'INHAN') flex @endif">
 							<div class="logo-circle text-center">
-								<img src="{{ asset('assets/images/logo/logo_company/logo_'.Auth::user()->company_id.'.png') }}" height="48" />
+								<img src="{{ asset('assets/images/logo/logo_company/logo_'.Auth::user()->perusahaan->company_code.'.png') }}" height="48" />
 							</div>
 							<div class="welcome-text">
 								<h6 class="lan-1">Welcome,</h6>
 								<p class="lan-2">
-									@php
-										$kat = Auth::user()->kat_user;
-										switch($kat) {
-											case 1:
-												echo 'Risk Officer ';
-												break;
-											case 2:
-												echo 'Risk Owner ';
-												break;
-											case 3:
-												echo 'Admin ';
-												break;
-										}
-									@endphp
-									{{ Auth::user()->instansi }}
+									{{ Auth::user()->perusahaan->instansi }}
 								</p>
 							</div>
 						</div>
