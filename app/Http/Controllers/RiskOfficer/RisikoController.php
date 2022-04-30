@@ -12,9 +12,6 @@ use PDF;
 
 class RisikoController extends Controller
 {
-    private $id_user = 1;
-    private $instansi = 'PT PAL INDONESIA (PERSERO)';
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +19,7 @@ class RisikoController extends Controller
      */
     public function index()
     {
-        $headers = RiskHeader::where('id_user', '=', $this->id_user)->get();
+        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->get();
         return view('risk-officer.risiko', compact("headers"));
     }
 
@@ -35,7 +32,7 @@ class RisikoController extends Controller
     public function store(Request $request)
     {
         RiskHeader::insert([
-            'id_user' => $this->id_user,
+            'id_user' => Auth::user()->id_user,
             'tahun' => $request->tahun,
             'target' => $request->target
         ]);
@@ -68,6 +65,7 @@ class RisikoController extends Controller
             'tahun' => $request->tahun,
             'target' => $request->target
         ]);
+        dd($riskheader);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil diubah!']);
     }
 
@@ -85,8 +83,9 @@ class RisikoController extends Controller
 
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $user = DefendidUser::where('id_user', '=', $this->id_user)->first();
+        $user = Auth::user();
+        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
         $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user'))->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan Manajemen Risiko Divisi '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
+        return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 }

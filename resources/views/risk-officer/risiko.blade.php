@@ -1,4 +1,4 @@
-@extends('layouts.risk-officer.table')
+@extends('layouts.user.table')
 
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
@@ -112,7 +112,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea id="summernote" name="target"></textarea>
+                    <textarea id="summernote"></textarea>
                     <input type="hidden" id="summernote-value" name="target"/>
 									</div>
 								</div>
@@ -160,7 +160,7 @@
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
                     <textarea class="summernote" id="summernote-{{ $data->id_riskh }}">{{ $data->target }}</textarea>
-                    <input type="hidden" id="summernote-value-{{ $data->id_riskh }}" name="target"/>
+                    <input type="hidden" id="summernote-value-{{ $data->id_riskh }}" name="target" value="{{ $data->target }}"/>
 									</div>
 								</div>
               </div>

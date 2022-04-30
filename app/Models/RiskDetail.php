@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskDetail
- *
+ * 
  * @property int $id_riskd
  * @property int $id_riskh
  * @property int $id_s_risiko
@@ -109,10 +109,5 @@ class RiskDetail extends Model
 	public function sumber_risiko()
 	{
 		return $this->belongsTo(SRisiko::class, 'id_s_risiko');
-	}
-
-	public function pengajuan_mitigasi()
-	{
-		return $this->hasMany(PengajuanMitigasi::class, 'id_riskd');
 	}
 }
