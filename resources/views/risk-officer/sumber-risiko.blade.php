@@ -1,4 +1,4 @@
-@extends('layouts.risk-officer.table')
+@extends('layouts.user.table')
 @section('title', 'Sumber Risiko')
 
 @section('breadcrumb-title')
