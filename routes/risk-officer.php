@@ -6,9 +6,10 @@ use \App\Http\Controllers\RiskOfficer\{
   SumberRisikoController,
   UserController,
   RisikoController,
+  PengukuranRisikoController,
 };
 
-Route::name('risk-officer.')->group(function () {
+Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(function () {
   Route::get('user', [UserController::class, 'index'])->name('user');
   Route::get('user/get-user/{id}', [UserController::class, 'get_user'])->name('user-get-user');
   Route::post('user/store/{id?}', [UserController::class, 'store'])->name('user-store');
