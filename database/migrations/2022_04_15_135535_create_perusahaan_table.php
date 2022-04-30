@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDivisiTable extends Migration
+class CreatePerusahaanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateDivisiTable extends Migration
      */
     public function up()
     {
-        Schema::create('divisi', function (Blueprint $table) {
-            $table->integer('id_divisi', true);
-            $table->string('divisi', 50);
-            $table->string('username', 100);
-            $table->string('password', 100);
-            $table->string('kode_divisi');
+        Schema::create('perusahaan', function (Blueprint $table) {
+            $table->increments('company_id');
+            $table->string('company_code');
+            $table->string('instansi');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class CreateDivisiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('divisi');
+        Schema::dropIfExists('perusahaan');
     }
 }

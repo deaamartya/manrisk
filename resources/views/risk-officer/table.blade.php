@@ -1,4 +1,4 @@
-@extends('layouts.risk-officer.table')
+@extends('layouts.user.table')
 @section('content')
 <div class="container-fluid">
   <div class="row">
