@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskDetail
- * 
+ *
  * @property int $id_riskd
  * @property int $id_riskh
  * @property int $id_s_risiko
