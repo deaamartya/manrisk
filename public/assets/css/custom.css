@@ -3,12 +3,9 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-direction: column;
 }
-.sidebar-main-title .welcome-card.flex {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+
 .sidebar-main-title .welcome-card.flex .logo-circle {
   border-radius: 50%;
   width: 48px;
