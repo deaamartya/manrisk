@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class DefendidPengukur
@@ -23,9 +24,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DefendidPengukur extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'defendid_pengukur';
 	protected $primaryKey = 'id_pengukur';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'jenis' => 'int',

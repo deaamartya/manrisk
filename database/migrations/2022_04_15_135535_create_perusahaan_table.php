@@ -18,6 +18,7 @@ class CreatePerusahaanTable extends Migration
             $table->string('company_code');
             $table->string('instansi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

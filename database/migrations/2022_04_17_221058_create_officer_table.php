@@ -21,6 +21,8 @@ class CreateOfficerTable extends Migration
             $table->string('password', 25);
             $table->string('email', 50);
             $table->integer('officer_status');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

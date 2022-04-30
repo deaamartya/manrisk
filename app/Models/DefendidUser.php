@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,10 +32,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class DefendidUser extends Authenticatable
 {
+	use SoftDeletes;
+
 	use HasFactory, Notifiable;
 	protected $table = 'defendid_user';
 	protected $primaryKey = 'id_user';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'company_id' => 'int',

@@ -25,6 +25,8 @@ class CreateDefendidUserTable extends Migration
             $table->boolean('is_risk_owner')->default(0);
             $table->boolean('is_admin')->default(0);
             $table->foreign('company_id')->references('company_id')->on('perusahaan');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,6 +18,8 @@ class CreateRespondenTable extends Migration
             $table->integer('id_divisi');
             $table->string('nama_responden')->nullable();
             $table->dateTime('tanggal')->nullable()->useCurrent();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

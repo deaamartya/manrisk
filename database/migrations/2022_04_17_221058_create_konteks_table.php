@@ -19,6 +19,8 @@ class CreateKonteksTable extends Migration
             $table->integer('no_k')->nullable();
             $table->text('konteks')->nullable();
             $table->string('tahun_konteks', 6)->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

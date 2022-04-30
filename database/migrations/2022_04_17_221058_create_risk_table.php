@@ -16,6 +16,8 @@ class CreateRiskTable extends Migration
         Schema::create('risk', function (Blueprint $table) {
             $table->string('id_risk', 20)->primary();
             $table->string('risk', 200);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

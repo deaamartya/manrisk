@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Mitigasi
@@ -26,9 +27,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Mitigasi extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'mitigasi';
 	protected $primaryKey = 'id_mitigasi';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'progress' => 'int'

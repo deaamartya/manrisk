@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Risk
@@ -18,10 +19,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Risk extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'risk';
 	protected $primaryKey = 'id_risk';
 	public $incrementing = false;
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $fillable = [
 		'risk'

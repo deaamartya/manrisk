@@ -23,7 +23,9 @@ class CreateRiskHeaderKorporasiTable extends Migration
             $table->string('pemeriksa', 100)->nullable();
             $table->string('lampiran', 200)->nullable();
             $table->integer('status_h')->nullable();
-            $table->integer('deleted')->nullable();
+            // $table->integer('deleted')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

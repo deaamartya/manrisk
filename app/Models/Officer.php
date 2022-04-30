@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Officer
@@ -23,9 +24,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Officer extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'officer';
 	protected $primaryKey = 'id_officer';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'officer_status' => 'int'
