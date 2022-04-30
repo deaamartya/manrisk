@@ -4,10 +4,16 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
+use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\Auth\{
+    LoginController,
+};
 
-Route::get('/', function () {
-    return view('dashboard.index');
-})->name('/');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
@@ -250,7 +256,7 @@ Route::prefix('others')->group(function () {
 });
 
 Route::prefix('authentication')->group(function () {
-    Route::view('login', 'authentication.login')->name('login');
+    // Route::view('login', 'authentication.login')->name('login');
     Route::view('login-one', 'authentication.login-one')->name('login-one');
     Route::view('login-two', 'authentication.login-two')->name('login-two');
     Route::view('login-bs-validation', 'authentication.login-bs-validation')->name('login-bs-validation');
@@ -359,8 +365,3 @@ Route::get('/clear-cache', function() {
     Artisan::call('route:clear');
     return "Cache is cleared";
 })->name('clear.cache');
-
-
-
-//LOGIN MANRISK
-Route::view('login', 'login')->name('login');

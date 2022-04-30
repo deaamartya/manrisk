@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\RiskOfficer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,10 +12,10 @@ class HomeController extends Controller
     }
 
     public function table() {
-        return view('user.table');
+        return view('risk-officer.table');
     }
 
     public function form() {
-        return view('user.form');
+        return view('risk-officer.form');
     }
 }

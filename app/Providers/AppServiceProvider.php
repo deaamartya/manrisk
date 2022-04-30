@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mapUserRoutes();
+        $this->mapRiskOfficerRoutes();
         $this->mapWebRoutes();
     }
 
@@ -34,10 +34,11 @@ class AppServiceProvider extends ServiceProvider
              ->group(base_path('routes/web.php'));
     }
 
-    protected function mapUserRoutes()
+    protected function mapRiskOfficerRoutes()
     {
-        Route::prefix('user')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/divisi.php'));
+        Route::middleware('web')
+            ->prefix('risk-officer')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/risk-officer.php'));
     }
 }
