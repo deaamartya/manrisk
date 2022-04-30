@@ -1,11 +1,11 @@
 .sidebar-main-title .welcome-card {
   white-space: normal !important;
-}
-.sidebar-main-title .welcome-card.flex {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-direction: column;
 }
+
 .sidebar-main-title .welcome-card.flex .logo-circle {
   border-radius: 50%;
   width: 48px;
@@ -18,6 +18,7 @@
   padding: 5px;
   margin-bottom: 8px;
 }
+
 .sidebar-main-title .logo-circle img {
   height: 100%;
 }
@@ -88,4 +89,12 @@
     height: 56px;
     padding: 10px 40px;
   }
+}
+
+label {
+  font-size: 16px;
+}
+
+.text-red {
+  color: red;
 }
