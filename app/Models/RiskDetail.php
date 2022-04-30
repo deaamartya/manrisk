@@ -100,4 +100,14 @@ class RiskDetail extends Model
 		'status_mitigasi',
 		'status_korporasi'
 	];
+
+	public function risk_header()
+	{
+		return $this->belongsTo(RiskHeader::class, 'id_riskh');
+	}
+
+	public function sumber_risiko()
+	{
+		return $this->belongsTo(SRisiko::class, 'id_s_risiko');
+	}
 }

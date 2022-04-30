@@ -44,8 +44,8 @@ class SRisiko extends Model
 		'status_s_risiko'
 	];
 
-	// public function konteks()
-	// {
-	// 	return $this->hasMany(Kontek::class, 'id_konteks');
-	// }
+	public function konteks()
+	{
+		return $this->belongsTo(Kontek::class, 'id_konteks');
+	}
 }
