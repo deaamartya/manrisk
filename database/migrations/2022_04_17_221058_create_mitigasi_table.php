@@ -24,6 +24,8 @@ class CreateMitigasiTable extends Migration
             $table->integer('progress')->nullable();
             $table->text('keterangan')->nullable();
             $table->text('ref')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

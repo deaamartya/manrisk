@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Responden
@@ -21,16 +22,18 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Responden extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'responden';
 	protected $primaryKey = 'id_responden';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_divisi' => 'int'
 	];
 
 	protected $dates = [
-		'tanggal'
+		'tanggal',
+		'deleted_at'
 	];
 
 	protected $fillable = [

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskHeader
@@ -27,18 +28,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class RiskHeader extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'risk_header';
 	protected $primaryKey = 'id_riskh';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_user' => 'int',
 		'status_h' => 'int',
-		'deleted' => 'int'
 	];
 
 	protected $dates = [
-		'tanggal'
+		'tanggal',
+		'deleted_at'
 	];
 
 	protected $fillable = [
@@ -49,7 +51,6 @@ class RiskHeader extends Model
 		'penyusun',
 		'pemeriksa',
 		'lampiran',
-		'status_h',
-		'deleted'
+		'status_h'
 	];
 }

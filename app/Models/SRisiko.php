@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class SRisiko
@@ -23,9 +24,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SRisiko extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 's_risiko';
 	protected $primaryKey = 'id_s_risiko';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $casts = [
 		'id_user' => 'int',

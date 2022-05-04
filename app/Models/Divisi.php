@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Divisi
@@ -21,9 +22,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Divisi extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'divisi';
 	protected $primaryKey = 'id_divisi';
-	public $timestamps = false;
+	protected $dates = ['deleted_at'];
 
 	protected $hidden = [
 		'password'

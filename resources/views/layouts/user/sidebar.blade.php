@@ -1,27 +1,33 @@
 <div class="sidebar-wrapper">
 	<div>
 		<div class="logo-wrapper">
-			<a href="{{route('/')}}"><img class="img-fluid for-light" src="{{asset('assets/images/logo/logo.png')}}" alt=""><img class="img-fluid for-dark" src="{{asset('assets/images/logo/logo_dark.png')}}" alt=""></a>
-			<div class="back-btn"><i class="fa fa-angle-left"></i></div>
+			<a href="{{ url('/') }}">
+				<img class="img-fluid for-light logo-header" src="{{asset('assets/images/logo/logo_company/logo_INHAN.png')}}" alt="">
+			</a>
 			<div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
 		</div>
-		<div class="logo-icon-wrapper"><a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a></div>
+		<div class="logo-icon-wrapper">
+			<a href="{{ url('/') }}">
+				<img class="img-fluid" src="{{asset('assets/images/logo/logo_company/logo2.png')}}" alt="">
+			</a>
+		</div>
 		<nav class="sidebar-main">
-			<div class="left-arrow" id="left-arrow"><i data-feather="arrow-left"></i></div>
 			<div id="sidebar-menu">
 				<ul class="sidebar-links" id="simple-bar">
 					<li class="back-btn">
-						<a href="{{route('/')}}"><img class="img-fluid" src="{{asset('assets/images/logo/logo-icon.png')}}" alt=""></a>
+						<a href="{{ url('/') }}"><img class="img-fluid" src="{{asset('assets/images/logo/logo_company/logo2.png')}}" alt=""></a>
 						<div class="mobile-back text-end"><span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i></div>
 					</li>
 					<li class="sidebar-main-title">
-						<div class="welcome-card">
-							<div class="logo-circle">
-								<img src="{{ asset('assets/images/logo/logo_company/logo2.png') }}" height="48" />
+						<div class="welcome-card @if(Auth::user()->company_id === 'LN' || Auth::user()->company_id === 'DI' || Auth::user()->company_id === 'INHAN') flex @endif">
+							<div class="logo-circle text-center">
+								<img src="{{ asset('assets/images/logo/logo_company/logo_'.Auth::user()->perusahaan->company_code.'.png') }}" height="48" />
 							</div>
 							<div class="welcome-text">
 								<h6 class="lan-1">Welcome,</h6>
-								<p class="lan-2">{{ 'nama divisi' }}</p>
+								<p class="lan-2">
+									{{ Auth::user()->perusahaan->instansi }}
+								</p>
 							</div>
 						</div>
 					</li>
@@ -75,7 +81,6 @@
 					</li>
 				</ul>
 			</div>
-			<div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
 		</nav>
 	</div>
 </div>

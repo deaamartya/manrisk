@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskDetail
@@ -45,9 +46,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class RiskDetail extends Model
 {
+	use SoftDeletes;
+
 	protected $table = 'risk_detail';
 	protected $primaryKey = 'id_riskd';
-	public $timestamps = false;
 
 	protected $casts = [
 		'id_riskh' => 'int',
@@ -65,7 +67,8 @@ class RiskDetail extends Model
 	];
 
 	protected $dates = [
-		'jadwal_mitigasi'
+		'jadwal_mitigasi',
+		'deleted_at'
 	];
 
 	protected $fillable = [

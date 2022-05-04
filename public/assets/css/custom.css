@@ -1,19 +1,35 @@
 .sidebar-main-title .welcome-card {
+    <<<<<<< HEAD display: flex;
+    align-items: center;
+    gap: 16px;
+    =======white-space: normal !important;
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-direction: column;
+}
+
+.sidebar-main-title .welcome-card.flex .logo-circle {
+    border-radius: 50%;
+    width: 48px;
+    >>>>>>>37a83cbe9b289af24f106123f18868474635689b
 }
 
 .sidebar-main-title .welcome-card .logo-circle {
-    border-radius: 50%;
+    border-radius: 10px;
     background-color: white;
-    width: 48px;
+    width: 100%;
     height: 48px;
     padding: 5px;
+    margin-bottom: 8px;
 }
 
 .sidebar-main-title .logo-circle img {
     height: 100%;
+}
+
+.page-wrapper .sidebar-main-title p {
+    line-height: 1.5;
 }
 
 .page-wrapper .page-header .header-wrapper {
@@ -34,7 +50,7 @@
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li {
-    margin-bottom: 4px;
+    <<<<<<< HEAD margin-bottom: 4px;
 }
 
 label {
@@ -43,4 +59,57 @@ label {
 
 .text-red {
     color: red;
+    =======margin-bottom: 4px;
+}
+
+.btn-link-custom {
+    text-decoration: none;
+}
+
+.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper {
+    height: 81px;
+    padding: 15px 50px 15px 40px;
+}
+
+.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-icon-wrapper {
+    height: 81px;
+    padding: 17px 24px;
+}
+
+.page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-icon-wrapper img {
+    width: 48px;
+}
+
+.media.profile-media {
+    align-items: center;
+}
+
+.logo-header {
+    max-width: 170px;
+}
+
+.logo-wrapper {
+    display: flex;
+}
+
+.logo-wrapper a {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper {
+        height: 56px;
+        padding: 10px 40px;
+    }
+}
+
+label {
+    font-size: 16px;
+}
+
+.text-red {
+    color: red;
+    >>>>>>>37a83cbe9b289af24f106123f18868474635689b
 }
