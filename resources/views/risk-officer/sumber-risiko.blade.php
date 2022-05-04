@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="tambahSumberRisiko" tabindex="-1" role="dialog" aria-labelledby="tambahSumberRisiko" aria-hidden="true">
+<div class="modal fade" id="tambahSumberRisiko" role="dialog" aria-labelledby="tambahSumberRisiko" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,7 +118,7 @@
 </div>
             
 @foreach($sumber_risiko as $s)
-    <div class="modal fade" id="edit_{{ $s->id_s_risiko }}" tabindex="-1" role="dialog" aria-labelledby="editSumberRisiko" aria-hidden="true">
+    <div class="modal fade" id="edit_{{ $s->id_s_risiko }}" role="dialog" aria-labelledby="editSumberRisiko" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
