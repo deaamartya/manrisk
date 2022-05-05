@@ -64,9 +64,7 @@ class PengukuranRisikoController extends Controller
         $tahun = $request->tahun;
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
-
         $id_user = Auth::user()->id_user;
-   
         $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
         ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
         ->join('risk as r', 'r.id_risk', 'k.id_risk')
