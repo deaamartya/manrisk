@@ -8,6 +8,8 @@ use App\Models\Pengukuran;
 use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use App\Models\Risk;
+use App\Models\RiskHeader;
+use App\Models\RiskDetail;
 use PDF;
 use DB;
 use Auth;
@@ -51,9 +53,68 @@ class PengukuranRisikoController extends Controller
             ->where('pengukuran.tahun_p', '2022')
             ->where('s_risiko.status_s_risiko', 1)
             ->get();
-
+            // dd(count($sumber_risiko));
         return view('risk-officer.pengukuran-risiko', compact('jml_risk','data_sr','jabatan','pengukuran','arr_pengukur','sumber_risiko'));
     }
+
+
+    public function penilaianRisiko(Request $request) {
+        $request->validate([
+            'nama_responden' => 'required',
+            'tahun' => 'required',
+        ]);
+        $tahun = $request->tahun;
+        $id_responden = $request->id_responden;
+        $nama_responden = $request->nama_responden;
+
+        // $queryl = "SELECT * FROM risk_header WHERE id_user='$id_divisi' AND tahun='$tahun' AND deleted=0";
+        // $sqll = mysqli_query($connect, $queryl);
+        // $datal = mysqli_fetch_assoc($sqll);
+        // $id_riskheader = $datal['id_riskh'];
+        $id_user = Auth::user()->id_user;
+        // $id_riskheader = RiskHeader::select('id_riskh')->where('id_user', $id_user)->where('tahun', $tahun)->where('deleted_at', null)->first();
+        
+        // $queryt = "SELECT * FROM s_risiko sr INNER JOIN konteks k INNER JOIN defendid_user d INNER JOIN risk r WHERE k.id_risk=r.id_risk AND sr.id_konteks=k.id_konteks AND sr.id_user=d.id_user AND sr.id_user=$id_user AND sr.tahun='$tahun' AND status_s_risiko=1 ORDER BY sr.id_s_risiko ASC";
+
+        $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
+        ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
+        ->join('risk as r', 'r.id_risk', 'k.id_risk')
+        ->where('s_risiko.id_user', $id_user)
+        ->where('s_risiko.tahun', $tahun)
+        ->where('s_risiko.status_s_risiko', 1)
+        ->orderBy('s_risiko.id_s_risiko')
+        ->get();
+
+        return view('risk-officer.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
+    }
+
+    
+    public function penilaianRisikoStore(Request $request) {
+        $request->validate([
+        'tahun' => 'required',
+        'id_responden' => 'required',
+        'nama_responden' => 'required',
+        'nilai_L' => 'required',
+        'nilai_C' => 'required',
+        'id_s_risk' => 'required',
+        ]);
+
+        $id_s_risiko = $request->id_s_risk;
+        
+        for ($i=0; $i < count($id_s_risiko); $i++) { 
+            Pengukuran::insert([
+                'tahun_p' => $request->tahun,
+                'id_s_risiko' => $request->id_s_risk[$i],
+                'id_pengukur' => $request->id_responden,
+                'nama_responden' => $request->nama_responden,
+                'nilai_L' => $request->nilai_L[$i],
+                'nilai_C' => $request->nilai_C[$i],
+            ]);
+        }
+
+        return redirect()->route('risk-officer.pengukuran-risiko')->with('created-alert', 'Data penilaian risiko berhasil disimpan.');
+    }
+
 
 
     public function generatePDF()
