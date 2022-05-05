@@ -1,4 +1,4 @@
-@extends('layouts.risk-officer.table')
+@extends('layouts.user.table')
 @section('title', 'Sumber Risiko')
 
 @section('breadcrumb-title')
@@ -44,51 +44,6 @@
                                         <td class="text-center">{{ $jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
-
-                                    <div class="modal fade insert_anggota{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title">Input Data Responden</h5>
-                                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <form method="POST" action="{{route('risk-officer.pengukuran-risiko-input-anggota') }}">
-                                                    @csrf    
-                                                    <div class="row mb-3">
-                                                        <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
-                                                        <div class='col-md-9 col-sm-9 col-xs-12'>
-                                                            <input type="text" name="nama_responden" required="required" value="" placeholder="Masukkan Nama Responden" class="form-control ">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <label class="col-md-3 col-sm-3 col-xs-12">Penilaian Tahun</label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <?php
-                                                            $l_tahun = array();
-                                                            $today = date("Y");
-                                                            $today_plus = strtotime('+ 1 years', $today);
-                                                            array_push($l_tahun, $today);
-                                                            array_push($l_tahun, $today_plus);
-                                                            ?>
-                                                            <select class="form-control pull-left" name="tahun">
-                                                            <?php
-                                                            for ($i=0; $i < sizeof($l_tahun); $i++) {  ?>
-                                                                <option value="{{ $l_tahun[$i]; }}"></option>  
-                                                            <?php }
-                                                            ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                                    <button class="btn btn-primary" type="submit">Simpan</button>
-                                                </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             @endif
                             @if(count($arr_pengukur) > 0)
@@ -99,10 +54,12 @@
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">{{ $jml_risk }}</td>
-                                        <td class="text-center"><a href="#modal-insert" data-target=".insert-anggota{{ $loop->iteration }}" role="button" data-toggle="modal" class="btn btn-danger btn-sm disabled"> Mulai Penilaian</a>
+                                        <td class="text-center">
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ $no; }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                        </td>
                                     </tr>
 
-                                    <div class="modal fade insert_anggota{{ $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+                                    <div class="modal fade" id="insert_responden{{ $no; }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -110,7 +67,7 @@
                                                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <form method="POST" action="{{route('risk-officer.pengukuran-risiko-input-anggota') }}">
+                                                <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
                                                     @csrf    
                                                     <div class="row mb-3">
                                                         <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
@@ -150,8 +107,6 @@
                                     </div>
                                 @endforeach
                             @endif
-                      
-                           
                             </tbody>
                         </table>
                     </div>
@@ -167,7 +122,7 @@
         <div class="card-body">
             <center>
                 <h5>Sumber Risiko</h5>
-                <h6 style="color:#3C88F7">{{  Auth::user()->instansi }}</h6>
+                <h6 style="color:#3C88F7">{{  Auth::user()->perusahaan->instansi }}</h6>
             </center>
             <br>
             <div class="table-responsive">
@@ -216,7 +171,8 @@
             </div>
         </div>
     </div>
-</div>  
+</div> 
+
 
 <div class="modal fade" id="daftarKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
