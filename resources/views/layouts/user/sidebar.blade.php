@@ -32,7 +32,13 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}"> 
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.user' ? 'active' : '' }}" href="{{route('risk-officer.user')}}">
+							<i data-feather="user"></i>
+							<span>User</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
 						</a>
