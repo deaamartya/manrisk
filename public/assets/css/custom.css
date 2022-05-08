@@ -131,3 +131,12 @@ label {
 .btn {
   padding: 8px 16px;
 }
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.hr-custom {
+  margin: 4px 0;
+}
