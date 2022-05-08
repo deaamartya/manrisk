@@ -45,6 +45,7 @@ class AbsDataMaster
         if($id == null){
             DefendidUser::insert([
                 'company_id' => $request->company_id,
+                'name' => $request->name,
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'status_user' => 0,
@@ -58,10 +59,10 @@ class AbsDataMaster
             ]);
         }
         else{
-            DefendidUser::where('id_user', $id)->update([
+            $params = [
                 'company_id' => $request->company_id,
+                'name' => $request->name,
                 'username' => $request->username,
-                'password' => Hash::make($request->password),
                 'status_user' => 0,
                 'is_risk_officer' => $request->is_risk_officer ?? 0,
                 'is_admin' => $request->is_admin ?? 0,
@@ -70,7 +71,12 @@ class AbsDataMaster
                 'is_risk_owner' => $request->is_risk_owner ?? 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ]);
+            ];
+
+            if($request->filled('password')){
+                $params['password'] = Hash::make($request->password);
+            }
+            DefendidUser::where('id_user', $id)->update($params);
         }
 
         $status = 200;

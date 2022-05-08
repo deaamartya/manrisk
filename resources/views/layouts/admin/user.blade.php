@@ -24,7 +24,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Perusahaan</th>
-                                    <th>Nama User</th>
+                                    <th>Nama</th>
+                                    <th>Username</th>
                                     <th>Jabatan / Role</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -35,6 +36,7 @@
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $u->instansi }}</td>
+                                    <td>{{ $u->name }}</td>
                                     <td>{{ $u->username }}</td>
                                     <td>{{ $u->jabatan }}</td>
                                     <td class="text-center field-status" id="{{ $u->id_user }}">
@@ -70,6 +72,12 @@
             <div class="modal-body">
             <form method="POST" action="" id="formUser">
                 @csrf
+                <div class="row mb-3">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="name" required="required" class="form-control" id="formName">
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12">Perusahaan</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">

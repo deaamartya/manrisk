@@ -114,6 +114,7 @@ $(document).ready(function(){
             data: {},
             success: function (results) {
                 $('#formPerusahaan').find('option:selected').removeAttr('selected')
+                $('#formName').val(results.data.name)
                 $('#formUsername').val(results.data.username)
                 $('#formPerusahaan option#option'+results.data.company_id).attr('selected', 'selected').trigger('change')
                 if(results.data.is_admin == 1){
