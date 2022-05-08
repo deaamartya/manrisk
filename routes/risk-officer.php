@@ -6,8 +6,10 @@ use \App\Http\Controllers\RiskOfficer\{
   SumberRisikoController,
   PengukuranRisikoController
   UserController,
-  RisikoController,
   PengukuranRisikoController,
+  RisikoController,
+  PengajuanMitigasiController,
+  RiskDetailController,
 };
 
 Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(function () {
@@ -24,6 +26,9 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::get('pengukuran-risiko-indhan', [PengukuranRisikoIndhanController::class, 'index'])->name('pengukuran-risiko-indhan');
   Route::resource('risiko', RisikoController::class);
   Route::get('risiko/print/{id}', [RisikoController::class, 'print'])->name('risiko.print');
+  Route::post('risiko/upload-lampiran', [RisikoController::class, 'uploadLampiran'])->name('risiko.upload-lampiran');
+  Route::resource('pengajuan-mitigasi', PengajuanMitigasiController::class);
+  Route::resource('risk-detail', RiskDetailController::class);
   Route::get('mitigasi-plan', [HomeController::class, 'index'])->name('mitigasi-plan');
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');
   Route::get('table', [HomeController::class, 'table'])->name('table');
