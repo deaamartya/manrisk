@@ -33,7 +33,8 @@ class SRisiko extends Model
 	protected $casts = [
 		'id_user' => 'int',
 		'status_s_risiko' => 'int',
-		'status_risk_indhan' => 'int'
+		'status_risk_indhan' => 'int',
+		'company_id' => 'int',
 	];
 
 	protected $fillable = [
@@ -43,7 +44,8 @@ class SRisiko extends Model
 		'tahun',
 		'catatan',
 		'status_s_risiko',
-		'status_risk_indhan'
+		'status_risk_indhan',
+		'company_id',
 	];
 
 	public function konteks()
