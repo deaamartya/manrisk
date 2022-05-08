@@ -110,4 +110,9 @@ class RiskDetail extends Model
 	{
 		return $this->belongsTo(SRisiko::class, 'id_s_risiko');
 	}
+
+	public function pengajuan_mitigasi()
+	{
+		return $this->hasMany(PengajuanMitigasi::class, 'id_riskd');
+	}
 }
