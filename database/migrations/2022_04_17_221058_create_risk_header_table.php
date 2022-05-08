@@ -16,8 +16,10 @@ class CreateRiskHeaderTable extends Migration
         Schema::create('risk_header', function (Blueprint $table) {
             $table->integer('id_riskh', true);
             $table->integer('id_user');
+            $table->unsignedInteger('company_id')->default(1);
+            $table->foreign('company_id')->references('company_id')->on('perusahaan');
             $table->string('tahun', 5);
-            $table->dateTime('tanggal')->useCurrent();
+            $table->date('tanggal')->useCurrent();
             $table->text('target')->nullable();
             $table->string('penyusun', 100)->nullable();
             $table->string('pemeriksa', 100)->nullable();
