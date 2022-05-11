@@ -89,7 +89,7 @@
 						@endif
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko-indhan')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
 							<i data-feather="edit"></i>
 							<span>Pengukuran Risiko Indhan</span>
 						</a>
