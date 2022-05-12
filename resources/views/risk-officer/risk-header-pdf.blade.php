@@ -117,7 +117,7 @@
     			Tanggal Penyusunan
     		</td>
     		<td width="49%" class="left pl-10p">
-    			@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->created_at))); @endphp
+    			@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->tanggal))); @endphp
     		</td>
     		<td rowspan="4" width="16%" class="center">
     			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo2.png' }}" width="60"><br><br>

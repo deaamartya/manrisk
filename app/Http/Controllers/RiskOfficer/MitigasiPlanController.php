@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
 use Auth;
+use Illuminate\Support\Arr;
+use App\Models\RiskDetail;
 
 class MitigasiPlanController extends Controller
 {
@@ -16,29 +18,9 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->get();
+        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)
+            ->get();
         return view('risk-officer.mitigasi-plan', compact("headers"));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -49,18 +31,8 @@ class MitigasiPlanController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        $headers = RiskHeader::where('id_riskh', '=', $id)->first();
+        return view('risk-officer.mitigasi-detail', compact("headers"));
     }
 
     /**
@@ -72,17 +44,17 @@ class MitigasiPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $detail = RiskDetail::where('id_riskd', '=', $id)->first();
+        $data = Arr::except($request->toArray(), ['_token', 'u_file']);
+        $detail->update($data);
+        if ($request->u_file) {
+            $filename = $request->file('u_file')->getClientOriginalName();
+            $folder = '/document/lampiran-mitigasi/';
+            $request->file('u_file')->storeAs($folder, $filename, 'public');
+            $detail->update([
+                'u_file' => $filename,
+            ]);
+        }
+        return redirect()->route('risk-officer.mitigasi-plan.show', $id);
     }
 }
