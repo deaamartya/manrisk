@@ -28,7 +28,7 @@
                         </select>
                     </div>
                     <div class='col-md-2 col-sm-2 col-xs-12'>
-                        <input type="number" name="tahun" placeholder="tahun" required="required" class="form-control ">
+                        <input type="number" name="tahun" placeholder="Tahun" required="required" class="form-control ">
                     </div>
                     <div class='col-md-2 col-sm-2 col-xs-12'>
                         <button class="btn btn-primary" type="submit">Lihat</button>
@@ -93,7 +93,7 @@
                         <div class="row mb-3">
                             <label class="col-md-3 col-sm-3 col-xs-12">Status Verifikasi</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <select class="js-example-basic-single col-sm-12" name="status_verifikasi" required>
+                                <select class="select-modal js-example-basic-single col-sm-12" name="status_verifikasi" required>
                                     <option value="1" @if($s->status_s_risiko == 1) selected @endif>Disetujui</option>
                                     <option value="2" @if($s->status_s_risiko == 2) selected @endif>Tidak Disetujui</option>
                                 </select>
