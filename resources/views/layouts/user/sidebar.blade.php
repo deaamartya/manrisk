@@ -55,12 +55,20 @@
 							<span>Konteks</span>
 						</a>
 					</li>
-                    <hr>
+					<hr>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
+						@if(Auth::user()->is_risk_officer == 1)
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}"> 
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
 						</a>
+						@elseif(Auth::user()->is_admin == 1)
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}"> 
+							<i data-feather="list"></i>
+							<span>Sumber Risiko</span>
+						</a>
+						@endif
 					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
