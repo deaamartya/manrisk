@@ -32,20 +32,20 @@
               <tbody>
                 @foreach($headers as $h)
                 <tr>
-                  <td>{{ $loop->index }}</td>
+                  <td>{{ $loop->iteration }}</td>
                   <td>{{ $h->tahun }}</td>
-                  <td>{{ $h->created_at }}</td>
+                  <td>{{ date('d M Y', strtotime($h->tanggal)) }}</td>
                   <td>{!! $h->target !!}</td>
-                  <td>
-                    <div class="alert alert-success">1</div>
+                  <td class="text-center">
+                    <div class="btn btn-primary btn-pill btn-xs status">{{ $h->migrateCount() }}</div>
                   </td>
                   <td>
-                    <div class="alert alert-success">0</div>
+                    <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount() }}</div>
                   </td>
                   <td>
-                    <button class="btn btn-info">
+                    <a href="{{ route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
                       <i class="fa fa-eye"></i> View
-                    </button>
+                    </a>
                   </td>
                 </tr>
                 @endforeach
