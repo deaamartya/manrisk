@@ -32,7 +32,32 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}"> 
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.user' ? 'active' : Route::currentRouteName()=='risk-officer.user' ? 'active' : '' }}" href="{{Auth::user()->is_admin===true ? route('admin.user') : route('risk-officer.user')}}">
+							<i data-feather="user"></i>
+							<span>User</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">
+							<i data-feather="list"></i>
+							<span>Perusahaan</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.resiko' ? 'active' : '' }}" href="{{route('admin.resiko')}}">
+							<i data-feather="list"></i>
+							<span>Resiko</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.konteks' ? 'active' : '' }}" href="{{route('admin.konteks')}}">
+							<i data-feather="list"></i>
+							<span>Konteks</span>
+						</a>
+					</li>
+                    <hr>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
 						</a>
