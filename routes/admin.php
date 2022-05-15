@@ -35,5 +35,11 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('sumber-risiko-indhan', [SumberRisikoIndhanController::class, 'index'])->name('sumber-risiko-indhan');
   Route::post('sumber-risiko-indhan/search', [SumberRisikoIndhanController::class, 'searchRisiko'])->name('search-risiko');
   Route::post('sumber-risiko-indhan/approval/{id}', [SumberRisikoIndhanController::class, 'approvalRisiko'])->name('approval-risiko');
+  Route::get('risk-register-indhan', [RiskRegisterIndhanController::class, 'index'])->name('risk-register-indhan');
+  Route::get('search-risk-header', [RiskRegisterIndhanController::class, 'searchRiskHeader'])->name('search-risk-header');
+  Route::get('all-risk-header', [RiskRegisterIndhanController::class, 'allRiskHeader'])->name('all-risk-header');
+  Route::get('detail-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'show'])->name('detail-risk-register');
+  Route::get('print-risk-register-indhan', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register');
+  Route::post('approval-risk-register-indhan', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register');
 });
 

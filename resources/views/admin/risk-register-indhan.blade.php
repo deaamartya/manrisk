@@ -21,7 +21,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header">
-            <form action="{{ route('admin.search-risk-header') }}" method="POST">
+            <form action="{{ route('admin.search-risk-header') }}" method="GET">
               @csrf
                 <div class="row">
                   <div class="col-md-3">
@@ -73,7 +73,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
                     <td>{{ $d->instansi }}</td>
-                    <td>{{ date_format($d->tanggal ,"d F Y (H:i)") }}</td>
+                    <td>{{ date('d M Y (H:i)', strtotime($d->tanggal))  }}</td>
                     <td>{{ $d->target }}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
@@ -119,21 +119,6 @@
           $("#summernote-value").val($editable[0].innerHTML);
         }
       }
-    });
-    $('.btn-edit').on('click', function() {
-      const id = $(this).attr('data-id');
-      $('#summernote-' + id).summernote({
-        toolbar: [
-          ['para', ['ul', 'ol']],
-        ],
-        height: 300,
-        tabsize: 2,
-        callbacks: {
-          onChange: function(contents, $editable) {
-            $("#summernote-value-" + id).val($editable[0].innerHTML);
-          }
-        }
-      });
     });
   })
 </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
+use App\Models\RiskDetail;
 use App\Models\DefendidUser;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
@@ -52,23 +53,6 @@ class RiskRegisterIndhanController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        RiskHeader::insert([
-            'id_user' => Auth::user()->id_user,
-            'tahun' => $request->tahun,
-            'target' => $request->target,
-            'penyusun' => Auth::user()->nama,
-        ]);
-        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil disimpan!']);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -76,14 +60,16 @@ class RiskRegisterIndhanController extends Controller
      */
     public function show($id)
     {
-        $headers = RiskHeader::where('id_riskh', '=', $id)->first();
-        $pilihan_s_risiko = SRisiko::where([
-            ['id_user', '=', Auth::user()->id_user],
-            ['tahun', '=', date('Y')],
-            ['status_s_risiko', '=', 1],
-            ['company_id', '=', Auth::user()->company_id],
-        ])->orderBy('id_s_risiko')->get();
-        return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko'));
+        $headers = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
+                    ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
+                    ->where('id_riskh', '=', $id)->first();
+        return view('admin.detail-risk-register', compact('headers'));
+    }
+
+    public function destroy($id)
+    {
+        RiskDetail::destroy($id);
+        return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dihapus!']);
     }
 
     /**
@@ -101,18 +87,6 @@ class RiskRegisterIndhanController extends Controller
             'target' => $request->target
         ]);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil diubah!']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        RiskHeader::destroy($id);
-        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil dihapus!']);
     }
 
     public function print($id) {
