@@ -112,7 +112,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_admin">
                         <input type="checkbox" name="is_admin" value="0" id="formIsAdmin">
-                        <label for="">admin</label>
+                        <label for="">Admin</label>
                     </div>
                 </div>
                 <div class="row is_risk_officer">
@@ -120,7 +120,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_risk_officer">
                         <input type="checkbox" name="is_risk_officer" value="0" id="formIsRiskOfficer">
-                        <label for="">risk officer</label>
+                        <label for="">Risk Officer</label>
                     </div>
                 </div>
                 <div class="row is_risk_owner">
@@ -128,7 +128,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_risk_owner">
                         <input type="checkbox" name="is_risk_owner" value="0" id="formIsRiskOwner">
-                        <label for="">risk owner</label>
+                        <label for="">Risk Owner</label>
                     </div>
                 </div>
                 <div class="row is_penilai">
@@ -136,7 +136,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_penilai">
                         <input type="checkbox" name="is_penilai" value="0" id="formIsPenilai">
-                        <label for="">penilai</label>
+                        <label for="">Penilai</label>
                     </div>
                 </div>
                 <div class="row is_penilai_indhan">
@@ -144,7 +144,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_penilai_indhan">
                         <input type="checkbox" name="is_penilai_indhan" value="0" id="formIsPenilaiIndhan">
-                        <label for="">penilai indhan</label>
+                        <label for="">Penilai Indhan</label>
                     </div>
                 </div>
             </div>
