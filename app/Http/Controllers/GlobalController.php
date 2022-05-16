@@ -24,4 +24,14 @@ class GlobalController extends Controller
             return response()->json(["message" => "Unauthorized"], 401);
         }
     }
+
+    public function forum()
+    {
+        if(Auth::check()){
+            return view('forum');
+        }
+        else{
+            return route('login');
+        }
+    }
 }

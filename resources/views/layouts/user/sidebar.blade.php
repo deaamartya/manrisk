@@ -104,6 +104,13 @@
 							<span>Kuesioner</span>
 						</a>
 					</li>
+                    <hr>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">
+							<i data-feather="list"></i>
+							<span>Forum</span>
+						</a>
+					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.table' ? 'active' : '' }}" href="{{route('risk-officer.table')}}">
 							<i data-feather="list"></i>
