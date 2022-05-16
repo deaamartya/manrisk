@@ -17,6 +17,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('get_perusahaan', [GlobalController::class, 'get_perusahaan']);
+Route::get('forum', [GlobalController::class, 'forum'])->name('forum');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
