@@ -15,7 +15,6 @@ class CreatePengukuranKorporasiTable extends Migration
     {
         Schema::create('pengukuran_korporasi', function (Blueprint $table) {
             $table->integer('id_p', true);
-            $table->integer('id_riskh');
             $table->integer('id_s_risiko');
             $table->string('nama_responden');
             $table->dateTime('tgl_penilaian')->useCurrent();
