@@ -28,21 +28,18 @@ class PengukuranRisikoIndhanController extends Controller
             $pengukuran = PengukuranKorporasi::join('s_risiko', 'pengukuran_korporasi.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('pengukuran_korporasi.id_s_risiko', $d->id_s_risiko)->get();
                
-            $company_id = Auth::user()->company_id;
-            $jabatan = DefendidPengukur::join('defendid_user', 'defendid_pengukur.id_user', 'defendid_user.id_user')
-                        ->where('is_penilai_indhan', 1)->get();
+            $jabatan = DefendidPengukur::join('defendid_user', 'defendid_pengukur.id_user', 'defendid_user.id_user')->where('defendid_user.is_penilai_indhan', 1)->get();
 
             $arr_pengukur = [];
             foreach($jabatan as $i=>$j){
-                $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
-                ->where('pengukuran.nama_responden', $j->jabatan)
+                $pengukur_risk = PengukuranKorporasi::join('s_risiko', 'pengukuran_korporasi.id_s_risiko', 's_risiko.id_s_risiko')
+                ->where('pengukuran_korporasi.id_s_risiko', $d->id_s_risiko)
+                ->where('pengukuran_korporasi.nama_responden', $j->jabatan)
                 ->get();  
 
                 if(count($pengukur_risk) == 0){
                         $arr_pengukur[] = $j;
                 }
-                    
             }
         // dd(count($arr_pengukur));
         }
