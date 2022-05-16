@@ -42,15 +42,17 @@
                 <div class="col-md-12 mb-2">{{ $headers->penyusun }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-3">{{ $headers->pemeriksa }}</div>
-                <h6>Lampiran :</h6>
-                @if($headers->lampiran == null || $headers->lampiran == '')
-                  <button class="btn btn-danger" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
-                @else
-                  <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger">
-                    <span class="flex-center">
-                      <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
-                    </span>
-                  </a>
+                <h6>Status</h6>
+                @if($headers->status_h == 1)
+                <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                @elseif($headers->status_h == 2)
+                <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                @endif
+
+                @if($headers->status_h_indhan == 1)
+                <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
+                @elseif($headers->status_h_indhan == 2)
+                <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
                 @endif
               </div>
             </div>
@@ -95,12 +97,12 @@
                       <form action="" method="POST">
                           @csrf
                           @if($d->status_korporasi == 0)
-                            <button type="submit" class="btn btn-sm btn-pill btn-success">
-                              <i class="fa fa-times"></i> Bukan Korporasi
+                            <button type="submit" class="btn btn-sm btn-pill btn-success d-flex align-items-center">
+                              <i class="fa fa-times me-2"></i>Bukan Korporasi
                             </button>
                           @else
-                            <button type="submit" class="btn btn-sm btn-pill btn-danger">
-                              <i class="fa fa-check"></i> Korporasi
+                            <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
+                              <i class="fa fa-check me-2"></i> Korporasi
                             </button>
                           @endif
                       </form>
@@ -109,12 +111,12 @@
                       <form action="" method="POST">
                           @csrf
                           @if($d->status_mitigasi == 0)
-                            <button type="submit" class="btn btn-sm btn-pill btn-success">
-                              <i class="fa fa-times"></i> Tidak Mitigasi
+                            <button type="submit" class="btn btn-sm btn-pill btn-success d-flex align-items-center">
+                              <i class="fa fa-times me-2"></i> Tidak Mitigasi
                             </button>
                           @else
-                            <button type="submit" class="btn btn-sm btn-pill btn-danger">
-                              <i class="fa fa-check"></i> Perlu Mitigasi
+                            <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
+                              <i class="fa fa-check me-2"></i> Perlu Mitigasi
                             </button>
                           @endif
                       </form>
@@ -169,8 +171,8 @@
                         @endif
                     </td>
                     <td>
-                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
-                        <i class="fa fa-trash-o"></i> Delete
+                      <button class="btn btn-sm btn-danger btn-delete d-flex align-items-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
+                        <i class="fa fa-trash-o me-2"></i> Delete
                       </button>
                     </td>
                   </tr>

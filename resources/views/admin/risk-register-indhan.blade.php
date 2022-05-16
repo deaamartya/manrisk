@@ -79,14 +79,14 @@
                     <td>{{ $d->pemeriksa }}</td>
                     <td>{{ count($d->risk_detail) }}</td>
                     <td>
-                      <a href="{{ route('admin.detail-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center" title="Detail">
-                        <i data-feather="eye" class="me-2 small-icon"></i>
+                      <a href="{{ route('admin.detail-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
+                        <i data-feather="eye" class="me-2 small-icon"></i> Detail
                       </a>
-                      <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center" title="Print">
-                        <i data-feather="printer" class="small-icon"></i> 
+                      <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
+                        <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
-                      <a href="{{ route('admin.approval-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-warning d-flex align-items-center" title="Approval">
-                        <i data-feather="check-circle" class="small-icon"></i>
+                      <a href="{{ route('admin.approval-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-warning d-flex align-items-center">
+                        <i data-feather="check-circle" class="me-2 small-icon"></i> Approval
                       </a>
                     </td>
                   </tr>
