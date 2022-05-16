@@ -5,6 +5,7 @@ namespace App\Http\Controllers\RiskOfficer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PengajuanMitigasi;
+use Auth;
 
 class PengajuanMitigasiController extends Controller
 {
@@ -37,12 +38,13 @@ class PengajuanMitigasiController extends Controller
     public function store(Request $request)
     {
         PengajuanMitigasi::insert([
+            'id_user' => Auth::user()->id_user,
             'id_riskd' => $request->id_risk_detail,
             'alasan' => $request->alasan,
             'is_approved' => false,
             'tipe_pengajuan' => $request->tipe_pengajuan,
         ]);
-        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil disimpan!']);
+        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Pengajuan berhasil diajukan!']);
     }
 
     /**
