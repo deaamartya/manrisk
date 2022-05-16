@@ -23,7 +23,6 @@ class CreateSRisikoTable extends Migration
             $table->string('tahun', 5)->nullable();
             $table->text('catatan')->nullable();
             $table->integer('status_s_risiko')->nullable();
-            $table->integer('status_risk_indhan')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
