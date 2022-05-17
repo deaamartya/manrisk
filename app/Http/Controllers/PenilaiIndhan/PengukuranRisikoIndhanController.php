@@ -6,15 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\DefendidPengukur;
-use App\Models\Pengukuran;
 use App\Models\PengukuranKorporasi;
 use App\Models\SRisiko;
-use App\Models\Risk;
-use App\Models\RiskHeader;
-use App\Models\RiskDetail;
 use PDF;
 use DB;
-use Auth;
 
 
 class PengukuranRisikoIndhanController extends Controller
@@ -23,7 +18,7 @@ class PengukuranRisikoIndhanController extends Controller
     {
         $jml_risk = Srisiko::where('tahun', date('Y'))->where('status_korporasi', 1)->count();
         $data_sr = Srisiko::where('tahun', date('Y'))->where('status_korporasi', 1)->limit(1)->get();
-        
+        // dd($data_sr);
         foreach($data_sr as $d){
             $pengukuran = PengukuranKorporasi::join('s_risiko', 'pengukuran_korporasi.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('pengukuran_korporasi.id_s_risiko', $d->id_s_risiko)->get();
