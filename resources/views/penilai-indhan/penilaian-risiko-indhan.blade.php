@@ -1,13 +1,13 @@
 @extends('layouts.user.table')
-@section('title', 'Penilaian Risiko')
+@section('title', 'Penilaian Risiko INDHAN')
 
 @section('breadcrumb-title')
-<h3>Penilaian Risiko</h3>
+<h3>Penilaian Risiko INDHAN</h3>
 @endsection
 
 @section('breadcrumb-items')
 <li class="breadcrumb-item">Pengukuran Risiko</li>
-<li class="breadcrumb-item active">Penilaian Risiko</li>
+<li class="breadcrumb-item active">Penilaian Risiko INDHAN</li>
 @endsection
 
 @section('content')
@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                    <form action="{{route('risk-officer.penilaian-risiko-store')}}" method="POST">
+                    <form action="{{route('penilai-indhan.penilaian-risiko-indhan-store')}}" method="POST">
                         @csrf 
                         <input type="hidden" name="tahun" value="{{ $tahun }}" required style="display: none;">
                         <input type="hidden" name="id_responden" value="{{ $id_responden }}" required style="display: none;">

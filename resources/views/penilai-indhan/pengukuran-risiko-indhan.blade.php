@@ -67,7 +67,7 @@
                                                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
+                                                    <form method="POST" action="{{route('penilai-indhan.penilaian-risiko-indhan') }}">
                                                         @csrf    
                                                         <div class="row mb-3">
                                                             <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
