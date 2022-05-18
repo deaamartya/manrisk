@@ -2,11 +2,11 @@
 @section('title', 'Sumber Risiko')
 
 @section('breadcrumb-title')
-<h3>Pengukuran Risiko</h3>
+<h3>Pengukuran Risiko Penilai</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Pengukuran Risiko</li>
+<li class="breadcrumb-item active">Pengukuran Risiko Penilai</li>
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Responden</th>
+                                    <th>Tahun</th>
                                     <th>Tanggal Penilaian</th>
                                     <th>Manrisk Tahun</th>
                                     <th>Jumlah Dinilai</th>
@@ -38,7 +38,7 @@
                                 @foreach($pengukuran as $p)
                                     <tr>
                                         <td class="text-center">{{ $no++; }}</td>
-                                        <td>{{ $p->nama_responden }}</td>
+                                        <td>{{ $p->tahun_p }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
                                         <td>{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $jml_risk }}</td>
@@ -50,7 +50,7 @@
                                 @foreach($arr_pengukur as $p)
                                     <tr>
                                         <td class="text-center">{{ $no++; }}</td>
-                                        <td>{{ $p->jabatan }}</td>
+                                        <td>{{ $p->tahun_p}}</td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">{{ $jml_risk }}</td>

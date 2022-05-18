@@ -25,24 +25,28 @@ class PengukuranRisikoController extends Controller
         // dd($data_sr);
         foreach($data_sr as $d){
             $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                        ->where('pengukuran.id_s_risiko', $d->id_s_risiko)->get();
-               
-            // $company_id = Auth::user()->company_id;
-            // $jabatan = DefendidPengukur::where('company_id', $company_id)->get();
-
-            $arr_pengukur = [];
-            // foreach($jabatan as $i=>$j){
-                $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                ->where('pengukuran.tahun_p', date('Y'))   
                 ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
-                ->where('s_risiko.id_user', Auth::user()->id_user)
+                ->where('defendid_pengukur.id_user', $user)
                 ->get();  
+        // dd(count($pengukuran));
 
-                // if(count($pengukur_risk) == 0){
-                //         $arr_pengukur[] = $j;
-                // }
+            $pengukur_user = DefendidPengukur::where('id_user', $user)->get();
+            $arr_pengukur = [];
+            foreach($pengukur_user as $i=>$p){
+                $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                ->where('pengukuran.tahun_p', date('Y'))   
+                ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
+                ->where('pengukuran.id_pengukur', $p->id_pengukur)
+                ->get();  
+                //blom melakukan pengukuran
+                if(count($pengukur_risk) == 0){
+                        $arr_pengukur[] = $p;
+                }
                     
-            // }
-        // dd(count($arr_pengukur));
+            }
         }
         $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
             ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
@@ -53,7 +57,7 @@ class PengukuranRisikoController extends Controller
             ->where('s_risiko.status_s_risiko', 1)
             ->get();
             // dd(count($sumber_risiko));
-        return view('penilai.pengukuran-risiko', compact('jml_risk','data_sr','jabatan','pengukuran','arr_pengukur','sumber_risiko'));
+        return view('penilai.pengukuran-risiko', compact('jml_risk','data_sr','pengukuran', 'arr_pengukur','sumber_risiko'));
     }
 
 
