@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\RiskOfficer;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 use App\Models\DefendidPengukur;
 use App\Models\Pengukuran;
-use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use PDF;
 use DB;
@@ -78,7 +79,6 @@ class PengukuranRisikoController extends Controller
         return view('risk-officer.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
     }
 
-    
     public function penilaianRisikoStore(Request $request) {
         $request->validate([
         'tahun' => 'required',
@@ -104,8 +104,6 @@ class PengukuranRisikoController extends Controller
 
         return redirect()->route('risk-officer.pengukuran-risiko')->with('created-alert', 'Data penilaian risiko berhasil disimpan.');
     }
-
-
 
     public function generatePDF()
     {   

@@ -2,11 +2,11 @@
 @section('title', 'Sumber Risiko')
 
 @section('breadcrumb-title')
-<h3>Pengukuran Risiko Penilai</h3>
+<h3>Pengukuran Risiko</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Pengukuran Risiko Penilai</li>
+<li class="breadcrumb-item active">Pengukuran Risiko</li>
 @endsection
 
 @section('content')

@@ -32,7 +32,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                    <form action="{{route('risk-officer.penilaian-risiko-store')}}" method="POST">
+                    <form action="{{route('risk-owner.penilaian-risiko-store')}}" method="POST">
                         @csrf 
                         <input type="hidden" name="tahun" value="{{ $tahun }}" required style="display: none;">
                         <input type="hidden" name="id_responden" value="{{ $id_responden }}" required style="display: none;">
