@@ -36,6 +36,7 @@ class RiskHeader extends Model
 	protected $casts = [
 		'id_user' => 'int',
 		'status_h' => 'int',
+		'status_h_indhan' => 'int'
 	];
 
 	protected $dates = [
@@ -51,7 +52,8 @@ class RiskHeader extends Model
 		'penyusun',
 		'pemeriksa',
 		'lampiran',
-		'status_h'
+		'status_h',
+		'status_h_indhan'
 	];
 
 	public function risk_detail()

@@ -10,7 +10,6 @@ use \App\Http\Controllers\Admin\{
     SumberRisikoIndhanController,
 };
 
-
 Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
 //   Route::get('/notifications/mark-as-read', [NotificationsController::class, 'notifAdminMark'])->name('notifications.mark-as-read');
   Route::get('/user', [UserController::class, 'index'])->name('user');
@@ -39,7 +38,12 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('search-risk-header', [RiskRegisterIndhanController::class, 'searchRiskHeader'])->name('search-risk-header');
   Route::get('all-risk-header', [RiskRegisterIndhanController::class, 'allRiskHeader'])->name('all-risk-header');
   Route::get('detail-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'show'])->name('detail-risk-register');
-  Route::get('print-risk-register-indhan', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register');
-  Route::post('approval-risk-register-indhan', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register');
+  Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register');
+  Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register');
+  Route::post('risk-detail-korporate/{id}', [RiskRegisterIndhanController::class, 'korporate'])->name('korporate');
+  Route::post('risk-detail-unkorporate/{id}', [RiskRegisterIndhanController::class, 'unKorporate'])->name('unkorporate');
+  Route::post('risk-detail-mitigation/{id}', [RiskRegisterIndhanController::class, 'mitigation'])->name('mitigation');
+  Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterIndhanController::class, 'notMitigation'])->name('not-mitigation');
+  Route::delete('risk-detail-delete/{id}', [RiskRegisterIndhanController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
 });
 

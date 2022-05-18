@@ -55,7 +55,7 @@
               <table class="display" id="basic-1">
                 <thead>
                   <tr>
-                    <th>No.</th>
+                    <th>No</th>
                     <th>Tahun</th>
                     <th>Instansi</th>
                     <th>Tanggal</th>
@@ -73,7 +73,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
                     <td>{{ $d->instansi }}</td>
-                    <td>{{ date('d M Y (H:i)', strtotime($d->tanggal))  }}</td>
+                    <td>{{ date('d M Y (H:i)', strtotime($d->tanggal)) }}</td>
                     <td>{{ $d->target }}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
@@ -85,9 +85,11 @@
                       <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
-                      <a href="{{ route('admin.approval-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-warning d-flex align-items-center">
-                        <i data-feather="check-circle" class="me-2 small-icon"></i> Approval
-                      </a>
+                      <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
+                          @csrf
+                          <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
+                        <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
+                      </form>
                     </td>
                   </tr>
                   @endforeach
