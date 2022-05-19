@@ -2,6 +2,7 @@
 
 namespace App\Abstracts;
 
+use App\Models\DefendidPengukur;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -41,43 +42,54 @@ class AbsDataMaster
     }
 
     public static function user_store($request, $id = null){
-        // dd($request);
+        $params = [
+            'company_id' => $request->company_id,
+            'name' => $request->name,
+            'username' => $request->username,
+            'status_user' => 0,
+            'is_risk_officer' => $request->is_risk_officer ?? 0,
+            'is_admin' => $request->is_admin ?? 0,
+            'is_penilai' => $request->is_penilai ?? 0,
+            'is_penilai_indhan' => $request->is_penilai_indhan ?? 0,
+            'is_risk_owner' => $request->is_risk_owner ?? 0,
+            'is_assessment' => $request->melakukan_penilaian ?? 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ];
+
+        if($request->filled('password')){
+            $params['password'] = Hash::make($request->password);
+        }
+
+        DB::beginTransaction();
         if($id == null){
-            DefendidUser::insert([
-                'company_id' => $request->company_id,
-                'name' => $request->name,
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
-                'status_user' => 0,
-                'is_risk_officer' => $request->is_risk_officer ?? 0,
-                'is_admin' => $request->is_admin ?? 0,
-                'is_penilai' => $request->is_penilai ?? 0,
-                'is_penilai_indhan' => $request->is_penilai_indhan ?? 0,
-                'is_risk_owner' => $request->is_risk_owner ?? 0,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
+            $id_user = DefendidUser::insertGetId($params);
+            if($request->melakukan_penilaian == 1){
+                DefendidPengukur::insert([
+                    'company_id' => $request->company_id,
+                    'id_user' => $id_user,
+                    'jabatan' => $request->jabatan,
+                    'nip' => $request->nip,
+                    'nama' => $request->name,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            }
         }
         else{
-            $params = [
-                'company_id' => $request->company_id,
-                'name' => $request->name,
-                'username' => $request->username,
-                'status_user' => 0,
-                'is_risk_officer' => $request->is_risk_officer ?? 0,
-                'is_admin' => $request->is_admin ?? 0,
-                'is_penilai' => $request->is_penilai ?? 0,
-                'is_penilai_indhan' => $request->is_penilai_indhan ?? 0,
-                'is_risk_owner' => $request->is_risk_owner ?? 0,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
-
-            if($request->filled('password')){
-                $params['password'] = Hash::make($request->password);
-            }
             DefendidUser::where('id_user', $id)->update($params);
+            if($request->melakukan_penilaian == 1){
+                DefendidPengukur::where('id_user', $id)->update([
+                    'company_id' => $request->company_id,
+                    'id_user' => $id,
+                    'jabatan' => $request->jabatan,
+                    'nip' => $request->nip,
+                    'nama' => $request->name,
+                    'updated_at' => Carbon::now()
+                ]);
+            }
         }
+        DB::commit();
 
         $status = 200;
 
@@ -102,8 +114,11 @@ class AbsDataMaster
 
     public static function get_user($id)
     {
-        $user = DefendidUser::findOrFail($id);
-        $msg = ['data' => $user, 'status' => 200];
+        $user = DefendidUser::where('id_user', $id)->get();
+        $pengukur = DefendidPengukur::where('id_user', $id)->get();
+
+        $data = $user->merge($pengukur);
+        $msg = ['data' => $data, 'status' => 200];
 
         return $msg;
     }

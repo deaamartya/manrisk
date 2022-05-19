@@ -24,11 +24,15 @@ class UserController extends Controller
         $req = [
             'company_id' => 'required',
             'username' => 'required',
+            'nip' => 'required_if:melakukan_penilaian,1',
+            'jabatan' => 'required_if:melakukan_penilaian,1',
         ];
 
         $msg = [
             'company_id.required' => 'Perusahaan tidak boleh kosong',
-            'username.required' => 'Nama user tidak boleh kosong'
+            'username.required' => 'Nama user tidak boleh kosong',
+            'nip.required_if' => 'Jabatan tidak boleh kosong jika melakukan penilaian true',
+            'jabatan.required_if' => 'Jabatan tidak boleh kosong jika melakukan penilaian true'
         ];
 
         $request->validate($req, $msg);

@@ -1,12 +1,12 @@
 @extends('layouts.user.table')
-@section('title', 'Data Master | Resiko')
+@section('title', 'Data Master | Risiko')
 
 @section('breadcrumb-title')
-<h3>Resiko</h3>
+<h3>Risiko</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Resiko</li>
+<li class="breadcrumb-item active">Risiko</li>
 @endsection
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <button class="btn btn-primary" type="button" id="tambah_resiko"><i class="fa fa-plus"></i> Tambah Resiko</button>
+                    <button class="btn btn-primary" type="button" id="tambah_risiko"><i class="fa fa-plus"></i> Tambah Risiko</button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -91,7 +91,7 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form method="POST" action="{{ route('admin.resiko-delete') }}">
+            <form method="POST" action="{{ route('admin.risiko-delete') }}">
                 @csrf
                 Apakah Anda yakin ingin menghapus resiko <b id="nama_resiko"></b> ?
                 <br>
@@ -112,5 +112,5 @@
     <script>
         const APP_URL = {!! json_encode(url('/')) !!}
     </script>
-    <script type="text/javascript" src="{{asset('assets/js/custom/data_master_resiko.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/custom/data_master_risiko.js')}}"></script>
 @endsection
