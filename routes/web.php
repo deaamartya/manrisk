@@ -10,7 +10,7 @@ use \App\Http\Controllers\Auth\{
 };
 use App\Http\Controllers\GlobalController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
