@@ -43,15 +43,15 @@
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
                 <h6>Status</h6>
-                @if($headers->status_h == 1)
+                @if($headers->status_h == 0)
                 <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
-                @elseif($headers->status_h == 2)
+                @elseif($headers->status_h == 1)
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
                 @endif
 
-                @if($headers->status_h_indhan == 1)
+                @if($headers->status_h_indhan == 0)
                 <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
-                @elseif($headers->status_h_indhan == 2)
+                @elseif($headers->status_h_indhan == 1)
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
                 @endif
               </div>

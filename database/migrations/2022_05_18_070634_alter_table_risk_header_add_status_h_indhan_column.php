@@ -14,7 +14,7 @@ class AlterTableRiskHeaderAddStatusHIndhanColumn extends Migration
     public function up()
     {
         Schema::table('risk_header', function (Blueprint $table) {
-            $table->integer('status_h_indhan')->after('status_h')->default(1);
+            $table->integer('status_h_indhan')->after('status_h')->default(0);
         });
     }
 

@@ -67,7 +67,7 @@ class RiskRegisterIndhanController extends Controller
     {
         $risk_header = RiskHeader::where('id_riskh', '=', $id)->first();
         $risk_header->update([
-            'status_h_indhan' => 2
+            'status_h_indhan' => 1
         ]);
         // dd($risk_header);
         return Redirect::back()->with(['success-swal' => 'Risk Header berhasil disetujui.']);
