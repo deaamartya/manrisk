@@ -33,5 +33,15 @@ class GlobalController extends Controller
         else{
             return route('login');
         }
+
+    }
+    public function forum_detail()
+    {
+        if(Auth::check()){
+            return view('forum-detail');
+        }
+        else{
+            return route('login');
+        }
     }
 }
