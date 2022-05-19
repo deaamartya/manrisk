@@ -6,6 +6,13 @@
             font-weight: bold;
             font-size: 120%;
         }
+        .card-forum {
+            cursor: pointer;
+            border-radius: 0px 25px 25px 25px;
+        }
+        .card:hover {
+            background-color: lightgrey;
+        }
         .body-form {
             font-size: 110%;
         }
@@ -44,129 +51,121 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="row">
-                    <div class="card" id="card_1">
-                        <div class="card-body">
-                            <div class="forum-action">
-                                <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-trash" style="cursor: pointer"></i>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between">
-                                <p class="subject">Subject Subject Subject Subject Subject Subject </p>
-                            </div>
-                            <p class="body-forum">content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                            </p>
-                            <div>
-                                <small>by Admin 15/05/2022 23:48:10</small>&nbsp;<i class="fa fa-comments text-comment" id="comment_1" style="cursor: pointer"> comment</i>&nbsp;<span class="badge rounded-pill badge-info">4</span>
-                            </div>
-                            <div class="body-comment" id="body_comment_1">
-                                <hr>
-                                <textarea name="comment" id="formComment" class="form-control" placeholder="Komentar" rows="2"></textarea>
-                                <br>
-                                <button type="button" class="btn btn-sm btn-secondary">Kirim</button>
-                                <hr>
-                                <p>comment comment comment comment comment comment comment comment comment comment comment.</p>
-                                <small>by Admin 15/05/2022 23:48:10 | <span class="hapus-comment">Hapus</span></small>
+                    <div class="col">
+                        <div class="btn-group btn-group-square" role="group" aria-label="Basic example">
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-pencil" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-eye-slash" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-trash" style="cursor: pointer"></i></button>
+                        </div>
+                        <div class="card card-forum" id="card_1">
+                            <div class="card-body">
+                                {{-- <div class="forum-action">
+                                    <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-trash" style="cursor: pointer"></i>
+                                </div>
+                                <br> --}}
+                                <div class="d-flex justify-content-between">
+                                    <p class="subject">Subject Subject Subject Subject Subject Subject </p>
+                                </div>
+                                <p class="body-forum">content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                </p>
+                                <div>
+                                    <small>by Admin 15/05/2022 23:48:10</small>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="forum-action">
-                                <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-trash" style="cursor: pointer"></i>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between">
-                                <p class="subject">Subject Subject Subject Subject Subject Subject </p>
-                            </div>
-                            <p class="body-forum">content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                            </p>
-                            <div>
-                                <small>by Admin 15/05/2022 23:48:10</small>&nbsp;<i class="fa fa-comments text-comment" style="cursor: pointer"> comment</i>&nbsp;<span class="badge rounded-pill badge-info">4</span>
-                            </div>
-                            <div class="body-comment">
-                                <hr>
-                                <textarea name="comment" id="formComment" class="form-control" placeholder="Komentar" rows="2"></textarea>
-                                <br>
-                                <button type="button" class="btn btn-sm btn-secondary">Kirim</button>
-                                <hr>
-                                <p>comment comment comment comment comment comment comment comment comment comment comment.</p>
-                                <small>by Admin 15/05/2022 23:48:10 | <span class="hapus-comment">Hapus</span></small>
+                    <div class="col">
+                        <div class="btn-group btn-group-square" role="group" aria-label="Basic example">
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-pencil" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-eye-slash" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-trash" style="cursor: pointer"></i></button>
+                        </div>
+                        <div class="card card-forum">
+                            <div class="card-body">
+                                {{-- <div class="forum-action">
+                                    <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-trash" style="cursor: pointer"></i>
+                                </div>
+                                <br> --}}
+                                <div class="d-flex justify-content-between">
+                                    <p class="subject">Subject Subject Subject Subject Subject Subject </p>
+                                </div>
+                                <p class="body-forum">content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                </p>
+                                <div>
+                                    <small>by Admin 15/05/2022 23:48:10</small>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="forum-action">
-                                <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-trash" style="cursor: pointer"></i>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between">
-                                <p class="subject">Subject Subject Subject Subject Subject Subject </p>
-                            </div>
-                            <p class="body-forum">content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                            </p>
-                            <div>
-                                <small>by Admin 15/05/2022 23:48:10</small>&nbsp;<i class="fa fa-comments text-comment" style="cursor: pointer"> comment</i>&nbsp;<span class="badge rounded-pill badge-info">4</span>
-                            </div>
-                            <div class="body-comment">
-                                <hr>
-                                <textarea name="comment" id="formComment" class="form-control" placeholder="Komentar" rows="2"></textarea>
-                                <br>
-                                <button type="button" class="btn btn-sm btn-secondary">Kirim</button>
-                                <hr>
-                                <p>comment comment comment comment comment comment comment comment comment comment comment.</p>
-                                <small>by Admin 15/05/2022 23:48:10 | <span class="hapus-comment">Hapus</span></small>
+                    <div class="col">
+                        <div class="btn-group btn-group-square" role="group" aria-label="Basic example">
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-pencil" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-eye-slash" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-trash" style="cursor: pointer"></i></button>
+                        </div>
+                        <div class="card card-forum">
+                            <div class="card-body">
+                                {{-- <div class="forum-action">
+                                    <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-trash" style="cursor: pointer"></i>
+                                </div>
+                                <br> --}}
+                                <div class="d-flex justify-content-between">
+                                    <p class="subject">Subject Subject Subject Subject Subject Subject </p>
+                                </div>
+                                <p class="body-forum">content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                </p>
+                                <div>
+                                    <small>by Admin 15/05/2022 23:48:10</small>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="forum-action">
-                                <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
-                                <i class="fa fa-trash" style="cursor: pointer"></i>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-between">
-                                <p class="subject">Subject Subject Subject Subject Subject Subject </p>
-                            </div>
-                            <p class="body-forum">content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                                content content content content content content content content content content content
-                            </p>
-                            <div>
-                                <small>by Admin 15/05/2022 23:48:10</small>&nbsp;<i class="fa fa-comments text-comment" style="cursor: pointer"> comment</i>&nbsp;<span class="badge rounded-pill badge-info">4</span>
-                            </div>
-                            <div class="body-comment">
-                                <hr>
-                                <textarea name="comment" id="formComment" class="form-control" placeholder="Komentar" rows="2"></textarea>
-                                <br>
-                                <button type="button" class="btn btn-sm btn-secondary">Kirim</button>
-                                <hr>
-                                <p>comment comment comment comment comment comment comment comment comment comment comment.</p>
-                                <small>by Admin 15/05/2022 23:48:10 | <span class="hapus-comment">Hapus</span></small>
+                    <div class="col">
+                        <div class="btn-group btn-group-square" role="group" aria-label="Basic example">
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-pencil" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-eye-slash" style="cursor: pointer"></i></button>
+                            <button class="btn btn-light" type="button" data-bs-original-title="" title=""><i class="fa fa-trash" style="cursor: pointer"></i></button>
+                        </div>
+                        <div class="card card-forum">
+                            <div class="card-body">
+                                {{-- <div class="forum-action">
+                                    <i class="fa fa-pencil" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-eye-slash" style="cursor: pointer"></i>&nbsp;
+                                    <i class="fa fa-trash" style="cursor: pointer"></i>
+                                </div>
+                                <br> --}}
+                                <div class="d-flex justify-content-between">
+                                    <p class="subject">Subject Subject Subject Subject Subject Subject </p>
+                                </div>
+                                <p class="body-forum">content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                    content content content content content content content content content content content
+                                </p>
+                                <div>
+                                    <small>by Admin 15/05/2022 23:48:10</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -241,15 +240,9 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('.card .text-comment').on('click', function(){
-                let id = $(this).attr('id').slice(8)
-                let x = document.getElementById('body_comment_'+id)
-                if (getComputedStyle(x, "").display === "none") {
-                    x.style.display = "block"
-                }
-                else{
-                    x.style.display = "none"
-                }
+            $('.card').on('click', function(){
+                let id = $(this).attr('id')
+                location.href = APP_URL+"/forum/"+id
             })
         })
     </script>
