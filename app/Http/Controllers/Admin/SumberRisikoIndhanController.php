@@ -13,7 +13,7 @@ class SumberRisikoIndhanController extends Controller
 {
     public function index()
     {
-      $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->orderBy('company_code')->get();
+      $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->groupBy('defendid_user.company_id')->orderBy('company_code')->get();
       $sumber_risiko = null;
       $perusahaan_filter = null;
       return view('admin.sumber-risiko-indhan', compact('perusahaan','sumber_risiko', 'perusahaan_filter'));
@@ -33,7 +33,7 @@ class SumberRisikoIndhanController extends Controller
                     ->orderBy('s_risiko.id_s_risiko')
                     ->get();
         $perusahaan_filter = $request->id_user;
-        $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->orderBy('company_code')->get();
+        $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->groupBy('defendid_user.company_id')->orderBy('company_code')->get();
         return view('admin.sumber-risiko-indhan', compact('perusahaan','sumber_risiko', 'perusahaan_filter'));
     }
 
