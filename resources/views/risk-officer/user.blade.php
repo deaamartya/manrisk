@@ -147,6 +147,26 @@
                         <label for="">Penilai Indhan</label>
                     </div>
                 </div>
+                <div class="row melakukan_penilaian">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Melakukan Penilaian?</label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="hidden" name="melakukan_penilaian" id="formMelakukanPenilaianHidden">
+                        <input type="checkbox" name="melakukan_penilaian" value="0" id="formMelakukanPenilaian">
+                        <label for="">No</label>
+                    </div>
+                </div>
+                <div class="row mb-3 nip">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">NIP <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="nip" class="form-control" id="formNip">
+                    </div>
+                </div>
+                <div class="row mb-3 jabatan">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Jabatan <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="jabatan" class="form-control" id="formJabatan">
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
             <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>

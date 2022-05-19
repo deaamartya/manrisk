@@ -7,7 +7,7 @@ use App\Models\Risk;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-class ResikoController extends Controller
+class RisikoController extends Controller
 {
     public function index()
     {

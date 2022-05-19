@@ -44,9 +44,9 @@
 						</a>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.resiko' ? 'active' : '' }}" href="{{route('admin.resiko')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risiko' ? 'active' : '' }}" href="{{route('admin.risiko')}}">
 							<i data-feather="list"></i>
-							<span>Resiko</span>
+							<span>Risiko</span>
 						</a>
 					</li>
 					<li class="sidebar-list">

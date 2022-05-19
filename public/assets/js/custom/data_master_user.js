@@ -73,10 +73,15 @@ $(document).ready(function(){
         }
         else if(user.is_risk_officer === true){
             $('.is_admin').hide()
+            $('.is_risk_officer').hide()
         }
 
         $('#formPassword').attr('required', 'required')
         $('#infoPassword').hide()
+        $('.nip').hide()
+        $('.jabatan').hide()
+        $('#formMelakukanPenilaian').removeAttr('disabled')
+        $('.melakukan_penilaian div label').html('No')
 
         $('#tambahUser').modal('show')
     })
@@ -114,44 +119,60 @@ $(document).ready(function(){
             data: {},
             success: function (results) {
                 $('#formPerusahaan').find('option:selected').removeAttr('selected')
-                $('#formName').val(results.data.name)
-                $('#formUsername').val(results.data.username)
-                $('#formPerusahaan option#option'+results.data.company_id).attr('selected', 'selected').trigger('change')
-                if(results.data.is_admin == 1){
+                $('#formName').val(results.data[0].name)
+                $('#formUsername').val(results.data[0].username)
+                $('#formPerusahaan option#option'+results.data[0].company_id).attr('selected', 'selected').trigger('change')
+                if(results.data[0].is_admin == 1){
                     $('#formIsAdmin').val(1)
                     $('#formIsRiskOfficer').prop('checked', true)
                 }
                 else{
                     $('#formIsAdmin').val(0)
                 }
-                if(results.data.is_risk_officer == 1){
+                if(results.data[0].is_risk_officer == 1){
                     $('#formIsRiskOfficer').val(1)
                     $('#formIsRiskOfficer').prop('checked', true)
                 }
                 else{
                     $('#formIsRiskOfficer').val(0)
                 }
-                if(results.data.is_penilai == 1){
+                if(results.data[0].is_penilai == 1){
                     $('#formIsPenilai').val(1)
                     $('#formIsPenilai').prop('checked', true)
                 }
                 else{
                     $('#formIsPenilai').val(0)
                 }
-                if(results.data.is_penilai_indhan == 1){
+                if(results.data[0].is_penilai_indhan == 1){
                     $('#formIsPenilaiIndhan').val(1)
                     $('#formIsPenilaiIndhan').prop('checked', true)
                 }
                 else{
                     $('#formIsPenilaiIndhan').val(0)
                 }
-                if(results.data.is_risk_owner == 1){
+                if(results.data[0].is_risk_owner == 1){
                     $('#formIsRiskOwner').val(1)
                     $('#formIsRiskOwner').prop('checked', true)
                 }
                 else{
                     $('#formIsRiskOwner').val(0)
                 }
+                if(results.data[0].is_assessment == 1){
+                    $('.melakukan_penilaian div label').html('Yes')
+                    $('#formMelakukanPenilaianHidden').val(1)
+                    $('#formMelakukanPenilaian').val(1)
+                    $('#formMelakukanPenilaian').prop('checked', true)
+
+                    $('#formNip').val(results.data[1].nip)
+                    $('#formJabatan').val(results.data[1].jabatan)
+                }
+                else{
+                    $('#formMelakukanPenilaian').val(0)
+                    $('.melakukan_penilaian div label').html('No')
+                    $('.nip').hide()
+                    $('.jabatan').hide()
+                }
+                $('#formMelakukanPenilaian').attr('disabled', 'disabled')
             },
             error:function(results){
                 console.log(results);
@@ -203,6 +224,21 @@ $(document).ready(function(){
         }
         else{
             $('#formIsAdmin').val(0)
+        }
+    })
+
+    $('#formMelakukanPenilaian').on('click', function(){
+        if($('#formMelakukanPenilaian:checked').val() != undefined){
+            $('#formMelakukanPenilaian').val(1)
+            $('.nip').show()
+            $('.jabatan').show()
+            $('.melakukan_penilaian div label').html('Yes')
+        }
+        else{
+            $('#formMelakukanPenilaian').val(0)
+            $('.nip').hide()
+            $('.jabatan').hide()
+            $('.melakukan_penilaian div label').html('No')
         }
     })
 })

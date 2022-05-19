@@ -6,7 +6,7 @@ use \App\Http\Controllers\Admin\{
     UserController,
     CompaniesController,
     KonteksController,
-    ResikoController
+    RisikoController
 };
 
 
@@ -22,10 +22,10 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
     Route::post('/perusahaan/store/{id?}', [CompaniesController::class, 'store'])->name('perusahaan-store');
     Route::post('/perusahaan/delete-perusahaan', [CompaniesController::class, 'delete'])->name('perusahaan-delete');
 
-    Route::get('/resiko', [ResikoController::class, 'index'])->name('resiko');
-    Route::get('/resiko/get-resiko/{id?}', [ResikoController::class, 'get_resiko'])->name('resiko-get-resiko');
-    Route::post('/resiko/store/{id?}', [ResikoController::class, 'store'])->name('resiko-store');
-    Route::put('/resiko/delete-resiko', [ResikoController::class, 'delete'])->name('resiko-delete');
+    Route::get('/risiko', [RisikoController::class, 'index'])->name('risiko');
+    Route::get('/risiko/get-risiko/{id?}', [RisikoController::class, 'get_risiko'])->name('risiko-get-risiko');
+    Route::post('/risiko/store/{id?}', [RisikoController::class, 'store'])->name('risiko-store');
+    Route::put('/risiko/delete-risiko', [RisikoController::class, 'delete'])->name('risiko-delete');
 
     Route::get('/konteks', [KonteksController::class, 'index'])->name('konteks');
     Route::get('/konteks/get-konteks/{id}', [KonteksController::class, 'get_konteks'])->name('konteks-get-konteks');
