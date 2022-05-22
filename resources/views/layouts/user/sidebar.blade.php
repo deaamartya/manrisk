@@ -75,6 +75,12 @@
 						</a>
 					</li>
 					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.hasil-kompilasi-risiko' ? 'active' : '' }}" href="{{route('admin.hasil-kompilasi-risiko')}}">
+							<i data-feather="file"></i>
+							<span>Hasil Kompilasi Risiko</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>View All Risk</span>

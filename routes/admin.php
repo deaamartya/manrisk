@@ -5,6 +5,7 @@ use \App\Http\Controllers\Admin\{
     HomeController,
     UserController,
     CompaniesController,
+    HasilKompilasiRisikoController,
     KonteksController,
     RisikoController
 };
@@ -31,4 +32,8 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
     Route::get('/konteks/get-konteks/{id}', [KonteksController::class, 'get_konteks'])->name('konteks-get-konteks');
     Route::post('/konteks/store/{id?}', [KonteksController::class, 'store'])->name('konteks-store');
     Route::put('/konteks/delete-konteks', [KonteksController::class, 'delete'])->name('konteks-delete');
+
+    Route::get('/hasil-kompilasi-risiko', [HasilKompilasiRisikoController::class, 'index'])->name('hasil-kompilasi-risiko');
+    Route::get('/responden_datatable', [HasilKompilasiRisikoController::class, 'responden_datatable']);
+    Route::get('/sumber_risiko_datatable', [HasilKompilasiRisikoController::class, 'sumber_risiko_datatable']);
 });
