@@ -15,14 +15,14 @@ $(document).ready(function(){
         },
         columns:[
             {data:null,name:null},
-            {data:"nama",name:"nama"},
-            {data:"created_at",name:"created_at"},
+            {data:"nama_responden",name:"nama_responden"},
+            {data:"tgl_penilaian",name:"tgl_penilaian"},
             {
                 data: "",
                 className: "text-center",
                 render: function ( data, type, row ) {
                     let html = ''
-                    html += '<button type="button" class="btn btn-danger delete-responden" id="'+row.id_responden+'">Hapus</button>'
+                    html += '<button type="button" class="btn btn-danger delete-responden" id="'+row.id_p+'_'+row.nama_responden+'">Hapus</button>'
 
                     return html
                 }
@@ -93,5 +93,13 @@ $(document).ready(function(){
     $('#cari').on('click', function(){
         table_responden.ajax.reload()
         table_sumber_risiko.ajax.reload()
+    })
+
+    $('#responden_table tbody').on('click', '.delete-responden', function(){
+        let temp = $(this).attr('id').split('_')
+
+        $('#nama-responden').html(temp[1])
+        $('#form-delete-responden').attr('action', APP_URL+'/admin/delete-responden/'+temp[0])
+        $('#modalDeleteResponden').modal('show')
     })
 })

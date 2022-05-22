@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengukuran;
 use App\Models\Perusahaan;
 use App\Models\Responden;
 use Illuminate\Http\Request;
@@ -22,12 +23,17 @@ class HasilKompilasiRisikoController extends Controller
     {
         $wr = "1=1";
         if($request->filled('company_id')){
-            $wr .= " AND company_id = ".$request->company_id;
+            $wr .= " AND du.company_id = ".$request->company_id;
         }
         if($request->filled('tahun')){
-            $wr .= " AND YEAR(created_at) = ".$request->tahun;
+            $wr .= " AND YEAR(p.tgl_penilaian) = ".$request->tahun;
         }
-        $data = DB::table('defendid_pengukur')->whereRaw($wr)->get();
+        $data = DB::table('pengukuran as p')
+        ->join('s_risiko as sr', 'sr.id_s_risiko', 'p.id_s_risiko')
+        ->leftJoin('defendid_user as du', 'du.id_user', 'sr.id_user')
+        ->whereRaw($wr)
+        ->whereNull('p.deleted_at')
+        ->get();
 
         return DataTables::of($data)->make(true);
     }
@@ -50,9 +56,17 @@ class HasilKompilasiRisikoController extends Controller
         ->leftJoin('defendid_user as du', 'du.id_user', 'C.id_user')
         ->leftJoin('perusahaan as p', 'p.company_id', 'du.company_id')
         ->whereRaw($wr)
+        ->whereNull('A.deleted_at')
         ->groupBy('B.id_s_risiko')
         ->get();
 
         return DataTables::of($data)->make(true);
+    }
+
+    public function delete_responden($id)
+    {
+        Pengukuran::where('id_p', $id)->delete();
+
+        return back()->with(['success-swal' => 'Responden berhasil dihapus!']);
     }
 }

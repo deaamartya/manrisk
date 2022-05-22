@@ -1,5 +1,12 @@
 @extends('layouts.user.table')
 @section('title', 'Hasil Kompilasi Risiko')
+{{-- @section('style')
+    <style>
+        .js-example-basic-single {
+            display: none;
+        }
+    </style>
+@endsection --}}
 
 @section('breadcrumb-title')
 <h3>Hasil Kompilasi Risiko</h3>
@@ -20,7 +27,7 @@
                             <div class="col-sm-4">
                                 {{-- <label class="col-md-3 col-sm-3 col-xs-12">Divisi</label> --}}
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <select class="js-example-basic-single col-sm-12" name="company_id" id="formPerusahaan">
+                                    <select class="js-example-basic-single" name="company_id" id="formPerusahaan">
                                         <option selected disabled>Pilih Perusahaan..</option>
                                         @foreach($companies as $c)
                                             <option value="{{ $c->company_id }}">{{ $c->company_code }} - {{ $c->instansi }}</option>
@@ -101,6 +108,27 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDeleteResponden" tabindex="-1" role="dialog" aria-labelledby="modalDeleteResponden">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Delete Responden</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form method="POST" action="" id="form-delete-responden">
+                @csrf
+                Apakah Anda yakin ingin menghapus responden <b id="nama-responden"></b> ?
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="submit">Ya</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('custom-script')
