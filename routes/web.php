@@ -18,7 +18,11 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('get_perusahaan', [GlobalController::class, 'get_perusahaan']);
 Route::get('forum', [GlobalController::class, 'forum'])->name('forum');
-Route::get('forum/card_1', [GlobalController::class, 'forum_detail'])->name('forum_detail');
+Route::get('get-forum/{id}', [GlobalController::class, 'get_forum'])->name('get_forum');
+Route::get('forum/{id}', [GlobalController::class, 'forum_detail'])->name('forum_detail');
+Route::post('forum/store/{id?}', [GlobalController::class, 'forum_store'])->name('forum-store');
+Route::post('forum/delete/{id}', [GlobalController::class, 'forum_delete'])->name('forum-delete');
+Route::post('forum-detail/store/{id}', [GlobalController::class, 'forum_detail_store'])->name('forum-detail-store');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
