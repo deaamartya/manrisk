@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->mapPenilaiRoutes();
         $this->mapAdminRoutes();
         $this->mapPenilaiIndhanRoutes();
-        // $this->mapRiskOwnerRoutes();
+        $this->mapRiskOwnerRoutes();
         $this->mapWebRoutes();
     }
 
@@ -42,7 +42,6 @@ class AppServiceProvider extends ServiceProvider
     protected function mapRiskOfficerRoutes()
     {
         Route::middleware('web')
-            // ->prefix('risk-officer')
             ->namespace($this->namespace)
             ->group(base_path('routes/risk-officer.php'));
 
@@ -58,7 +57,6 @@ class AppServiceProvider extends ServiceProvider
     protected function mapRiskOwnerRoutes()
     {
         Route::middleware('web')
-            // ->prefix('penilai-indhan')
             ->namespace($this->namespace)
             ->group(base_path('routes/risk-owner.php'));
     }
@@ -70,5 +68,11 @@ class AppServiceProvider extends ServiceProvider
             ->group(base_path('routes/penilai.php'));
     }
 
+    protected function mapPenilaiIndhanRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/penilai-indhan.php'));
+    }
     
 }

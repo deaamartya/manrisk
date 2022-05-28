@@ -133,6 +133,14 @@
 							<span>Form</span>
 						</a>
 					</li>
+					@if(Auth::user()->is_risk_owner)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
+							<i data-feather="list"></i>
+							<span>View All Risk</span>
+						</a>
+					</li>
+					@endif
 				</ul>
 			</div>
 		</nav>
