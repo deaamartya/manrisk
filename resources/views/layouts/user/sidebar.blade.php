@@ -76,12 +76,14 @@
 							<span>Pengukuran Risiko</span>
 						</a>
 					</li>
+					@if(Auth::user()->is_penilai_indhan == 1)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
 							<i data-feather="edit"></i>
 							<span>Pengukuran Risiko Indhan</span>
 						</a>
 					</li>
+					@endif
 					{{--<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
