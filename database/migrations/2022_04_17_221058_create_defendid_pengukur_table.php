@@ -21,6 +21,7 @@ class CreateDefendidPengukurTable extends Migration
             $table->string('nip')->nullable();
             $table->string('nama')->nullable();
             $table->integer('status_pengukur')->default(0);
+            $table->integer('jenis')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
