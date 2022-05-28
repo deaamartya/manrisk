@@ -7,6 +7,8 @@
     <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
+    {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('assets/images/logo/logo_company/logo2.png')}}" type="image/x-icon">
     <link rel="shortcut icon" href="{{asset('assets/images/logo/logo_company/logo2.png')}}" type="image/x-icon">
     <title>Manrisk - Indhan</title>
@@ -31,7 +33,7 @@
         @include('layouts.user.sidebar')
         <!-- Page Sidebar Ends-->
         <div class="page-body">
-          <div class="container-fluid">        
+          <div class="container-fluid">
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
@@ -46,7 +48,7 @@
               </div>
             </div>
             @if(Session::has('created-alert') || Session::has('updated-alert') || Session::has('deleted-alert') || Session::has('error-alert'))
-            <div class="alert 
+            <div class="alert
               @if(Session::has('created-alert') || Session::has('updated-alert'))
               alert-success
               @elseif(Session::has('deleted-alert'))
@@ -71,7 +73,7 @@
           <!-- Container-fluid Ends-->
         </div>
         <!-- footer start-->
-        @include('layouts.user.footer') 
+        @include('layouts.user.footer')
       </div>
     </div>
     @if(Session::has('success-swal') || Session::has('warning-swal') || Session::has('error-swal'))
@@ -92,9 +94,9 @@
         swal("Oops!", "{{ Session::get('error-swal') }}", "error");
       </script>
       @endif
-    @endif
+    @endif 
     <!-- latest jquery-->
-    @include('layouts.user.script')  
+    @include('layouts.user.script')
     <!-- Plugin used-->
     <script type="text/javascript">
       if ($(".page-wrapper").hasClass("horizontal-wrapper")) {

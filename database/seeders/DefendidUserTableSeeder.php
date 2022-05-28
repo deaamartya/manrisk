@@ -14,67 +14,73 @@ class DefendidUserTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('defendid_user')->delete();
-        
+
         \DB::table('defendid_user')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id_user' => 1,
                 'company_id' => 1,
+                'name' => 'ptpal',
                 'username' => 'ptpal',
                 'password' => bcrypt('ptpal'),
                 'status_user' => 0,
                 'is_risk_officer' => 1,
             ),
-            1 => 
+            1 =>
             array (
                 'id_user' => 2,
                 'company_id' => 2,
+                'name' => 'ptlen',
                 'username' => 'ptlen',
                 'password' => bcrypt('ptlen'),
                 'status_user' => 0,
                 'is_risk_officer' => 1,
             ),
-            2 => 
+            2 =>
             array (
                 'id_user' => 3,
                 'company_id' => 3,
+                'name' => 'ptdi',
                 'username' => 'ptdi',
                 'password' => bcrypt('ptdi'),
                 'status_user' => 0,
                 'is_risk_officer' => 1,
             ),
-            3 => 
+            3 =>
             array (
                 'id_user' => 4,
                 'company_id' => 4,
+                'name' => 'ptdahana',
                 'username' => 'ptdahana',
                 'password' => bcrypt('ptdahana'),
                 'status_user' => 0,
                 'is_risk_officer' => 1,
             ),
-            4 => 
+            4 =>
             array (
                 'id_user' => 5,
                 'company_id' => 5,
+                'name' => 'ptpindad',
                 'username' => 'ptpindad',
                 'password' => bcrypt('ptpindad'),
                 'status_user' => 0,
                 'is_risk_officer' => 1,
             ),
-            5 => 
+            5 =>
             array (
                 'id_user' => 6,
                 'company_id' => 6,
+                'name' => 'inhan',
                 'username' => 'inhan',
                 'password' => bcrypt('inhan'),
                 'status_user' => 0,
                 'is_admin' => 1,
             ),
         ));
-        
-        
+
+
     }
 }

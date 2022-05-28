@@ -4,8 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37b08c7070769a544b2acbe0fd9a0690",
-    "packages": [{
+    "content-hash": "0cfcde3d90d02ff37982d3eb2954dc3c",
+    "packages": [
+        {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
             "source": {
@@ -2985,7 +2986,7 @@
             ],
             "authors": [{
                 "name": "Raphael Schweikert"
-            }],
+            }]
             "description": "Parser for CSS Files written in PHP",
             "homepage": "https://www.sabberworm.com/blog/2010/6/10/php-css-parser",
             "keywords": [
