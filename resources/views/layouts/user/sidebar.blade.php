@@ -32,11 +32,13 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.user' ? 'active' : Route::currentRouteName()=='risk-officer.user' ? 'active' : '' }}" href="{{Auth::user()->is_admin===true ? route('admin.user') : route('risk-officer.user')}}">
+						<a class="sidebar-link sidebar-title link-nav 
+						{{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
 							<i data-feather="user"></i>
 							<span>User</span>
 						</a>
 					</li>
+					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">
 							<i data-feather="list"></i>
@@ -56,6 +58,7 @@
 						</a>
 					</li>
 					<hr>
+					@endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
 						@if(Auth::user()->is_risk_officer == 1)
@@ -114,23 +117,11 @@
 							<span>Kuesioner</span>
 						</a>
 					</li>
-                    <hr>
+					<hr>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">
 							<i data-feather="list"></i>
 							<span>Forum</span>
-						</a>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.table' ? 'active' : '' }}" href="{{route('risk-officer.table')}}">
-							<i data-feather="list"></i>
-							<span>Table</span>
-						</a>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.form' ? 'active' : '' }}" href="{{route('risk-officer.form')}}">
-							<i data-feather="file-text"></i>
-							<span>Form</span>
 						</a>
 					</li>
 					@if(Auth::user()->is_risk_owner)

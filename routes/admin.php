@@ -6,7 +6,8 @@ use \App\Http\Controllers\Admin\{
     UserController,
     CompaniesController,
     KonteksController,
-    RisikoController
+    RisikoController,
+    SumberRisikoIndhanController,
 };
 
 
