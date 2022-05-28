@@ -35,7 +35,7 @@ class HomeController extends Controller
                 return view('risk-owner.index');
             }
             if (Auth::user()->is_penilai_indhan) {
-                return view('risk-owner.index');
+                return view('penilai-indhan.index');
             }
             if (Auth::user()->is_admin) {
                 return view('admin.index');

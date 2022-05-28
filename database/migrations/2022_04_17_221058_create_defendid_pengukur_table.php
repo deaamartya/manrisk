@@ -16,7 +16,7 @@ class CreateDefendidPengukurTable extends Migration
         Schema::create('defendid_pengukur', function (Blueprint $table) {
             $table->integer('id_pengukur', true);
             $table->string('company_id')->nullable();
-            $table->integer('jenis')->nullable();
+            // $table->integer('jenis')->nullable();
             $table->string('jabatan')->nullable();
             $table->string('nip')->nullable();
             $table->string('nama')->nullable();

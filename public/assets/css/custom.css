@@ -146,3 +146,8 @@ label {
 .hr-custom {
   margin: 4px 0;
 }
+
+.datepickers-container,
+.datepicker {
+    z-index: 1500 !important;
+}

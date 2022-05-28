@@ -7,7 +7,6 @@ use DB;
 
 class DefendidPengukurTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -21,8 +20,8 @@ class DefendidPengukurTableSeeder extends Seeder
             0 => 
             array (
                 'id_pengukur' => 1,
-                'company_id' => 'PI',
-                'jenis' => 1,
+                'company_id' => 1,
+                // 'jenis' => 1,
                 'jabatan' => 'Risk Officer PT PAL INDONESIA',
                 'nip' => NULL,
                 'nama' => ' Risk Officer PT PAL INDONESIA',
@@ -31,15 +30,13 @@ class DefendidPengukurTableSeeder extends Seeder
             1 => 
             array (
                 'id_pengukur' => 2,
-                'company_id' => 'PI',
-                'jenis' => 1,
+                'company_id' => 1,
+                // 'jenis' => 1,
                 'jabatan' => 'Kepala Divisi TI',
                 'nip' => '105194549',
                 'nama' => 'Joko Suyono',
                 'status_pengukur' => 0,
             ),
         ));
-        
-        
     }
 }
