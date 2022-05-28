@@ -61,6 +61,12 @@
     text-decoration: none;
 }
 
+.btn-green {
+    background-color: #51bb25 !important;
+    border-color: #51bb25 !important;
+    color: white !important;
+}
+
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .logo-wrapper {
     height: 81px;
     padding: 15px 50px 15px 40px;
