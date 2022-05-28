@@ -8,6 +8,7 @@ use \App\Http\Controllers\Admin\{
     KonteksController,
     RisikoController,
     SumberRisikoIndhanController,
+    RiskRegisterIndhanController,
 };
 
 Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {

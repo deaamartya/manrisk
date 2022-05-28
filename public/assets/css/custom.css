@@ -44,13 +44,13 @@
     z-index: 1050;
 }
 
-.select2-container {
-  z-index: 1050;
-}
-
 .selection .select2-selection .select2-search__field {
     margin: 2px;
     padding-left: 8px;
+}
+
+.select2 .select2-custom .select2-container {
+    z-index: 900 !important;
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li {
@@ -105,38 +105,46 @@ label {
 }
 
 .text-red {
-  color: red;
+    color: red;
 }
 
 .btn-sm .small-icon {
-  width: auto;
-  height: 14px;
+    width: auto;
+    height: 14px;
 }
 
 .card .card-header,
 .card .card-body {
-  padding: 24px;
+    padding: 24px;
 }
 
 .btn-primary {
-  background-color: #3c88f7 !important;
-  border-color: #3c88f7 !important;
+    background-color: #3c88f7 !important;
+    border-color: #3c88f7 !important;
 }
 
 .btn-success {
-  background-color: #f54e49 !important;
-  border-color: #f54e49 !important;
+    background-color: #f54e49 !important;
+    border-color: #f54e49 !important;
+}
+
+.btn-green {
+    background-color: #51bb25 !important;
+    border-color: #51bb25 !important;
+    color: white !important;
 }
 
 .btn {
-  padding: 8px 16px;
+    padding: 8px 16px;
+    <<<<<<< HEAD=======
 }
 
 .flex-center {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .hr-custom {
-  margin: 4px 0;
+    margin: 4px 0;
+    >>>>>>>c98c1e8c058d9c8ff02955701cad077a2824d015
 }

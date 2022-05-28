@@ -28,7 +28,7 @@
                     <label>Filter Berdasarkan Tahun</label>
                   </div>
                   <div class="col-md-3">
-                    <select class="select2" name="tahun" required>
+                    <select class="select2 select2-custom" name="tahun" required>
                       <option disabled selected>Pilih Tahun</option>
                       @foreach($tahun as $t)
                         <option value="{{ $t->tahun }}" @if($tahun_filter != null && $t->tahun == $tahun_filter) selected @endif>{{ $t->tahun }}</option>
@@ -85,11 +85,13 @@
                       <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
+                      @if($d->status_h_indhan == 0)
                       <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
                           @csrf
                           <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
                         <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
                       </form>
+                      @endif
                     </td>
                   </tr>
                   @endforeach

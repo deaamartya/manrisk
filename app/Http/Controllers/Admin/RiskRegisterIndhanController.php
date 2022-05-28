@@ -94,7 +94,7 @@ class RiskRegisterIndhanController extends Controller
             'status_korporasi' => 1
         ]);
         $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Korporasi.']);
+        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi INDHAN.']);
     }
 
     public function unKorporate($id, Request $request)
@@ -104,7 +104,7 @@ class RiskRegisterIndhanController extends Controller
             'status_korporasi' => 0
         ]);
         $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Bukan Korporasi.']);
+        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Bukan INDHAN.']);
     }
 
     public function mitigation($id, Request $request)

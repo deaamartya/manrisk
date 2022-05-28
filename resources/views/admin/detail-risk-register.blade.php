@@ -65,7 +65,7 @@
                 <thead>
                   <tr>
                     <th>Id Risk</th>
-                    <th>Korporasi</th>
+                    <th>INDHAN</th>
                     <th>Mitigasi</th>                  
                     <th>Konteks Organisasi</th>
                     <th>Indikator</th>
@@ -98,8 +98,8 @@
                         <form action="{{ route('admin.korporate', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-success d-flex align-items-center">
-                            <i class="fa fa-times me-2"></i>Bukan Korporasi
+                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
+                            <i class="fa fa-times me-2"></i>Bukan INDHAN
                           </button>
                         </form>
                         @elseif($d->status_korporasi == 1)
@@ -107,7 +107,7 @@
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
                           <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
-                            <i class="fa fa-check me-2"></i> Korporasi
+                            <i class="fa fa-check me-2"></i> INDHAN
                           </button>
                         </form>
                         @endif
@@ -117,7 +117,7 @@
                         <form action="{{ route('admin.mitigation', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-success d-flex align-items-center">
+                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
                             <i class="fa fa-times me-2"></i> Tidak Mitigasi
                           </button>
                         </form>
@@ -142,7 +142,7 @@
                     <td>{{ $d->c_awal }}</td>
                     <td>
                         @if($d->r_awal <= 5)
-                          <button class="btn btn-sm btn-pill btn-success">
+                          <button class="btn btn-sm btn-pill btn-green">
                         @elseif($d->r_awal >= 6 && $d->r_awal <= 11)
                           <button class="btn btn-sm btn-pill btn-warning">
                         @else
@@ -160,7 +160,7 @@
                     <td>{{ $d->c_akhir }}</td>
                     <td>
                         @if($d->r_akhir <= 5)
-                          <button class="btn btn-sm btn-pill btn-success">
+                          <button class="btn btn-sm btn-pill btn-green">
                         @elseif($d->r_akhir>= 6 && $d->r_akhir <= 11)
                           <button class="btn btn-sm btn-pill btn-warning">
                         @else
@@ -175,7 +175,7 @@
                             Waiting
                           </button>
                         @else
-                          <button class="btn btn-sm btn-pill btn-success" title="Pantau">
+                          <button class="btn btn-sm btn-pill btn-green" title="Pantau">
                             Verified
                           </button>
                         @endif
