@@ -38,17 +38,17 @@
 						</a>
 					</li>
 					<li class="sidebar-list">
-						@if(Auth::user()->is_risk_officer)
+						@if(Auth::user()->is_risk_officer == 1)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
 						</a>
-						@elseif(Auth::user()->is_risk_owner)
+						@elseif(Auth::user()->is_risk_owner == 1)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-owner.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
 						</a>
-						@elseif(Auth::user()->is_penilai)
+						@elseif(Auth::user()->is_penilai == 1)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai.pengukuran-risiko' ? 'active' : '' }}" href="{{route('penilai.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
