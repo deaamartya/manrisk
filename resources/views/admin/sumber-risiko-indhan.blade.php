@@ -62,7 +62,7 @@
                             @if( $s->status_s_risiko == 0)
                                 <button class="btn btn-warning btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_s_risiko }}"><i class="fa fa-question"></i></button>
                             @elseif($s->status_s_risiko == 1)
-                                <button class="btn btn-success btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_s_risiko }}"><i class="fa fa-check"></i></button>
+                                <button class="btn btn-green btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_s_risiko }}"><i class="fa fa-check"></i></button>
                             @elseif($s->status_s_risiko == 2)
                                 <button class="btn btn-danger btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_s_risiko }}"><i class="fa fa-close"></i></button>
                             @endif
