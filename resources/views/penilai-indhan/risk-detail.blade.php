@@ -33,28 +33,40 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
+                <div class="col-md-4"><h6>Instansi</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">{{ $headers->perusahaan->instansi }}</div>
                 <div class="col-md-4"><h6>Tahun Risiko</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->tahun }}</div>
                 <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($headers->tanggal)) }}</div>
-                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
                 <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->penyusun }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
                 <div class="col-md-12">{{ $headers->pemeriksa }}</div>
               </div>
               <div class="col-md-6">
-                <h6>Lampiran :</h6>
-                @if($headers->lampiran == null || $headers->lampiran == '')
-                  <button class="btn btn-danger" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
-                @else
-                  <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger">
-                    <span class="flex-center">
-                      <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
-                    </span>
-                  </a>
-                @endif
+                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-3">{!! $headers->target !!}</div>
+                <div class="col-md-5 mb-2">
+                  <h6>Lampiran</h6>
+                  <hr class="hr-custom">
+                </div>
+                <div class="col-md-12 mb-3">
+                  @if($headers->lampiran == null || $headers->lampiran == '')
+                    <button class="btn btn-danger mb-3" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
+                  @else
+                    <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger mb-3">
+                      <span class="flex-center">
+                        <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
+                      </span>
+                    </a>
+                  @endif
+                </div>
+                <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">
+                  <div class="badge badge-warning">Waiting for Approval</div>
+                  <div class="badge badge-success">Approved</div>
+                </div>
               </div>
             </div>
           </div>

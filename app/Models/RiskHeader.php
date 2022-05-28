@@ -45,6 +45,7 @@ class RiskHeader extends Model
 
 	protected $fillable = [
 		'id_user',
+		'company_id',
 		'tahun',
 		'tanggal',
 		'target',
@@ -57,6 +58,11 @@ class RiskHeader extends Model
 	public function risk_detail()
 	{
 		return $this->hasMany(RiskDetail::class, 'id_riskh');
+	}
+
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
 
 	public function getMitigasiDetail() {
