@@ -63,10 +63,22 @@
 						</a>
 					</li>
 					<li class="sidebar-list">
+						@if(Auth::user()->is_risk_officer == 1)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
 						</a>
+						@elseif(Auth::user()->is_risk_owner == 1)
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-owner.pengukuran-risiko')}}">
+							<i data-feather="edit-3"></i>
+							<span>Pengukuran Risiko</span>
+						</a>
+						@elseif(Auth::user()->is_penilai == 1)
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai.pengukuran-risiko' ? 'active' : '' }}" href="{{route('penilai.pengukuran-risiko')}}">
+							<i data-feather="edit-3"></i>
+							<span>Pengukuran Risiko</span>
+						</a>
+						@endif
 					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko-indhan')}}">
@@ -74,12 +86,12 @@
 							<span>Pengukuran Risiko Indhan</span>
 						</a>
 					</li>
-					<li class="sidebar-list">
+					{{--<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>View All Risk</span>
 						</a>
-					</li>
+					</li> --}}
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.mitigasi-plan' ? 'active' : '' }}" href="{{route('risk-officer.mitigasi-plan')}}">
 							<i data-feather="sidebar"></i>

@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mapRiskOfficerRoutes();
+        $this->mapRiskOwnerRoutes();
+        $this->mapPenilaiRoutes();
         $this->mapAdminRoutes();
         $this->mapWebRoutes();
     }
@@ -50,4 +52,20 @@ class AppServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
     }
+
+    protected function mapRiskOwnerRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/risk-owner.php'));
+    }
+
+    protected function mapPenilaiRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/penilai.php'));
+    }
+
+    
 }
