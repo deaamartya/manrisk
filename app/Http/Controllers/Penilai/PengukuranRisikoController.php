@@ -18,8 +18,8 @@ class PengukuranRisikoController extends Controller
     public function index()
     {
         $user =  Auth::user()->id_user;
-        $jml_risk = Srisiko::where('id_user', $user)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
-        $data_sr = Srisiko::where('id_user', $user)->where('tahun', date('Y'))
+        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
+        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))
                             ->where('status_s_risiko', 1)->limit(1)->get();
                             
         // dd($data_sr);
@@ -74,7 +74,7 @@ class PengukuranRisikoController extends Controller
         $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
         ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
         ->join('risk as r', 'r.id_risk', 'k.id_risk')
-        ->where('s_risiko.id_user', $id_user)
+        ->where('s_risiko.company_id', Auth::user()->company_id)
         ->where('s_risiko.tahun', $tahun)
         ->where('s_risiko.status_s_risiko', 1)
         ->orderBy('s_risiko.id_s_risiko')
