@@ -33,8 +33,4 @@ class Perusahaan extends Model
 		'instansi'
 	];
 
-	public function defendid_users()
-	{
-		return $this->hasMany(DefendidUser::class, 'company_id');
-	}
 }

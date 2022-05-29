@@ -11,6 +11,7 @@
 
 @section('content')
 <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
     <!-- Zero Configuration  Starts-->
     <div class="col-sm-12">

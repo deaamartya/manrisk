@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskHeader
- * 
+ *
  * @property int $id_riskh
  * @property int $id_user
  * @property string $tahun
@@ -36,6 +36,7 @@ class RiskHeader extends Model
 	protected $casts = [
 		'id_user' => 'int',
 		'status_h' => 'int',
+		'status_h_indhan' => 'int'
 	];
 
 	protected $dates = [
@@ -51,7 +52,8 @@ class RiskHeader extends Model
 		'penyusun',
 		'pemeriksa',
 		'lampiran',
-		'status_h'
+		'status_h',
+		'status_h_indhan'
 	];
 
 	public function risk_detail()
@@ -91,5 +93,10 @@ class RiskHeader extends Model
 			->where('status_mitigasi', '=', 1)
 			->count('d.id_riskd');
 		return $jml;
+    }
+    
+	public function defendid_user()
+	{
+		return $this->hasMany(DefendidUser::class, 'id_user');
 	}
 }
