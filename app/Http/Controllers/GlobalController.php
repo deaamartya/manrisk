@@ -37,7 +37,7 @@ class GlobalController extends Controller
             ->orWhere('forum.id_user', Auth::user()->id_user)
             ->orderBy('forum.updated_at', 'desc')
             ->select('forum.id', 'forum.id_user', 'forum.subject', 'forum.body', 'forum.display', 'forum.updated_at', 'du.username')
-            ->simplePaginate(1);
+            ->simplePaginate(25);
 
             return view('forum', compact('data'));
         }
