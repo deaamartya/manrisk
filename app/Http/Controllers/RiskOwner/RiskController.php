@@ -74,39 +74,13 @@ class RiskController extends Controller
             'tahun' => $request->tahun,
             'target' => $request->target
         ]);
-        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil diubah!']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        RiskHeader::destroy($id);
-        return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil dihapus!']);
+        return redirect()->route('risk-owner.risiko.index')->with(['success-swal' => 'Risk Header berhasil diubah!']);
     }
 
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $user = Auth::user();
-        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
-        $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user'))->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
-    }
-
-    public function uploadLampiran(Request $request) {
-        $id = $request->id;
-        $riskheader = RiskHeader::where('id_riskh', '=', $id)->first();
-        $filename = $request->file('lampiran')->getClientOriginalName();
-        $folder = '/document/lampiran/';
-        $request->file('lampiran')->storeAs($folder, $filename, 'public');
-        $riskheader->update([
-            'lampiran' => $filename,
-        ]);
-        return redirect()->route('risk-officer.risiko.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
+        $pdf = PDF::loadView('risk-owner.risk-header-pdf', compact('header'))->setPaper('a4', 'landscape');
+        return $pdf->stream('Laporan Manajemen Risiko '.$header->perusahaan->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 
     public function toggleIndhan($id) {
@@ -128,10 +102,12 @@ class RiskController extends Controller
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
         if ($header->status_h === 0) {
             $header->update([
+                'pemeriksa' => Auth::user()->name,
                 'status_h' => 1,
             ]);
         } else {
             $header->update([
+                'pemeriksa' => Auth::user()->name,
                 'status_h' => 0,
             ]);
         }

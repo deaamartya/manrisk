@@ -59,7 +59,7 @@
                     <td>
                       @if($d->status_h === 0)
                       <a href="{{ route('risk-owner.risiko.approve', $d->id_riskh) }}">
-                        <button class="btn btn-sm btn-primary d-flex align-items-center">
+                        <button class="btn btn-sm btn-green d-flex align-items-center">
                           <i data-feather="check-square" class="small-icon"></i>
                         </button>
                       </a>
@@ -68,7 +68,7 @@
                       @endif
                     </td>
                     <td>
-                      <a href="{{ route('risk-officer.risiko.print', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success">
+                      <a href="{{ route('risk-owner.risiko.print', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success">
                         <i data-feather="printer" class="small-icon"></i>
                       </a>
                     </td>
