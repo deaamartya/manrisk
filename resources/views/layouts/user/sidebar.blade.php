@@ -99,6 +99,7 @@
 						</a>
 					</li>
 					@endif
+					@if(Auth::user()->is_risk_officer == 1)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
@@ -111,6 +112,7 @@
 							<span>Mitigasi Plan</span>
 						</a>
 					</li>
+					@endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.kuesioner' ? 'active' : '' }}" href="{{route('risk-officer.kuesioner')}}">
 							<i data-feather="file-text"></i>

@@ -17,8 +17,8 @@ class PengukuranRisikoController extends Controller
     public function index()
     {
         $user =  Auth::user()->id_user;
-        $jml_risk = Srisiko::where('id_user', $user)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
-        $data_sr = Srisiko::where('id_user', $user)->where('tahun', date('Y'))
+        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
+        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))
                             ->where('status_s_risiko', 1)->limit(1)->get();
                             
         // dd($data_sr);
@@ -37,7 +37,7 @@ class PengukuranRisikoController extends Controller
                 ->get();  
 
                 if(count($pengukur_risk) == 0){
-                        $arr_pengukur[] = $j;
+                    $arr_pengukur[] = $j;
                 }
                     
             }
