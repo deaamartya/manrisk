@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PengajuanMitigasi extends Model
 {
-    protected $table = 'pengajuan_mitigasi';
+	protected $table = 'pengajuan_mitigasi';
 	protected $primaryKey = 'id';
 
 	protected $casts = [
@@ -20,13 +20,22 @@ class PengajuanMitigasi extends Model
 
 	protected $fillable = [
 		'id_riskd',
+		'id_user',
+		'company_id',
 		'alasan',
+		'status',
 		'is_approved',
+		'alasan_admin',
 		'tipe_pengajuan',
 	];
 
 	public function risk_detail()
 	{
 		return $this->belongsTo(RiskDetail::class, 'id_riskd');
+	}
+
+	public function pemohon()
+	{
+		return $this->belongsTo(DefendidUser::class, 'id_user');
 	}
 }

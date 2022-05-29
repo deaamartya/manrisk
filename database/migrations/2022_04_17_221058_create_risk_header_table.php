@@ -24,7 +24,7 @@ class CreateRiskHeaderTable extends Migration
             $table->string('penyusun', 100)->nullable();
             $table->string('pemeriksa', 100)->nullable();
             $table->string('lampiran', 200)->nullable();
-            $table->integer('status_h')->nullable();
+            $table->integer('status_h')->default(0);
             // $table->integer('deleted')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\RiskOfficer;
 
+use App\Abstracts\AbsMitigasiPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
@@ -18,8 +19,7 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)
-            ->get();
+        $headers = AbsMitigasiPlan::getAllData();
         return view('risk-officer.mitigasi-plan', compact("headers"));
     }
 
@@ -31,7 +31,8 @@ class MitigasiPlanController extends Controller
      */
     public function show($id)
     {
-        $headers = RiskHeader::where('id_riskh', '=', $id)->first();
+        $headers = AbsMitigasiPlan::getDataByIdRiskh($id);
+        // dd($headers);
         return view('risk-officer.mitigasi-detail', compact("headers"));
     }
 
@@ -44,17 +45,9 @@ class MitigasiPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $data = Arr::except($request->toArray(), ['_token', 'u_file']);
-        $detail->update($data);
-        if ($request->u_file) {
-            $filename = $request->file('u_file')->getClientOriginalName();
-            $folder = '/document/lampiran-mitigasi/';
-            $request->file('u_file')->storeAs($folder, $filename, 'public');
-            $detail->update([
-                'u_file' => $filename,
-            ]);
-        }
-        return redirect()->route('risk-officer.mitigasi-plan.show', $id);
+        $query = AbsMitigasiPlan::updateRiskDetail($request, $id);
+        $id_header = $query['id_header'];
+
+        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
     }
 }

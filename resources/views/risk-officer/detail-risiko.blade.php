@@ -6,11 +6,11 @@
 @endsection
 
 @section('page-title')
-<h3>View All Risk</h3>
+<h3>Risk Register Korporasi</h3>
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">View All Risk</li>
+<li class="breadcrumb-item">Risk Register Korporasi</li>
 @endsection
 
 @section('content')
@@ -20,36 +20,56 @@
       <!-- Zero Configuration  Starts-->
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex justify-content-between">
             <div class="product-page-details">
               <h3>ID HEADER # {{ $headers->id_riskh }}</h3>
             </div>
+            <a href="{{ route('risk-officer.risiko.index') }}">
+              <button class="btn btn-sm btn-success">
+                Kembali
+              </button>
+            </a>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
+                <div class="col-md-4"><h6>Instansi</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">{{ $headers->perusahaan->instansi }}</div>
                 <div class="col-md-4"><h6>Tahun Risiko</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->tahun }}</div>
                 <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($headers->tanggal)) }}</div>
-                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
-              </div>
-              <div class="col-md-6">
                 <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->penyusun }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-3">{{ $headers->pemeriksa }}</div>
-                <h6>Lampiran :</h6>
-                @if($headers->lampiran == null || $headers->lampiran == '')
-                  <button class="btn btn-danger" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
-                @else
-                  <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger">
-                    <span class="flex-center">
-                      <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
-                    </span>
-                  </a>
-                @endif
+                <div class="col-md-12">{{ $headers->pemeriksa }}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-3">{!! $headers->target !!}</div>
+                <div class="col-md-5 mb-2">
+                  <h6>Lampiran</h6>
+                  <hr class="hr-custom">
+                </div>
+                <div class="col-md-12 mb-3">
+                  @if($headers->lampiran == null || $headers->lampiran == '')
+                    <button class="btn btn-danger mb-3" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
+                  @else
+                    <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger mb-3">
+                      <span class="flex-center">
+                        <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
+                      </span>
+                    </a>
+                  @endif
+                </div>
+                <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">
+                  @if($headers->status_h == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                  @elseif($headers->status_h == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
@@ -207,15 +227,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L">
+                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ $nilai_l }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C">
+                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ $nilai_c }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly>
+                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ $nilai_l * $nilai_c }}">
                   </div>
                 </div>
               </div>

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskHeader
- * 
+ *
  * @property int $id_riskh
  * @property int $id_user
  * @property string $tahun
@@ -36,6 +36,7 @@ class RiskHeader extends Model
 	protected $casts = [
 		'id_user' => 'int',
 		'status_h' => 'int',
+		'status_h_indhan' => 'int'
 	];
 
 	protected $dates = [
@@ -51,12 +52,19 @@ class RiskHeader extends Model
 		'penyusun',
 		'pemeriksa',
 		'lampiran',
-		'status_h'
+		'company_id',
+		'status_h',
+		'status_h_indhan'
 	];
 
 	public function risk_detail()
 	{
 		return $this->hasMany(RiskDetail::class, 'id_riskh');
+	}
+
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
 
 	public function getMitigasiDetail() {
@@ -76,20 +84,23 @@ class RiskHeader extends Model
 		return $details;
 	}
 
-	public function migrateCount()
+	public function migrateCount($id)
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.id_riskh', '=', $id)
 			->where('d.r_awal','>=', 12)
 			->whereOr('status_mitigasi', '=', 1)
 			->count('d.id_riskd');
 		return $jml;
 	}
 
-	public function doneMigrateCount()
+	public function doneMigrateCount($id)
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.id_riskh', '=', $id)
 			->where('status_mitigasi', '=', 1)
 			->count('d.id_riskd');
 		return $jml;
 	}
+
 }

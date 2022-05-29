@@ -44,8 +44,8 @@
     z-index: 1050;
 }
 
-.select2-container {
-  z-index: 1050;
+.select2-normal {
+    z-index: 2 !important;
 }
 
 .selection .select2-selection .select2-search__field {
@@ -121,30 +121,60 @@ label {
 
 .card .card-header,
 .card .card-body {
-  padding: 24px;
+    padding: 24px;
 }
 
 .btn-primary {
-  background-color: #3c88f7 !important;
-  border-color: #3c88f7 !important;
+    background-color: #3c88f7 !important;
+    border-color: #3c88f7 !important;
 }
 
 .btn-success {
-  background-color: #f54e49 !important;
-  border-color: #f54e49 !important;
+    background-color: #f54e49 !important;
+    border-color: #f54e49 !important;
+}
+
+.btn-green {
+    background-color: #51bb25 !important;
+    border-color: #51bb25 !important;
+    color: white !important;
 }
 
 .btn {
-  padding: 8px 16px;
+    padding: 8px 16px;
 }
 
 .flex-center {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .hr-custom {
-  margin: 4px 0;
+    margin: 4px 0;
+}
+
+#aksi-filter div .print{
+    float: right;
+}
+
+@media only screen and (max-width: 599px) {
+    #aksi-filter div{
+        margin-bottom: 5px;
+    }
+
+    #aksi-filter div .print{
+        float: left;
+    }
+}
+
+.datepickers-container,
+.datepicker {
+    z-index: 1500 !important;
+}
+
+.column-action {
+    display: flex;
+    gap: 8px;
 }
 
 .datepickers-container,

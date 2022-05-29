@@ -37,13 +37,13 @@
                   <td>{{ date('d M Y', strtotime($h->tanggal)) }}</td>
                   <td>{!! $h->target !!}</td>
                   <td class="text-center">
-                    <div class="btn btn-primary btn-pill btn-xs status">{{ $h->migrateCount() }}</div>
+                    <div class="btn btn-primary btn-pill btn-xs status">{{ $h->migrateCount($h->id_riskh) }}</div>
                   </td>
                   <td>
-                    <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount() }}</div>
+                    <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount($h->id_riskh) }}</div>
                   </td>
                   <td>
-                    <a href="{{ route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
+                    <a href="{{ auth()->user()->is_admin ? route('admin.approval-hasil-mitigasi.show', $h->id_riskh) : route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
                       <i class="fa fa-eye"></i> View
                     </a>
                   </td>

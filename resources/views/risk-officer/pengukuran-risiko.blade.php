@@ -31,35 +31,31 @@
                                 </tr>
                             </thead>
                         <tbody>
-                        @php
-                            $no = 1;
-                        @endphp
-                            @if(count($pengukuran) > 0)
-                                @foreach($pengukuran as $p)
-                                    <tr>
-                                        <td class="text-center">{{ $no++; }}</td>
-                                        <td>{{ $p->nama_responden }}</td>
-                                        <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
-                                        <td>{{ $p->tahun}}</td>
-                                        <td class="text-center">{{ $jml_risk }}</td>
-                                        <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
-                                    </tr>
-                                @endforeach
-                            @endif
+                        @if(count($pengukuran) > 0)
+                            @foreach($pengukuran as $p)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ $p->nama_responden }}</td>
+                                    <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
+                                    <td>{{ $p->tahun}}</td>
+                                    <td class="text-center">{{ $jml_risk }}</td>
+                                    <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
+                                </tr>
+                            @endforeach
                             @if(count($arr_pengukur) > 0)
                                 @foreach($arr_pengukur as $p)
                                     <tr>
-                                        <td class="text-center">{{ $no++; }}</td>
+                                        <td class="text-center">{{ count($pengukuran) + $loop->iteration }}</td>
                                         <td>{{ $p->jabatan }}</td>
                                         <td></td>
                                         <td></td>
                                         <td class="text-center">{{ $jml_risk }}</td>
                                         <td class="text-center">
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ $no; }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
                                         </td>
                                     </tr>
 
-                                    <div class="modal fade" id="insert_responden{{ $no; }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+                                    <div class="modal fade" id="insert_responden{{ count($pengukuran) + $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -68,7 +64,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                 <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
-                                                    @csrf    
+                                                    @csrf
                                                     <div class="row mb-3">
                                                         <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
                                                         <div class='col-md-9 col-sm-9 col-xs-12'>
@@ -89,8 +85,8 @@
                                                             <select class="form-control pull-left" name="tahun">
                                                             <?php
                                                             for ($j=0; $j < sizeof($l_tahun); $j++) {  ?>
-                                                                <option value=" {{ $l_tahun[$j]  }}"> 
-                                                                    {{ $l_tahun[$j] }} </option>  
+                                                                <option value=" {{ $l_tahun[$j]  }}">
+                                                                    {{ $l_tahun[$j] }} </option>
                                                             <?php }
                                                             ?>
                                                             </select>
@@ -107,6 +103,7 @@
                                     </div>
                                 @endforeach
                             @endif
+                        @endif
                             </tbody>
                         </table>
                     </div>
@@ -115,7 +112,7 @@
                     <button class="btn btn-secondary mb-2" type="button" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>
                     <a href="{{route('risk-officer.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
                         <i class="fa fa-print"></i> Cetak Penilaian
-                    </a> 
+                    </a>
                 </div>
             </div>
         </div>
@@ -171,7 +168,7 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 
 <div class="modal fade" id="daftarKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
@@ -189,5 +186,5 @@
     </div>
 
 
-            
+
 @endsection
