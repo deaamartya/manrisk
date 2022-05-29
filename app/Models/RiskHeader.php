@@ -84,18 +84,20 @@ class RiskHeader extends Model
 		return $details;
 	}
 
-	public function migrateCount()
+	public function migrateCount($id)
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.id_riskh', '=', $id)
 			->where('d.r_awal','>=', 12)
 			->whereOr('status_mitigasi', '=', 1)
 			->count('d.id_riskd');
 		return $jml;
 	}
 
-	public function doneMigrateCount()
+	public function doneMigrateCount($id)
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.id_riskh', '=', $id)
 			->where('status_mitigasi', '=', 1)
 			->count('d.id_riskd');
 		return $jml;
