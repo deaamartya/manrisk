@@ -31,6 +31,7 @@
 							</div>
 						</div>
 					</li>
+					@if(!Auth::user()->is_risk_owner)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav
 						{{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
@@ -38,6 +39,7 @@
 							<span>User</span>
 						</a>
 					</li>
+					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">
@@ -126,9 +128,15 @@
 						</a>
 					</li>
 					@endif
-					@if(Auth::user()->is_admin == 1)
+					@if(Auth::user()->is_admin || Auth::user()->is_penilai_indhan)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
 							<i data-feather="sidebar"></i>
 							<span>Risk Register INDHAN</span>
 						</a>

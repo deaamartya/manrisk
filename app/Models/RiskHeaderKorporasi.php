@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class RiskHeaderKorporasi
  * 
  * @property int $id_riskh
- * @property int $id_divisi
+ * @property int $company_id
  * @property string $tahun
  * @property Carbon $tanggal
  * @property string|null $target
@@ -34,7 +34,7 @@ class RiskHeaderKorporasi extends Model
 	protected $primaryKey = 'id_riskh';
 
 	protected $casts = [
-		'id_divisi' => 'int',
+		'company_id' => 'int',
 		'status_h' => 'int',
 	];
 
@@ -44,7 +44,7 @@ class RiskHeaderKorporasi extends Model
 	];
 
 	protected $fillable = [
-		'id_divisi',
+		'company_id',
 		'tahun',
 		'tanggal',
 		'target',
@@ -53,4 +53,9 @@ class RiskHeaderKorporasi extends Model
 		'lampiran',
 		'status_h'
 	];
+
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
+	}
 }
