@@ -109,10 +109,16 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-secondary mb-2" type="button" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>
-                    <a href="{{route('risk-officer.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
-                        <i class="fa fa-print"></i> Cetak Penilaian
-                    </a> 
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button class="btn btn-secondary" type="button" style="float:right;" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>                                        
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{route('risk-officer.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
+                                <i class="fa fa-print"></i> Cetak Penilaian
+                            </a> 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
