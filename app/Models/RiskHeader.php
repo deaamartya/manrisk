@@ -102,5 +102,5 @@ class RiskHeader extends Model
 			->count('d.id_riskd');
 		return $jml;
 	}
-	
+
 }
