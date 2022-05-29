@@ -57,8 +57,8 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::delete('risk-detail-delete/{id}', [RiskRegisterIndhanController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
 
   Route::get('approval-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'progressMitigasi']);
-  Route::put('mitigasi-plan/persetujuan-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'approvalHasilMitigasi']);
-//   Route::resource('mitigasi-plan', ApprovalHasilMitigasiController::class);
+  Route::put('approval-hasil-mitigasi/persetujuan-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'approvalHasilMitigasi']);
+  Route::resource('approval-hasil-mitigasi', ApprovalHasilMitigasiController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
 });
 

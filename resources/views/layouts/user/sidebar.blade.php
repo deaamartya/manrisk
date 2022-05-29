@@ -39,6 +39,7 @@
 							<span>User</span>
 						</a>
 					</li>
+                    @endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">
@@ -120,7 +121,7 @@
                     @endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav
-                        {{ Route::currentRouteName() == 'admin.mitigasi-plan.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.mitigasi-plan.index') : route('risk-officer.mitigasi-plan.index') }}">
+                        {{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
 							<i data-feather="sidebar"></i>
 							<span>Mitigasi Plan</span>
 						</a>

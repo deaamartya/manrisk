@@ -8,7 +8,7 @@ $(document).ready(function(){
         interval = setInterval(function(){
             $.ajax({
                 type: 'PUT',
-                url: APP_URL+'/admin/mitigasi-plan/persetujuan-mitigasi/'+id,
+                url: APP_URL+'/admin/approval-hasil-mitigasi/persetujuan-mitigasi/'+id,
                 dataType: 'json',
                 data: {
                     'realisasi' : val
