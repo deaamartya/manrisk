@@ -146,3 +146,17 @@ label {
 .hr-custom {
     margin: 4px 0;
 }
+
+#aksi-filter div .print{
+    float: right;
+}
+
+@media only screen and (max-width: 599px) {
+    #aksi-filter div{
+        margin-bottom: 5px;
+    }
+
+    #aksi-filter div .print{
+        float: left;
+    }
+}

@@ -5,6 +5,7 @@ use \App\Http\Controllers\Admin\{
     HomeController,
     UserController,
     CompaniesController,
+    HasilKompilasiRisikoController,
     KonteksController,
     RisikoController,
     SumberRisikoIndhanController,
@@ -27,6 +28,12 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('/risiko/get-risiko/{id?}', [RisikoController::class, 'get_risiko'])->name('risiko-get-risiko');
   Route::post('/risiko/store/{id?}', [RisikoController::class, 'store'])->name('risiko-store');
   Route::put('/risiko/delete-risiko', [RisikoController::class, 'delete'])->name('risiko-delete');
+
+  Route::get('/hasil-kompilasi-risiko', [HasilKompilasiRisikoController::class, 'index'])->name('hasil-kompilasi-risiko');
+  Route::post('/delete-responden/{id}', [HasilKompilasiRisikoController::class, 'delete_responden'])->name('delete-responden');
+  Route::get('/responden_datatable', [HasilKompilasiRisikoController::class, 'responden_datatable']);
+  Route::get('/sumber_risiko_datatable', [HasilKompilasiRisikoController::class, 'sumber_risiko_datatable']);
+  Route::get('/print-kompilasi-hasil-mitigasi/{instansi?}/{tahun?}', [HasilKompilasiRisikoController::class, 'print_kompilasi_hasil_mitigasi']);
 
   Route::get('/konteks', [KonteksController::class, 'index'])->name('konteks');
   Route::get('/konteks/get-konteks/{id}', [KonteksController::class, 'get_konteks'])->name('konteks-get-konteks');

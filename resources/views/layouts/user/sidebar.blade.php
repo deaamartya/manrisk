@@ -32,7 +32,7 @@
 						</div>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav 
+						<a class="sidebar-link sidebar-title link-nav
 						{{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
 							<i data-feather="user"></i>
 							<span>User</span>
@@ -62,12 +62,12 @@
 					@if(Auth::user()->is_risk_officer == 1 || Auth::user()->is_admin == 1)
 					<li class="sidebar-list">
 						@if(Auth::user()->is_risk_officer == 1)
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}"> 
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
 						</a>
 						@elseif(Auth::user()->is_admin == 1)
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}"> 
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
 						</a>
@@ -101,6 +101,12 @@
 					</li>
 					@endif
 					@if(Auth::user()->is_risk_officer == 1)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.hasil-kompilasi-risiko' ? 'active' : '' }}" href="{{route('admin.hasil-kompilasi-risiko')}}">
+							<i data-feather="file"></i>
+							<span>Hasil Kompilasi Risiko</span>
+						</a>
+					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>

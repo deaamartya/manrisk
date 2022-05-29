@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class RiskHeader
- * 
+ *
  * @property int $id_riskh
  * @property int $id_user
  * @property string $tahun
@@ -62,6 +62,40 @@ class RiskHeader extends Model
 		return $this->hasMany(RiskDetail::class, 'id_riskh');
 	}
 
+	public function getMitigasiDetail() {
+		$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
+		$details = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
+			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
+			->where('d.id_riskh','=', $this->id_riskh)
+			->where(function($q) use ($pengajuan) {
+				$q->where('d.r_awal','>=', 12)
+					->whereNotIn('d.id_riskd', $pengajuan);
+				$q->orWhere(function($q) use ($pengajuan) {
+					$q->whereIn('d.id_riskd', $pengajuan);
+				});
+			})
+			->get();
+		return $details;
+	}
+
+	public function migrateCount()
+	{
+		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.r_awal','>=', 12)
+			->whereOr('status_mitigasi', '=', 1)
+			->count('d.id_riskd');
+		return $jml;
+	}
+
+	public function doneMigrateCount()
+	{
+		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('status_mitigasi', '=', 1)
+			->count('d.id_riskd');
+		return $jml;
+    }
+    
 	public function defendid_user()
 	{
 		return $this->hasMany(DefendidUser::class, 'id_user');
