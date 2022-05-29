@@ -6,7 +6,7 @@ use App\Abstracts\AbsMitigasiPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MitigasiPlanController extends Controller
+class ApprovalHasilMitigasiController extends Controller
 {
     /**
      * Display a listing of the resource.
