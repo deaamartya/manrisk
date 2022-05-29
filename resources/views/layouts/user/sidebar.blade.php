@@ -31,7 +31,7 @@
 							</div>
 						</div>
 					</li>
-					@if (Auth::user()->is_risk_officer)
+					@if (Auth::user()->is_risk_officer || Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav
 						{{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
@@ -110,7 +110,7 @@
 						</a>
 					</li>
                     @endif
-                    @if(Auth::user()->is_penilai_indhan == 1 || Auth::user()->is_admin == 1)
+                    @if(Auth::user()->is_risk_officer == 1 || Auth::user()->is_admin == 1)
                     @if(Auth::user()->is_admin == 1)
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.hasil-kompilasi-risiko' ? 'active' : '' }}" href="{{route('admin.hasil-kompilasi-risiko')}}">
