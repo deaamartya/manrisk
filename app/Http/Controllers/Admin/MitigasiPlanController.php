@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\RiskOfficer;
+namespace App\Http\Controllers\Admin;
 
 use App\Abstracts\AbsMitigasiPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RiskHeader;
-use Auth;
-use Illuminate\Support\Arr;
-use App\Models\RiskDetail;
 
 class MitigasiPlanController extends Controller
 {
@@ -49,5 +45,18 @@ class MitigasiPlanController extends Controller
         $id_header = $query['id_header'];
 
         return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
+    }
+
+    public function progressMitigasi($id)
+    {
+        $data = AbsMitigasiPlan::showApprovalHasilMitigasi($id);
+
+        return view('admin.approval-hasil-mitigasi', compact('data'));
+    }
+
+    public function approvalHasilMitigasi(Request $request, $id){
+        $result = AbsMitigasiPlan::updateRealisasiApprovalHasilMitigasi($request, $id);
+
+        return response()->json($result);
     }
 }

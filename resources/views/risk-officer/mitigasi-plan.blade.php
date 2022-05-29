@@ -43,7 +43,7 @@
                     <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount() }}</div>
                   </td>
                   <td>
-                    <a href="{{ route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
+                    <a href="{{ auth()->user()->is_admin ? route('admin.mitigasi-plan.show', $h->id_riskh) : route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
                       <i class="fa fa-eye"></i> View
                     </a>
                   </td>

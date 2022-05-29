@@ -107,9 +107,15 @@
                       </button>
                     </td>
                     <td>
-                      <button class="btn btn-xs btn-info p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
-                        <i data-feather="edit" class="small-icon" height="13"></i>
-                      </button>
+                      @if(auth()->user()->is_admin == 1)
+                        <a href="{{ url('admin/approval-mitigasi/'.$d->id_riskd) }}"><button class="btn btn-xs btn-info p-1 flex-center">
+                          <i data-feather="edit" class="small-icon" height="13"></i>
+                        </button></a>
+                      @else
+                        <button class="btn btn-xs btn-info p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
+                          <i data-feather="edit" class="small-icon" height="13"></i>
+                        </button>
+                      @endif
                     </td>
                   </tr>
                   @endforeach
