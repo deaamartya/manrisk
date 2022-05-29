@@ -34,28 +34,41 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
+                <div class="col-md-4"><h6>Instansi</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">{{ $headers->perusahaan->instansi }}</div>
                 <div class="col-md-4"><h6>Tahun Risiko</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->tahun }}</div>
                 <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($headers->tanggal)) }}</div>
-                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
-              </div>
-              <div class="col-md-6">
                 <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->penyusun }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-3">{{ $headers->pemeriksa }}</div>
-                <h6>Lampiran :</h6>
-                @if($headers->lampiran == null || $headers->lampiran == '')
-                  <button class="btn btn-danger" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>
-                @else
-                  <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger">
+                <div class="col-md-12">{{ $headers->pemeriksa }}</div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-3">{!! $headers->target !!}</div>
+                @if($headers->lampiran != null || $headers->lampiran != '')
+                <div class="col-md-5 mb-2">
+                  <h6>Lampiran</h6>
+                  <hr class="hr-custom">
+                </div>
+                <div class="col-md-12 mb-3">
+                  <a href="{{ asset('document/lampiran/'. $headers->lampiran) }}" class="btn btn-sm btn-danger mb-3">
                     <span class="flex-center">
                       <i data-feather="download" class="me-2"></i>{{ $headers->lampiran }}
                     </span>
                   </a>
+                </div>
                 @endif
+                <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
+                <div class="col-md-12 mb-2">
+                  @if($headers->status_h == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                  @elseif($headers->status_h == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
@@ -102,9 +115,11 @@
                     </td>
                     <td>{{ $d->keterangan }}</td>
                     <td>
+                      @if($d->u_file)
                       <button class="btn btn-xs btn-primary p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#preview-document-{{ $d->id_riskd }}">
                         <i data-feather="zoom-in" class="small-icon" height="13"></i>View File
                       </button>
+                      @endif
                     </td>
                     <td>
                       @if(auth()->user()->is_admin == 1)

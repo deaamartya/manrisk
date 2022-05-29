@@ -105,12 +105,12 @@ label {
 }
 
 .text-red {
-    color: red;
+  color: red;
 }
 
 .btn-sm .small-icon {
-    width: auto;
-    height: 14px;
+  width: auto;
+  height: 14px;
 }
 
 .card .card-header,
@@ -159,4 +159,14 @@ label {
     #aksi-filter div .print{
         float: left;
     }
+}
+
+.datepickers-container,
+.datepicker {
+    z-index: 1500 !important;
+}
+
+.column-action {
+    display: flex;
+    gap: 8px;
 }

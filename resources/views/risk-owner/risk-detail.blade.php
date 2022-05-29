@@ -6,11 +6,11 @@
 @endsection
 
 @section('page-title')
-<h3>View All Risk</h3>
+<h3>Risk Register Korporasi</h3>
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">View All Risk</li>
+<li class="breadcrumb-item">Risk Register Korporasi</li>
 @endsection
 
 @section('content')
@@ -64,8 +64,11 @@
                 </div>
                 <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">
-                  <div class="badge badge-warning">Waiting for Approval</div>
-                  <div class="badge badge-success">Approved</div>
+                  @if($headers->status_h == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                  @elseif($headers->status_h == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  @endif
                 </div>
               </div>
             </div>
@@ -78,106 +81,24 @@
                 <thead>
                   <tr>
                     <th>Id Risk</th>
-                    <th>Indhan</th>
-                    <th>Mitigasi</th>
                     <th>Konteks Organisasi</th>
-                    <th>Indikator</th>
                     <th>Risiko</th>
                     <th>Penyebab</th>
-                    <th>Dampak</th>
-                    <th>UC/C</th>
-                    <th>Pengendalian</th>
-                    <th>L Awal</th>
-                    <th>C Awal</th>
-                    <th>R Awal</th>
-                    <th>Peluang</th>
-                    <th>Tindak Lanjut</th>
-                    <th>Jadwal Pelaksanaan</th>
-                    <th>PIC</th>
-                    <th>Dokumen Terkait</th>
-                    <th>L Akhir</th>
-                    <th>C Akhir</th>
-                    <th>R Akhir</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
+                    <th>L</th>
+                    <th>C</th>
+                    <th>R</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach($headers->risk_detail as $d)
                   <tr>
                     <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
-                    <td>
-                      @if($d->status_korporasi === 1)
-                        <a href="{{ route('risk-owner.toggleIndhan', $d->id_riskd) }}" class="btn btn-sm btn-success">
-                          Bukan Indhan
-                        </a>
-                      @elseif($d->status_korporasi === 0)
-                        <a href="{{ route('risk-owner.toggleIndhan', $d->id_riskd) }}" class="btn btn-sm btn-primary">
-                          Indhan
-                        </a>
-                      @endif
-                    </td>
-                    <td>
-                      @if(count($d->pengajuan_mitigasi) === 1)
-                      <span>Aksi Mitigasi telah diajukan</span>
-                      @else
-                        @if($d->r_awal >= 12)
-                          <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
-                            Tidak Perlu Mitigasi
-                          </button>
-                        @elseif($d->r_awal < 12)
-                          <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
-                            Ajukan Mitigasi
-                          </button>
-                        @endif
-                      @endif
-                    </td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
-                    <td>{{ $d->indikator }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ $d->dampak }}</td>
-                    <td>{{ $d->uc }}</td>
-                    <td>{{ $d->pengendalian }}</td>
                     <td>{{ $d->l_awal }}</td>
                     <td>{{ $d->c_awal }}</td>
-                    <td>
-                      @if($d->r_awal > 12) 
-                      <div class="badge badge-sm badge-success">
-                      @else
-                      <div class="badge badge-sm badge-danger">
-                      @endif
-                      {{ $d->r_awal }}
-                      </div>
-                    </td>
-                    <td>{{ $d->peluang }}</td>
-                    <td>{{ $d->tindak_lanjut }}</td>
-                    <td>{{ $d->jadwal }}</td>
-                    <td>{{ $d->pic }}</td>
-                    <td>{{ $d->dokumen }}</td>
-                    <td>{{ $d->l_akhir }}</td>
-                    <td>{{ $d->c_akhir }}</td>
-                    <td>
-                      @if($d->r_awal > 12) 
-                      <div class="badge badge-sm badge-success">
-                      @else
-                      <div class="badge badge-sm badge-danger">
-                      @endif
-                      {{ $d->r_akhir }}
-                      </div>
-                    </td>
-                    <td>
-                      @if($headers->status_h === 0)
-                        <div class="badge badge-sm badge-danger">Waiting</div>
-                      @elseif($headers->status_h === 1)
-                        <div class="badge badge-sm badge-success">Verified</div>
-                      @endif
-                    </td>
-                    <td>
-                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
-                        <i data-feather="trash-2" class="small-icon"></i>
-                      </button>
-                    </td>
+                    <td>{{ $d->r_awal }}</td>
                   </tr>
                   @endforeach
                 </tbody>

@@ -10,7 +10,8 @@ use \App\Http\Controllers\Admin\{
     RisikoController,
     SumberRisikoIndhanController,
     RiskRegisterIndhanController,
-    ApprovalHasilMitigasiController
+    ApprovalHasilMitigasiController,
+    MitigasiPlanController,
 };
 
 Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
@@ -57,6 +58,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
 
   Route::get('approval-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'progressMitigasi']);
   Route::put('mitigasi-plan/persetujuan-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'approvalHasilMitigasi']);
-  Route::resource('mitigasi-plan', ApprovalHasilMitigasiController::class);
+//   Route::resource('mitigasi-plan', ApprovalHasilMitigasiController::class);
+  Route::resource('mitigasi-plan', MitigasiPlanController::class);
 });
 

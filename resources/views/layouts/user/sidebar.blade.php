@@ -31,6 +31,7 @@
 							</div>
 						</div>
 					</li>
+					@if (Auth::user()->is_risk_officer)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav
 						{{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
@@ -104,7 +105,7 @@
 					<li class="sidebar-list">
                         <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
-							<span>View All Risk</span>
+							<span>Risk Register Korporasi</span>
 						</a>
 					</li>
                     @endif
@@ -125,11 +126,11 @@
 						</a>
 					</li>
                     @endif
-                    @if(Auth::user()->is_penilai_indhan == 1)
+					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.kuesioner' ? 'active' : '' }}" href="{{route('risk-officer.kuesioner')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
 							<i data-feather="file-text"></i>
-							<span>Kuesioner</span>
+							<span>Pengajuan Mitigasi</span>
 						</a>
 					</li>
 					@endif
@@ -151,7 +152,7 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
 							<i data-feather="list"></i>
-							<span>View All Risk</span>
+							<span>Risk Register Korporasi</span>
 						</a>
 					</li>
 					@endif

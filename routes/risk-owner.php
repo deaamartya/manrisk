@@ -14,4 +14,5 @@ Route::middleware(['auth', 'cekRiskOwner'])->name('risk-owner.')->group(function
   Route::resource('risiko', RiskController::class);
   Route::get('risiko/toggle-indhan/{id}', [RiskController::class, 'toggleIndhan'])->name('toggleIndhan');
   Route::get('risiko/approve/{id}', [RiskController::class, 'approve'])->name('risiko.approve');
+  Route::get('risiko/print/{id}', [RiskController::class, 'print'])->name('risiko.print');
 });
