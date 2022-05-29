@@ -76,6 +76,7 @@ class HasilKompilasiRisikoController extends Controller
         $wr = "1=1";
         if($instansi){
             $wr .= " AND du.company_id = ".$instansi;
+            $instansi = Perusahaan::select('instansi')->where('company_id', $instansi)->first();
         }
         if($tahun){
             $wr .= " AND B.tahun = ".$tahun;
@@ -92,7 +93,7 @@ class HasilKompilasiRisikoController extends Controller
         ->get();
 
         // dd($data);
-        $pdf = PDF::loadview('admin.print_hasil_kompilasi_risiko',['data'=>$data, 'instansi'=>$instansi, 'tahun'=>$tahun]);
-    	return $pdf->download('Kompilasi_Risiko_hasil_mitigasi_'.$instansi.'_'.$tahun);
+        $pdf = PDF::loadview('admin.print_hasil_kompilasi_risiko',['data'=>$data, 'instansi'=>$instansi, 'tahun'=>$tahun])->setPaper('a4', 'landscape');
+    	return $pdf->stream('Kompilasi_Risiko_hasil_mitigasi_'.$instansi.'_'.$tahun);
     }
 }
