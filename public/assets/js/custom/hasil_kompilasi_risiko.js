@@ -102,4 +102,12 @@ $(document).ready(function(){
         $('#form-delete-responden').attr('action', APP_URL+'/admin/delete-responden/'+temp[0])
         $('#modalDeleteResponden').modal('show')
     })
+
+    $('.print').on('click', function(){
+        console.log('yess');
+        let instansi = $('#formPerusahaan').val()
+        let tahun = $('#formTahun').val()
+
+        window.location.assign(APP_URL+"/admin/print-kompilasi-hasil-mitigasi/"+instansi+"/"+tahun)
+    })
 })

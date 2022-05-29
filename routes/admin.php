@@ -37,4 +37,5 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
     Route::post('/delete-responden/{id}', [HasilKompilasiRisikoController::class, 'delete_responden'])->name('delete-responden');
     Route::get('/responden_datatable', [HasilKompilasiRisikoController::class, 'responden_datatable']);
     Route::get('/sumber_risiko_datatable', [HasilKompilasiRisikoController::class, 'sumber_risiko_datatable']);
+    Route::get('/print-kompilasi-hasil-mitigasi/{instansi?}/{tahun?}', [HasilKompilasiRisikoController::class, 'print_kompilasi_hasil_mitigasi']);
 });

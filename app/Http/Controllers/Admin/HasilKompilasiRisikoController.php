@@ -9,6 +9,7 @@ use App\Models\Responden;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class HasilKompilasiRisikoController extends Controller
 {
@@ -68,5 +69,30 @@ class HasilKompilasiRisikoController extends Controller
         Pengukuran::where('id_p', $id)->delete();
 
         return back()->with(['success-swal' => 'Responden berhasil dihapus!']);
+    }
+
+    public function print_kompilasi_hasil_mitigasi($instansi = null, $tahun = null)
+    {
+        $wr = "1=1";
+        if($instansi){
+            $wr .= " AND du.company_id = ".$instansi;
+        }
+        if($tahun){
+            $wr .= " AND B.tahun = ".$tahun;
+        }
+        $data = DB::table('pengukuran as A')
+        ->selectRaw('du.company_id, D.id_risk, D.konteks, B.s_risiko, AVG(A.nilai_L) AS l, AVG(A.nilai_C) AS c, AVG(A.nilai_L)*AVG(A.nilai_C) AS r, count(A.nama_responden)')
+        ->join('s_risiko as B', 'A.id_s_risiko', 'B.id_s_risiko')
+        ->join('konteks as D', 'B.id_konteks', 'D.id_konteks')
+        ->leftJoin('defendid_user as du', 'du.id_user', 'B.id_user')
+        ->whereRaw($wr)
+        ->whereNull('A.deleted_at')
+        ->groupBy('B.id_s_risiko')
+        ->orderBy('r', 'desc')
+        ->get();
+
+        // dd($data);
+        $pdf = PDF::loadview('admin.print_hasil_kompilasi_risiko',['data'=>$data, 'instansi'=>$instansi, 'tahun'=>$tahun]);
+    	return $pdf->download('Kompilasi_Risiko_hasil_mitigasi_'.$instansi.'_'.$tahun);
     }
 }
