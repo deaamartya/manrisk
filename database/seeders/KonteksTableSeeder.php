@@ -24,8 +24,8 @@ class KonteksTableSeeder extends Seeder
                 'id_konteks' => 1,
                 'id_risk' => 'RD',
                 'no_k' => 1,
-            'konteks' => 'Fasilitas Teknologi dan Peralatan Utama (Infrastruktur)',
-                'tahun_konteks' => '2020',
+                'konteks' => 'Fasilitas Teknologi dan Peralatan Utama (Infrastruktur)',
+                'tahun_konteks' => '2022',
             ),
             1 => 
             array (
@@ -33,7 +33,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 2,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             2 => 
             array (
@@ -41,7 +41,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 3,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             3 => 
             array (
@@ -49,7 +49,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 4,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             4 => 
             array (
@@ -57,7 +57,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 5,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             5 => 
             array (
@@ -65,7 +65,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 6,
                 'konteks' => 'Tipe Pemasok & Partner',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             6 => 
             array (
@@ -73,7 +73,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 7,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             7 => 
             array (
@@ -81,7 +81,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 8,
                 'konteks' => 'Persyaratan Key Supply Chain',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             8 => 
             array (
@@ -89,7 +89,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 9,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             9 => 
             array (
@@ -97,7 +97,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 10,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             10 => 
             array (
@@ -105,7 +105,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 11,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             11 => 
             array (
@@ -113,7 +113,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 12,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             12 => 
             array (
@@ -121,7 +121,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RD',
                 'no_k' => 13,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             13 => 
             array (
@@ -129,7 +129,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 1,
             'konteks' => 'Fasilitas Teknologi dan Peralatan Utama (Infrastruktur)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             14 => 
             array (
@@ -137,7 +137,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 2,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             15 => 
             array (
@@ -145,7 +145,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 3,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             16 => 
             array (
@@ -153,7 +153,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 4,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             17 => 
             array (
@@ -161,7 +161,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 5,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             18 => 
             array (
@@ -169,7 +169,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 6,
                 'konteks' => 'Persyaratan Key Supply Chain',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             19 => 
             array (
@@ -177,7 +177,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 7,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             20 => 
             array (
@@ -185,7 +185,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 8,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             21 => 
             array (
@@ -193,7 +193,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 9,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             22 => 
             array (
@@ -201,7 +201,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 10,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             23 => 
             array (
@@ -209,7 +209,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RL',
                 'no_k' => 11,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             24 => 
             array (
@@ -217,7 +217,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 1,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             25 => 
             array (
@@ -225,7 +225,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 2,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             26 => 
             array (
@@ -233,7 +233,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 3,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             27 => 
             array (
@@ -241,7 +241,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 4,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             28 => 
             array (
@@ -249,7 +249,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 5,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             29 => 
             array (
@@ -257,7 +257,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 6,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             30 => 
             array (
@@ -265,7 +265,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 7,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             31 => 
             array (
@@ -273,7 +273,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 8,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             32 => 
             array (
@@ -281,7 +281,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 9,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             33 => 
             array (
@@ -289,7 +289,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RPP',
                 'no_k' => 10,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             34 => 
             array (
@@ -297,7 +297,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
             'konteks' => 'Tingkat Relatif Penting Produk (Target Penjualan / Sales)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             35 => 
             array (
@@ -305,7 +305,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
             'konteks' => 'Core Competensi, Future Core Competensi (Kompetensi Karyawan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             36 => 
             array (
@@ -313,7 +313,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
             'konteks' => 'Profil tenaga kerja (Jumlah Pensiun MPP Pendidikan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             37 => 
             array (
@@ -321,7 +321,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
             'konteks' => 'Faktor Utama yang mempengaruhi Keterikatan Tenaga Kerja (Engagement)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             38 => 
             array (
@@ -329,7 +329,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Serikat Pekerja',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             39 => 
             array (
@@ -337,7 +337,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
             'konteks' => 'Persyaratan khusus terkait dengan Kesehatan dan Keselamatan Kerja (HSE)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             40 => 
             array (
@@ -345,7 +345,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Struktur Organisasi',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             41 => 
             array (
@@ -353,7 +353,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Tata Kelola Perusahaan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             42 => 
             array (
@@ -361,7 +361,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             43 => 
             array (
@@ -369,7 +369,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             44 => 
             array (
@@ -377,7 +377,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             45 => 
             array (
@@ -385,7 +385,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             46 => 
             array (
@@ -393,7 +393,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             47 => 
             array (
@@ -401,7 +401,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             48 => 
             array (
@@ -409,7 +409,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             49 => 
             array (
@@ -417,7 +417,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             50 => 
             array (
@@ -425,7 +425,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Financial',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             51 => 
             array (
@@ -433,7 +433,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             52 => 
             array (
@@ -441,7 +441,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RBS',
                 'no_k' => 0,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             53 => 
             array (
@@ -449,7 +449,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
             'konteks' => 'Profil tenaga kerja (Jumlah Pensiun, MPP, Pendidikan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             54 => 
             array (
@@ -457,7 +457,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
             'konteks' => 'Fasilitas Teknologi dan Peralatan Utama (Infrastruktur)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             55 => 
             array (
@@ -465,7 +465,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             56 => 
             array (
@@ -473,7 +473,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             57 => 
             array (
@@ -481,7 +481,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             58 => 
             array (
@@ -489,7 +489,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             59 => 
             array (
@@ -497,7 +497,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             60 => 
             array (
@@ -505,7 +505,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             61 => 
             array (
@@ -513,7 +513,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             62 => 
             array (
@@ -521,7 +521,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             63 => 
             array (
@@ -529,7 +529,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RP',
                 'no_k' => 0,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             64 => 
             array (
@@ -537,7 +537,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
             'konteks' => 'Core Competensi, Future Core Competensi (Kompetensi Karyawan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             65 => 
             array (
@@ -545,7 +545,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
             'konteks' => 'Profil tenaga kerja (Jumlah Pensiun MPP Pendidikan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             66 => 
             array (
@@ -553,7 +553,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
             'konteks' => 'Faktor Utama yang mempengaruhi Keterikatan Tenaga Kerja (Engagement)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             67 => 
             array (
@@ -561,7 +561,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Serikat Pekerja',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             68 => 
             array (
@@ -569,7 +569,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
             'konteks' => 'Persyaratan khusus terkait dengan Kesehatan dan Keselamatan Kerja (HSE)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             69 => 
             array (
@@ -577,7 +577,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             70 => 
             array (
@@ -585,7 +585,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             71 => 
             array (
@@ -593,7 +593,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             72 => 
             array (
@@ -601,7 +601,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             73 => 
             array (
@@ -609,7 +609,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Tipe Pemasok & Partner',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             74 => 
             array (
@@ -617,7 +617,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             75 => 
             array (
@@ -625,7 +625,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             76 => 
             array (
@@ -633,7 +633,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             77 => 
             array (
@@ -641,7 +641,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             78 => 
             array (
@@ -649,7 +649,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             79 => 
             array (
@@ -657,7 +657,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RSD',
                 'no_k' => 0,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             80 => 
             array (
@@ -665,7 +665,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RF',
                 'no_k' => 0,
             'konteks' => 'Fasilitas, Teknologi dan Peralatan Utama (Infrastruktur)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             81 => 
             array (
@@ -673,7 +673,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RF',
                 'no_k' => 0,
                 'konteks' => 'Tipe Pemasok & Partner',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             82 => 
             array (
@@ -681,7 +681,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RF',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan Key Supply Chain',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             83 => 
             array (
@@ -689,7 +689,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
             'konteks' => 'Tingkat Relatif Penting Produk (Target Penjualan / Sales)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             84 => 
             array (
@@ -697,7 +697,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
             'konteks' => 'Core Competensi, Future Core Competensi (Kompetensi Karyawan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             85 => 
             array (
@@ -705,7 +705,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
             'konteks' => 'Profil tenaga kerja (Jumlah Pensiun MPP Pendidikan)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             86 => 
             array (
@@ -713,7 +713,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
             'konteks' => 'Persyaratan khusus terkait dengan Kesehatan dan Keselamatan Kerja (HSE)',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             87 => 
             array (
@@ -721,7 +721,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
             'konteks' => 'Peraturan & Perundangan (Regulasi) Internal & Eksternal',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             88 => 
             array (
@@ -729,7 +729,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Struktur Organisasi',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             89 => 
             array (
@@ -737,7 +737,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Tata Kelola Perusahaan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             90 => 
             array (
@@ -745,7 +745,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Segmen Pasar Utama',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             91 => 
             array (
@@ -753,7 +753,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             92 => 
             array (
@@ -761,7 +761,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & Harapan Pelanggan / stake holder',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             93 => 
             array (
@@ -769,7 +769,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Perbedaan Persyaratan & Harapan Pelanggan ',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             94 => 
             array (
@@ -777,7 +777,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Tipe Pemasok & Partner',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             95 => 
             array (
@@ -785,7 +785,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Persyaratan & harapan pemangku kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             96 => 
             array (
@@ -793,7 +793,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Posisi Kompotitive dan Market Share',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             97 => 
             array (
@@ -801,7 +801,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Tantangan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             98 => 
             array (
@@ -809,7 +809,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Keunggulan Strategis',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             99 => 
             array (
@@ -817,7 +817,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Business Process',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             100 => 
             array (
@@ -825,7 +825,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RHU',
                 'no_k' => 0,
                 'konteks' => 'Quality Objective & KPI Korporat',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             101 => 
             array (
@@ -833,7 +833,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RIF',
                 'no_k' => 0,
                 'konteks' => 'Teknologi Informasi',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             102 => 
             array (
@@ -841,7 +841,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RK',
                 'no_k' => 0,
                 'konteks' => 'Peraturan Perundangan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             103 => 
             array (
@@ -849,7 +849,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RK',
                 'no_k' => 0,
                 'konteks' => 'Harapan Pemangku Kepentingan',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             104 => 
             array (
@@ -857,7 +857,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RK',
                 'no_k' => 0,
                 'konteks' => 'Tata Kelola',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             105 => 
             array (
@@ -865,7 +865,7 @@ class KonteksTableSeeder extends Seeder
                 'id_risk' => 'RK',
                 'no_k' => 0,
                 'konteks' => 'Finance',
-                'tahun_konteks' => '2020',
+                'tahun_konteks' => '2022',
             ),
             106 => 
             array (

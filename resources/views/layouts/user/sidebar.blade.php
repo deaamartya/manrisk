@@ -99,12 +99,12 @@
 						</a>
 					</li>
 					@endif
-					{{--<li class="sidebar-list">
+					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>View All Risk</span>
 						</a>
-					</li> --}}
+					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.mitigasi-plan' ? 'active' : '' }}" href="{{route('risk-officer.mitigasi-plan.index')}}">
 							<i data-feather="sidebar"></i>
