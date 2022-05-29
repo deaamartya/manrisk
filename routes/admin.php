@@ -8,8 +8,8 @@ use \App\Http\Controllers\Admin\{
     KonteksController,
     RisikoController,
     SumberRisikoIndhanController,
+    RiskRegisterIndhanController,
 };
-
 
 Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
 //   Route::get('/notifications/mark-as-read', [NotificationsController::class, 'notifAdminMark'])->name('notifications.mark-as-read');
@@ -35,4 +35,16 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('sumber-risiko-indhan', [SumberRisikoIndhanController::class, 'index'])->name('sumber-risiko-indhan');
   Route::post('sumber-risiko-indhan/search', [SumberRisikoIndhanController::class, 'searchRisiko'])->name('search-risiko');
   Route::post('sumber-risiko-indhan/approval/{id}', [SumberRisikoIndhanController::class, 'approvalRisiko'])->name('approval-risiko');
+  Route::get('risk-register-indhan', [RiskRegisterIndhanController::class, 'index'])->name('risk-register-indhan');
+  Route::get('search-risk-header', [RiskRegisterIndhanController::class, 'searchRiskHeader'])->name('search-risk-header');
+  Route::get('all-risk-header', [RiskRegisterIndhanController::class, 'allRiskHeader'])->name('all-risk-header');
+  Route::get('detail-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'show'])->name('detail-risk-register');
+  Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register');
+  Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register');
+  Route::post('risk-detail-korporate/{id}', [RiskRegisterIndhanController::class, 'korporate'])->name('korporate');
+  Route::post('risk-detail-unkorporate/{id}', [RiskRegisterIndhanController::class, 'unKorporate'])->name('unkorporate');
+  Route::post('risk-detail-mitigation/{id}', [RiskRegisterIndhanController::class, 'mitigation'])->name('mitigation');
+  Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterIndhanController::class, 'notMitigation'])->name('not-mitigation');
+  Route::delete('risk-detail-delete/{id}', [RiskRegisterIndhanController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
 });
+

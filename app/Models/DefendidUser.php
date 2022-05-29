@@ -64,9 +64,10 @@ class DefendidUser extends Authenticatable
 		'is_risk_owner',
 		'is_admin'
 	];
-
+	
 	public function perusahaan()
 	{
 		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
+	
 }

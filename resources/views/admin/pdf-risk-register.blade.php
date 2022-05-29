@@ -92,23 +92,29 @@
 	@endphp
     <table class="table-header" cellspacing="0" width="100%">
     	<tr>
-            <td width="140">
-    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="width:90px;" />
+            <td width="100">
+    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="width:100px;" />
     		</td>
     		<td width="70%" height="40">
-    			<b>RISK REGISTER {{ $user->perusahaan->instansi }} </b>
+    			<h3>RISK REGISTER {{ $header->instansi }} </h3>
     		</td>
-    		<td width="143">
-    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="width:120px;" />
+    		<td width="100">
+    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$header->company_code.'.png' }}" style="width:100px;" />
     		</td>
     	</tr>
     </table>
     <table class="table-2" cellspacing="0" width="100%">
     	<tr>
-    		<td class="left" colspan="2">
-    			Disusun Oleh :
+    		<td width="13%" class="left">
+    			Instansi
     		</td>
-    		<td class="left" colspan="2">
+			<td width="49%" class="left pl-10p">
+    			{{ $header->instansi }}
+    		</td>
+    		<td width="16%" class="center">
+    			Disusun Oleh
+    		</td>
+			<td width="20%" class="center">
     			Diperiksa &  Disetujui  Oleh
     		</td>
     	</tr>

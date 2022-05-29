@@ -117,7 +117,14 @@
 							<span>Kuesioner</span>
 						</a>
 					</li>
-					<hr>
+					@if(Auth::user()->is_admin == 1)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register INDHAN</span>
+						</a>
+					</li>
+					@endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">
 							<i data-feather="list"></i>
