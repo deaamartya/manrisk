@@ -29,6 +29,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2021-11-05 15:17:50',
                 'nilai_L' => 1,
                 'nilai_C' => 2,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             1 => 
             array (
@@ -40,6 +43,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2021-11-05 15:17:50',
                 'nilai_L' => 2,
                 'nilai_C' => 3,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             2 => 
             array (
@@ -51,6 +57,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2021-11-05 15:17:50',
                 'nilai_L' => 4,
                 'nilai_C' => 4,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             3 => 
             array (
@@ -62,6 +71,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2022-04-08 22:37:43',
                 'nilai_L' => 2,
                 'nilai_C' => 3,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             4 => 
             array (
@@ -73,6 +85,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2022-04-08 22:37:43',
                 'nilai_L' => 1,
                 'nilai_C' => 4,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             5 => 
             array (
@@ -84,6 +99,9 @@ class PengukuranTableSeeder extends Seeder
                 'tgl_penilaian' => '2022-04-08 22:37:43',
                 'nilai_L' => 3,
                 'nilai_C' => 5,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
         ));
         

@@ -40,7 +40,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->risk_detail->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->risk_detail->r_awal }}</td>
-                    <td>{{ $d->pemohon->nama }}</td>
+                    <td>{{ $d->pemohon->name }}</td>
                     <td>
                       @if ($d->tipe_pengajuan === 0)
                       <div class="text-danger">Tidak Perlu Mitigasi</div>
@@ -91,7 +91,7 @@
             <div class="row">
               <div class="col-md-6 pb-3">
                 <div class="pb-2"><strong>Pemohon</strong></div>
-                <p>{{ $d->pemohon->nama }}</p>
+                <p>{{ $d->pemohon->name }}</p>
               </div>
               <div class="col-md-6 pb-3">
                 <div class="pb-2"><strong>Risiko</strong></div>
@@ -154,7 +154,7 @@
             <div class="row">
               <div class="col-md-6 pb-3">
                 <div class="pb-2"><strong>Pemohon</strong></div>
-                <p>{{ $d->pemohon->nama }}</p>
+                <p>{{ $d->pemohon->name }}</p>
               </div>
               <div class="col-md-6 pb-3">
                 <div class="pb-2"><strong>Risiko</strong></div>
@@ -212,7 +212,7 @@
           <div class="row">
             <div class="col-md-6 pb-3">
               <div class="pb-2"><strong>Pemohon</strong></div>
-              <p>{{ $d->pemohon->nama }}</p>
+              <p>{{ $d->pemohon->name }}</p>
             </div>
             <div class="col-md-6 pb-3">
               <div class="pb-2"><strong>Risiko</strong></div>

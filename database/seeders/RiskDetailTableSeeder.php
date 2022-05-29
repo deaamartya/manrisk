@@ -49,6 +49,9 @@ class RiskDetailTableSeeder extends Seeder
                 'u_file' => 'mitigasi_2.pdf',
                 'status_mitigasi' => NULL,
                 'status_korporasi' => 0,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             1 => 
             array (
@@ -80,6 +83,9 @@ class RiskDetailTableSeeder extends Seeder
                 'u_file' => NULL,
                 'status_mitigasi' => NULL,
                 'status_korporasi' => 0,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             2 => 
             array (
@@ -111,6 +117,9 @@ class RiskDetailTableSeeder extends Seeder
                 'u_file' => NULL,
                 'status_mitigasi' => NULL,
                 'status_korporasi' => 0,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
             ),
             3 => 
             array (
@@ -142,6 +151,43 @@ class RiskDetailTableSeeder extends Seeder
                 'u_file' => NULL,
                 'status_mitigasi' => NULL,
                 'status_korporasi' => 0,
+                'created_at' => NULL,
+                'updated_at' => NULL,
+                'deleted_at' => NULL,
+            ),
+            4 => 
+            array (
+                'id_riskd' => 6,
+                'id_riskh' => 4,
+                'id_s_risiko' => 3,
+                'ppkh' => 'isi ppkh',
+                'indikator' => 'isi indikator',
+                'sebab' => 'sebabnyaa',
+                'dampak' => 'dampknyaa',
+                'uc' => 'UC',
+                'pengendalian' => 'pengendalian',
+                'l_awal' => 4.0,
+                'c_awal' => 2.0,
+                'r_awal' => 8.0,
+                'peluang' => 'isi peluang',
+                'tindak_lanjut' => 'tindak lanjut',
+                'jadwal' => 'Akhir Bulan Juni',
+                'pic' => 'Divisi Teknologi Informasi',
+                'dokumen' => 'BOD, PDF',
+                'mitigasi' => 'Transparansi Dana',
+                'jadwal_mitigasi' => '2022-05-29',
+                'realisasi' => NULL,
+                'keterangan' => 'Test keterangan',
+                'l_akhir' => 3.0,
+                'c_akhir' => 1.0,
+                'r_akhir' => 3.0,
+                'status' => NULL,
+            'u_file' => 'Hasil_Mitigasi_Divisi (1).pdf',
+                'status_mitigasi' => NULL,
+                'status_korporasi' => 1,
+                'created_at' => NULL,
+                'updated_at' => '2022-05-29 06:23:09',
+                'deleted_at' => NULL,
             ),
         ));
         
