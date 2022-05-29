@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
 use App\Models\SRisiko;
+use App\Models\Pengukuran;
 
 class RisikoController extends Controller
 {
@@ -36,7 +37,11 @@ class RisikoController extends Controller
             'id_user' => Auth::user()->id_user,
             'tahun' => $request->tahun,
             'target' => $request->target,
-            'penyusun' => Auth::user()->nama,
+            'penyusun' => Auth::user()->name,
+            'tanggal' => date('Y-m-d'),
+            'status_h' => 0,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil disimpan!']);
     }
@@ -56,7 +61,10 @@ class RisikoController extends Controller
             ['status_s_risiko', '=', 1],
             ['company_id', '=', Auth::user()->company_id],
         ])->orderBy('id_s_risiko')->get();
-        return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko'));
+        $s_risiko = Srisiko::where('tahun', '=', $headers->tahun)->where('company_id', '=', $headers->company_id)->limit(1)->first();
+        $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
+        $nilai_c = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_C');
+        return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko', 'nilai_l', 'nilai_c'));
     }
 
     /**
