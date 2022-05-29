@@ -16,7 +16,6 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        $user =  Auth::user()->id_user;
         $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
         $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))
                             ->where('status_s_risiko', 1)->limit(1)->get();
@@ -46,13 +45,12 @@ class PengukuranRisikoController extends Controller
         $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
             ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
             ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-            ->join('defendid_user', 'defendid_pengukur.company_id','defendid_user.company_id')
-            ->where('defendid_user.id_user', $user)
+            ->where('defendid_pengukur.company_id', Auth::user()->company_id)
             ->where('pengukuran.tahun_p', date('Y'))
             ->where('s_risiko.status_s_risiko', 1)
             ->get();
             // dd(count($sumber_risiko));
-        return view('risk-officer.pengukuran-risiko', compact('jml_risk','data_sr','jabatan','pengukuran','arr_pengukur','sumber_risiko'));
+        return view('risk-owner.pengukuran-risiko', compact('jml_risk','data_sr','jabatan','pengukuran','arr_pengukur','sumber_risiko'));
     }
 
     public function penilaianRisiko(Request $request) {
@@ -64,18 +62,18 @@ class PengukuranRisikoController extends Controller
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
 
-        $id_user = Auth::user()->id_user;
+        // $id_user = Auth::user()->id_user;
 
         $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
         ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
         ->join('risk as r', 'r.id_risk', 'k.id_risk')
-        ->where('s_risiko.id_user', $id_user)
+        ->where('s_risiko.company_id',  Auth::user()->company_id)
         ->where('s_risiko.tahun', $tahun)
         ->where('s_risiko.status_s_risiko', 1)
         ->orderBy('s_risiko.id_s_risiko')
         ->get();
 
-        return view('risk-officer.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
+        return view('risk-owner.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
     }
 
     public function penilaianRisikoStore(Request $request) {
@@ -101,7 +99,7 @@ class PengukuranRisikoController extends Controller
             ]);
         }
 
-        return redirect()->route('risk-officer.pengukuran-risiko')->with('created-alert', 'Data penilaian risiko berhasil disimpan.');
+        return redirect()->route('risk-owner.pengukuran-risiko')->with('created-alert', 'Data penilaian risiko berhasil disimpan.');
     }
 
     public function generatePDF()
@@ -114,7 +112,7 @@ class PengukuranRisikoController extends Controller
                 ->where('sr.status_s_risiko', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();
-        $pdf = PDF::loadView('risk-officer.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
+        $pdf = PDF::loadView('risk-owner.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
         return $pdf->stream('Hasil Kompilasi Risiko.pdf');
 
     }

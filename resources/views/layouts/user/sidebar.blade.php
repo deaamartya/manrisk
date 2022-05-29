@@ -135,9 +135,15 @@
 						</a>
 					</li>
 					@endif
-					@if(Auth::user()->is_admin == 1)
+					@if(Auth::user()->is_admin || Auth::user()->is_penilai_indhan)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
 							<i data-feather="sidebar"></i>
 							<span>Risk Register INDHAN</span>
 						</a>

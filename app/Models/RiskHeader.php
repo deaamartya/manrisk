@@ -67,22 +67,22 @@ class RiskHeader extends Model
 		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
 
-	public function getMitigasiDetail() {
-		$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
-		$details = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
-			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
-			->where('d.id_riskh','=', $this->id_riskh)
-			->where(function($q) use ($pengajuan) {
-				$q->where('d.r_awal','>=', 12)
-					->whereNotIn('d.id_riskd', $pengajuan);
-				$q->orWhere(function($q) use ($pengajuan) {
-					$q->whereIn('d.id_riskd', $pengajuan);
-				});
-			})
-			->get();
-		return $details;
-	}
+	// public function getMitigasiDetail() {
+	// 	$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
+	// 	$details = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+	// 		->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
+	// 		->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
+	// 		->where('d.id_riskh','=', $this->id_riskh)
+	// 		->where(function($q) use ($pengajuan) {
+	// 			$q->where('d.r_awal','>=', 12)
+	// 				->whereNotIn('d.id_riskd', $pengajuan);
+	// 			$q->orWhere(function($q) use ($pengajuan) {
+	// 				$q->whereIn('d.id_riskd', $pengajuan);
+	// 			});
+	// 		})
+	// 		->get();
+	// 	return $details;
+	// }
 
 	public function migrateCount($id)
 	{

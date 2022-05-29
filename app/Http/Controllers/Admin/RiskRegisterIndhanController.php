@@ -4,73 +4,43 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 use App\Models\RiskHeader;
-use App\Models\RiskDetail;
 use App\Models\DefendidUser;
-use App\Models\SRisiko;
+use App\Models\RiskHeaderKorporasi;
+use App\Models\RiskDetail;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
-use Redirect;
-
+use App\Models\SRisiko;
 
 class RiskRegisterIndhanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $data_headers= RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                        ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                        ->orderBy('risk_header.id_riskh')
-                        ->get();
-        $tahun = RiskHeader::select('tahun')->orderBy('tahun')->distinct()->get();
-        $tahun_filter = null;
-        return view('admin.risk-register-indhan', compact('data_headers', 'tahun', 'tahun_filter'));
+        $headers = RiskHeaderKorporasi::all();
+        $jml_risk = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh')
+        ->where('tahun', '=', date('Y'))
+        ->where('status_korporasi', '=', 1)
+        ->count();
+        return view('admin.risk-register-indhan', compact('headers', 'jml_risk'));
     }
 
-    public function allRiskHeader()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $data_headers= RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                        ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                        ->orderBy('risk_header.id_riskh')
-                        ->get();
-        $tahun = RiskHeader::select('tahun')->orderBy('tahun')->distinct()->get();
-        $tahun_filter = null;
-        return view('admin.risk-register-indhan', compact('data_headers', 'tahun', 'tahun_filter'));
-    }
-
-    public function searchRiskHeader(Request $request)
-    {
-        $data_headers= RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                    ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                    ->where('risk_header.tahun', $request->tahun)
-                    ->orderBy('risk_header.id_riskh')
-                    ->get();
-        $tahun = RiskHeader::select('tahun')->orderBy('tahun')->distinct()->get();
-        $tahun_filter = $request->tahun;
-        return view('admin.risk-register-indhan', compact('data_headers', 'tahun', 'tahun_filter'));
-    }
-
-    public function print($id) {
-        $header = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-        ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('id_riskh', '=', $id)->first();
-
-        $pdf = PDF::loadView('admin.pdf-risk-register', compact('header'))->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan Manajemen Risiko '.$header->instansi.' Tahun '.$header->tahun.'.pdf');
-    }
-
-    public function approval($id)
-    {
-        $risk_header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $risk_header->update([
-            'status_h_indhan' => 1
+        RiskHeaderKorporasi::insert([
+            'tahun' => $request->tahun,
+            'target' => $request->target,
+            'penyusun' => Auth::user()->name,
+            'pemeriksa' => $request->pemeriksa,
         ]);
-        // dd($risk_header);
-        return Redirect::back()->with(['success-swal' => 'Risk Header berhasil disetujui.']);
+        return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil disimpan!']);
     }
 
     /**
@@ -79,60 +49,81 @@ class RiskRegisterIndhanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $headers = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                    ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                    ->where('id_riskh', '=', $id)->first();
-        return view('admin.detail-risk-register', compact('headers'));
-    }
+   
 
-    public function korporate($id, Request $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $risk_detail->update([
-            'status_korporasi' => 1
+        $riskheader = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        $riskheader->update([
+            'tahun' => $request->tahun,
+            'target' => $request->target,
+            'pemeriksa' => $request->pemeriksa
         ]);
-        $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi INDHAN.']);
+        return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil diubah!']);
     }
 
-    public function unKorporate($id, Request $request)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $risk_detail->update([
-            'status_korporasi' => 0
+        RiskHeaderKorporasi::destroy($id);
+        return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil dihapus!']);
+    }
+
+
+    public function show($id, Request $request)
+    {
+        $headers = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        // dd($headers);
+        $detail_risk = RiskDetail::join('risk_header', 'risk_detail.id_riskh', 'risk_header.id_riskh' )
+                ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko' )
+                ->join('konteks', 'konteks.id_konteks', 's_risiko.id_konteks' )
+                ->where('status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $request->tahun)
+                ->first();
+            // dd($detail_risk);
+        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk'));
+    }
+
+    public function uploadLampiran(Request $request) {
+        $id = $request->id;
+        $riskheader = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        $filename = $request->file('lampiran')->getClientOriginalName();
+        $folder = '/document/lampiran/';
+        $request->file('lampiran')->storeAs($folder, $filename, 'public');
+        $riskheader->update([
+            'lampiran' => $filename,
         ]);
-        $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Bukan INDHAN.']);
+        
+        return redirect()->route('admin.risk-register-indhan', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
     }
 
-    public function mitigation($id, Request $request)
+    public function print($id) {
+        $header = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        $user = Auth::user();
+        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
+        $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'user'))->setPaper('a4', 'landscape');
+        return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
+    }
+
+    public function approval($id)
     {
-        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $risk_detail->update([
-            'status_mitigasi' => 1
+        $risk_header = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        $risk_header->update([
+            'status_h' => 1
         ]);
-        $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Perlu Mitigasi.']);
+        // dd($risk_header);
+        return Redirect::back()->with(['success-swal' => 'Risk Header INDHAN berhasil disetujui.']);
     }
-
-    public function notMitigation($id, Request $request)
-    {
-        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $risk_detail->update([
-            'status_mitigasi' => 0
-        ]);
-        $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Tidak Mitigasi.']);
-    }
-
-    public function deleteRiskDetail($id, Request $request)
-    {
-        RiskDetail::destroy($id);
-        $id_risk = $request->id_risk;
-        return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil dihapus.']);
-    }
-
-
 }
