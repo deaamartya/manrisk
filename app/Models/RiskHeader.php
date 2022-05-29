@@ -53,9 +53,4 @@ class RiskHeader extends Model
 		'lampiran',
 		'status_h'
 	];
-
-	public function risk_detail()
-	{
-		return $this->hasMany(RiskDetail::class, 'id_riskh');
-	}
 }

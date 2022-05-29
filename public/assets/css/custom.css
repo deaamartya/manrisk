@@ -44,10 +44,6 @@
     z-index: 1050;
 }
 
-.select2-container {
-  z-index: 1050;
-}
-
 .selection .select2-selection .select2-search__field {
     margin: 2px;
     padding-left: 8px;
@@ -105,38 +101,5 @@ label {
 }
 
 .text-red {
-  color: red;
-}
-
-.btn-sm .small-icon {
-  width: auto;
-  height: 14px;
-}
-
-.card .card-header,
-.card .card-body {
-  padding: 24px;
-}
-
-.btn-primary {
-  background-color: #3c88f7 !important;
-  border-color: #3c88f7 !important;
-}
-
-.btn-success {
-  background-color: #f54e49 !important;
-  border-color: #f54e49 !important;
-}
-
-.btn {
-  padding: 8px 16px;
-}
-
-.flex-center {
-  display: flex;
-  align-items: center;
-}
-
-.hr-custom {
-  margin: 4px 0;
+    color: red;
 }

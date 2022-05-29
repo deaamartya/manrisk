@@ -8,28 +8,25 @@ use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\Auth\{
     LoginController,
 };
-use App\Http\Controllers\GlobalController;
 
-Route::get('/', [HomeController::class, 'index'])->name('/');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('get_perusahaan', [GlobalController::class, 'get_perusahaan']);
-
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (! in_array($locale, ['en', 'de', 'es','fr','pt', 'cn', 'ae'])) {
         abort(400);
-    }
+    }   
     Session()->put('locale', $locale);
     Session::get('locale');
     return redirect()->back();
 })->name('lang');
 
 Route::view('index', 'dashboard.index')->name('index');
-
+    
 Route::prefix('dashboard')->group(function () {
     Route::view('index', 'dashboard.index')->name('index');
     Route::view('dashboard-02', 'dashboard.dashboard-02')->name('dashboard-02');
@@ -41,14 +38,14 @@ Route::prefix('widgets')->group(function () {
 });
 
 Route::prefix('page-layouts')->group(function () {
-    Route::view('box-layout', 'page-layout.box-layout')->name('box-layout');
-    Route::view('layout-rtl', 'page-layout.layout-rtl')->name('layout-rtl');
-    Route::view('layout-dark', 'page-layout.layout-dark')->name('layout-dark');
-    Route::view('hide-on-scroll', 'page-layout.hide-on-scroll')->name('hide-on-scroll');
-    Route::view('footer-light', 'page-layout.footer-light')->name('footer-light');
-    Route::view('footer-dark', 'page-layout.footer-dark')->name('footer-dark');
-    Route::view('footer-fixed', 'page-layout.footer-fixed')->name('footer-fixed');
-});
+    Route::view('box-layout', 'page-layout.box-layout')->name('box-layout');    
+    Route::view('layout-rtl', 'page-layout.layout-rtl')->name('layout-rtl');    
+    Route::view('layout-dark', 'page-layout.layout-dark')->name('layout-dark');    
+    Route::view('hide-on-scroll', 'page-layout.hide-on-scroll')->name('hide-on-scroll');    
+    Route::view('footer-light', 'page-layout.footer-light')->name('footer-light');    
+    Route::view('footer-dark', 'page-layout.footer-dark')->name('footer-dark');    
+    Route::view('footer-fixed', 'page-layout.footer-fixed')->name('footer-fixed');    
+}); 
 
 Route::prefix('project')->group(function () {
     Route::view('projects', 'project.projects')->name('projects');

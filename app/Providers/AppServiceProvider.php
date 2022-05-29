@@ -16,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
         $this->mapRiskOfficerRoutes();
         $this->mapRiskOwnerRoutes();
         $this->mapPenilaiRoutes();
-        $this->mapAdminRoutes();
         $this->mapWebRoutes();
     }
 
@@ -43,14 +42,6 @@ class AppServiceProvider extends ServiceProvider
             ->prefix('risk-officer')
             ->namespace($this->namespace)
             ->group(base_path('routes/risk-officer.php'));
-
-        }
-    protected function mapAdminRoutes()
-    {
-        Route::middleware('web')
-            ->prefix('admin')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/admin.php'));
     }
 
     protected function mapRiskOwnerRoutes()

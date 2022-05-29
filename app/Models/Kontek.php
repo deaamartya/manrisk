@@ -38,9 +38,4 @@ class Kontek extends Model
 		'konteks',
 		'tahun_konteks'
 	];
-
-	public function sumber_risiko()
-	{
-		return $this->hasMany(SRisiko::class, 'id_s_risiko');
-	}
 }

@@ -16,8 +16,6 @@ class CreateSRisikoTable extends Migration
         Schema::create('s_risiko', function (Blueprint $table) {
             $table->integer('id_s_risiko', true);
             $table->string('s_risiko', 500);
-            $table->unsignedInteger('company_id')->default(1);
-            $table->foreign('company_id')->references('company_id')->on('perusahaan');
             $table->string('id_konteks', 10)->nullable();
             $table->integer('id_user')->nullable();
             $table->string('tahun', 5)->nullable();

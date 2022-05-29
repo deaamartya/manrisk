@@ -32,8 +32,7 @@ class SRisiko extends Model
 
 	protected $casts = [
 		'id_user' => 'int',
-		'status_s_risiko' => 'int',
-		'company_id' => 'int',
+		'status_s_risiko' => 'int'
 	];
 
 	protected $fillable = [
@@ -42,12 +41,11 @@ class SRisiko extends Model
 		'id_user',
 		'tahun',
 		'catatan',
-		'status_s_risiko',
-		'company_id',
+		'status_s_risiko'
 	];
 
-	public function konteks()
-	{
-		return $this->belongsTo(Kontek::class, 'id_konteks');
-	}
+	// public function konteks()
+	// {
+	// 	return $this->hasMany(Kontek::class, 'id_konteks');
+	// }
 }
