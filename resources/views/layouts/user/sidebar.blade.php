@@ -110,7 +110,7 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
-							<span>View All Risk</span>
+							<span>Risk Register Korporasi</span>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -144,7 +144,7 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
 							<i data-feather="list"></i>
-							<span>View All Risk</span>
+							<span>Risk Register Korporasi</span>
 						</a>
 					</li>
 					@endif
