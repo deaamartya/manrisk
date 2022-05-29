@@ -20,7 +20,7 @@
                 @csrf
                 <div class="row">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Pilih Perusahaan<span class="required"></span></label>
-                    <div class='col-md-5 col-sm-5 col-xs-12'>
+                    <div class="col-md-5 col-sm-5 col-xs-12 select2-normal">
                         <select class="js-example-basic-single col-sm-12" name="id_user" >
                             @foreach($perusahaan as $p)
                             <option value="{{ $p->id_user }}"  @if($p->company_id == $perusahaan_filter) selected @endif>{{ $p->company_code }} - {{ $p->instansi }}</option>
@@ -93,7 +93,7 @@
                         <div class="row mb-3">
                             <label class="col-md-3 col-sm-3 col-xs-12">Status Verifikasi</label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <select class="select-modal js-example-basic-single col-sm-12" name="status_verifikasi" required>
+                                <select class="js-example-basic-single col-sm-12" name="status_verifikasi" required>
                                     <option value="1" @if($s->status_s_risiko == 1) selected @endif>Disetujui</option>
                                     <option value="2" @if($s->status_s_risiko == 2) selected @endif>Tidak Disetujui</option>
                                 </select>

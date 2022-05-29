@@ -18,8 +18,7 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)
-            ->get();
+        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->get();
         return view('risk-officer.mitigasi-plan', compact("headers"));
     }
 
@@ -32,6 +31,7 @@ class MitigasiPlanController extends Controller
     public function show($id)
     {
         $headers = RiskHeader::where('id_riskh', '=', $id)->first();
+        // dd($headers);
         return view('risk-officer.mitigasi-detail', compact("headers"));
     }
 
@@ -45,6 +45,7 @@ class MitigasiPlanController extends Controller
     public function update(Request $request, $id)
     {
         $detail = RiskDetail::where('id_riskd', '=', $id)->first();
+        $id_header = $detail->id_riskh;
         $data = Arr::except($request->toArray(), ['_token', 'u_file']);
         $detail->update($data);
         if ($request->u_file) {
@@ -55,6 +56,6 @@ class MitigasiPlanController extends Controller
                 'u_file' => $filename,
             ]);
         }
-        return redirect()->route('risk-officer.mitigasi-plan.show', $id);
+        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
     }
 }

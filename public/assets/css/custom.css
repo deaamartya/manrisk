@@ -44,13 +44,13 @@
     z-index: 1050;
 }
 
+.select2-normal {
+    z-index: 2 !important;
+}
+
 .selection .select2-selection .select2-search__field {
     margin: 2px;
     padding-left: 8px;
-}
-
-.select2 .select2-custom .select2-container {
-    z-index: 900 !important;
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li {
@@ -136,7 +136,6 @@ label {
 
 .btn {
     padding: 8px 16px;
-    <<<<<<< HEAD=======
 }
 
 .flex-center {
