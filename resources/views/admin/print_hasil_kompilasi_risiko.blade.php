@@ -7,67 +7,44 @@
         vertical-align: middle;
     }
 
-    .first-table {
+
+    .table {
         width: 997px;
     }
 
-    .first-table tr td[0] {
-        width: 240px;
-        font-size:12px;
-    }
-
-    .first-table tr td[1] {
-        width: 505px;
-        height: 40px;
-        font-size:14px;
-        padding-left: 10px;
-        padding-right: 10px;
-        line-height: 2px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    .first-table tr td[2] {
-        width: 240px;
-    }
-
-    .third-table {
-        width: 997px;
-    }
-
-    .third-table tbody tr td[0] {
-        width: 40px;
+    .table tbody tr td[0] {
+        width: 20px;
         font-size:14px;
         font-weight: bold;
         text-align: center;
     }
 
-    .third-table tbody tr td[1] {
+    .table tbody tr td[1] {
         font-size:14px;
         font-weight: bold;
         text-align: center;
     }
 
-    .third-table tbody tr td[2] {
+    .table tbody tr td[2] {
         font-size:14px;
         padding-left: 10px;
         font-weight: bold;
         text-align: center;
     }
 
-    .third-table tbody tr td[3] {
+    .table tbody tr td[3] {
         font-size:14px;
         font-weight: bold;
         text-align: center;
     }
 
-    .third-table tbody tr td[4] {
+    .table tbody tr td[4] {
         font-size:14px;
         font-weight: bold;
         text-align: center;
     }
 
-    .third-table tbody tr td[5] {
+    .table tbody tr td[5] {
         font-size:14px;
         font-weight: bold;
         text-align: center;
@@ -75,69 +52,45 @@
     }
 </style>
 <body backtop="2mm" backbottom="5mm" backleft="5mm" backright="5mm">
-    <table class="first-table" cellspacing="0">
-        <tr>
-            <td align="center">
-                <img src="{{ asset('assets/images/logo/logo_company/logo_bumn.png') }}" style="width:120px;">
-            </td>
-            <td align="center">
-                <b>Hasil Kompilasi Risiko</b>
-                <p>{{ $instansi->instansi }} Tahun {{ $tahun }} </p>
-            </td>
-            <td align="center">
-                <img src="{{ asset('assets/images/logo/logo_company/logo_PI.png') }}" style="width:90px;">
-            </td>
-        </tr>
-    </table>
-    {{-- <table class="second-table" cellspacing="0">
-        <tr>
-            <td align="center">
-                No
-            </td>
-            <td align="center">
-                Konteks Organisasi
-            </td>
-            <td align="center">
-                Sumber Risiko
-            </td>
-            <td align="center">
-                L
-            </td>
-            <td align="center">
-                C
-            </td>
-            <td align="center">
-                R
-            </td>
-        </tr>
-    </table> --}}
-    <table class="third-table" cellspacing="0">
+    <table class="table" cellspacing="0">
         <thead>
             <tr>
-                <th align="center">
-                    No
+                <th colspan="2" align="center" style="width: 240px">
+                    <img src="{{ asset('assets/images/logo/logo_company/logo_bumn.png') }}" style="width:120px;">
                 </th>
-                <th align="center">
-                    Konteks Organisasi
+                <th align="center" style="width: 505px">
+                    <b>Hasil Kompilasi Risiko</b>
+                    <p>{{ $instansi->instansi }} Tahun {{ $tahun }} </p>
                 </th>
-                <th align="center">
-                    Sumber Risiko
-                </th>
-                <th align="center">
-                    L
-                </th>
-                <th align="center">
-                    C
-                </th>
-                <th align="center">
-                    R
+                <th colspan="3" align="center" style="width: 240px">
+                    <img src="{{ asset('assets/images/logo/logo_company/logo_PI.png') }}" style="width:90px;">
                 </th>
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <td align="center">
+                    No
+                </td>
+                <td align="center">
+                    Konteks Organisasi
+                </td>
+                <td align="center">
+                    Sumber Risiko
+                </td>
+                <td align="center">
+                    L
+                </td>
+                <td align="center">
+                    C
+                </td>
+                <td align="center">
+                    R
+                </td>
+            </tr>
             @foreach($data as $dt)
                 <tr>
-                    <td align="center">
+                    <td align="center" style="width: 40px">
                         {{ $loop->iteration }}
                     </td>
                     <td align="left">
