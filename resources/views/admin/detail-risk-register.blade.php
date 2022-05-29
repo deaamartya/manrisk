@@ -42,16 +42,16 @@
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
-                <h6>Status</h6>
+                <h6>Status</h6><hr class="hr-custom"></div>
                 @if($headers->status_h == 0)
                 <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
                 @elseif($headers->status_h == 1)
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
                 @endif
 
-                @if($headers->status_h_indhan == 0)
+                @if($headers_indhan->status_h == 0)
                 <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
-                @elseif($headers->status_h_indhan == 1)
+                @elseif($headers_indhan->status_h == 1)
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
                 @endif
               </div>
@@ -187,15 +187,19 @@
                     <td>{{ $d->l_akhir }}</td>
                     <td>{{ $d->c_akhir }}</td>
                     <td>
-                        @if($d->r_akhir <= 5)
-                          <button class="btn btn-sm btn-pill btn-green">
-                        @elseif($d->r_akhir>= 6 && $d->r_akhir <= 11)
-                          <button class="btn btn-sm btn-pill btn-warning">
-                        @else
-                          <button class="btn btn-sm btn-pill btn-danger">
-                        @endif
-                          {{ number_format($d->r_akhir, 2) }}
-                          </button>
+                          @if($d->r_akhir < 6)
+                          <span class="badge badge-blue me-2">
+                          @elseif($d->r_akhir < 12)
+                          <span class="badge badge-green me-2">
+                          @elseif($d->r_akhir < 16)
+                          <span class="badge badge-warning me-2">
+                          @elseif($d->r_akhir < 20)
+                          <span class="badge badge-orange me-2">
+                          @else
+                          <span class="badge badge-danger me-2">
+                          @endif
+                          {{ number_format($d->r_akhir ,2) }}
+                          </span>
                     </td>
                     <td>
                         @if($d->status == 0)

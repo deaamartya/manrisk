@@ -9,10 +9,12 @@ use App\Models\RiskHeader;
 use App\Models\DefendidUser;
 use App\Models\RiskHeaderKorporasi;
 use App\Models\RiskDetail;
+use App\Models\SRisiko;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
-use App\Models\SRisiko;
+use Redirect;
+
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -82,18 +84,23 @@ class RiskRegisterIndhanController extends Controller
     }
 
 
-    public function show($id, Request $request)
+    public function show($id)
     {
         $headers = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
         // dd($headers);
-        $detail_risk = RiskDetail::join('risk_header', 'risk_detail.id_riskh', 'risk_header.id_riskh' )
-                ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko' )
-                ->join('konteks', 'konteks.id_konteks', 's_risiko.id_konteks' )
-                ->where('status_korporasi', '=', 1)
-                ->where('risk_header.tahun', '=', $request->tahun)
-                ->first();
+        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+                ->where('risk_detail.status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->get();
+        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
+                ->where('risk_detail.status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->count();
             // dd($detail_risk);
-        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk'));
+        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
     }
 
     public function uploadLampiran(Request $request) {
@@ -105,16 +112,37 @@ class RiskRegisterIndhanController extends Controller
         $riskheader->update([
             'lampiran' => $filename,
         ]);
-        
-        return redirect()->route('admin.risk-register-indhan', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
+        $headers = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
+        // dd($headers);
+        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+                ->where('risk_detail.status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $request->tahun)
+                ->get();
+        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
+                ->where('risk_detail.status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $request->tahun)
+                ->count();
+            // dd($detail_risk);
+        return redirect()->route('admin.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!', 'headers' => $headers,  'detail_risk' => $detail_risk, 'mitigasi' => $mitigasi]);
     }
 
     public function print($id) {
         $header = RiskHeaderKorporasi::where('id_riskh', '=', $id)->first();
-        $user = Auth::user();
-        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
-        $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'user'))->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
+        // dd($headers);
+        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+                ->where('risk_detail.status_korporasi', '=', 1)
+                ->where('risk_header.tahun', '=', $header->tahun)
+                ->get();
+            // dd($detail_risk);
+        // $user = Auth::user();
+        $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk'))->setPaper('a4', 'landscape');
+        // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
+        return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
     }
 
     public function approval($id)

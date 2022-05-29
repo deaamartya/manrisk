@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RiskHeader;
 use App\Models\RiskDetail;
+use App\Models\RiskHeaderKorporasi;
 use App\Models\DefendidUser;
 use App\Models\SRisiko;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
@@ -84,7 +85,9 @@ class RiskRegisterKorporasiController extends Controller
         $headers = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
                     ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
                     ->where('id_riskh', '=', $id)->first();
-        return view('admin.detail-risk-register', compact('headers'));
+        $headers_indhan = RiskHeaderKorporasi::where('tahun', $headers->tahun)->first();
+        // dd($headers_indhan);
+        return view('admin.detail-risk-register', compact('headers', 'headers_indhan'));
     }
 
     public function korporate($id, Request $request)

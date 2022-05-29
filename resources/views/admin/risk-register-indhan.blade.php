@@ -55,31 +55,26 @@
                       </button>
                     </td>
                     <td>
-                      <form action="{{ route('admin.risk-register-indhan.show', $d->id_riskh) }}" method="GET">
-                          <input type="hidden" value="{{ $d->tahun }}" name="tahun">
-                      <!-- <a href="{{ route('admin.risk-register-indhan.show', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center"> -->
-                      <button type="submit" class="btn btn-sm btn-success"> 
+                      <a href="{{ route('admin.risk-register-indhan.show', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
                       <i data-feather="eye" class="me-2 small-icon"></i>
                         Detail
-                      </button>
-                      <!-- </a> -->
-                      </form>
+                      </a>
                     </td>
                     <td>
-                      <a href="{{ route('admin.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success">
+                      <a href="{{ route('admin.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success" title="Print">
                         <i data-feather="printer" class="small-icon"></i>
                       </a>
-                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}">
+                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
-                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}">
+                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
                       </button>
-                      @if($d->status_h == 0)
-                      <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
+                      @if($d->status_h != 1)
+                      <form action="{{ route('admin.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
                           @csrf
-                          <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
-                        <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
+                          <button title="Approval" type="submit" class="btn btn-sm btn-green mt-2">
+                        <i data-feather="check-circle" class="small-icon"></i></button>
                       </form>
                       @endif
                     </td>
