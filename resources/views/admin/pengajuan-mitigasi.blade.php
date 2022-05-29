@@ -20,6 +20,30 @@
       <!-- Zero Configuration  Starts-->
       <div class="col-sm-12">
         <div class="card">
+          <div class="card-header">
+            Kelompok Risiko
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <span class="badge badge-blue me-2"> </span>Rendah
+              </div>
+              <div class="col">
+                <span class="badge badge-green me-2"> </span>Rendah-Menengah
+              </div>
+              <div class="col">
+                <span class="badge badge-warning me-2"> </span>Menengah
+              </div>
+              <div class="col">
+                <span class="badge badge-orange me-2"> </span>Menengah-Tinggi
+              </div>
+              <div class="col">
+                <span class="badge badge-danger me-2"> </span>Tinggi
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
           <div class="card-body">
             <div class="table-responsive">
               <table class="display" id="basic-1">
@@ -39,7 +63,21 @@
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->risk_detail->sumber_risiko->s_risiko }}</td>
-                    <td>{{ $d->risk_detail->r_awal }}</td>
+                    <td>
+                      @if($d->risk_detail->r_awal < 6)
+                      <span class="badge badge-blue me-2">
+                      @elseif($d->risk_detail->r_awal < 12)
+                      <span class="badge badge-green me-2">
+                      @elseif($d->risk_detail->r_awal < 16)
+                      <span class="badge badge-warning me-2">
+                      @elseif($d->risk_detail->r_awal < 20)
+                      <span class="badge badge-orange me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($d->risk_detail->r_awal ,2) }}
+                      </span>
+                    </td>
                     <td>{{ $d->pemohon->name }}</td>
                     <td>
                       @if ($d->tipe_pengajuan === 0)

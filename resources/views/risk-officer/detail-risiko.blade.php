@@ -76,6 +76,30 @@
         </div>
         <div class="card">
           <div class="card-header">
+            Kelompok Risiko
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <span class="badge badge-blue me-2"> </span>Rendah
+              </div>
+              <div class="col">
+                <span class="badge badge-green me-2"> </span>Rendah-Menengah
+              </div>
+              <div class="col">
+                <span class="badge badge-warning me-2"> </span>Menengah
+              </div>
+              <div class="col">
+                <span class="badge badge-orange me-2"> </span>Menengah-Tinggi
+              </div>
+              <div class="col">
+                <span class="badge badge-danger me-2"> </span>Tinggi
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
             <button class="btn btn-lg btn-primary d-flex btn-add" data-bs-toggle="modal" data-bs-target="#create-risk">
               <i data-feather="plus" class="me-2"></i>
               Tambah Detail Risiko
@@ -106,7 +130,21 @@
                     <td>{{ $d->sebab }}</td>
                     <td>{{ $d->l_awal }}</td>
                     <td>{{ $d->c_awal }}</td>
-                    <td>{{ $d->r_awal }}</td>
+                    <td>
+                      @if($d->r_awal < 6)
+                      <span class="badge badge-blue me-2">
+                      @elseif($d->r_awal < 12)
+                      <span class="badge badge-green me-2">
+                      @elseif($d->r_awal < 16)
+                      <span class="badge badge-warning me-2">
+                      @elseif($d->r_awal < 20)
+                      <span class="badge badge-orange me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ $d->r_awal }}
+                      </span>
+                    </td>
                     <td>
                       @if(count($d->pengajuan_mitigasi) === 1)
                       <span>Aksi Mitigasi telah diajukan</span>

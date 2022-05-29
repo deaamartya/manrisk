@@ -170,3 +170,15 @@ label {
     display: flex;
     gap: 8px;
 }
+
+.badge-blue {
+    background-color: #3c88f7;
+}
+
+.badge-orange {
+    background-color: #ecab14;
+}
+
+.badge-green {
+    background-color: #51bb25;
+}
