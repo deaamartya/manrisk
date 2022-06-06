@@ -13,7 +13,7 @@ class RisikoController extends Controller
     {
         $resiko = Risk::whereNull('deleted_at')->get();
 
-        return view('admin.resiko', compact('resiko'));
+        return view('admin.risiko', compact('risiko'));
     }
 
     public function store(Request $request, $id = null)
