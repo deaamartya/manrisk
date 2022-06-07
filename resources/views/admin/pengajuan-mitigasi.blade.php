@@ -50,6 +50,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
+                    <th>Instansi</th>
                     <th>Risiko</th>
                     <th>R Awal</th>
                     <th>Pemohon</th>
@@ -62,6 +63,7 @@
                   @foreach($pengajuan as $d)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
+                    <td>{{ $d->pemohon->perusahaan->instansi }}</td>
                     <td>{{ $d->risk_detail->sumber_risiko->s_risiko }}</td>
                     <td>
                       @if($d->risk_detail->r_awal < 6)
@@ -153,7 +155,7 @@
               </div>
               <div class="col-md-6">
                 <div class="pb-2"><strong>Waktu Pengajuan</strong></div>
-                <p>{{ date('d M Y h:i:s', strtotime($d->created_at)) }}</p>
+                <p>{{ date('d M Y H:i:s', strtotime($d->created_at)) }}</p>
               </div>
             </div>
             <hr>
@@ -216,7 +218,7 @@
               </div>
               <div class="col-md-6">
                 <div class="pb-2"><strong>Waktu Pengajuan</strong></div>
-                <p>{{ date('d M Y h:i:s', strtotime($d->created_at)) }}</p>
+                <p>{{ date('d M Y H:i:s', strtotime($d->created_at)) }}</p>
               </div>
             </div>
             <hr>
@@ -274,7 +276,7 @@
             </div>
             <div class="col-md-6">
               <div class="pb-2"><strong>Waktu Pengajuan</strong></div>
-              <p>{{ date('d M Y h:i:s', strtotime($d->created_at)) }}</p>
+              <p>{{ date('d M Y H:i:s', strtotime($d->created_at)) }}</p>
             </div>
           </div>
           <hr>
@@ -294,7 +296,7 @@
             </div>
             <div class="col-md-6 pb-3">
               <div class="pb-2"><strong>Waktu Konfirmasi</strong></div>
-              <p>{{ date('d M Y h:i:s', strtotime($d->updated_at)) }}</p>
+              <p>{{ date('d M Y H:i:s', strtotime($d->updated_at)) }}</p>
             </div>
           </div>
           @endif

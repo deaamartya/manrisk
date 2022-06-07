@@ -313,13 +313,13 @@
     			{!! wordwrap(nl2br($rd->pengendalian), 14, '<br />', true) !!}
     		</td>
     		<td width="2%" class="center f-11">
-    			{{ $rd->l_awal }}
+    			{{ number_format($rd->l_awal, 2) }}
     		</td>
 				<td width="2%" class="center f-11">
-    			{{ $rd->c_awal }}
+    			{{ number_format($rd->c_awal, 2) }}
     		</td>
 				<td width="3%" class="center f-11">
-    			{{ $rd->r_awal }}
+    			{{ number_format($rd->r_awal, 2) }}
     		</td>
     		<td width="8%" class="center f-11">
     			{!! nl2br($rd->peluang) !!}

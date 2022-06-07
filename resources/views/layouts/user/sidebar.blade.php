@@ -129,9 +129,12 @@
                     @endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
+						<a class="sidebar-link sidebar-title link-nav d-flex {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
 							<i data-feather="file-text"></i>
-							<span>Pengajuan Mitigasi</span>
+							<div class="flex-row-between-center">
+								<span class="me-4p">Pengajuan Mitigasi</span>
+								<span class="badge rounded-pill badge-danger">2</span>
+							</div>
 						</a>
 					</li>
 					@endif

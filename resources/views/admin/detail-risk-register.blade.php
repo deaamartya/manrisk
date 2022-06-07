@@ -49,9 +49,9 @@
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
                 @endif
 
-                @if($headers_indhan->status_h == 0)
+                @if($headers_indhan->status_h_indhan == 0)
                 <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
-                @elseif($headers_indhan->status_h == 1)
+                @elseif($headers_indhan->status_h_indhan == 1)
                 <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
                 @endif
               </div>
@@ -162,8 +162,8 @@
                     <td>{{ $d->dampak }}</td>
                     <td>{{ $d->uc }}</td>
                     <td>{{ $d->pengendalian }}</td>
-                    <td>{{ $d->l_awal }}</td>
-                    <td>{{ $d->c_awal }}</td>
+                    <td>{{ number_format($d->l_awal ,2) }}</td>
+                    <td>{{ number_format($d->c_awal ,2) }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">

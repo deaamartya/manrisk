@@ -89,7 +89,7 @@
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
-              <table class="display" id="basic-1">
+              <table class="display" id="table-risiko">
                 <thead>
                   <tr>
                     <th>Id Risk</th>
@@ -111,8 +111,8 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ $d->l_awal }}</td>
-                    <td>{{ $d->c_awal }}</td>
+                    <td>{{ number_format($d->l_awal, 2) }}</td>
+                    <td>{{ number_format($d->c_awal, 2) }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -125,7 +125,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ $d->r_awal }}
+                      {{ number_format($d->r_awal, 2) }}
                       </span>
                     </td>
                     <td>
@@ -202,6 +202,9 @@
 <script>
   $(document).ready(function(){
     $(".select2").select2();
+    $("#table-risiko").DataTable({
+      'order': [ 6, 'desc' ]
+    });
   })
   function cal() {
     var lawal = $('#l_awal').val();

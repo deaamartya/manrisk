@@ -16,7 +16,8 @@ class PengajuanMitigasiController extends Controller
      */
     public function index()
     {
-        //
+        $pengajuan = PengajuanMitigasi::where('id_user', '=', Auth::user()->id_user)->get();
+        return view('risk-officer.pengajuan-mitigasi', compact('pengajuan'));
     }
 
     /**
@@ -43,6 +44,8 @@ class PengajuanMitigasiController extends Controller
             'alasan' => $request->alasan,
             'is_approved' => false,
             'tipe_pengajuan' => $request->tipe_pengajuan,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Pengajuan berhasil diajukan!']);
     }

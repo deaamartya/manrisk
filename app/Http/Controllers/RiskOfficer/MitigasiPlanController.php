@@ -9,6 +9,7 @@ use App\Models\RiskHeader;
 use Auth;
 use Illuminate\Support\Arr;
 use App\Models\RiskDetail;
+use App\Models\MitigasiLogs;
 
 class MitigasiPlanController extends Controller
 {
@@ -49,5 +50,37 @@ class MitigasiPlanController extends Controller
         $id_header = $query['id_header'];
 
         return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
+    }
+
+    public function getProgressData(Request $request) {
+        $data = null;
+        $logs = MitigasiLogs::where('id_riskd', '=', $request->id)->get();
+        if($logs != null){
+            $data = new \stdClass();
+            $data->data = [];
+            $count = 0;
+            foreach($logs as $c){
+                if ($c->dokumen === null) {
+                    $isi = [
+                        $count + 1,
+                        $c->realisasi,
+                        $c->timestamp,
+                        '',
+                    ];
+                } else {
+                    $isi = [
+                        $count + 1,
+                        $c->realisasi,
+                        $c->timestamp,
+                        '<a href="{{ asset('.'\'document/lampiran-mitigasi/\''.$c->dokumen.') }}"  target="_blank" class="btn btn-secondary">
+                        <i data-feather="zoom-out" class="small-icon" height="13"></i>Progress
+                        </a>',
+                    ];
+                }
+                array_push($data->data, $isi);
+                $count++;
+            }
+        }
+        return response()->json($data);
     }
 }

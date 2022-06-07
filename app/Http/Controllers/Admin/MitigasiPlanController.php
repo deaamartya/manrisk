@@ -31,6 +31,9 @@ class MitigasiPlanController extends Controller
     {
         $pengajuan = PengajuanMitigasi::where('id', '=', $id)->first();
         $pengajuan->update($request->except('_token'));
+        $pengajuan->update([
+            'updated_at' => now(),
+        ]);
         return Redirect::back()->with(['success-swal' => 'Pengajuan Mitigasi berhasil dikonfirmasi!']);
     }
 }

@@ -69,6 +69,11 @@
                   @elseif($headers->status_h == 1)
                   <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
                   @endif
+                  @if($headers->status_h_indhan == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Admin</span>
+                  @elseif($headers->status_h_indhan == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Admin</span>
+                  @endif
                 </div>
               </div>
             </div>
@@ -120,8 +125,8 @@
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ $d->l_awal }}</td>
-                    <td>{{ $d->c_awal }}</td>
+                    <td>{{ number_format($d->l_awal, 2) }}</td>
+                    <td>{{ number_format($d->c_awal, 2) }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">

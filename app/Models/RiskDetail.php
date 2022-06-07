@@ -115,4 +115,9 @@ class RiskDetail extends Model
 	{
 		return $this->hasMany(PengajuanMitigasi::class, 'id_riskd');
 	}
+
+	public function mitigasi_logs()
+	{
+		return $this->hasMany(MitigasiLogs::class, 'id_riskd');
+	}
 }

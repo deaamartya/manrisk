@@ -31,4 +31,7 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');
   Route::get('table', [HomeController::class, 'table'])->name('table');
   Route::get('form', [HomeController::class, 'form'])->name('form');
+  
+  Route::post('fetchNilaiRisiko', [RisikoController::class, 'getNilai']);
+  Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
 });

@@ -25,9 +25,7 @@
 <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
 <script>
-  $(document).ready(function() {
-    $('.table-datatable').DataTable();
-  })
+  $(document).ready(function() {})
 </script>
 @yield('custom-script')
 @endsection

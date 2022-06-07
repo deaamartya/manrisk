@@ -65,9 +65,14 @@
                 <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">
                   @if($headers->status_h == 0)
-                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                  <span class="badge badge-warning me-2"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
                   @elseif($headers->status_h == 1)
-                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  <span class="badge badge-success me-2"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  @endif
+                  @if($headers->status_h_indhan == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Admin</span>
+                  @elseif($headers->status_h_indhan == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Admin</span>
                   @endif
                 </div>
               </div>
@@ -128,8 +133,8 @@
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ $d->l_awal }}</td>
-                    <td>{{ $d->c_awal }}</td>
+                    <td>{{ number_format($d->l_awal, 2) }}</td>
+                    <td>{{ number_format($d->c_awal, 2) }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -142,7 +147,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ $d->r_awal }}
+                      {{ number_format($d->r_awal, 2) }}
                       </span>
                     </td>
                     <td>
@@ -226,7 +231,7 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Risiko</label>
-                    <select class="select2" name="id_s_risiko" required>
+                    <select class="select2" name="id_s_risiko" required id="select-risiko">
                       @foreach($pilihan_s_risiko as $p)
                       <option value="{{ $p->id_s_risiko }}">{{ $p->tahun }} - {{ $p->s_risiko }}</option>
                       @endforeach
@@ -265,15 +270,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ $nilai_l }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ $nilai_c }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ $nilai_l * $nilai_c }}">
+                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) }}">
                   </div>
                 </div>
               </div>
@@ -419,15 +424,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ $data->l_awal }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ $data->c_awal }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ $data->r_awal }}">
+                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) }}">
                   </div>
                 </div>
               </div>
@@ -499,6 +504,20 @@
 <script>
   $(document).ready(function(){
     $(".select2").select2();
+    $("#select-risiko").on('change', function(){
+      $.post(
+        "{{ url('risk-officer/fetchNilaiRisiko') }}", {
+          _token: "{{ csrf_token() }}",
+          id: $(this).val()
+        }, function(result) {
+          console.log(result)
+          $("#l_awal").val(parseFloat(result.nilai_l).toFixed(2))
+          $("#c_awal").val(parseFloat(result.nilai_c).toFixed(2))
+          var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
+          $('#r_awal').val(mul.toFixed(2));
+        }
+      )
+    });
   })
   function cal() {
     var lawal = $('#l_awal').val();

@@ -22,7 +22,8 @@ class RisikoController extends Controller
     public function index()
     {
         $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->get();
-        return view('risk-officer.risiko', compact("headers"));
+        $risk_owner = DefendidUser::where('company_id', Auth::user()->company_id)->where('is_risk_owner', '=', TRUE)->first();
+        return view('risk-officer.risiko', compact("headers", "risk_owner"));
     }
 
     /**
@@ -114,5 +115,12 @@ class RisikoController extends Controller
             'lampiran' => $filename,
         ]);
         return redirect()->route('risk-officer.risiko.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
+    }
+
+    public function getNilai(Request $request) {
+        $nilai_l = Pengukuran::where('id_s_risiko', '=', $request->id)->avg('nilai_L');
+        $nilai_c = Pengukuran::where('id_s_risiko', '=', $request->id)->avg('nilai_C');
+
+        return response()->json(['success' => true, 'nilai_l' => $nilai_l, "nilai_c" => $nilai_c]);
     }
 }

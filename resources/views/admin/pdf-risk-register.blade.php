@@ -312,13 +312,13 @@
     			{!! wordwrap(nl2br($rd->pengendalian), 14, '<br />', true) !!}
     		</td>
     		<td width="2%" class="center f-11">
-    			{{ $rd->l_awal }}
+    			{{ number_format($rd->l_awal) }}
     		</td>
 				<td width="2%" class="center f-11">
-    			{{ $rd->c_awal }}
+    			{{ number_format($rd->c_awal) }}
     		</td>
 				<td width="3%" class="center f-11">
-    			{{ $rd->r_awal }}
+    			{{ number_format($rd->r_awal) }}
     		</td>
     		<td width="8%" class="center f-11">
     			{!! nl2br($rd->peluang) !!}
@@ -336,13 +336,13 @@
     			{!! nl2br($rd->dokumen) !!}
     		</td>
     		<td width="2%" class="center f-11">
-    			{{ $rd->l_akhir }}
+    			{{ number_format($rd->l_akhir, 2) }}
     		</td>
 				<td width="2%" class="center f-11">
-    			{{ $rd->c_akhir }}
+    			{{ number_format($rd->c_akhir, 2) }}
     		</td>
 				<td width="3%" class="center f-11">
-    			{{ $rd->r_akhir }}
+    			{{ number_format($rd->r_akhir, 2) }}
     		</td>
     	</tr>
 			@endforeach
