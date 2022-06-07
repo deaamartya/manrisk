@@ -52,8 +52,28 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td><b>{{ $s->risk }}</b> ({{ $s->konteks }})</td>
                                     <td>{{ $s->s_risiko }}</td>
-                                    <td><input type="number" name="nilai_L[]" required></td>
-                                    <td><input type="number" name="nilai_C[]" required></td>
+                                    <!-- <td><input type="number" name="nilai_L[]" required></td>
+                                    <td><input type="number" name="nilai_C[]" required></td> -->
+                                    <td>
+                                        <select class="js-example-basic-single col-sm-12" name="nilai_L[]" required>
+                                            <option selected disabled>Pilih Nilai L</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="js-example-basic-single col-sm-12" name="nilai_C[]" required>
+                                            <option selected disabled>Pilih Nilai C</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
                                     <input type="hidden" name="id_s_risk[]" required value=" {{ $s->id_s_risiko }}" style="display: none;"> 
                                     <input type="hidden" name="nama_responden" value="{{ $nama_responden }}" required style="display: none;">
                                 </tr>

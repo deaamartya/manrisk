@@ -14,6 +14,7 @@
     <div class="row">
     <!-- Zero Configuration  Starts-->
     <div class="col-sm-12">
+    @if($sr_exists)
         <div class="card">
         <div class="card-header">
             <div class="row">
@@ -31,17 +32,18 @@
                                 </tr>
                             </thead>
                         <tbody>
-                        @if(count($pengukuran) > 0)
-                            @foreach($pengukuran as $p)
-                                <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $p->nama_responden }}</td>
-                                    <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
-                                    <td>{{ $p->tahun}}</td>
-                                    <td class="text-center">{{ $jml_risk }}</td>
-                                    <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
-                                </tr>
-                            @endforeach
+                            @if(count($pengukuran) > 0)
+                                @foreach($pengukuran as $p)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $p->nama_responden }}</td>
+                                        <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
+                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $jml_risk }}</td>
+                                        <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
+                                    </tr>
+                                @endforeach
+                            @endif
                             @if(count($arr_pengukur) > 0)
                                 @foreach($arr_pengukur as $p)
                                     <tr>
@@ -103,7 +105,6 @@
                                     </div>
                                 @endforeach
                             @endif
-                        @endif
                             </tbody>
                         </table>
                     </div>
@@ -172,6 +173,9 @@
                 </div>
             </div>
             </div>
+            @else
+            <div class="alert alert-danger">Sumber risiko untuk perusahaan ini pada tahun {{ date('Y') }} belum tersedia.</div>
+            @endif
         </div>
     </div>
 </div> 

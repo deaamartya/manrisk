@@ -24,28 +24,31 @@ class PengukuranRisikoController extends Controller
         foreach($data_sr as $d){
             $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('pengukuran.id_s_risiko', $d->id_s_risiko)->get();
-               
-            $company_id = Auth::user()->company_id;
-            $jabatan = DefendidPengukur::where('company_id', $company_id)->get();
+            // dd($pengukuran);
+            $pengukur = DefendidPengukur::where('id_user', Auth::user()->id_user)->get();
 
             $arr_pengukur = [];
-            foreach($jabatan as $i=>$j){
+            foreach($pengukur as $i=>$p){
                 $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
                 ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
-                ->where('pengukuran.nama_responden', $j->jabatan)
+                ->where('pengukuran.id_pengukur', $p->id_pengukur)
                 ->get();  
 
+                // dd(count($pengukur_risk));
                 if(count($pengukur_risk) == 0){
-                    $arr_pengukur[] = $j;
+                        $arr_pengukur[] = $p;
                 }
                     
             }
-        // dd(count($arr_pengukur));
+            // dd(count($arr_pengukur));
         }
+
         $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
             ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
             ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-            ->where('defendid_pengukur.company_id', Auth::user()->company_id)
+            ->join('defendid_user', 'defendid_pengukur.company_id','defendid_user.company_id')
+            ->where('defendid_user.id_user', Auth::user()->id_user)
             ->where('pengukuran.tahun_p', date('Y'))
             ->where('s_risiko.status_s_risiko', 1)
             ->get();
