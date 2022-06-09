@@ -85,7 +85,6 @@
                       <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
-                      {{--
                       @if($d->status_h_indhan == 0)
                       <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
                           @csrf
@@ -93,7 +92,6 @@
                         <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
                       </form>
                       @endif
-                      --}}
                     </td>
                   </tr>
                   @endforeach

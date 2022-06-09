@@ -34,4 +34,5 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   
   Route::post('fetchNilaiRisiko', [RisikoController::class, 'getNilai']);
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
+  Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
 });

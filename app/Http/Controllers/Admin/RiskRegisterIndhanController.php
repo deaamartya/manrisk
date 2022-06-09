@@ -40,7 +40,6 @@ class RiskRegisterIndhanController extends Controller
             'tahun' => $request->tahun,
             'target' => $request->target,
             'penyusun' => Auth::user()->name,
-            'pemeriksa' => $request->pemeriksa,
         ]);
         return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil disimpan!']);
     }

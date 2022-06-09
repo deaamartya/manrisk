@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Support\Arr;
 use App\Models\RiskDetail;
 use App\Models\MitigasiLogs;
+use Redirect;
 
 class MitigasiPlanController extends Controller
 {
@@ -54,7 +55,7 @@ class MitigasiPlanController extends Controller
 
     public function getProgressData(Request $request) {
         $data = null;
-        $logs = MitigasiLogs::where('id_riskd', '=', $request->id)->get();
+        $logs = MitigasiLogs::where('id_riskd', '=', $request->id)->orderBy('created_at', 'DESC')->get();
         if($logs != null){
             $data = new \stdClass();
             $data->data = [];
@@ -64,17 +65,18 @@ class MitigasiPlanController extends Controller
                     $isi = [
                         $count + 1,
                         $c->realisasi,
-                        $c->timestamp,
+                        date('d M Y', strtotime($c->created_at)),
                         '',
+                        $c->description,
                     ];
                 } else {
+                    $path = asset('document/mitigasi-progress/'. $c->dokumen);
                     $isi = [
                         $count + 1,
                         $c->realisasi,
-                        $c->timestamp,
-                        '<a href="{{ asset('.'\'document/lampiran-mitigasi/\''.$c->dokumen.') }}"  target="_blank" class="btn btn-secondary">
-                        <i data-feather="zoom-out" class="small-icon" height="13"></i>Progress
-                        </a>',
+                        date('d M Y', strtotime($c->created_at)),
+                        '<a href="'. $path. '"  target="_blank" class="btn btn-xs btn-info p-1">Lihat Dokumen</a>',
+                        $c->description,
                     ];
                 }
                 array_push($data->data, $isi);
@@ -82,5 +84,24 @@ class MitigasiPlanController extends Controller
             }
         }
         return response()->json($data);
+    }
+
+    public function insertProgress(Request $request) {
+        $filename = null;
+        if($request->dokumen) {
+            $filename = $request->file('dokumen')->getClientOriginalName();
+            $folder = '/document/mitigasi-progress/';
+            $request->file('dokumen')->storeAs($folder, $filename, 'public');
+        }
+        MitigasiLogs::insert([
+            'id_riskd' => $request->id_riskd,
+            'id_user' => $request->id_user,
+            'realisasi' => $request->prosentase,
+            'dokumen' => $filename,
+            'description' => $request->description,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        return Redirect::back()->with(['success-swal' => 'Progress Mitigasi berhasil ditambahkan.']);
     }
 }

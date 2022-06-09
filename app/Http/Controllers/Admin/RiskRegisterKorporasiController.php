@@ -85,9 +85,8 @@ class RiskRegisterKorporasiController extends Controller
         $headers = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
                     ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
                     ->where('id_riskh', '=', $id)->first();
-        $headers_indhan = RiskHeaderKorporasi::where('tahun', $headers->tahun)->first();
         // dd($headers_indhan);
-        return view('admin.detail-risk-register', compact('headers', 'headers_indhan'));
+        return view('admin.detail-risk-register', compact('headers'));
     }
 
     public function korporate($id, Request $request)

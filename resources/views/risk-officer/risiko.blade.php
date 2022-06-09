@@ -112,8 +112,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea id="summernote"></textarea>
-                    <input type="hidden" id="summernote-value" name="target"/>
+                    <textarea id="summernote" name="target"></textarea>
 									</div>
 								</div>
               </div>
@@ -175,8 +174,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea class="summernote" id="summernote-{{ $data->id_riskh }}">{{ $data->target }}</textarea>
-                    <input type="hidden" id="summernote-value-{{ $data->id_riskh }}" name="target" value="{{ $data->target }}"/>
+                    <textarea name="target">{{ $data->target }}</textarea>
 									</div>
 								</div>
               </div>
@@ -216,38 +214,10 @@
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
-<script src="{{asset('assets/summernote/summernote.min.js')}}"></script>
 <script>
   $(document).ready(function(){
     const headers = @json($headers);
     $(".select2").select2();
-    $('#summernote').summernote({
-      toolbar: [
-        ['para', ['ul', 'ol']],
-      ],
-      height: 300,
-      tabsize: 2,
-      callbacks: {
-        onChange: function(contents, $editable) {
-          $("#summernote-value").val($editable[0].innerHTML);
-        }
-      }
-    });
-    $('.btn-edit').on('click', function() {
-      const id = $(this).attr('data-id');
-      $('#summernote-' + id).summernote({
-        toolbar: [
-          ['para', ['ul', 'ol']],
-        ],
-        height: 300,
-        tabsize: 2,
-        callbacks: {
-          onChange: function(contents, $editable) {
-            $("#summernote-value-" + id).val($editable[0].innerHTML);
-          }
-        }
-      });
-    });
   })
 </script>
 @endsection

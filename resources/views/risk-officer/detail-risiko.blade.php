@@ -112,7 +112,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="display" id="basic-1">
+              <table class="display" id="table-risiko">
                 <thead>
                   <tr>
                     <th>Id Risk</th>
@@ -504,6 +504,9 @@
 <script>
   $(document).ready(function(){
     $(".select2").select2();
+    $("#table-risiko").DataTable({
+      'order': [ 6, 'desc' ]
+    });
     $("#select-risiko").on('change', function(){
       $.post(
         "{{ url('risk-officer/fetchNilaiRisiko') }}", {

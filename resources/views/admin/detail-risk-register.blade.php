@@ -6,11 +6,11 @@
 @endsection
 
 @section('page-title')
-<h3>Risk Register INDHAN</h3>
+<h3>Risk Register Korporasi</h3>
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">Risk Register INDHAN</li>
+<li class="breadcrumb-item">Risk Register Korporasi</li>
 @endsection
 
 @section('content')
@@ -42,18 +42,23 @@
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
-                <h6>Status</h6><hr class="hr-custom"></div>
-                @if($headers->status_h == 0)
-                <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
-                @elseif($headers->status_h == 1)
-                <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
-                @endif
+                <div class="col-md-5">
+                  <h6>Status</h6>
+                  <hr class="hr-custom">
+                </div>
+                <div class="col-md-12 mb-2">
+                  @if($headers->status_h == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                  @elseif($headers->status_h == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                  @endif
 
-                @if($headers_indhan->status_h_indhan == 0)
-                <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
-                @elseif($headers_indhan->status_h_indhan == 1)
-                <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
-                @endif
+                  @if($headers->status_h_indhan == 0)
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
+                  @elseif($headers->status_h_indhan == 1)
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
@@ -85,7 +90,7 @@
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
-              <table class="display" id="basic-1">
+              <table class="display" id="table-risiko">
                 <thead>
                   <tr>
                     <th>Id Risk</th>
@@ -181,7 +186,7 @@
                     </td>
                     <td>{{ $d->peluang }}</td>
                     <td>{{ $d->tindak_lanjut }}</td>
-                    <td>{{ $d->jadwal_mitigasi }}</td>
+                    <td>{{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}</td>
                     <td>{{ $d->pic }}</td>
                     <td>{{ $d->dokumen }}</td>
                     <td>{{ $d->l_akhir }}</td>
@@ -260,6 +265,9 @@
 <script>
   $(document).ready(function(){
     $(".select2").select2();
+    $("#table-risiko").DataTable({
+      'order': [ 12, 'desc' ]
+    });
   })
 </script>
 @endsection

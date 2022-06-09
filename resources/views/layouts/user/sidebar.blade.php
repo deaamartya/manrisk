@@ -138,7 +138,7 @@
 						</a>
 					</li>
 					@endif
-					@if(Auth::user()->is_admin || Auth::user()->is_penilai_indhan)
+					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
 							<i data-feather="sidebar"></i>

@@ -46,7 +46,7 @@
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
-              <table class="display" id="basic-1">
+              <table class="display" id="table-risiko">
                 <thead>
                   <tr>
                     <th>No.</th>
@@ -305,4 +305,13 @@
   </div>
 </div>
 @endforeach
+@endsection
+@section('custom-script')
+<script>
+  $(document).ready(function(){
+    $("#table-risiko").DataTable({
+      'order': [ 3, 'desc' ]
+    });
+  })
+</script>
 @endsection

@@ -296,7 +296,7 @@
   </div>
 </div>
 <div class="modal fade" id="add-progress-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Progress</h5>
@@ -305,8 +305,10 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-              <form method="POST" enctype="multipart/form-data">
+              <form method="POST" action="{{ route('risk-officer.storeProgress') }}" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="id_riskd" value="{{ $data->id_riskd }}"/>
+                <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}"/>
                 <div class="mb-3 row">
                   <div class="col-sm-6">
                     <h6>Tambah Progress Baru</h6>
@@ -315,7 +317,7 @@
                 <div class="mb-3 row">
                   <label class="col-sm-3 col-form-label">Prosentase</label>
                   <div class="col-sm-9">
-                    <input type="number" name="prosentase" class="form-control" required />
+                    <input type="number" name="prosentase" class="form-control" required min="1" max="100"/>
                   </div>
                 </div>
                 <div class="mb-3 row">
@@ -327,7 +329,7 @@
                 <div class="mb-3 row">
                   <label class="col-sm-3 col-form-label">Description</label>
                   <div class="col-sm-9">
-                    <textarea name="prosentase" class="form-control"></textarea>
+                    <textarea name="description" class="form-control"></textarea>
                   </div>
                 </div>
                 <div class="row justify-content-end">
@@ -345,6 +347,7 @@
                 <th>No</th>
                 <th>Prosentase</th>
                 <th>Dokumen</th>
+                <th>Description</th>
               </thead>
               <tbody>
               </tbody>
@@ -372,6 +375,7 @@
       const id = $(this).attr('data-id')
       const url = "{{ url('risk-officer/getProgress') }}";
       table = $("#table-progress-"+id).DataTable({
+        "destroy": true,
         "ajax": {
           "url": url,
           "type": "post",
@@ -381,7 +385,6 @@
           }
         }
       })
-      table.ajax.reload();
     })
   })
   function cal(id) {
