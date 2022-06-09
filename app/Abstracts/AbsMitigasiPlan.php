@@ -16,8 +16,8 @@ class AbsMitigasiPlan
     public static function getAllData()
     {
         $wr = '1=1';
-        if(Auth::user()->is_admin){
-            $wr .= ' AND id_user = '.Auth::user()->id_user;
+        if(!Auth::user()->is_admin){
+            $wr .= ' AND company_id = '.Auth::user()->company_id;
         }
         $headers = RiskHeader::whereRaw($wr)->get();
 

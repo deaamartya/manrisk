@@ -45,6 +45,7 @@ class AbsDataMaster
         $params = [
             'company_id' => $request->company_id,
             'name' => $request->name,
+            'nip' => $request->nip,
             'username' => $request->username,
             'status_user' => 0,
             'is_risk_officer' => $request->is_risk_officer ?? 0,
@@ -115,11 +116,11 @@ class AbsDataMaster
     public static function get_user($id)
     {
         $user = DefendidUser::where('id_user', $id)->get();
-        $pengukur = DefendidPengukur::where('id_user', $id)->get();
+        $pengukur = DefendidPengukur::selectRaw('company_id, id_user, nama, nip, jabatan, status_pengukur, jenis')->where('id_user', $id)->get();
 
         $data = $user->merge($pengukur);
         $msg = ['data' => $data, 'status' => 200];
-
+        // dd($pengukur);
         return $msg;
     }
 }

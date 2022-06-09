@@ -78,7 +78,7 @@ $(document).ready(function(){
 
         $('#formPassword').attr('required', 'required')
         $('#infoPassword').hide()
-        $('.nip').hide()
+        // $('.nip').hide()
         $('.jabatan').hide()
         $('#formMelakukanPenilaian').removeAttr('disabled')
         $('.melakukan_penilaian div label').html('No')
@@ -121,6 +121,7 @@ $(document).ready(function(){
                 $('#formPerusahaan').find('option:selected').removeAttr('selected')
                 $('#formName').val(results.data[0].name)
                 $('#formUsername').val(results.data[0].username)
+                $('#formNip').val(results.data[0].nip)
                 $('#formPerusahaan option#option'+results.data[0].company_id).attr('selected', 'selected').trigger('change')
                 if(results.data[0].is_admin == 1){
                     $('#formIsAdmin').val(1)
@@ -163,13 +164,13 @@ $(document).ready(function(){
                     $('#formMelakukanPenilaian').val(1)
                     $('#formMelakukanPenilaian').prop('checked', true)
 
-                    $('#formNip').val(results.data[1].nip)
                     $('#formJabatan').val(results.data[1].jabatan)
+                    $('.jabatan').show()
                 }
                 else{
                     $('#formMelakukanPenilaian').val(0)
                     $('.melakukan_penilaian div label').html('No')
-                    $('.nip').hide()
+                    // $('.nip').hide()
                     $('.jabatan').hide()
                 }
                 $('#formMelakukanPenilaian').attr('disabled', 'disabled')
@@ -230,13 +231,13 @@ $(document).ready(function(){
     $('#formMelakukanPenilaian').on('click', function(){
         if($('#formMelakukanPenilaian:checked').val() != undefined){
             $('#formMelakukanPenilaian').val(1)
-            $('.nip').show()
+            // $('.nip').show()
             $('.jabatan').show()
             $('.melakukan_penilaian div label').html('Yes')
         }
         else{
             $('#formMelakukanPenilaian').val(0)
-            $('.nip').hide()
+            // $('.nip').hide()
             $('.jabatan').hide()
             $('.melakukan_penilaian div label').html('No')
         }

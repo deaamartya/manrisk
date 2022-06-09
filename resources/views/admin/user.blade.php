@@ -78,6 +78,12 @@
                         <input type="text" name="name" required="required" class="form-control" id="formName">
                     </div>
                 </div>
+                <div class="row mb-3 nip">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">NIP <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="nip" class="form-control" id="formNip">
+                    </div>
+                </div>
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12">Perusahaan</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
@@ -136,7 +142,7 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="hidden" name="is_penilai">
                         <input type="checkbox" name="is_penilai" value="0" id="formIsPenilai">
-                        <label for="">Penilai</label>
+                        <label for="">Penilai Korporasi</label>
                     </div>
                 </div>
                 <div class="row is_penilai_indhan">
@@ -155,12 +161,7 @@
                         <label for="">No</label>
                     </div>
                 </div>
-                <div class="row mb-3 nip">
-                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">NIP <span class="required"></span></label>
-                    <div class='col-md-9 col-sm-9 col-xs-12'>
-                        <input type="text" name="nip" class="form-control" id="formNip">
-                    </div>
-                </div>
+
                 <div class="row mb-3 jabatan">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Jabatan <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
