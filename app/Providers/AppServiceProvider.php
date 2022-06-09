@@ -3,6 +3,9 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Models\PengajuanMitigasi;
+use Auth;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +31,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer('layouts.user.sidebar', function ($view) {
+            $counts = PengajuanMitigasi::where('status', '=', 0)->count();
+            return $view->with('counts', $counts);
+        });
     }
 
     protected function mapWebRoutes()

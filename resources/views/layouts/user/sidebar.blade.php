@@ -133,7 +133,9 @@
 							<i data-feather="file-text"></i>
 							<div class="flex-row-between-center">
 								<span class="me-4p">Pengajuan Mitigasi</span>
-								<span class="badge rounded-pill badge-danger">2</span>
+								@if ($counts > 0)
+									<span class="badge rounded-pill badge-danger">{{ $counts }}</span>
+								@endif
 							</div>
 						</a>
 					</li>
