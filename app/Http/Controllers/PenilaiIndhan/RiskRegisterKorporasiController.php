@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\RiskHeader;
 use App\Models\RiskDetail;
-use App\Models\RiskHeaderKorporasi;
+use App\Models\RiskHeaderIndhan;
 use App\Models\DefendidUser;
 use App\Models\SRisiko;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
@@ -93,7 +93,7 @@ class RiskRegisterKorporasiController extends Controller
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([
-            'status_korporasi' => 1
+            'status_indhan' => 1
         ]);
         $id_risk = $request->id_risk;
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi INDHAN.']);
@@ -103,7 +103,7 @@ class RiskRegisterKorporasiController extends Controller
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([
-            'status_korporasi' => 0
+            'status_indhan' => 0
         ]);
         $id_risk = $request->id_risk;
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Bukan INDHAN.']);

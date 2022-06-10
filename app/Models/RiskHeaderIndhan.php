@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class RiskHeaderKorporasi
+ * Class RiskHeaderIndhan
  * 
  * @property int $id_riskh
  * @property int $company_id
@@ -26,11 +26,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  */
-class RiskHeaderKorporasi extends Model
+class RiskHeaderIndhan extends Model
 {
 	use SoftDeletes;
 
-	protected $table = 'risk_header_korporasi';
+	protected $table = 'risk_header_indhan';
 	protected $primaryKey = 'id_riskh';
 
 	protected $casts = [

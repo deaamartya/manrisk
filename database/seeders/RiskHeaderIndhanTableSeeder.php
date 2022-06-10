@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class RiskHeaderKorporasiTableSeeder extends Seeder
+class RiskHeaderIndhanTableSeeder extends Seeder
 {
 
     /**
@@ -16,7 +16,7 @@ class RiskHeaderKorporasiTableSeeder extends Seeder
     {
         
 
-        \DB::table('risk_header_korporasi')->delete();
+        \DB::table('risk_header_indhan')->delete();
         
         
         

@@ -40,7 +40,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $status
  * @property string|null $u_file
  * @property int|null $status_mitigasi
- * @property int|null $status_korporasi
+ * @property int|null $status_indhan
  *
  * @package App\Models
  */
@@ -63,7 +63,7 @@ class RiskDetail extends Model
 		'r_akhir' => 'float',
 		'status' => 'int',
 		'status_mitigasi' => 'int',
-		'status_korporasi' => 'int'
+		'status_indhan' => 'int'
 	];
 
 	protected $dates = [
@@ -98,7 +98,7 @@ class RiskDetail extends Model
 		'status',
 		'u_file',
 		'status_mitigasi',
-		'status_korporasi'
+		'status_indhan'
 	];
 
 	public function risk_header()

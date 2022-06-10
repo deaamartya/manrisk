@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTablePengukuranKorporasiAddTahunDanIdPengukurColumn extends Migration
+class AlterTablePengukuranIndhanAddTahunDanIdPengukurColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AlterTablePengukuranKorporasiAddTahunDanIdPengukurColumn extends Migration
      */
     public function up()
     {
-        Schema::table('pengukuran_korporasi', function (Blueprint $table) {
+        Schema::table('pengukuran_indhan', function (Blueprint $table) {
             $table->integer('tahun_p')->after('id_p');
             $table->integer('id_pengukur')->after('id_s_risiko');
         });
@@ -26,7 +26,7 @@ class AlterTablePengukuranKorporasiAddTahunDanIdPengukurColumn extends Migration
      */
     public function down()
     {
-        Schema::table('pengukuran_korporasi', function (Blueprint $table) {
+        Schema::table('pengukuran_indhan', function (Blueprint $table) {
             $table->dropColumn('tahun_p');
             $table->dropColumn('id_pengukur');
         });

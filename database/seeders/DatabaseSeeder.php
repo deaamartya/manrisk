@@ -21,12 +21,12 @@ class DatabaseSeeder extends Seeder
         $this->call(MitigasiTableSeeder::class);
         $this->call(OfficerTableSeeder::class);
         $this->call(PengukuranTableSeeder::class);
-        $this->call(PengukuranKorporasiTableSeeder::class);
+        $this->call(PengukuranIndhanTableSeeder::class);
         $this->call(RespondenTableSeeder::class);
         $this->call(RiskTableSeeder::class);
         $this->call(RiskDetailTableSeeder::class);
         $this->call(RiskHeaderTableSeeder::class);
-        $this->call(RiskHeaderKorporasiTableSeeder::class);
+        $this->call(RiskHeaderIndhanTableSeeder::class);
         $this->call(SRisikoTableSeeder::class);
     }
 }

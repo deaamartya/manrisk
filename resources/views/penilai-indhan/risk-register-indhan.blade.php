@@ -70,6 +70,7 @@
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
                       </button>
+                      {{--
                       @if($d->status_h != 1)
                       <form action="{{ route('penilai-indhan.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
                           @csrf
@@ -77,6 +78,7 @@
                         <i data-feather="check-circle" class="small-icon"></i></button>
                       </form>
                       @endif
+                      --}}
                     </td>
                   </tr>
                   @endforeach

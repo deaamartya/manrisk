@@ -123,7 +123,7 @@
                   <tr>
                     <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
                     <td>
-                        @if($d->status_korporasi == 0)
+                        @if($d->status_indhan == 0)
                         <form action="{{ route('penilai-indhan.korporate', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
@@ -131,7 +131,7 @@
                             <i class="fa fa-times me-2"></i>Bukan INDHAN
                           </button>
                         </form>
-                        @elseif($d->status_korporasi == 1)
+                        @elseif($d->status_indhan == 1)
                         <form action="{{ route('penilai-indhan.unkorporate', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
