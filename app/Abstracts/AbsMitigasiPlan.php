@@ -70,4 +70,14 @@ class AbsMitigasiPlan
 
         return $query;
     }
+
+    public static function approveHasilMitigasi($request, $id)
+    {
+        $query = DB::table('mitigasi_logs')->where('id', $id)->update([
+            'is_approved' => 1,
+            'updated_at' => Carbon::now()
+        ]);
+
+        return $query;
+    }
 }

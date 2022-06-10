@@ -95,7 +95,7 @@ class AbsDataMaster
         }
         DB::commit();
 
-        $results['status'] = 200;
+        $results['status'] = 201;
 
         return $results;
     }

@@ -39,12 +39,14 @@ class RisikoController extends Controller
         if($id == null){
             $params['created_at'] = Carbon::now();
             Risk::insert($params);
+            $messages = ['success-swal' => 'Risiko berhasil disimpan!'];
         }
         else{
             Risk::where('id_risk', $id)->update($params);
+            $messages = ['success-swal' => 'Risiko berhasil diubah!']
         }
 
-        return back();
+        return back()->with($messages);
     }
 
     public function delete(Request $request)
@@ -52,10 +54,10 @@ class RisikoController extends Controller
         try {
             Risk::where('id_risk', $request->id_risk)->update(['deleted_at' => Carbon::now()]);
         } catch (\ErrorException $e) {
-            return back()->with("message", $e->getMessage());
+            return back()->with(["error-swal" => $e->getMessage()]);
         }
 
-        return back();
+        return back()->with(['success-swal' => 'Risiko berhasil dihapus!']);
     }
 
     public function get_resiko($id = null)
