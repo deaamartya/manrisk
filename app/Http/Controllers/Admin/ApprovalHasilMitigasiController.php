@@ -59,4 +59,10 @@ class ApprovalHasilMitigasiController extends Controller
 
         return response()->json($result);
     }
+
+    public function approvedHasilMitigasi(Request $request, $id){
+        $result = AbsMitigasiPlan::approveHasilMitigasi($request, $id);
+
+        return response()->json($result);
+    }
 }

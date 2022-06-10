@@ -42,6 +42,7 @@ class AbsDataMaster
     }
 
     public static function user_store($request, $id = null){
+        $results = [];
         $params = [
             'company_id' => $request->company_id,
             'name' => $request->name,
@@ -76,6 +77,7 @@ class AbsDataMaster
                     'updated_at' => Carbon::now()
                 ]);
             }
+            $results['messages'] = ['success-swal' => 'User berhasil disimpan!'];
         }
         else{
             DefendidUser::where('id_user', $id)->update($params);
@@ -89,12 +91,13 @@ class AbsDataMaster
                     'updated_at' => Carbon::now()
                 ]);
             }
+            $results['messages'] = ['success-swal' => 'User berhasil diubah!'];
         }
         DB::commit();
 
-        $status = 200;
+        $results['status'] = 201;
 
-        return $status;
+        return $results;
     }
 
     public static function update_status($id)

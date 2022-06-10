@@ -23,6 +23,7 @@
                                     <th>Deskripsi</th>
                                     <th>Dokumen</th>
                                     <th>% Realisasi</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,6 +42,11 @@
                                     </td>
                                     <td align="center" style="width: 60px">
                                         <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}">
+                                    </td>
+                                    <td align="center">
+                                    @if($d->is_approved)
+                                        <button class="btn btn-warning btn-sm approve" id="{{ $d->id }}"><i class="feather feather-check-circle"></i> Approval</button>
+                                    @endif
                                     </td>
                                 </tr>
                                 @endforeach

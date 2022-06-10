@@ -39,12 +39,14 @@ class CompaniesController extends Controller
         if($id == null){
             $params['created_at'] = Carbon::now();
             Perusahaan::insert($params);
+            $messages = ['success-swal' => 'Perusahaan berhasil disimpan!'];
         }
         else{
             Perusahaan::where('company_id', $id)->update($params);
+            $messages = ['success-swal' => 'Perusahaan berhasil diubah!'];
         }
 
-        return back();
+        return back()->with($messages);
     }
 
     public function delete(Request $request)
@@ -52,10 +54,10 @@ class CompaniesController extends Controller
         try {
             Perusahaan::where('company_id', $request->company_id)->update(['deleted_at' => Carbon::now()]);
         } catch (\ErrorException $e) {
-            return back()->with("message", $e->getMessage());
+            return back()->with(["error-swal" => $e->getMessage()]);
         }
 
-        return back();
+        return back()->with(['success-swal' => 'Perusahaan berhasil dihapus!']);
     }
 
     public function get_perusahaan($id)

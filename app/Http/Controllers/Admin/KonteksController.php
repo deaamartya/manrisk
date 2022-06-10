@@ -44,14 +44,16 @@ class KonteksController extends Controller
         DB::beginTransaction();
         if($id){
             Kontek::where('id_konteks', $id)->update($params);
+            $messages = ['success-swal' => 'Konteks berhasil diubah!'];
         }
         else{
             $params['created_at'] = Carbon::now();
             Kontek::insert($params);
+            $messages = ['success-swal' => 'Konteks berhasil disimpan!']
         }
         DB::commit();
 
-        return back();
+        return back()->with($messages);
     }
 
     public function delete(Request $request)
@@ -59,10 +61,10 @@ class KonteksController extends Controller
         try {
             Kontek::where('id_konteks', $request->id_konteks)->update(['deleted_at' => Carbon::now()]);
         } catch (\ErrorException $e) {
-            return back()->with("message", $e->getMessage());
+            return back()->with(["error-swal" => $e->getMessage()]);
         }
 
-        return back();
+        return back()->with(['success-swal' => 'Konteks berhasil dihapus!']);
     }
 
     public function get_konteks($id)
