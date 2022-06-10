@@ -39,7 +39,7 @@ class UserController extends Controller
 
         $store = AbsDataMaster::user_store($request, $id);
 
-        return back()->with('status', $store);
+        return back()->with($store['messages']);
     }
 
     public function update_status($id)
