@@ -153,6 +153,19 @@
 							<span>Risk Register INDHAN</span>
 						</a>
 					</li>
+					@elseif(Auth::user()->is_penilai_indhan)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-korporasi' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-korporasi')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-indhan.index')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register INDHAN</span>
+						</a>
+					</li>
 					@endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">

@@ -52,8 +52,6 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td><b>{{ $s->risk }}</b> ({{ $s->konteks }})</td>
                                     <td>{{ $s->s_risiko }}</td>
-                                    <!-- <td><input type="number" name="nilai_L[]" required></td>
-                                    <td><input type="number" name="nilai_C[]" required></td> -->
                                     <td>
                                         <select class="js-example-basic-single col-sm-12" name="nilai_L[]" required>
                                             <option selected disabled>Pilih Nilai L</option>

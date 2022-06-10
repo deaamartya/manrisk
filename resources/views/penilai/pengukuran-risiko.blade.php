@@ -14,6 +14,7 @@
     <div class="row">
     <!-- Zero Configuration  Starts-->
     <div class="col-sm-12">
+    @if($sr_exists)
         <div class="card">
         <div class="card-header">
             <div class="row">
@@ -169,6 +170,9 @@
                 </div>
             </div>
             </div>
+            @else
+            <div class="alert alert-danger">Sumber risiko untuk perusahaan ini pada tahun {{ date('Y') }} belum tersedia.</div>
+            @endif
         </div>
     </div>
 </div> 

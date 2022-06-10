@@ -166,7 +166,7 @@
           <h5 class="modal-title">Input Lampiran Risiko</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('admin.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('penilai-indhan.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="id" value="{{ $headers->id_riskh }}">
           <div class="modal-body">

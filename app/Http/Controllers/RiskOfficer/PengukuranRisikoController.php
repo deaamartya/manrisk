@@ -19,7 +19,6 @@ class PengukuranRisikoController extends Controller
         $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
         $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))
                             ->where('status_s_risiko', 1)->limit(1)->get();
-                            
         // dd(count($data_sr));
         if(count($data_sr) > 0){
             $sr_exists = true;
@@ -60,11 +59,10 @@ class PengukuranRisikoController extends Controller
             $sr_exists = false;
             return view('risk-officer.pengukuran-risiko', compact('sr_exists'));
         }
-        
     }
 
-
-    public function penilaianRisiko(Request $request) {
+    public function penilaianRisiko(Request $request) 
+    {
         $request->validate([
             'nama_responden' => 'required',
             'tahun' => 'required',
@@ -85,7 +83,8 @@ class PengukuranRisikoController extends Controller
         return view('risk-officer.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
     }
 
-    public function penilaianRisikoStore(Request $request) {
+    public function penilaianRisikoStore(Request $request) 
+    {
         $request->validate([
         'tahun' => 'required',
         'id_responden' => 'required',
