@@ -6,33 +6,8 @@
             font-weight: bold;
             font-size: 120%;
         }
-        .card {
-            cursor: pointer;
-        }
-        .card:hover {
-            background-color: lightgrey;
-        }
-        .body-form {
-            font-size: 110%;
-        }
-        .body-comment p{
-            font-size: 110%;
-        }
-        .hapus-comment {
-            cursor: pointer;
-            color: red;
-        }
-        .forum-action {
-            float: right;
-        }
-        .form-forum .card{
-            display: block;
-            position: fixed;
-            /* top: 0; */
-        }
-        .body-comment {
-            display: none;
-        }
+
+
     </style>
 @endsection
 
@@ -85,14 +60,14 @@
                                             @foreach ($forum_detail as $fd)
                                                 @if($fd->id_user != auth()->user()->id_user)
                                                     <li>
-                                                        <div class="message my-message">{{ $fd->username }}
+                                                        <div class="message my-message" style="background-color: rgb(0, 222, 0); color: black">{{ $fd->username }}
                                                             <div class="text-end"><span>{{ date('d/m/Y H:i:s', strtotime($fd->created_at)) }}</span></div>
                                                             {{ $fd->body }}
                                                         </div>
                                                     </li>
                                                 @else
                                                     <li class="clearfix">
-                                                        <div class="message other-message pull-right">
+                                                        <div class="message other-message pull-right" style="background-color: rgb(0, 170, 255); color: black">
                                                             <div><span>{{ date('d/m/Y H:i:s', strtotime($fd->created_at)) }}</span></div>
                                                             {{ $fd->body }}
                                                         </div>
@@ -102,19 +77,19 @@
                                         </ul>
                                     </div>
                                     <!-- end chat-history-->
-                                    <div class="chat-message clearfix">
-                                        <div class="row">
-                                            <form action="{{ url('forum-detail/store/'.$forum->id) }}" method="post">
-                                                @csrf
-                                                <div class="col-xl-12 d-flex">
+                                    <form action="{{ url('forum-detail/store/'.$forum->id) }}" method="post">
+                                        @csrf
+                                        <div class="chat-message clearfix">
+                                            <div class="row">
+                                                <div class="col-sm-12 d-flex">
                                                     <div class="input-group text-box">
-                                                        <input class="form-control input-txt-bx" id="message-to-send" type="text" name="message" placeholder="Type a message......" data-bs-original-title="" title="">
-                                                        <button class="input-group-text btn btn-primary" type="submit" data-bs-original-title="" title="">SEND</button>
+                                                        <input class="form-control input-txt-bx" id="message-to-send" type="text" name="message" placeholder="Type a message......" data-bs-original-title="" title="" required>
+                                                        <button class="input-group-text btn btn-danger" type="submit" data-bs-original-title="" title="">SEND</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 <!-- end chat-message-->
                                 <!-- chat end-->
                                 <!-- Chat right side ends-->

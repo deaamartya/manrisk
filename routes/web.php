@@ -24,6 +24,9 @@ Route::post('forum/store/{id?}', [GlobalController::class, 'forum_store'])->name
 Route::post('forum/delete/{id}', [GlobalController::class, 'forum_delete'])->name('forum-delete');
 Route::post('forum-detail/store/{id}', [GlobalController::class, 'forum_detail_store'])->name('forum-detail-store');
 
+// Get Notification
+Route::get('get-notification', [GlobalController::class, 'get_notification']);
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (! in_array($locale, ['en', 'de', 'es','fr','pt', 'cn', 'ae'])) {

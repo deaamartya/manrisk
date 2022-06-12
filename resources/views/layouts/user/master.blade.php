@@ -94,7 +94,10 @@
         swal("Oops!", "{{ Session::get('error-swal') }}", "error");
       </script>
       @endif
-    @endif 
+    @endif
+    <script>
+        const APP_URL = {!! json_encode(url('/')) !!}
+    </script>
     <!-- latest jquery-->
     @include('layouts.user.script')
     <!-- Plugin used-->

@@ -21,26 +21,15 @@
         <li class="onhover-dropdown">
           <div class="notification-box">
             <i data-feather="bell"></i>
-            <span class="badge rounded-pill badge-secondary">4</span>
+            <span class="badge rounded-pill badge-secondary" id="total-notif"></span>
           </div>
-          <ul class="notification-dropdown onhover-show-div">
+          <ul class="notification-dropdown onhover-show-div" id="body-notif">
             <li>
               <i data-feather="bell"></i>
               <h6 class="f-18 mb-0">Notitications</h6>
             </li>
-            <li>
-              <p><i class="fa fa-circle-o me-3 font-primary"> </i>Delivery processing <span class="pull-right">10 min.</span></p>
-            </li>
-            <li>
-              <p><i class="fa fa-circle-o me-3 font-success"></i>Order Complete<span class="pull-right">1 hr</span></p>
-            </li>
-            <li>
-              <p><i class="fa fa-circle-o me-3 font-info"></i>Tickets Generated<span class="pull-right">3 hr</span></p>
-            </li>
-            <li>
-              <p><i class="fa fa-circle-o me-3 font-danger"></i>Delivery Complete<span class="pull-right">6 hr</span></p>
-            </li>
-            <li><a class="btn btn-primary" href="#">Check all notification</a></li>
+            
+            {{-- <li><a class="btn btn-primary" href="#">Check all notification</a></li> --}}
           </ul>
         </li>
         <li class="profile-nav onhover-dropdown p-0 me-0">
@@ -68,7 +57,7 @@
       </ul>
     </div>
     <script class="result-template" type="text/x-handlebars-template">
-      <div class="ProfileCard u-cf">                        
+      <div class="ProfileCard u-cf">
       <div class="ProfileCard-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay m-0"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg></div>
       <div class="ProfileCard-details">
       <div class="ProfileCard-realName">@{{name}}</div>

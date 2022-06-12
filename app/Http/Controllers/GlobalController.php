@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Perusahaan;
+use App\Models\Srisiko;
+use App\Models\Pengukuran;
+use App\Models\PengukuranIndhan;
+use App\Models\RiskHeader;
+use App\Models\RiskHeaderIndhan;
+use App\Models\RiskDetail;
+use App\Models\PengajuanMitigasi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -125,5 +132,181 @@ class GlobalController extends Controller
         }
 
         return back()->with(['success-swal' => 'Forum berhasil disimpan!']);
+    }
+
+    public function get_notification()
+    {
+        if(Auth::user()->is_risk_officer){
+            $data = $this->notif_risk_officer();
+        }
+        else if(Auth::user()->is_penilai){
+            $data = $this->notif_penilai();
+        }
+        else if(Auth::user()->is_penilai_indhan){
+            $data = $this->notif_penilai_indhan();
+        }
+        else if(Auth::user()->is_risk_owner){
+            $data = $this->notif_risk_owner();
+        }
+        else if(Auth::user()->is_admin){
+            $data = $this->notif_admin();
+        }
+
+        return response()->json(['message' => 'ok', 'data' => $data], 200);
+    }
+
+    public function notif_risk_officer()
+    {
+        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                    ->where('s_risiko.company_id', Auth::user()->company_id)
+                    ->where('s_risiko.tahun', date('Y'))
+                    ->where('s_risiko.status_s_risiko', 1)
+                    ->count('pengukuran.id_p');
+        $risk_detail = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                        ->select('risk_detail.id_riskd')
+                        ->get();
+        $rd = [];
+        foreach ($risk_detail as $key => $value) {
+            $rd[] = $value->id_riskd;
+        }
+        $jml_mitigasi = DB::table('mitigasi_logs')->whereNotIn('id_riskd', $rd)->count();
+
+        $data = [];
+        if($jml_risk > 0){
+            $data[] = [
+                'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
+                'jumlah' => $jml_risk
+            ];
+        }
+        if($jml_mitigasi > 0){
+            $data[] = [
+                'title' => 'Terdapat detail risiko yang belum dimitigasi sebanyak ',
+                'jumlah' => $jml_mitigasi
+            ];
+        }
+
+        // $data = [[
+        //     'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
+        //     'jumlah' => $jml_risk
+        // ],
+        // [
+        //     'title' => 'Terdapat detail risiko yang belum dimitigasi sebanyak ',
+        //     'jumlah' => $jml_risk
+        // ]];
+
+        return $data;
+    }
+
+    public function notif_risk_owner()
+    {
+        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                    ->where('s_risiko.company_id', Auth::user()->company_id)
+                    ->where('s_risiko.tahun', date('Y'))
+                    ->where('s_risiko.status_s_risiko', 1)
+                    ->count('pengukuran.id_p');
+        $jml_approval_risk_register = RiskHeader::where(['company_id' => Auth::user()->company_id, 'status_h' => 0])->count();
+
+        $data = [];
+        if($jml_risk > 0){
+            $data[] = [
+                'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
+                'jumlah' => $jml_risk
+            ];
+        }
+        if($jml_approval_risk_register > 0){
+            $data[] = [
+                'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
+                'jumlah' => $jml_approval_risk_register
+            ];
+        }
+
+        // $data = [[
+        //     'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
+        //     'jumlah' => $jml_risk
+        // ],
+        // [
+        //     'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
+        //     'jumlah' => $jml_approval_risk_register
+        // ]];
+
+        return $data;
+    }
+
+    public function notif_penilai()
+    {
+        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                    ->where('s_risiko.company_id', Auth::user()->company_id)
+                    ->where('s_risiko.tahun', date('Y'))
+                    ->where('s_risiko.status_s_risiko', 1)
+                    ->count('pengukuran.id_p');
+
+        $data = [[
+            'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
+            'jumlah' => $jml_risk
+        ]];
+        if($jml_risk == 0){
+            $data = [];
+        }
+
+        return $data;
+    }
+
+    public function notif_penilai_indhan()
+    {
+        $jml_risk = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
+                    ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                    ->where('s_risiko.tahun', date('Y'))
+                    ->where('risk_detail.status_indhan', 1)
+                    ->count('pengukuran_indhan.id_p');
+
+        $data = [[
+            'title' => 'Terdapat pengukuran risiko indhan sebanyak ',
+            'jumlah' => $jml_risk
+        ]];
+        if($jml_risk == 0){
+            $data = [];
+        }
+
+        return $data;
+    }
+
+    public function notif_admin()
+    {
+        $approval_srisiko_indhan = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                                    ->where('s_risiko.tahun', date('Y'))
+                                    ->where('s_risiko.status_s_risiko', 0)
+                                    ->where('risk_detail.status_indhan', 1)
+                                    ->count('s_risiko.id_s_risiko');
+        $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
+        $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
+        $approval_hasil_mitigasi = DB::table('mitigasi_logs')->where('is_approved', 0)->count();
+
+        $data = [];
+        if($approval_srisiko_indhan > 0){
+            $data[] = [
+                'title' => 'Terdapat sumber risiko indhan yang belum disetujui sebanyak ',
+                'jumlah' => $approval_srisiko_indhan
+            ];
+        }
+        if($approval_pengajuan_mitigasi_indhan > 0){
+            $data[] = [
+                'title' => 'Terdapat pengajuan mitigasi indhan yang belum disetujui sebanyak ',
+                'jumlah' => $approval_pengajuan_mitigasi_indhan
+            ];
+        }
+        if($approval_risk_register_indhan > 0){
+            $data[] = [
+                'title' => 'Terdapat risk register indhan yang belum disetujui sebanyak ',
+                'jumlah' => $approval_risk_register_indhan
+            ];
+        }
+        if($approval_hasil_mitigasi > 0){
+            $data[] = [
+                'title' => 'Terdapat hasil mitigasi yang belum disetujui sebanyak ',
+                'jumlah' => $approval_hasil_mitigasi
+            ];
+        }
+
+        return $data;
     }
 }
