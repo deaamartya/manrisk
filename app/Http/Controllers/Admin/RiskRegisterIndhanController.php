@@ -39,7 +39,8 @@ class RiskRegisterIndhanController extends Controller
         RiskHeaderIndhan::insert([
             'tahun' => $request->tahun,
             'target' => $request->target,
-            'penyusun' => Auth::user()->name,
+            'penyusun' => $request->penyusun,
+            'pemeriksa' => $request->pemeriksa,
         ]);
         return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil disimpan!']);
     }
@@ -65,7 +66,8 @@ class RiskRegisterIndhanController extends Controller
         $riskheader->update([
             'tahun' => $request->tahun,
             'target' => $request->target,
-            'pemeriksa' => $request->pemeriksa
+            'penyusun' => $request->penyusun,
+            'pemeriksa' => $request->pemeriksa,
         ]);
         return redirect()->route('admin.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil diubah!']);
     }

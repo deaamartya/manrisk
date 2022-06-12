@@ -129,7 +129,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Penyusun</label>
 									<div class="col-sm-9">
-                    <input type="text" class="form-control" name="penyusun" readonly value="{{ Auth::user()->name }}" />
+                    <input type="text" class="form-control" name="penyusun" />
 									</div>
 								</div>
               </div>
@@ -137,7 +137,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Pemeriksa</label>
 									<div class="col-sm-9">
-                    <input type="text" class="form-control" name="pemeriksa" readonly />
+                    <input type="text" class="form-control" name="pemeriksa" />
 									</div>
 								</div>
               </div>
@@ -184,6 +184,14 @@
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
                     <textarea class="form-control" name="target">{{ $data->target }}</textarea>
+									</div>
+								</div>
+              </div>
+              <div class="col-12">
+								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Penyusun</label>
+									<div class="col-sm-9">
+                    <input type="text" class="form-control" name="penyusun" value="{{ $data->penyusun }}"/>
 									</div>
 								</div>
               </div>
