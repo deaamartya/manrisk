@@ -23,7 +23,6 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('penilaian-risiko', [PengukuranRisikoController::class, 'penilaianRisiko'])->name('penilaian-risiko');
   Route::post('penilaian-risiko-store', [PengukuranRisikoController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-store');
   Route::resource('risiko', RisikoController::class);
-  Route::get('risiko/print/{id}', [RisikoController::class, 'print'])->name('risiko.print');
   Route::post('risiko/upload-lampiran', [RisikoController::class, 'uploadLampiran'])->name('risiko.upload-lampiran');
   Route::resource('pengajuan-mitigasi', PengajuanMitigasiController::class);
   Route::post('risk-detail/import', [RiskDetailController::class, 'import'])->name('risk-detail.import');
@@ -36,4 +35,9 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('fetchNilaiRisiko', [RisikoController::class, 'getNilai']);
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
+});
+
+Route::middleware(['cekRiskOfficer'])->name('risk-officer.')->group(function () {
+  Route::get('risiko/print/{id}', [RisikoController::class, 'print'])->name('risiko.print');
+  Route::get('mitigasi-plan/print/{id}', [MitigasiPlanController::class, 'print'])->name('mitigasi-plan.print');
 });

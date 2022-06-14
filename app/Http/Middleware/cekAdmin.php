@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 
 class cekAdmin
 {
@@ -17,7 +18,7 @@ class cekAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->is_admin){
+        if(Session::get('is_bypass') === true || Auth::user()->is_admin){
             return $next($request);
         }
         else {

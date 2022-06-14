@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 
 class cekROwner
 {
@@ -17,7 +18,7 @@ class cekROwner
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->is_risk_owner){
+        if(Session::get('is_bypass') === true || Auth::user()->is_risk_owner){
             return $next($request);
         }
         else {

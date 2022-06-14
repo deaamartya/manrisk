@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Auth;
+use Session;
 
 class cekPenilaiIndhan
 {
@@ -16,7 +18,7 @@ class cekPenilaiIndhan
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->is_penilai_indhan){
+        if(Session::get('is_bypass') === true || Auth::user()->is_penilai_indhan){
             return $next($request);
         }
         else {

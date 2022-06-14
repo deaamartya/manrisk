@@ -8,7 +8,10 @@ use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\Auth\{
     LoginController,
 };
-use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\{
+    GlobalController,
+    VerifyController,
+};
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 
@@ -26,6 +29,7 @@ Route::post('forum-detail/store/{id}', [GlobalController::class, 'forum_detail_s
 
 // Get Notification
 Route::get('get-notification', [GlobalController::class, 'get_notification']);
+Route::get('document/verify/{token}', [VerifyController::class, 'getDecrypted']);
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {

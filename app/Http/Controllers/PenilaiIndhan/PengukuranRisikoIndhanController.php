@@ -16,8 +16,8 @@ class PengukuranRisikoIndhanController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_indhan', 1)->count();
-        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_indhan', 1)->limit(1)->get();
+        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_korporasi', 1)->count();
+        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_korporasi', 1)->limit(1)->get();
         // dd($data_sr);
         foreach($data_sr as $d){
             $pengukuran = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
@@ -56,7 +56,7 @@ class PengukuranRisikoIndhanController extends Controller
         ->join('risk as r', 'r.id_risk', 'k.id_risk')
         ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
         ->where('s_risiko.tahun', $tahun)
-        ->where('risk_detail.status_indhan', 1)
+        ->where('risk_detail.status_korporasi', 1)
         ->orderBy('s_risiko.id_s_risiko')
         ->get();
 
@@ -98,7 +98,7 @@ class PengukuranRisikoIndhanController extends Controller
                 ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
                 ->join('defendid_pengukur as d', 'pengukuran_indhan.id_pengukur', 'd.id_pengukur')
                 ->where('pengukuran_indhan.tahun_p', '2022')
-                ->where('rd.status_indhan', '1')
+                ->where('rd.status_korporasi', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();
         $pdf = PDF::loadView('penilai-indhan.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');

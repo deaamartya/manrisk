@@ -80,7 +80,7 @@ class RiskDetailController extends Controller
                 'r_akhir' => $risk_detail[0][$i]['r_akhir'],
                 'status' => $risk_detail[0][$i]['status'],
                 'status_mitigasi' => $risk_detail[0][$i]['status_mitigasi'],
-                'status_indhan' => $risk_detail[0][$i]['status_indhan'],
+                'status_korporasi' => $risk_detail[0][$i]['status_korporasi'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];

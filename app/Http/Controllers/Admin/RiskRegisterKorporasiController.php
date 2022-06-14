@@ -13,6 +13,9 @@ use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
 use Redirect;
+use Illuminate\Support\Facades\Crypt;
+use DNS2D;
+use Session;
 
 
 class RiskRegisterKorporasiController extends Controller
@@ -57,10 +60,12 @@ class RiskRegisterKorporasiController extends Controller
     }
 
     public function print($id) {
-        $header = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-        ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('id_riskh', '=', $id)->first();
-
-        $pdf = PDF::loadView('admin.pdf-risk-register', compact('header'))->setPaper('a4', 'landscape');
+        $header = RiskHeader::where('id_riskh', '=', $id)->first();
+        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-korporasi/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
+        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
+        $pdf = PDF::loadView('admin.pdf-risk-register', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
+        Session::forget('is_bypass');
         return $pdf->stream('Laporan Manajemen Risiko '.$header->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 
@@ -93,7 +98,7 @@ class RiskRegisterKorporasiController extends Controller
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([
-            'status_indhan' => 1
+            'status_korporasi' => 1
         ]);
         $id_risk = $request->id_risk;
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi INDHAN.']);
@@ -103,7 +108,7 @@ class RiskRegisterKorporasiController extends Controller
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([
-            'status_indhan' => 0
+            'status_korporasi' => 0
         ]);
         $id_risk = $request->id_risk;
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi Bukan INDHAN.']);

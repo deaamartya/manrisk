@@ -112,7 +112,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea id="summernote" name="target"></textarea>
+                    <textarea class="form-control" name="target"></textarea>
 									</div>
 								</div>
               </div>
@@ -174,7 +174,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Target</label>
 									<div class="col-sm-9">
-                    <textarea name="target">{{ $data->target }}</textarea>
+                    <textarea class="form-control" name="target">{{ $data->target }}</textarea>
 									</div>
 								</div>
               </div>

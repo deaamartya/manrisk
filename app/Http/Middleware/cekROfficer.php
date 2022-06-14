@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 
 class cekROfficer
 {
@@ -17,7 +18,7 @@ class cekROfficer
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->is_risk_officer){
+        if(Session::get('is_bypass') === true || Auth::user()->is_risk_officer){
             return $next($request);
         }
         else {
