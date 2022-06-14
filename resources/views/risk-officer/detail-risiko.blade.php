@@ -104,11 +104,12 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex justify-content-between">
             <button class="btn btn-lg btn-primary d-flex btn-add" data-bs-toggle="modal" data-bs-target="#create-risk">
               <i data-feather="plus" class="me-2"></i>
               Tambah Detail Risiko
             </button>
+            <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -497,6 +498,27 @@
   </div>
 </div>
 @endforeach
+<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Import Risk Detail</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{{ route('risk-officer.risk-detail.import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-body">
+              <input type="hidden" name="id_header" value="{{ $headers->id_riskh }}">
+              <input type="file" name="file" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" type="submit">Simpan</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>

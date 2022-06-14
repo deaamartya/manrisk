@@ -100,9 +100,10 @@ class RisikoController extends Controller
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
         $user = Auth::user();
+        // dd($header->risk_detail);
         // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
-        $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user'))->setPaper('a4', 'landscape');
-        return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
+        $pdf = PDF::loadView('risk-officer.mitigasi-plan-pdf', compact('header', 'user'))->setPaper('a4', 'landscape');
+        return $pdf->stream('Laporan Rencana Pengelolaan Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 
     public function uploadLampiran(Request $request) {
