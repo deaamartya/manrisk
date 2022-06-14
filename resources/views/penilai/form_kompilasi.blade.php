@@ -33,10 +33,10 @@
                     <td>
                         <b>Hasil Kompilasi Risiko</b>
                         <br>
-                        PI - PAL Indonesia Tahun 2022
+                        {{ $data[0]->company_code }} - {{ $data[0]->instansi }} Tahun {{ $data[0]->tahun_p }}
                     </td>
                     <td colspan="3">
-                        <img src="{{ public_path('assets/images/logo_pal.png') }}" style="width:90px;">
+                        <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$data[0]->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
                     </td>
                 </tr>
             </thead>

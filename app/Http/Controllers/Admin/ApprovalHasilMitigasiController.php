@@ -16,7 +16,7 @@ class ApprovalHasilMitigasiController extends Controller
     public function index()
     {
         $headers = AbsMitigasiPlan::getAllData();
-        return view('risk-officer.mitigasi-plan', compact("headers"));
+        return view('admin.mitigasi-plan', compact("headers"));
     }
 
     /**
@@ -29,7 +29,7 @@ class ApprovalHasilMitigasiController extends Controller
     {
         $headers = AbsMitigasiPlan::getDataByIdRiskh($id);
         // dd($headers);
-        return view('risk-officer.mitigasi-detail', compact("headers"));
+        return view('admin.mitigasi-detail', compact("headers"));
     }
 
     /**
@@ -44,7 +44,7 @@ class ApprovalHasilMitigasiController extends Controller
         $query = AbsMitigasiPlan::updateRiskDetail($request, $id);
         $id_header = $query['id_header'];
 
-        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
+        return redirect()->route('admin.mitigasi-plan.show', $id_header);
     }
 
     public function progressMitigasi($id)

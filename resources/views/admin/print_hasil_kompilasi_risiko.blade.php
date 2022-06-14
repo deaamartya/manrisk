@@ -55,16 +55,21 @@
     <table class="table" cellspacing="0">
         <thead>
             <tr>
-                <th colspan="2" align="center" style="width: 240px">
-                    <img src="{{ asset('assets/images/logo/logo_company/logo_bumn.png') }}" style="width:120px;">
-                </th>
-                <th align="center" style="width: 505px">
+                <td colspan="2">
+                    <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo_bumn.png' }}" style="width:120px;">
+                </td>
+                <td>
                     <b>Hasil Kompilasi Risiko</b>
-                    <p>{{ $instansi->instansi }} Tahun {{ $tahun }} </p>
-                </th>
-                <th colspan="3" align="center" style="width: 240px">
-                    <img src="{{ asset('assets/images/logo/logo_company/logo_PI.png') }}" style="width:90px;">
-                </th>
+                    <br>
+                    @if (count($data) > 0) 
+                    {{ $data[0]->company_code }} - {{ $data[0]->instansi }} Tahun {{ $data[0]->tahun_p }}
+                    @endif
+                </td>
+                <td colspan="3">
+                    @if (count($data) > 0) 
+                    <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$data[0]->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
+                    @endif
+                </td>
             </tr>
         </thead>
         <tbody>

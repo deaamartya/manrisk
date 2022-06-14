@@ -100,72 +100,79 @@
     			{{-- <b>MITIGASI PLAN {{ $user->perusahaan->instansi }} </b> --}}
     		</td>
     		<td width="143">
-    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="width:120px;" />
+    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
     		</td>
     	</tr>
     </table>
-    <table class="table-2" cellspacing="0" width="100%">
+		<table class="table-2" cellspacing="0" width="100%">
+			<tr style="height: 10px;">
+				<td class="left pl-10p">
+					Instansi
+				</td>
+				<td class="left pl-10p" height="5">
+					{{ $header->perusahaan->instansi }}
+				</td>
+				<td class="left">
+					Diperiksa &  Disetujui  Oleh
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td width="13%" class="left pl-10p">
+					Tanggal Penyusunan
+				</td>
+				<td width="49%" height="5" class="left pl-10p">
+					@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->tanggal))); @endphp
+				</td>
+				<td rowspan="5" width="20%" height="" class="center">
+					<img src="data:image/png;base64,{{ $qrcode }}" height="90"><br><br>
+					<p class="f-10">Ditandangani secara elektronik oleh {{ $header->pemeriksa }}</p>
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td width="13%" class="left pl-10p">
+					Tanggal Cetak
+				</td>
+				<td width="49%" height="5" class="left pl-10p">
+					@php echo tanggal_indonesia(date('Y-m-d')); @endphp
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td width="13%" class="left pl-10p" style="height: 10px;">
+					Tahun Periode
+				</td>
+				<td width="49%" height="5" class="left pl-10p" style="height: 10px;">
+					{{ $header->tahun }}
+				</td>
+			</tr>
+			<tr>
+				<td width="13%" class="left pl-10p">
+					Sasaran / Target
+				</td>
+				<td width="49%" height="80" style="font-size:12px;" class="left pl-10p">
+					@php echo nl2br($header->target) @endphp
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td width="13%" class="left pl-10p">
+					Disusun Oleh
+				</td>
+				<td width="49%" height="5" class="left pl-10p">
+					{{ $header->penyusun }}
+				</td>
+			</tr>
+		</table>
+		<table class="table-4" cellspacing="0" width="100%">
     	<tr>
-    		<td class="left" colspan="2">
-    			Disusun Oleh :
-    		</td>
-    		<td class="left" colspan="2">
-    			Diperiksa &  Disetujui  Oleh
-    		</td>
-    	</tr>
-    	<tr>
-    		<td width="13%" class="left">
-    			Tanggal Penyusunan
-    		</td>
-    		<td width="49%" class="left pl-10p">
-    			@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->tanggal))); @endphp
-    		</td>
-    		<td rowspan="4" width="16%" class="center">
-    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo2.png' }}" width="60"><br><br>
-				{{ $header->penyusun }}
-    		</td>
-    		<td rowspan="4" width="20%" class="center">
-    			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo2.png' }}" width="60"><br><br>
-				{{ $header->pemeriksa }}
-    		</td>
-    	</tr>
-		<tr>
-    		<td width="13%" class="left">
-    			Tanggal Cetak
-    		</td>
-    		<td width="49%" class="left pl-10p">
-    			@php echo tanggal_indonesia(date('Y-m-d')); @endphp
-    		</td>
-    	</tr>
-		<tr>
-    		<td width="13%" class="left">
-    			Tahun Periode
-    		</td>
-    		<td width="49%" class="left pl-10p">
-    			{{ $header->tahun }}
-    		</td>
-    	</tr>
-		<tr>
-    		<td width="13%" class="left">
-    			Sasaran / Target
-    		</td>
-    		<td width="49%" height="80" style="font-size:12px;" class="left pl-10p">
-    			{!! $header->target !!}
-    		</td>
-    	</tr>
-    </table>
-	<table class="table-4" cellspacing="0" width="100%">
-    	<tr>
-    		<td width="5%" height="70" class="center f-11">
+    		<td width="3%" height="30" class="center f-11">
     			ID Risk
     		</td>
     		<td width="7%" class="center f-12">
     			Peristiwa yang mengganggu target / sasaran
     		</td>
-    		<td width="8%" class="center f-10">
+    		<td width="3%" class="center f-10">
     			Level Risiko Awal
     		</td>
-    		<td width="8%" class="center f-12">
+    		<td class="center f-12">
     			Opsi Mitigasi
     		</td>
     		<td width="6%" class="center f-12">

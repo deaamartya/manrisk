@@ -120,16 +120,16 @@ class PengukuranRisikoController extends Controller
 
     public function generatePDF()
     {   
-        $data = Pengukuran::select('k.id_risk', 'k.konteks', 'sr.s_risiko', DB::raw('AVG(pengukuran.nilai_L) as L'), DB::raw('AVG(pengukuran.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran.nilai_C) as R'), DB::raw('count(pengukuran.nama_responden)'))
+        $data = Pengukuran::select('k.id_risk', 'k.konteks', 'sr.s_risiko', 'p.*', 'pengukuran.tahun_p', DB::raw('AVG(pengukuran.nilai_L) as L'), DB::raw('AVG(pengukuran.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran.nilai_C) as R'), DB::raw('count(pengukuran.nama_responden)'))
                 ->join('s_risiko as sr', 'pengukuran.id_s_risiko', 'sr.id_s_risiko')
                 ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
                 ->join('defendid_pengukur as d', 'pengukuran.id_pengukur', 'd.id_pengukur')
+                ->join('perusahaan as p', 'd.company_id', 'p.company_id')
                 ->where('pengukuran.tahun_p', date('Y'))
                 ->where('sr.status_s_risiko', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();
         $pdf = PDF::loadView('penilai.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
         return $pdf->stream('Hasil Kompilasi Risiko.pdf');
-
     }
 }

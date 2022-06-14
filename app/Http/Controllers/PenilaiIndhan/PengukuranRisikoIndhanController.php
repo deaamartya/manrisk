@@ -92,18 +92,18 @@ class PengukuranRisikoIndhanController extends Controller
 
     public function generatePDF()
     {   
-        $data = PengukuranIndhan::select('k.id_risk', 'k.konteks', 'sr.s_risiko', DB::raw('AVG(pengukuran_indhan.nilai_L) as L'), DB::raw('AVG(pengukuran_indhan.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran_indhan.nilai_C) as R'), DB::raw('count(pengukuran_indhan.nama_responden)'))
+        $data = PengukuranIndhan::select('k.id_risk', 'k.konteks', 'sr.s_risiko','p.*', 'pengukuran.tahun_p', DB::raw('AVG(pengukuran_indhan.nilai_L) as L'), DB::raw('AVG(pengukuran_indhan.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran_indhan.nilai_C) as R'), DB::raw('count(pengukuran_indhan.nama_responden)'))
                 ->join('s_risiko as sr', 'pengukuran_indhan.id_s_risiko', 'sr.id_s_risiko')
                 ->join('risk_detail as rd', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                 ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
                 ->join('defendid_pengukur as d', 'pengukuran_indhan.id_pengukur', 'd.id_pengukur')
-                ->where('pengukuran_indhan.tahun_p', '2022')
+                ->join('perusahaan as p', 'd.company_id', 'p.company_id')
+                ->where('pengukuran_indhan.tahun_p', date('Y'))
                 ->where('rd.status_korporasi', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();
         $pdf = PDF::loadView('penilai-indhan.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
         return $pdf->stream('Hasil Kompilasi Risiko.pdf');
-
     }
 
 

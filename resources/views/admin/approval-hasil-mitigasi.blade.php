@@ -41,10 +41,10 @@
                                         @endif
                                     </td>
                                     <td align="center" style="width: 60px">
-                                        <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}">
+                                        <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly>
                                     </td>
                                     <td align="center">
-                                    @if($d->is_approved)
+                                    @if(!$d->is_approved)
                                         <button class="btn btn-warning btn-sm approve" id="{{ $d->id }}"><i class="feather feather-check-circle"></i> Approval</button>
                                     @endif
                                     </td>

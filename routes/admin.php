@@ -69,5 +69,11 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::put('approval-hasil-mitigasi/approve/{id}', [ApprovalHasilMitigasiController::class, 'approvedHasilMitigasi']);
   Route::resource('approval-hasil-mitigasi', ApprovalHasilMitigasiController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
+  Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
+  Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
+});
+
+Route::middleware(['cekAdmin'])->name('admin.')->group(function () {
+  Route::get('mitigasi-plan/print/{id}', [MitigasiPlanController::class, 'print'])->name('mitigasi-plan.print');
 });
 

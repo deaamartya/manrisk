@@ -76,24 +76,22 @@ class HasilKompilasiRisikoController extends Controller
         $wr = "1=1";
         if($instansi){
             $wr .= " AND du.company_id = ".$instansi;
-            $instansi = Perusahaan::select('instansi')->where('company_id', $instansi)->first();
+            // $instansi = Perusahaan::select('instansi')->where('company_id', $instansi)->first();
         }
         if($tahun){
             $wr .= " AND B.tahun = ".$tahun;
         }
-        $data = DB::table('pengukuran as A')
-        ->selectRaw('du.company_id, D.id_risk, D.konteks, B.s_risiko, AVG(A.nilai_L) AS l, AVG(A.nilai_C) AS c, AVG(A.nilai_L)*AVG(A.nilai_C) AS r, count(A.nama_responden)')
-        ->join('s_risiko as B', 'A.id_s_risiko', 'B.id_s_risiko')
-        ->join('konteks as D', 'B.id_konteks', 'D.id_konteks')
-        ->leftJoin('defendid_user as du', 'du.id_user', 'B.id_user')
-        ->whereRaw($wr)
-        ->whereNull('A.deleted_at')
-        ->groupBy('B.id_s_risiko')
-        ->orderBy('r', 'desc')
-        ->get();
-
-        // dd($data);
-        $pdf = PDF::loadview('admin.print_hasil_kompilasi_risiko',['data'=>$data, 'instansi'=>$instansi, 'tahun'=>$tahun])->setPaper('a4', 'landscape');
-    	return $pdf->stream('Kompilasi_Risiko_hasil_mitigasi_'.$instansi.'_'.$tahun);
+        $data = Pengukuran::select('k.id_risk', 'k.konteks', 'sr.s_risiko', 'p.*', 'pengukuran.tahun_p', DB::raw('AVG(pengukuran.nilai_L) as L'), DB::raw('AVG(pengukuran.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran.nilai_C) as R'), DB::raw('count(pengukuran.nama_responden)'))
+            ->join('s_risiko as sr', 'pengukuran.id_s_risiko', 'sr.id_s_risiko')
+            ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
+            ->join('defendid_pengukur as d', 'pengukuran.id_pengukur', 'd.id_pengukur')
+            ->join('perusahaan as p', 'd.company_id', 'p.company_id')
+            ->where('pengukuran.tahun_p', $tahun)
+            ->where('sr.status_s_risiko', '1')
+            ->where('sr.company_id', $instansi)
+            ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
+            ->get();
+        $pdf = PDF::loadView('penilai-indhan.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
+        return $pdf->stream('Hasil Kompilasi Risiko'.$instansi.'_'.$tahun.'.pdf');
     }
 }
