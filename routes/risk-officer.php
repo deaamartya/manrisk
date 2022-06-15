@@ -25,7 +25,6 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::resource('risiko', RisikoController::class);
   Route::post('risiko/upload-lampiran', [RisikoController::class, 'uploadLampiran'])->name('risiko.upload-lampiran');
   Route::resource('pengajuan-mitigasi', PengajuanMitigasiController::class);
-  Route::post('risk-detail/import', [RiskDetailController::class, 'import'])->name('risk-detail.import');
   Route::resource('risk-detail', RiskDetailController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');

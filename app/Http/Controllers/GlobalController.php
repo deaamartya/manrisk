@@ -309,4 +309,6 @@ class GlobalController extends Controller
 
         return $data;
     }
+
+    
 }

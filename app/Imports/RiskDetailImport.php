@@ -37,9 +37,6 @@ class RiskDetailImport implements ToModel, WithHeadingRow
             'l_akhir' => $row['l_akhir'],
             'c_akhir' => $row['c_akhir'],
             'r_akhir' => $row['r_akhir'],
-            'status' => $row['status'],
-            'status_mitigasi' => $row['status_mitigasi'],
-            'status_indhan' => $row['status_indhan'],
         ]);
     }
 }
