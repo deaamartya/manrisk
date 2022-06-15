@@ -36,12 +36,12 @@ class HomeController extends Controller
             foreach ($companies as $c) {
                 array_push($labels, $c->instansi);
                 $count_risk = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->where('company_id', $c->company_id)
+                    ->where('rd.company_id', $c->company_id)
                     ->count('rd.id_riskd');
                 array_push($total_risk, $count_risk);
 
                 $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-                    ->where('company_id', $c->company_id)
+                    ->where('d.company_id', $c->company_id)
                     ->where('d.r_awal','>=', 12)
                     ->whereOr('status_mitigasi', '=', 1)
                     ->count('d.id_riskd');
@@ -49,7 +49,7 @@ class HomeController extends Controller
 
                 $done_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
                     ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
-                    ->where('company_id', $c->company_id)
+                    ->where('rd.company_id', $c->company_id)
                     ->where('m.realisasi', '=', 100)
                     ->where('m.is_approved', '=', 1)
                     ->count('rd.id_riskd');
@@ -57,7 +57,7 @@ class HomeController extends Controller
             }
             $counts_risiko = SRisiko::where('company_id', '=', Auth::user()->company_id)->count('id_s_risiko');
             $count_risiko = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                ->where('company_id', Auth::user()->company_id)
+                ->where('rd.company_id', Auth::user()->company_id)
                 ->count('rd.id_riskd');
             if (Auth::user()->is_risk_officer) {
                 return view('risk-officer.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));

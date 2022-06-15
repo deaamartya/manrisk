@@ -16,12 +16,12 @@ class PengukuranRisikoIndhanController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_korporasi', 1)->count();
-        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('tahun', date('Y'))->where('status_korporasi', 1)->limit(1)->get();
-        // dd($data_sr);
+        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('s_risiko.tahun', date('Y'))->where('status_korporasi', 1)->count();
+        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('s_risiko.tahun', date('Y'))->where('status_korporasi', 1)->limit(1)->get();
+        dd($jml_risk);
         foreach($data_sr as $d){
             $pengukuran = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
-                        ->where('pengukuran_indhan.id_s_risiko', $d->id_s_risiko)->get();
+                ->where('pengukuran_indhan.id_s_risiko', $d->id_s_risiko)->get();
                
             $jabatan = DefendidPengukur::join('defendid_user', 'defendid_pengukur.id_user', 'defendid_user.id_user')->where('defendid_user.is_penilai_indhan', 1)->get();
 
