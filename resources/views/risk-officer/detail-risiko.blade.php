@@ -134,8 +134,8 @@
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($d->l_awal, 2) }}</td>
-                    <td>{{ number_format($d->c_awal, 2) }}</td>
+                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -148,7 +148,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal, 2) }}
+                      {{ number_format($d->r_awal, 2) + 0 }}
                       </span>
                     </td>
                     <td>
@@ -271,15 +271,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) }}">
+                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
                   </div>
                 </div>
               </div>
@@ -425,15 +425,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) }}">
+                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) + 0 }}">
                   </div>
                 </div>
               </div>

@@ -105,8 +105,8 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($d->l_awal, 2) }}</td>
-                    <td>{{ number_format($d->c_awal, 2) }}</td>
+                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -119,7 +119,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal, 2) }}
+                      {{ number_format($d->r_awal, 2) + 0 }}
                       </span>
                     </td>
                     <td>

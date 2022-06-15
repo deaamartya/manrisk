@@ -73,8 +73,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
                     <td>{{ $d->instansi }}</td>
-                    <td>{{ date('d M Y (H:i)', strtotime($d->tanggal)) }}</td>
-                    <td>{{ $d->target }}</td>
+                    <td>{{ date('d M Y', strtotime($d->tanggal)) }}</td>
+                    <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
                     <td>{{ count($d->risk_detail) }}</td>

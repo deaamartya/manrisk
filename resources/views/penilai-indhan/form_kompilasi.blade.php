@@ -86,7 +86,7 @@
                             {{ round($d->C, 2) }}
                         </td>
                         <td class="text-center">
-                            {{ number_format($d->L * $d->C, 2) }}
+                            {{ number_format($d->L * $d->C, 2) + 0 }}
                         </td>
                     </tr>
                 @endforeach

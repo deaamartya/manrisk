@@ -123,7 +123,7 @@
                   <tr>
                     <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
                     <td>
-                        @if($d->status_indhan == 0)
+                        @if($d->status_korporasi == 0)
                         <form action="{{ route('admin.korporate', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
@@ -131,7 +131,7 @@
                             <i class="fa fa-times me-2"></i>Bukan INDHAN
                           </button>
                         </form>
-                        @elseif($d->status_indhan == 1)
+                        @elseif($d->status_korporasi == 1)
                         <form action="{{ route('admin.unkorporate', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
@@ -167,8 +167,8 @@
                     <td>{{ $d->dampak }}</td>
                     <td>{{ $d->uc }}</td>
                     <td>{{ $d->pengendalian }}</td>
-                    <td>{{ number_format($d->l_awal ,2) }}</td>
-                    <td>{{ number_format($d->c_awal ,2) }}</td>
+                    <td>{{ number_format($d->l_awal,2) + 0 }}</td>
+                    <td>{{ number_format($d->c_awal,2) + 0 }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -181,7 +181,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal ,2) }}
+                      {{ number_format($d->r_awal,2) + 0 }}
                       </span>
                     </td>
                     <td>{{ $d->peluang }}</td>

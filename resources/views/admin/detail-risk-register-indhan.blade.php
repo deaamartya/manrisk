@@ -108,8 +108,8 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($d->l_awal, 2) }}</td>
-                    <td>{{ number_format($d->c_awal, 2) }}</td>
+                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-blue me-2">
@@ -122,25 +122,25 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal, 2) }}
+                      {{ number_format($d->r_awal, 2) + 0 }}
                       </span>
                     </td>
                     <td>
-                      @if($mitigasi === 1)
+                      {{-- @if($mitigasi === 1)
                       <span>Aksi Mitigasi telah diajukan</span>
-                      @else
+                      @else --}}
                         @if($d->r_awal >= 12)
                           <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Tidak Perlu Mitigasi
                           </button> -->
-                          <span class="badge badge-success">Tidak Perlu Mitigasi</span>
+                          <span class="badge badge-primary">Ajukan Mitigasi</span>
                         @elseif($d->r_awal < 12)
                           <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Ajukan Mitigasi
                           </button> -->
-                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                          <span class="badge badge-success">Aman</span>
                         @endif
-                      @endif
+                      {{-- @endif --}}
                     </td>
                     <!-- <td>
                       <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-risk-{{ $d->id_riskd }}">
@@ -221,7 +221,7 @@
   $(document).ready(function(){
     $(".select2").select2();
     $("#table-risiko").DataTable({
-      'order': [ 6, 'desc' ]
+      'order': [ 7, 'desc' ]
     });
   })
   function cal() {

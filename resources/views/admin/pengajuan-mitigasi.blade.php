@@ -77,7 +77,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->risk_detail->r_awal ,2) }}
+                      {{ number_format($d->risk_detail->r_awal, 2) + 0 }}
                       </span>
                     </td>
                     <td>{{ $d->pemohon->name }}</td>

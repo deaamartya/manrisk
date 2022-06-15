@@ -155,7 +155,7 @@
                         <td>{{ round($s->nilai_L, 2) }}</td>
                         <td>{{ round($s->nilai_C, 2) }}</td>
                         <td>
-                        {{ number_format(($s->nilai_L * $s->nilai_C),2) }}
+                        {{ number_format(($s->nilai_L * $s->nilai_C),2) + 0 }}
                         </td>
                         <td class="text-center">
                             @if($s->status_s_risiko == 0)

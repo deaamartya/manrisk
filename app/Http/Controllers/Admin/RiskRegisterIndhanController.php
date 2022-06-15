@@ -29,7 +29,7 @@ class RiskRegisterIndhanController extends Controller
     {
         $headers = RiskHeaderIndhan::all();
         $jml_risk = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh')
-        ->where('tahun', '=', date('Y'))
+        ->where('risk_detail.tahun', '=', date('Y'))
         ->where('status_korporasi', '=', 1)
         ->count();
         return view('admin.risk-register-indhan', compact('headers', 'jml_risk'));
@@ -96,13 +96,11 @@ class RiskRegisterIndhanController extends Controller
     {
         $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
         // dd($headers);
-        $detail_risk = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )     
+        $detail_risk = RiskDetail::join('perusahaan', 'risk_detail.company_id', 'perusahaan.company_id')
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_korporasi', '=', 1)
-                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->where('risk_detail.tahun', '=', $headers->tahun)
                 ->get();
         $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
         ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
@@ -141,11 +139,10 @@ class RiskRegisterIndhanController extends Controller
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh')
-                ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        $detail_risk = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
-                ->where('risk_detail.status_korporasi', '=', 1)
-                ->where('risk_header.tahun', '=', $header->tahun)
+                ->where('status_korporasi', '=', 1)
+                ->where('risk_detail.tahun', '=', $header->tahun)
                 ->get();
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
         $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-indhan/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
@@ -163,6 +160,8 @@ class RiskRegisterIndhanController extends Controller
             $params[] = [
                 'id_riskh' => $request->id_header,
                 'id_s_risiko' => $risk_detail[0][$i]['id_s_risiko'],
+                'tahun' => date('Y'),
+                'company_id' => 6,
                 'ppkh' => $risk_detail[0][$i]['ppkh'],
                 'indikator' => $risk_detail[0][$i]['indikator'],
                 'sebab' => $risk_detail[0][$i]['sebab'],
