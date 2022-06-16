@@ -38,9 +38,13 @@ class GlobalController extends Controller
     public function forum()
     {
         if(Auth::check()){
+            $wr = '1=1';
+            if(!Auth::user()->is_admin){
+                $wr.=' AND forum.display = 1';
+            }
             $data = DB::table('forum')
             ->leftJoin('defendid_user as du', 'du.id_user', 'forum.id_user')
-            ->where('forum.display', 1)
+            ->whereRaw($wr)
             ->orWhere('forum.id_user', Auth::user()->id_user)
             ->orderBy('forum.updated_at', 'desc')
             ->select('forum.id', 'forum.id_user', 'forum.subject', 'forum.body', 'forum.display', 'forum.updated_at', 'du.username')
@@ -256,7 +260,7 @@ class GlobalController extends Controller
         $jml_risk = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
                     ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                     ->where('s_risiko.tahun', date('Y'))
-                    ->where('risk_detail.status_korporasi', 1)
+                    ->where('risk_detail.status_indhan', 1)
                     ->count('pengukuran_indhan.id_p');
 
         $data = [[
@@ -275,7 +279,7 @@ class GlobalController extends Controller
         $approval_srisiko_indhan = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                                     ->where('s_risiko.tahun', date('Y'))
                                     ->where('s_risiko.status_s_risiko', 0)
-                                    ->where('risk_detail.status_korporasi', 1)
+                                    ->where('risk_detail.status_indhan', 1)
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
         $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
@@ -310,5 +314,5 @@ class GlobalController extends Controller
         return $data;
     }
 
-    
+
 }

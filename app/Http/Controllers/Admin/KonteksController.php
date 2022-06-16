@@ -49,7 +49,7 @@ class KonteksController extends Controller
         else{
             $params['created_at'] = Carbon::now();
             Kontek::insert($params);
-            $messages = ['success-swal' => 'Konteks berhasil disimpan!']
+            $messages = ['success-swal' => 'Konteks berhasil disimpan!'];
         }
         DB::commit();
 

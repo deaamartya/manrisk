@@ -14,6 +14,65 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between">
+                    <h5>ID HEADER # {{ $data['headers']->id_riskh }}</h5>
+                    
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="col-md-4"><h6>Instansi</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-2">{{ $data['headers']->perusahaan->instansi }}</div>
+                      <div class="col-md-4"><h6>Tahun Risiko</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-2">{{ $data['headers']->tahun }}</div>
+                      <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($data['headers']->tanggal)) }}</div>
+                      <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-2">{{ $data['headers']->penyusun }}</div>
+                      <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12">{{ $data['headers']->pemeriksa }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-3">{!! nl2br($data['headers']->target) !!}</div>
+                      @if($data['headers']->lampiran != null || $data['headers']->lampiran != '')
+                      <div class="col-md-5 mb-2">
+                        <h6>Lampiran</h6>
+                        <hr class="hr-custom">
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <a href="{{ asset('document/lampiran/'. $data['headers']->lampiran) }}" class="btn btn-sm btn-danger mb-3">
+                          <span class="flex-center">
+                            <i data-feather="download" class="me-2"></i>{{ $data['headers']->lampiran }}
+                          </span>
+                        </a>
+                      </div>
+                      @endif
+                      <div class="col-md-5"><h6>Status</h6><hr class="hr-custom"></div>
+                      <div class="col-md-12 mb-2">
+                        @if($data['headers']->status_h == 0)
+                        <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Risk Owner</span>
+                        @elseif($data['headers']->status_h == 1)
+                        <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
+                        @endif
+                        @if($data['headers']->status_h_indhan == 0)
+                        <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Admin</span>
+                        @elseif($data['headers']->status_h_indhan == 1)
+                        <span class="badge badge-success"><i class="fa fa-check"></i> Approved Admin</span>
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="display" id="basic-1">
@@ -27,7 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($data as $d)
+                                @foreach($data['logs'] as $d)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $d->description }}</td>
@@ -59,7 +118,7 @@
     </div>
 </div>
 
-@foreach ($data as $dt)
+@foreach ($data['logs'] as $dt)
 <div class="modal fade" id="preview-document-{{ $dt->id }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -79,7 +138,6 @@
 
 @section('custom-script')
     <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
         const user = {!! auth()->user()->toJson() !!}
     </script>
     <script type="text/javascript" src="{{asset('assets/js/custom/approval_hasil_mitigasi.js')}}"></script>

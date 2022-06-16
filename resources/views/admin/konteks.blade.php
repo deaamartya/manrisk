@@ -126,8 +126,5 @@
 @endsection
 
 @section('custom-script')
-    <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
-    </script>
     <script type="text/javascript" src="{{asset('assets/js/custom/data_master_konteks.js')}}"></script>
 @endsection

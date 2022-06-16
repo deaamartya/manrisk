@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($resiko as $r)
+                                @foreach($risiko as $r)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $r->id_risk }}</td>
@@ -109,8 +109,5 @@
 @endsection
 
 @section('custom-script')
-    <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
-    </script>
     <script type="text/javascript" src="{{asset('assets/js/custom/data_master_risiko.js')}}"></script>
 @endsection

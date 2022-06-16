@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    $('#tambah_resiko').on('click', function(){
-        $('#judul_modal').html('Tambah Resiko')
-        $('#formResiko').attr('action', APP_URL+'/admin/resiko/store')
+    $('#tambah_risiko').on('click', function(){
+        $('#judul_modal').html('Tambah Risiko')
+        $('#formResiko').attr('action', APP_URL+'/admin/risiko/store')
         var elements = document.getElementsByTagName("input");
         for (var i=0; i < elements.length; i++) {
             if (elements[i].type == "text") {
@@ -15,7 +15,7 @@ $(document).ready(function(){
     $('.edit').on('click', function(){
         let id = $(this).attr('id').slice(5)
         $('#judul_modal').html('Edit Resiko')
-        $('#formResiko').attr('action', APP_URL+'/admin/resiko/store/'+id)
+        $('#formResiko').attr('action', APP_URL+'/admin/risiko/store/'+id)
         var elements = document.getElementsByTagName("input");
         for (var i=0; i < elements.length; i++) {
             if (elements[i].type == "text") {
@@ -24,7 +24,7 @@ $(document).ready(function(){
         }
         $.ajax({
             type: 'GET',
-            url: APP_URL+'/admin/resiko/get-resiko/'+id,
+            url: APP_URL+'/admin/risiko/get-risiko/'+id,
             dataType: 'json',
             data: {},
             success: function (results) {
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
         $.ajax({
             type: 'GET',
-            url: APP_URL+'/admin/resiko/get-resiko/'+id,
+            url: APP_URL+'/admin/risiko/get-risiko/'+id,
             dataType: 'json',
             data: {},
             success: function (results) {

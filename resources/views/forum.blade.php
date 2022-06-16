@@ -191,7 +191,6 @@
 
 @section('custom-script')
     <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
         const user = {!! auth()->user()->toJson() !!}
     </script>
     <script type="text/javascript">

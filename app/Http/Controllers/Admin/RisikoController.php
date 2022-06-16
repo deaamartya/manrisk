@@ -11,7 +11,7 @@ class RisikoController extends Controller
 {
     public function index()
     {
-        $resiko = Risk::whereNull('deleted_at')->get();
+        $risiko = Risk::whereNull('deleted_at')->get();
 
         return view('admin.risiko', compact('risiko'));
     }
@@ -43,7 +43,7 @@ class RisikoController extends Controller
         }
         else{
             Risk::where('id_risk', $id)->update($params);
-            $messages = ['success-swal' => 'Risiko berhasil diubah!']
+            $messages = ['success-swal' => 'Risiko berhasil diubah!'];
         }
 
         return back()->with($messages);
@@ -60,7 +60,7 @@ class RisikoController extends Controller
         return back()->with(['success-swal' => 'Risiko berhasil dihapus!']);
     }
 
-    public function get_resiko($id = null)
+    public function get_risiko($id = null)
     {
         $wr = "1=1";
         if($id){
