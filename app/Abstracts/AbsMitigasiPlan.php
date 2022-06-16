@@ -57,8 +57,13 @@ class AbsMitigasiPlan
     public static function showApprovalHasilMitigasi($id)
     {
         $logs = DB::table('mitigasi_logs')->where('id_riskd', $id)->get();
+        $risk_detail = RiskDetail::where('id_riskd', $id)->first();
+        $headers = RiskHeader::where('id_riskh', '=', $risk_detail->id_riskh)->first();
 
-        return $logs;
+        $results['logs'] = $logs;
+        $results['headers'] = $headers;
+
+        return $results;
     }
 
     public static function updateRealisasiApprovalHasilMitigasi($request, $id)

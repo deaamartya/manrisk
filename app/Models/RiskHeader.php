@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB;
 
 /**
  * Class RiskHeader
@@ -69,9 +70,13 @@ class RiskHeader extends Model
 
 	public function getMitigasiDetail() {
 		$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
+        $mitigasi_logs = DB::raw("(
+            SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+        ) as mitigasi_logs");
 		$details = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
+            ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
 			->where('d.id_riskh','=', $this->id_riskh)
 			->where(function($q) use ($pengajuan) {
 				$q->where('d.r_awal','>=', 12)
