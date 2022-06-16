@@ -24,34 +24,16 @@ class VerifyController extends Controller
         try {
             $decrypt = Crypt::decryptString($token);
             $data = explode(";", $decrypt);
-            // dd($data);
             $url = explode('=', $data[0])[1];
             $url = str_replace("'", '', $url);
-            // dd($url);
             $signed_by = explode('=', $data[1])[1];
-            $signed_by = str_replace('[', '', $signed_by);
-            $signed_by = str_replace(']', '', $signed_by);
-            $signed_by = str_replace("'", '', $signed_by);
-            $signed_by = explode(',', $signed_by);
-            // dd($signed_by);
+            $instansi = explode('=', $data[2])[1];
+            $tahun = explode('=', $data[3])[1];
+            $created_at = explode('=', $data[4])[1];
+            $penyusun = explode('=', $data[5])[1];
             Session::put('is_bypass', true);
-            $teks_signed = '';
-            $length = count($signed_by);
-            if ($length > 0) {
-                $count = 1;
-                foreach($signed_by as $d) {
-                    $teks_signed = $teks_signed.$d;
-                    if ($count == $length - 1) {
-                        $teks_signed = $teks_signed.' dan ';
-                    } elseif($length > 1 && $count !== $length) {
-                        $teks_signed = $teks_signed.', ';
-                    }
-                    $count++;
-                }
-            }
-            return view('verified', compact("url", "teks_signed"));
+            return view('verified', compact("url", "signed_by", "instansi", "tahun", "created_at", "penyusun"));
         } catch (DecryptException $e) {
-            // dd($e);
             abort(403);
         }
     }
