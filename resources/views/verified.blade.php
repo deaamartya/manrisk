@@ -32,11 +32,16 @@
               <h6>Sistem Informasi Manajemen Risiko</h6>
               <hr>
               <p>menyatakan bahwa dokumen ini <strong>asli</strong> dan telah ditandangani secara elektronik oleh :</p>
-              <p>{{ $teks_signed }}</p>
+              <h5>{{ $signed_by }}</h5>
+              <hr>
+              <h6>Instansi : </h6><p>{{ $instansi }}</p>
+              <h6>Tahun periode : </h6><p>{{ $tahun }}</p>
+              <h6>Disusun pada : </h6><p>{{ date('d M Y', strtotime($created_at)) }}</p>
+              <h6>Disusun oleh : </h6><p>{{ $penyusun }}</p>
             </div>
             <div class="row justify-content-center">
-              <div class="col-4">
-                <a href="{{ url($url) }}" class="btn btn-primary d-flex align-items-center text-center" target="_blank">
+              <div class="col-12 col-md-6 col-lg-6 col-xl-4">
+                <a href="{{ url($url) }}" class="btn btn-primary text-center" target="_blank">
                   View/Download
                 </a>
               </div>

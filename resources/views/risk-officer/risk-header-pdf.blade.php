@@ -15,7 +15,7 @@
 			}
 			.table-2 tr td,
 			.table-3 tr td {
-				font-size: 14px;
+				font-size: 13px;
 				vertical-align: middle;
 			}
 			.table-4 tr td {
@@ -29,6 +29,12 @@
 			}
 			.pl-10p {
 				padding-left: 10px;
+			}
+			.p-10p {
+				padding: 10px;
+			}
+			.m-1 {
+				margin: 8px;
 			}
 			.f-13 {
 				font-size: 13px;
@@ -70,9 +76,8 @@
 			}
 	</style>
 </head>
-<body>
 @php
-function tanggal_indonesia($tanggal){
+function tanggal_indonesia1($tanggal){
 $bulan = array (
 	1 =>'Januari',
 			'Februari',
@@ -91,80 +96,78 @@ $bulan = array (
 	$var = explode('-', $tanggal);
 
 	return $var[2] . ' ' . $bulan[ (int)$var[1] ] . ' ' . $var[0];
-	// var 0 = tanggal
-	// var 1 = bulan
-	// var 2 = tahun
-}		
+}
 @endphp
+<body>
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
-			<td width="140">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="width:90px;max-height:60px" />
+			<td width="15%">
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
-			<td width="70%" height="40">
+			<td height="40">
 				<b>RISK REGISTER {{ $user->perusahaan->instansi }} </b>
 			</td>
-			<td width="140">
+			<td width="20%">
 				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>
 	<table class="table-2" cellspacing="0" width="100%">
-			<tr style="height: 10px;">
-				<td class="left pl-10p">
-					Instansi
-				</td>
-				<td class="left pl-10p" height="5">
-					{{ $header->perusahaan->instansi }}
-				</td>
-				<td class="left">
-					Diperiksa &  Disetujui  Oleh
-				</td>
-			</tr>
-			<tr style="height: 10px;">
-				<td width="13%" class="left pl-10p">
-					Tanggal Penyusunan
-				</td>
-				<td width="49%" height="5" class="left pl-10p">
-					@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->tanggal))); @endphp
-				</td>
-				<td rowspan="5" width="20%" height="" class="center">
-					<img src="data:image/png;base64,{{ $qrcode }}" height="90"><br><br>
-					<p class="f-10">Ditandangani secara elektronik oleh {{ $header->pemeriksa }}</p>
-				</td>
-			</tr>
-			<tr style="height: 10px;">
-				<td width="13%" class="left pl-10p">
-					Tanggal Cetak
-				</td>
-				<td width="49%" height="5" class="left pl-10p">
-					@php echo tanggal_indonesia(date('Y-m-d')); @endphp
-				</td>
-			</tr>
-			<tr style="height: 10px;">
-				<td width="13%" class="left pl-10p" style="height: 10px;">
-					Tahun Periode
-				</td>
-				<td width="49%" height="5" class="left pl-10p" style="height: 10px;">
-					{{ $header->tahun }}
-				</td>
-			</tr>
-			<tr>
-				<td width="13%" class="left pl-10p">
-					Sasaran / Target
-				</td>
-				<td width="49%" height="80" style="font-size:12px;" class="left pl-10p">
-					@php echo nl2br($header->target) @endphp
-				</td>
-			</tr>
-			<tr style="height: 10px;">
-				<td width="13%" class="left pl-10p">
-					Disusun Oleh
-				</td>
-				<td width="49%" height="5" class="left pl-10p">
-					{{ $header->penyusun }}
-				</td>
-			</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Instansi
+			</td>
+			<td class="left pl-10p">
+				{{ $header->perusahaan->instansi }}
+			</td>
+			<td width="15%" class="left pl-10p">
+				Diperiksa &  Disetujui  Oleh
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Tanggal Penyusunan
+			</td>
+			<td class="left pl-10p">
+				@php echo tanggal_indonesia1(date('Y-m-d', strtotime($header->tanggal))); @endphp
+			</td>
+			<td width="20%" rowspan="5" class="center">
+				<img src="data:image/png;base64,{{ $qrcode }}" style="max-width:120px"><br><br>
+				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ $header->pemeriksa }}</p>
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Tanggal Cetak
+			</td>
+			<td class="left pl-10p">
+				@php echo tanggal_indonesia1(date('Y-m-d')); @endphp
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Tahun Periode
+			</td>
+			<td class="left pl-10p">
+				{{ $header->tahun }}
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Sasaran / Target
+			</td>
+			<td height="80" class="left pl-10p">
+				@php echo nl2br($header->target) @endphp
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Disusun Oleh
+			</td>
+			<td class="left pl-10p">
+				{{ $header->penyusun }}
+			</td>
+		</tr>
 	</table>
 	<table class="table-4" cellspacing="0" width="100%">
 		<tr>

@@ -45,7 +45,17 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
-					<p><strong>TEMUAN HASIL AUDIT TAHUN {{ date('Y') }}</strong></p>
+					<div class="d-flex justify-content-between">
+						<h6>TEMUAN HASIL AUDIT TAHUN <span id="tahun-title">{{ date('Y') }}</span></h6>
+						<div>
+							<select class="form-control" id="tahun-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
 					<div class="small-bar">
 						<div class="small-chart flot-chart-container"></div>
 					</div>
@@ -79,35 +89,71 @@
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
 <script src="{{asset('assets/js/notify/index.js')}}"></script>
 <script type="text/javascript">
-	const labels = @json($labels);
-	const total_risk = @json($total_risk);
-	const mitigasi = @json($mitigasi);
-	const selesai_mitigasi = @json($selesai_mitigasi);
-	new Chartist.Bar('.small-chart', {
-		labels: labels,
-		series: [
-			total_risk,
-			mitigasi,
-			selesai_mitigasi,
-		]
-	}, {
-		seriesBarDistance: 15,
-		axisX: {
-			offset: 60
-		},
-		axisY: {
-			offset: 80,
-			labelInterpolationFnc: function(value) {
-				return value
-			},
-			scaleMinSpace: 40
-		}
-	}).on('draw', function (data) {
-		if (data.type === 'bar') {
-			data.element.attr({
-				style: 'width: 20px'
+	$(document).ready(function(){
+		function initBarChart(data) {
+			new Chartist.Bar('.small-chart', {
+				labels: data.labels,
+				series: [
+					data.total_risk,
+					data.mitigasi,
+					data.selesai_mitigasi,
+				]
+			}, {
+				seriesBarDistance: 15,
+				axisX: {
+					offset: 60
+				},
+				axisY: {
+					offset: 80,
+					labelInterpolationFnc: function(value) {
+						return value
+					},
+					scaleMinSpace: 40
+				}
+			}).on('draw', function (chart) {
+				if (chart.type === 'bar') {
+					chart.element.attr({
+						style: 'width: 20px'
+					});
+				}
 			});
 		}
+		$('#tahun-risiko').change(function(){
+			const url = "{{ url('dashboard/dataRisiko') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-risiko').val() })
+				.done(function(result) {
+					$('#tahun-title').html($('#tahun-risiko').val());
+					new Chartist.Bar('.small-chart', {
+						labels: result.labels,
+						series: [
+							result.total_risk,
+							result.mitigasi,
+							result.selesai_mitigasi,
+						]
+					}, {
+						seriesBarDistance: 15,
+						axisX: {
+							offset: 60
+						},
+						axisY: {
+							offset: 80,
+							labelInterpolationFnc: function(value) {
+								return value
+							},
+							scaleMinSpace: 40
+						}
+					}).on('draw', function (chart) {
+						if (chart.type === 'bar') {
+							chart.element.attr({
+								style: 'width: 20px'
+							});
+						}
+					});
+				});
+		});
+		const date = new Date();
+		$('#tahun-risiko').val(date.getUTCFullYear());
+		$('#tahun-risiko').change();
 	});
 </script>
 @endsection
