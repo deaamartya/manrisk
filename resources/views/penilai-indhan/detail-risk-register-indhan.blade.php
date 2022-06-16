@@ -39,7 +39,7 @@
               </div>
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{!! $headers->target !!}</div>
+                <div class="col-md-12 mb-2">{!! nl2br($headers->target) !!}</div>
                 <h6>Lampiran :</h6>
                 @if($headers->lampiran == null || $headers->lampiran == '')
                   <button class="btn btn-danger" data-bs-target="#insert-lampiran" data-bs-toggle="modal">Kosong</button>

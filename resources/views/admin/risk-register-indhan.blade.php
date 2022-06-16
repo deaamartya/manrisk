@@ -46,12 +46,12 @@
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
-                    <td>{!! $d->target !!}</td>
+                    <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
                     <td>
                       <button class="btn btn-pill btn-success">
-                        {{ $jml_risk }}
+                        {{ $jml_risk[$loop->index] }}
                       </button>
                     </td>
                     <td>
@@ -225,7 +225,7 @@
           @csrf
           <div class="modal-body">
             <p>Apakah Anda yakin ingin menghapus risk header dengan target : </p>
-            {!! $d->target !!}
+            {!! nl2br($d->target) !!}
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>

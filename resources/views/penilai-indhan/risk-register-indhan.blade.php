@@ -40,12 +40,12 @@
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
-                    <td>{!! $d->target !!}</td>
+                    <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
                     <td>
                       <button class="btn btn-pill btn-success">
-                        {{ $jml_risk }}
+                        {{ $jml_risk[$loop->index] }}
                       </button>
                     </td>
                     <td>
@@ -58,12 +58,12 @@
                       <a href="{{ route('penilai-indhan.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success" title="Print">
                         <i data-feather="printer" class="small-icon"></i>
                       </a>
-                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
+                      {{-- <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
-                      </button>
+                      </button> --}}
                       {{--
                       @if($d->status_h != 1)
                       <form action="{{ route('penilai-indhan.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
@@ -211,7 +211,7 @@
           @csrf
           <div class="modal-body">
             <p>Apakah Anda yakin ingin menghapus risk header dengan target : </p>
-            {!! $d->target !!}
+            {!! nl2br($d->target) !!}
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>

@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RiskOwner\{
   PengukuranRisikoController,
   RiskController,
+  RiskIndhanController
+};
+use \App\Http\Controllers\PenilaiIndhan\{
+  RiskRegisterIndhanController,
 };
 
 Route::middleware(['auth', 'cekRiskOwner'])->name('risk-owner.')->group(function () {
@@ -15,4 +19,5 @@ Route::middleware(['auth', 'cekRiskOwner'])->name('risk-owner.')->group(function
   Route::get('risiko/toggle-indhan/{id}', [RiskController::class, 'toggleIndhan'])->name('toggleIndhan');
   Route::get('risiko/approve/{id}', [RiskController::class, 'approve'])->name('risiko.approve');
   Route::get('risiko/print/{id}', [RiskController::class, 'print'])->name('risiko.print');
+  Route::resource('risiko-indhan', RiskRegisterIndhanController::class);
 });

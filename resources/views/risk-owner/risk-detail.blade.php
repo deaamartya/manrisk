@@ -46,7 +46,7 @@
               </div>
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-3">{!! $headers->target !!}</div>
+                <div class="col-md-12 mb-3">{!! nl2br($headers->target) !!}</div>
                 <div class="col-md-5 mb-2">
                   <h6>Lampiran</h6>
                   <hr class="hr-custom">

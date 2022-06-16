@@ -11,6 +11,9 @@ use \App\Http\Controllers\RiskOfficer\{
   RiskDetailController,
   MitigasiPlanController
 };
+use \App\Http\Controllers\PenilaiIndhan\{
+  RiskRegisterIndhanController,
+};
 
 Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(function () {
   Route::get('user', [UserController::class, 'index'])->name('user');
@@ -24,6 +27,7 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('penilaian-risiko-store', [PengukuranRisikoController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-store');
   Route::resource('risiko', RisikoController::class);
   Route::post('risiko/upload-lampiran', [RisikoController::class, 'uploadLampiran'])->name('risiko.upload-lampiran');
+  Route::resource('risiko-indhan', RiskRegisterIndhanController::class);
   Route::resource('pengajuan-mitigasi', PengajuanMitigasiController::class);
   Route::resource('risk-detail', RiskDetailController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);

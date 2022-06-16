@@ -41,7 +41,7 @@
                   <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
-                    <td>{!! $d->target !!}</td>
+                    <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ $d->penyusun }}</td>
                     <td>{{ $d->pemeriksa }}</td>
                     <td>

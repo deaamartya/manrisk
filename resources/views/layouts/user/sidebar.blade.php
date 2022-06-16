@@ -104,29 +104,35 @@
 					@endif
 					@if(Auth::user()->is_risk_officer == 1)
 					<li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
 						</a>
 					</li>
-                    @endif
-                    @if(Auth::user()->is_risk_officer == 1 || Auth::user()->is_admin == 1)
-                    @if(Auth::user()->is_admin == 1)
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.hasil-kompilasi-risiko' ? 'active' : '' }}" href="{{route('admin.hasil-kompilasi-risiko')}}">
-                            <i data-feather="file"></i>
-                            <span>Hasil Kompilasi Risiko</span>
-                        </a>
-                    </li>
-                    @endif
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav
-                        {{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
-							<i data-feather="sidebar"></i>
-							<span>Mitigasi Plan</span>
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko-indhan.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko-indhan.index')}}">
+							<i data-feather="list"></i>
+							<span>Risk Register Indhan</span>
 						</a>
 					</li>
-                    @endif
+					@endif
+					@if(Auth::user()->is_risk_officer == 1 || Auth::user()->is_admin == 1)
+						@if(Auth::user()->is_admin == 1)
+						<li class="sidebar-list">
+								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.hasil-kompilasi-risiko' ? 'active' : '' }}" href="{{route('admin.hasil-kompilasi-risiko')}}">
+										<i data-feather="file"></i>
+										<span>Hasil Kompilasi Risiko</span>
+								</a>
+						</li>
+						@endif
+						<li class="sidebar-list">
+							<a class="sidebar-link sidebar-title link-nav
+								{{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
+								<i data-feather="sidebar"></i>
+								<span>Mitigasi Plan</span>
+							</a>
+						</li>
+					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav d-flex {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
@@ -178,6 +184,12 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko-indhan.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko-indhan.index')}}">
+							<i data-feather="list"></i>
+							<span>Risk Register Indhan</span>
 						</a>
 					</li>
 					@endif

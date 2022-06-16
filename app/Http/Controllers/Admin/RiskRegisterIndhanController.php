@@ -28,10 +28,12 @@ class RiskRegisterIndhanController extends Controller
     public function index()
     {
         $headers = RiskHeaderIndhan::all();
-        $jml_risk = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh')
-        ->where('risk_detail.tahun', '=', date('Y'))
-        ->where('status_korporasi', '=', 1)
-        ->count();
+        $jml_risk = [];
+        foreach($headers as $h) {
+            $jml_risk[] = RiskDetail::where('tahun', '=', $h->tahun)
+                ->where('status_korporasi', '=', 1)
+                ->count();
+        }
         return view('admin.risk-register-indhan', compact('headers', 'jml_risk'));
     }
 
@@ -102,13 +104,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_korporasi', '=', 1)
                 ->where('risk_detail.tahun', '=', $headers->tahun)
                 ->get();
-        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
-                ->where('risk_detail.status_korporasi', '=', 1)
-                ->where('risk_header.tahun', '=', $headers->tahun)
-                ->count();
-            // dd($detail_risk);
-        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
+        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk'));
     }
 
     public function uploadLampiran(Request $request) {

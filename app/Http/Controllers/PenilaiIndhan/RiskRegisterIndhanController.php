@@ -23,10 +23,12 @@ class RiskRegisterIndhanController extends Controller
     public function index()
     {
         $headers = RiskHeaderIndhan::all();
-        $jml_risk = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh')
-        ->where('tahun', '=', date('Y'))
-        ->where('status_korporasi', '=', 1)
-        ->count();
+        $jml_risk = [];
+        foreach($headers as $h) {
+            $jml_risk[] = RiskDetail::where('tahun', '=', $h->tahun)
+                ->where('status_korporasi', '=', 1)
+                ->count();
+        }
         return view('penilai-indhan.risk-register-indhan', compact('headers', 'jml_risk'));
     }
 
