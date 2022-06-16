@@ -260,7 +260,7 @@ class GlobalController extends Controller
         $jml_risk = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
                     ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                     ->where('s_risiko.tahun', date('Y'))
-                    ->where('risk_detail.status_korporasi', 1)
+                    ->where('risk_detail.status_indhan', 1)
                     ->count('pengukuran_indhan.id_p');
 
         $data = [[
@@ -279,7 +279,7 @@ class GlobalController extends Controller
         $approval_srisiko_indhan = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                                     ->where('s_risiko.tahun', date('Y'))
                                     ->where('s_risiko.status_s_risiko', 0)
-                                    ->where('risk_detail.status_korporasi', 1)
+                                    ->where('risk_detail.status_indhan', 1)
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
         $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
