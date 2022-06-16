@@ -20,6 +20,12 @@
       <!-- Zero Configuration  Starts-->
       <div class="col-sm-12">
         <div class="card">
+          <div class="card-header">
+            <button class="btn btn-lg btn-primary d-flex btn-add" data-bs-toggle="modal" data-bs-target="#create-header">
+              <i data-feather="plus" class="me-2"></i>
+              Tambah Risiko Header
+            </button>
+          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="display" id="basic-1">
@@ -49,24 +55,24 @@
                       </button>
                     </td>
                     <td>
-                      <a href="{{ route('penilai-indhan.risk-register-indhan.show', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
+                      <a href="{{ route('risk-owner.risk-register-indhan.show', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
                       <i data-feather="eye" class="me-2 small-icon"></i>
                         Detail
                       </a>
                     </td>
                     <td>
-                      <a href="{{ route('penilai-indhan.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success" title="Print">
+                      <a href="{{ route('risk-owner.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success" title="Print">
                         <i data-feather="printer" class="small-icon"></i>
                       </a>
-                      {{-- <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
+                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
-                      </button> --}}
+                      </button>
                       {{--
                       @if($d->status_h != 1)
-                      <form action="{{ route('penilai-indhan.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
+                      <form action="{{ route('risk-owner.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
                           @csrf
                           <button title="Approval" type="submit" class="btn btn-sm btn-green mt-2">
                         <i data-feather="check-circle" class="small-icon"></i></button>
@@ -92,7 +98,7 @@
           <h5 class="modal-title">Input Risk Header INDHAN</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('penilai-indhan.risk-register-indhan.store') }}">
+        <form method="POST" action="{{ route('risk-owner.risk-register-indhan.store') }}">
           @csrf
           <div class="modal-body">
             <div class="row">
@@ -123,7 +129,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Penyusun</label>
 									<div class="col-sm-9">
-                    <input type="text" class="form-control" name="penyusun" readonly value="{{ Auth::user()->name }}" />
+                    <input type="text" class="form-control" name="penyusun" />
 									</div>
 								</div>
               </div>
@@ -131,7 +137,7 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Pemeriksa</label>
 									<div class="col-sm-9">
-                    <input type="text" class="form-control" name="pemeriksa" readonly />
+                    <input type="text" class="form-control" name="pemeriksa" />
 									</div>
 								</div>
               </div>
@@ -153,7 +159,7 @@
           <h5 class="modal-title">Edit Risk Header INDHAN</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="{{ route('penilai-indhan.risk-register-indhan.update', $data->id_riskh) }}" method="POST">
+        <form action="{{ route('risk-owner.risk-register-indhan.update', $data->id_riskh) }}" method="POST">
           @method('PUT')
           @csrf
           <div class="modal-body">
@@ -183,6 +189,14 @@
               </div>
               <div class="col-12">
 								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Penyusun</label>
+									<div class="col-sm-9">
+                    <input type="text" class="form-control" name="penyusun" value="{{ $data->penyusun }}"/>
+									</div>
+								</div>
+              </div>
+              <div class="col-12">
+								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Pemeriksa</label>
 									<div class="col-sm-9">
                     <input type="text" class="form-control" name="pemeriksa" value="{{ $data->pemeriksa }}"/>
@@ -206,7 +220,7 @@
           <h5 class="modal-title">Delete Risk Header INDHAN</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="{{ route('penilai-indhan.risk-register-indhan.destroy',  $data->id_riskh) }}" method="POST">
+        <form action="{{ route('risk-owner.risk-register-indhan.destroy',  $data->id_riskh) }}" method="POST">
           @method('DELETE')
           @csrf
           <div class="modal-body">

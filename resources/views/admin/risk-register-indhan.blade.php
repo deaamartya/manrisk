@@ -51,7 +51,7 @@
                     <td>{{ $d->pemeriksa }}</td>
                     <td>
                       <button class="btn btn-pill btn-success">
-                        {{ $jml_risk[$loop->index] }}
+                        {{ $jml_risk[$loop->index]}}
                       </button>
                     </td>
                     <td>

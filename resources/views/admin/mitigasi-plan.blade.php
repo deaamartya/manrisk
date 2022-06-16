@@ -21,6 +21,7 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>Instansi</th>
                   <th>Tahun</th>
                   <th>Tanggal</th>
                   <th>Target</th>
@@ -33,6 +34,7 @@
                 @foreach($headers as $h)
                 <tr>
                   <td>{{ $loop->iteration }}</td>
+                  <td>{{ $h->perusahaan->instansi }}</td>
                   <td>{{ $h->tahun }}</td>
                   <td>{{ date('d M Y', strtotime($h->tanggal)) }}</td>
                   <td>{!! $h->target !!}</td>

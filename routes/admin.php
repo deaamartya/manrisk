@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Admin\{
-    HomeController,
     UserController,
     CompaniesController,
     HasilKompilasiRisikoController,
@@ -15,7 +14,12 @@ use \App\Http\Controllers\Admin\{
     MitigasiPlanController,
 };
 
+use \App\Http\Controllers\{
+  HomeController
+};
+
 Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
+  Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 //   Route::get('/notifications/mark-as-read', [NotificationsController::class, 'notifAdminMark'])->name('notifications.mark-as-read');
   Route::get('/user', [UserController::class, 'index'])->name('user');
   Route::get('/user/get-user/{id}', [UserController::class, 'get_user'])->name('user-get-user');
@@ -61,7 +65,6 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
   Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');
-  // Route::get('detail-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'show'])->name('detail-risk-register');
   Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register-indhan');
   Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register-indhan');
 

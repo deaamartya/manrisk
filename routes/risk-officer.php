@@ -2,20 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\RiskOfficer\{
-  HomeController,
+  // HomeController,
   SumberRisikoController,
   UserController,
   PengukuranRisikoController,
   RisikoController,
   PengajuanMitigasiController,
   RiskDetailController,
-  MitigasiPlanController
-};
-use \App\Http\Controllers\PenilaiIndhan\{
+  MitigasiPlanController,
   RiskRegisterIndhanController,
 };
 
+use \App\Http\Controllers\{
+  HomeController
+};
+
 Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(function () {
+  Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
   Route::get('user', [UserController::class, 'index'])->name('user');
   Route::get('user/get-user/{id}', [UserController::class, 'get_user'])->name('user-get-user');
   Route::post('user/store/{id?}', [UserController::class, 'store'])->name('user-store');
@@ -38,6 +41,11 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('fetchNilaiRisiko', [RisikoController::class, 'getNilai']);
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
+
+  Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
+  Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
+  Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');
+  Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register-indhan');
 });
 
 Route::middleware(['cekRiskOfficer'])->name('risk-officer.')->group(function () {

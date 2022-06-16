@@ -7,7 +7,12 @@ use \App\Http\Controllers\PenilaiIndhan\{
   RiskRegisterIndhanController,
 };
 
+use \App\Http\Controllers\{
+  HomeController
+};
+
 Route::name('penilai-indhan.')->group(function () {
+    Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::get('pengukuran-risiko-indhan', [PengukuranRisikoIndhanController::class, 'index'])->name('pengukuran-risiko-indhan');
     Route::post('penilaian-risiko-indhan', [PengukuranRisikoindhanController::class, 'penilaianRisiko'])->name('penilaian-risiko-indhan');
     Route::post('penilaian-risiko-indhan-store', [PengukuranRisikoIndhanController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-indhan-store');
@@ -23,10 +28,9 @@ Route::name('penilai-indhan.')->group(function () {
     Route::post('risk-detail-mitigation/{id}', [RiskRegisterKorporasiController::class, 'mitigation'])->name('mitigation');
     Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterKorporasiController::class, 'notMitigation'])->name('not-mitigation');
     Route::delete('risk-detail-delete/{id}', [RiskRegisterKorporasiController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
-  
+
     Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
+    Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
     Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');
-    // Route::get('detail-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'show'])->name('detail-risk-register');
     Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register-indhan');
-    Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register-indhan');
 });

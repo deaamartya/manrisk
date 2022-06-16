@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\PenilaiIndhan;
+namespace App\Http\Controllers\RiskOwner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,9 +14,6 @@ use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
 use Redirect;
-use Illuminate\Support\Facades\Crypt;
-use DNS2D;
-use Session;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -27,13 +24,15 @@ class RiskRegisterIndhanController extends Controller
         // ->where('risk_header.tahun', '=', date('Y'))
         // ->where('status_indhan', '=', 1)
         // ->count();
+
         $jml_risk = [];
         foreach($headers as $h) {
             $jml_risk[] = RiskDetail::where('tahun', '=', $h->tahun)
                 ->where('status_indhan', '=', 1)
                 ->count();
         }
-        return view('penilai-indhan.risk-register-indhan', compact('headers', 'jml_risk'));
+        // dd($jml_risk);
+        return view('risk-owner.risk-register-indhan', compact('headers', 'jml_risk'));
     }
 
     /**
@@ -47,9 +46,10 @@ class RiskRegisterIndhanController extends Controller
         RiskHeaderIndhan::insert([
             'tahun' => $request->tahun,
             'target' => $request->target,
-            'penyusun' => Auth::user()->name,
+            'penyusun' => $request->penyusun,
+            'pemeriksa' => $request->pemeriksa,
         ]);
-        return redirect()->route('penilai-indhan.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil disimpan!']);
+        return redirect()->route('risk-owner.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil disimpan!']);
     }
 
     /**
@@ -73,9 +73,10 @@ class RiskRegisterIndhanController extends Controller
         $riskheader->update([
             'tahun' => $request->tahun,
             'target' => $request->target,
-            'pemeriksa' => $request->pemeriksa
+            'penyusun' => $request->penyusun,
+            'pemeriksa' => $request->pemeriksa,
         ]);
-        return redirect()->route('penilai-indhan.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil diubah!']);
+        return redirect()->route('risk-owner.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil diubah!']);
     }
 
     /**
@@ -87,7 +88,7 @@ class RiskRegisterIndhanController extends Controller
     public function destroy($id)
     {
         RiskHeaderIndhan::destroy($id);
-        return redirect()->route('penilai-indhan.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil dihapus!']);
+        return redirect()->route('risk-owner.risk-register-indhan.index')->with(['success-swal' => 'Risk Header INDHAN berhasil dihapus!']);
     }
 
 
@@ -109,7 +110,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->count();
             // dd($detail_risk);
-        return view('penilai-indhan.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
+        return view('risk-owner.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
     }
 
     public function uploadLampiran(Request $request) {
@@ -135,32 +136,22 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_header.tahun', '=', $request->tahun)
                 ->count();
             // dd($detail_risk);
-        return redirect()->route('penilai-indhan.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!', 'headers' => $headers,  'detail_risk' => $detail_risk, 'mitigasi' => $mitigasi]);
+        return redirect()->route('risk-owner.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!', 'headers' => $headers,  'detail_risk' => $detail_risk, 'mitigasi' => $mitigasi]);
     }
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh')
-                ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+        // dd($headers);
+        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->get();
-        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='penilai-indhan/print-risk-register-indhan/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
-        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
-        $pdf = PDF::loadView('penilai-indhan.pdf-risk-register-indhan', compact('header', 'user', 'qrcode', 'detail_risk'))->setPaper('a4', 'landscape');
-        Session::forget('is_bypass');
+            // dd($detail_risk);
+        // $user = Auth::user();
+        $pdf = PDF::loadView('risk-owner.pdf-risk-register-indhan', compact('header', 'detail_risk'))->setPaper('a4', 'landscape');
+        // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
         return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
-    }
-
-    public function approval($id)
-    {
-        $risk_header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        $risk_header->update([
-            'status_h' => 1
-        ]);
-        // dd($risk_header);
-        return Redirect::back()->with(['success-swal' => 'Risk Header INDHAN berhasil disetujui.']);
     }
 }
