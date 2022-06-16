@@ -79,7 +79,6 @@
 
 @section('custom-script')
     <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
         const user = {!! auth()->user()->toJson() !!}
     </script>
     <script type="text/javascript" src="{{asset('assets/js/custom/approval_hasil_mitigasi.js')}}"></script>

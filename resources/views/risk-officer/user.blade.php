@@ -204,7 +204,6 @@
 
 @section('custom-script')
     <script>
-        const APP_URL = {!! json_encode(url('/')) !!}
         const head_url = 'risk-officer'
         const user = {!! auth()->user()->toJson() !!}
     </script>

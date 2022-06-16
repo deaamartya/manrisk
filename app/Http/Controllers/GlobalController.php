@@ -38,9 +38,13 @@ class GlobalController extends Controller
     public function forum()
     {
         if(Auth::check()){
+            $wr = '1=1';
+            if(!Auth::user()->is_admin){
+                $wr.=' AND forum.display = 1';
+            }
             $data = DB::table('forum')
             ->leftJoin('defendid_user as du', 'du.id_user', 'forum.id_user')
-            ->where('forum.display', 1)
+            ->whereRaw($wr)
             ->orWhere('forum.id_user', Auth::user()->id_user)
             ->orderBy('forum.updated_at', 'desc')
             ->select('forum.id', 'forum.id_user', 'forum.subject', 'forum.body', 'forum.display', 'forum.updated_at', 'du.username')
@@ -310,5 +314,5 @@ class GlobalController extends Controller
         return $data;
     }
 
-    
+
 }
