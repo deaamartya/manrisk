@@ -36,13 +36,13 @@ class HomeController extends Controller
                 return view('risk-officer.index', compact("counts_risiko", "count_risiko"));
             }
             if (Auth::user()->is_risk_owner) {
-                return view('risk-owner.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));
+                return view('risk-owner.index', compact("counts_risiko", "count_risiko"));
             }
             if (Auth::user()->is_penilai) {
-                return view('penilai.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));
+                return view('penilai.index', compact("counts_risiko", "count_risiko"));
             }
             if (Auth::user()->is_penilai_indhan) {
-                return view('penilai-indhan.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));
+                return view('penilai-indhan.index', compact("counts_risiko", "count_risiko"));
             }
             if (Auth::user()->is_admin) {
                 return view('admin.index', compact("counts_risiko", "count_risiko"));
