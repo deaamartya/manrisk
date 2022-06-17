@@ -76,7 +76,7 @@
 							<span>User</span>
 						</a>
 					</li>
-                    @endif
+					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">

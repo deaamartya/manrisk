@@ -73,7 +73,7 @@ class RiskHeader extends Model
         $mitigasi_logs = DB::raw("(
             SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
         ) as mitigasi_logs");
-		$details = self::select('d.*', 'sr.*', 'k.*')
+		$details = self::select('d.*', 'sr.*', 'k.*', 'mitigasi_logs.final_realisasi')
 			->join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')

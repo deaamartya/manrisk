@@ -86,13 +86,13 @@ class RiskController extends Controller
     public function toggleIndhan($id) {
         $detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $riskh = $detail->id_riskh;
-        if ($detail->status_korporasi === 0) {
+        if ($detail->status_indhan === 0) {
             $detail->update([
-                'status_korporasi' => 1,
+                'status_indhan' => 1,
             ]);
         } else {
             $detail->update([
-                'status_korporasi' => 0,
+                'status_indhan' => 0,
             ]);
         }
         return redirect()->route('risk-owner.risiko.show', $riskh)->with(['success-swal' => 'Detail risiko berhasil diupdate!']);
