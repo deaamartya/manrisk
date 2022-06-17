@@ -45,7 +45,7 @@ class HomeController extends Controller
                 return view('penilai-indhan.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));
             }
             if (Auth::user()->is_admin) {
-                return view('admin.index', compact("labels", "total_risk", "mitigasi", "selesai_mitigasi", "counts_risiko", "count_risiko"));
+                return view('admin.index', compact("counts_risiko", "count_risiko"));
             }
         } else {
             return redirect()->route('login');

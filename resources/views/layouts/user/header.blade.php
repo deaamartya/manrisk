@@ -21,9 +21,9 @@
         <li class="onhover-dropdown">
           <div class="notification-box">
             <i data-feather="bell"></i>
-            <span class="badge rounded-pill badge-secondary" id="total-notif"></span>
+            <span class="badge rounded-pill badge-secondary total-notif"></span>
           </div>
-          <ul class="notification-dropdown onhover-show-div" id="body-notif">
+          <ul class="notification-dropdown onhover-show-div body-notif">
             <li>
               <i data-feather="bell"></i>
               <h6 class="f-18 mb-0">Notitications</h6>

@@ -64,7 +64,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
 							<i data-feather="list"></i>
 							<span>Dashboard</span>
-							<span class="badge rounded-pill badge-secondary" id="total-notif"></span>
+							<label class="badge badge-secondary total-notif" style="float: right;"></label>
 						</a>
 					</li>
 					@endif
@@ -108,6 +108,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
 							<i data-feather="list"></i>
 							<span>Sumber Risiko</span>
+							<label class="badge badge-secondary srisiko-indhan-notif" style="float: right;"></label>
 						</a>
 						@endif
 					</li>
@@ -166,19 +167,24 @@
 								{{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
 								<i data-feather="sidebar"></i>
 								<span>Mitigasi Plan</span>
+								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
 							</a>
 						</li>
 					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav d-flex {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
 							<i data-feather="file-text"></i>
+							{{-- 
 							<div class="flex-row-between-center">
 								<span class="me-4p">Pengajuan Mitigasi</span>
 								@if ($counts > 0)
 									<span class="badge rounded-pill badge-danger">{{ $counts }}</span>
-								@endif
+								@endif 
 							</div>
+							--}}
+							<span class="me-4p">Pengajuan Mitigasi</span>
+							<label class="badge badge-secondary mitigasi-indhan-notif" style="float: right;"></label>
 						</a>
 					</li>
 					@endif
@@ -193,6 +199,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
 							<i data-feather="sidebar"></i>
 							<span>Risk Register INDHAN</span>
+							<label class="badge badge-secondary riskregister-indhan-notif" style="float: right;"></label>
 						</a>
 					</li>
 					@elseif(Auth::user()->is_penilai_indhan)

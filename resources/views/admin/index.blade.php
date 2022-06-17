@@ -79,10 +79,10 @@
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
 <script src="{{asset('assets/js/notify/index.js')}}"></script>
 <script type="text/javascript">
-	const labels = @json($labels);
-	const total_risk = @json($total_risk);
-	const mitigasi = @json($mitigasi);
-	const selesai_mitigasi = @json($selesai_mitigasi);
+	const labels = {{--@json($labels);--}}
+	const total_risk = {{--@json($total_risk);--}}
+	const mitigasi = {{--@json($mitigasi);--}}
+	const selesai_mitigasi = {{--@json($selesai_mitigasi);--}}
 	new Chartist.Bar('.small-chart', {
 		labels: labels,
 		series: [
