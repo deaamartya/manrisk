@@ -64,7 +64,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
 							<i data-feather="list"></i>
 							<span>Dashboard</span>
-							<label class="badge badge-secondary total-notif" style="float: right;"></label>
+							<!-- <label class="badge badge-secondary total-notif" style="float: right;"></label> -->
 						</a>
 					</li>
 					@endif
