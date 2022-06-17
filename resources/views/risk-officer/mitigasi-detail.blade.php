@@ -174,9 +174,9 @@
                       @endif
                     </td>
                     <td>
-                      @if($d->realisasi === null) -
-                      @else {{ $d->realisasi }}%
-                      @endif
+                        @if($d->final_realisasi === null) -
+                        @else {{ $d->final_realisasi ?? $d->realisasi }}%
+                        @endif
                     </td>
                     <td>{{ $d->keterangan }}</td>
                     <td>
