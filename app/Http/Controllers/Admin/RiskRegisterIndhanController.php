@@ -14,7 +14,9 @@ use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
 use Redirect;
-
+use Illuminate\Support\Facades\Crypt;
+use DNS2D;
+use Session;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -151,9 +153,13 @@ class RiskRegisterIndhanController extends Controller
                 ->get();
             // dd($detail_risk);
         // $user = Auth::user();
-        $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk'))->setPaper('a4', 'landscape');
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-indhan/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
+        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
+        $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');
+        Session::forget('is_bypass');
         // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
         return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
+       
     }
 
     // public function approval($id)
