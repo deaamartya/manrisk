@@ -20,7 +20,9 @@ class RiskDetailController extends Controller
      */
     public function store(Request $request)
     {
-        RiskDetail::insert($request->except('_token'));
+        $data = $request->except('_token');
+        $data['status_mitigasi'] = ($request->r_awal >= 12) ? 1 : 0;
+        RiskDetail::insert($data);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dibuat!']);
     }
 

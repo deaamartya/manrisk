@@ -225,6 +225,9 @@
           <form action="{{ route('risk-officer.risk-detail.store') }}" method="POST">
             @csrf
             <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            <input type="hidden" name="tahun" value="{{ $headers->tahun }}">
+            <input type="hidden" name="company_id" value="{{ $headers->company_id }}">
+            <input type="hidden" name="status_mitigasi" value="0">
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-6">
@@ -271,11 +274,11 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}">
+                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
@@ -425,11 +428,11 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}">
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>

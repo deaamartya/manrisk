@@ -188,6 +188,14 @@
 						</a>
 					</li>
 					@endif
+					@if(Auth::user()->is_risk_officer)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengajuan-mitigasi.index' ? 'active' : '' }}" href="{{route('risk-officer.pengajuan-mitigasi.index')}}">
+							<i data-feather="file-text"></i>
+							<span class="me-4p">Pengajuan Mitigasi</span>
+						</a>
+					</li>
+					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">

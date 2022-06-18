@@ -43,10 +43,16 @@ class MitigasiPlanController extends Controller
     public function update(Request $request, $id)
     {
         $pengajuan = PengajuanMitigasi::where('id', '=', $id)->first();
+        $risk_detail = RiskDetail::where('id_riskd', '=', $pengajuan->id_riskd)->first();
         $pengajuan->update($request->except('_token'));
         $pengajuan->update([
             'updated_at' => now(),
         ]);
+        if ($request->is_approved == 1) {
+            $risk_detail->update([
+                'status_mitigasi' => $pengajuan->tipe_pengajuan,
+            ]);
+        }
         return Redirect::back()->with(['success-swal' => 'Pengajuan Mitigasi berhasil dikonfirmasi!']);
     }
 
