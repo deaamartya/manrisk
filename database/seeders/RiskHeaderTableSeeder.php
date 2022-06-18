@@ -60,7 +60,7 @@ class RiskHeaderTableSeeder extends Seeder
                 'company_id' => 1,
                 'tahun' => '2022',
                 'tanggal' => '2022-05-29',
-            'target' => '<span style="font-family: &quot;Helvetica Neue&quot;, Roboto, Arial, &quot;Droid Sans&quot;, sans-serif; font-size: 13px; background-color: rgb(249, 249, 249);">1. Sasaran Perusahaan KPI 2022</span><br style="font-family: &quot;Helvetica Neue&quot;, Roboto, Arial, &quot;Droid Sans&quot;, sans-serif; font-size: 13px; background-color: rgb(249, 249, 249);"><span style="font-family: &quot;Helvetica Neue&quot;, Roboto, Arial, &quot;Droid Sans&quot;, sans-serif; font-size: 13px; background-color: rgb(249, 249, 249);">2.</span>',
+                'target' => '1. Sasaran Perusahaan KPI 2022<br>2.',
                 'penyusun' => 'Risk Officer PT. PAL',
                 'pemeriksa' => 'Kepala Divisi TI',
                 'lampiran' => NULL,
