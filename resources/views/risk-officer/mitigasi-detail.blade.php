@@ -325,7 +325,7 @@
                   </div>
                 </div>
                 <div class="mb-3 row">
-                  <label class="col-sm-3 col-form-label">Description</label>
+                  <label class="col-sm-3 col-form-label">Deskripsi</label>
                   <div class="col-sm-9">
                     <textarea name="description" class="form-control"></textarea>
                   </div>
@@ -344,8 +344,10 @@
               <thead>
                 <th>No</th>
                 <th>Prosentase</th>
+                <th>Dibuat tanggal</th>
                 <th>Dokumen</th>
-                <th>Description</th>
+                <th>Deskripsi</th>
+                <th>Status</th>
               </thead>
               <tbody>
               </tbody>

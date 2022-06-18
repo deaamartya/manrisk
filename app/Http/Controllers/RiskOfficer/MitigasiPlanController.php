@@ -69,13 +69,20 @@ class MitigasiPlanController extends Controller
             $data->data = [];
             $count = 0;
             foreach($logs as $c){
-                if ($c->dokumen === null) {
+                $status = '';
+                if ($c->is_approved == 1) {
+                    $status = '<div class="badge badge-success">Disetujui</div>';
+                } else {
+                    $status = '<div class="badge badge-danger">Belum Disetujui</div>';
+                }
+                if ($c->dokumen == null) {
                     $isi = [
                         $count + 1,
                         $c->realisasi,
                         date('d M Y', strtotime($c->created_at)),
                         '',
-                        $c->description,
+                        $c->description ? $c->description : '-',
+                        $status
                     ];
                 } else {
                     $path = asset('document/mitigasi-progress/'. $c->dokumen);
@@ -84,7 +91,8 @@ class MitigasiPlanController extends Controller
                         $c->realisasi,
                         date('d M Y', strtotime($c->created_at)),
                         '<a href="'. $path. '"  target="_blank" class="btn btn-xs btn-info p-1">Lihat Dokumen</a>',
-                        $c->description,
+                        $c->description ? $c->description : '-',
+                        $status
                     ];
                 }
                 array_push($data->data, $isi);
