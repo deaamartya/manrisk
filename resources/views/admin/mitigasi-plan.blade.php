@@ -37,7 +37,7 @@
                   <td>{{ $h->perusahaan->instansi }}</td>
                   <td>{{ $h->tahun }}</td>
                   <td>{{ date('d M Y', strtotime($h->tanggal)) }}</td>
-                  <td>{!! $h->target !!}</td>
+                  <td>{!! nl2br($h->target) !!}</td>
                   <td class="text-center">
                     <div class="btn btn-primary btn-pill btn-xs status">{{ $h->migrateCount($h->id_riskh) }}</div>
                   </td>

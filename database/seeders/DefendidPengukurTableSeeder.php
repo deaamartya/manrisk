@@ -14,12 +14,12 @@ class DefendidPengukurTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('defendid_pengukur')->delete();
-        
+
         \DB::table('defendid_pengukur')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id_pengukur' => 1,
                 'company_id' => '1',
@@ -33,7 +33,7 @@ class DefendidPengukurTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id_pengukur' => 2,
                 'company_id' => '1',
@@ -47,7 +47,7 @@ class DefendidPengukurTableSeeder extends Seeder
                 'updated_at' => '2022-05-29 15:12:43',
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id_pengukur' => 4,
                 'company_id' => '1',
@@ -61,8 +61,22 @@ class DefendidPengukurTableSeeder extends Seeder
                 'updated_at' => '2022-05-29 04:07:07',
                 'deleted_at' => NULL,
             ),
+            3 =>
+            array (
+                'id_pengukur' => 5,
+                'company_id' => '1',
+                'id_user' => 10,
+                'jabatan' => 'Kepala Departemen B',
+                'nip' => '151811513049',
+                'nama' => 'Penilai Inhan',
+                'status_pengukur' => 0,
+                'jenis' => 1,
+                'created_at' => '2022-05-29 04:07:07',
+                'updated_at' => '2022-05-29 04:07:07',
+                'deleted_at' => NULL,
+            ),
         ));
-        
-        
+
+
     }
 }

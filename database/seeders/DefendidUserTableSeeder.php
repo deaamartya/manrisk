@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Hash;
 
 class DefendidUserTableSeeder extends Seeder
 {
@@ -14,12 +15,12 @@ class DefendidUserTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('defendid_user')->delete();
-        
+
         \DB::table('defendid_user')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id_user' => 1,
                 'company_id' => 1,
@@ -37,7 +38,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            1 => 
+            1 =>
             array (
                 'id_user' => 2,
                 'company_id' => 2,
@@ -55,7 +56,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            2 => 
+            2 =>
             array (
                 'id_user' => 3,
                 'company_id' => 3,
@@ -73,7 +74,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            3 => 
+            3 =>
             array (
                 'id_user' => 4,
                 'company_id' => 4,
@@ -91,7 +92,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            4 => 
+            4 =>
             array (
                 'id_user' => 5,
                 'company_id' => 5,
@@ -109,7 +110,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            5 => 
+            5 =>
             array (
                 'id_user' => 6,
                 'company_id' => 6,
@@ -127,7 +128,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => NULL,
                 'deleted_at' => NULL,
             ),
-            6 => 
+            6 =>
             array (
                 'id_user' => 7,
                 'company_id' => 1,
@@ -145,7 +146,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => '2022-05-29 15:12:43',
                 'deleted_at' => NULL,
             ),
-            7 => 
+            7 =>
             array (
                 'id_user' => 8,
                 'company_id' => 1,
@@ -163,7 +164,7 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => '2022-05-29 04:07:07',
                 'deleted_at' => NULL,
             ),
-            8 => 
+            8 =>
             array (
                 'id_user' => 9,
                 'company_id' => 1,
@@ -181,8 +182,26 @@ class DefendidUserTableSeeder extends Seeder
                 'updated_at' => '2022-05-29 15:12:29',
                 'deleted_at' => NULL,
             ),
+            9 =>
+            array (
+                'id_user' => 10,
+                'company_id' => 1,
+                'name' => 'Kepala Departemen B',
+                'username' => 'penilaiinhan',
+                'password' => Hash::make('penilaiinhan'),
+                'status_user' => 0,
+                'is_risk_officer' => 0,
+                'is_penilai' => 0,
+                'is_penilai_indhan' => 1,
+                'is_risk_owner' => 0,
+                'is_admin' => 0,
+                'is_assessment' => 1,
+                'created_at' => '2022-05-29 15:12:29',
+                'updated_at' => '2022-05-29 15:12:29',
+                'deleted_at' => NULL,
+            ),
         ));
-        
-        
+
+
     }
 }

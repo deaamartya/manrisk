@@ -140,20 +140,56 @@ class GlobalController extends Controller
 
     public function get_notification()
     {
+        // init
+        $data_risk_officer = [];
+        $data_penilai = [];
+        $data_penilai_indhan = [];
+        $data_risk_owner = [];
+        $data_admin = [];
+
+        // check role
         if(Auth::user()->is_risk_officer){
-            $data = $this->notif_risk_officer();
+            $data_risk_officer = $this->notif_risk_officer();
         }
-        else if(Auth::user()->is_penilai){
-            $data = $this->notif_penilai();
+        if(Auth::user()->is_penilai){
+            $data_penilai = $this->notif_penilai();
         }
-        else if(Auth::user()->is_penilai_indhan){
-            $data = $this->notif_penilai_indhan();
+        if(Auth::user()->is_penilai_indhan){
+            $data_penilai_indhan = $this->notif_penilai_indhan();
         }
-        else if(Auth::user()->is_risk_owner){
-            $data = $this->notif_risk_owner();
+        if(Auth::user()->is_risk_owner){
+            $data_risk_owner = $this->notif_risk_owner();
         }
-        else if(Auth::user()->is_admin){
-            $data = $this->notif_admin();
+        if(Auth::user()->is_admin){
+            $data_admin = $this->notif_admin();
+        }
+
+        // merge notif
+        $data = [];
+        if(count($data_risk_officer) > 0){
+            foreach($data_risk_officer as $dro){
+                $data[] = $dro;
+            }
+        }
+        if(count($data_penilai) > 0){
+            foreach($data_penilai as $dp){
+                $data[] = $dp;
+            }
+        }
+        if(count($data_penilai_indhan) > 0){
+            foreach($data_penilai_indhan as $dpi){
+                $data[] = $dpi;
+            }
+        }
+        if(count($data_risk_owner) > 0){
+            foreach($data_risk_owner as $drow){
+                $data[] = $drow;
+            }
+        }
+        if(count($data_admin) > 0){
+            foreach($data_admin as $da){
+                $data[] = $da;
+            }
         }
 
         return response()->json(['message' => 'ok', 'data' => $data], 200);
@@ -180,13 +216,15 @@ class GlobalController extends Controller
         if($jml_risk > 0){
             $data[] = [
                 'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
-                'jumlah' => $jml_risk
+                'jumlah' => $jml_risk,
+                'link' => url('/')."/risk-officer/pengukuran-risiko"
             ];
         }
         if($jml_mitigasi > 0){
             $data[] = [
                 'title' => 'Terdapat detail risiko yang belum dimitigasi sebanyak ',
-                'jumlah' => $jml_mitigasi
+                'jumlah' => $jml_mitigasi,
+                'link' => url('/')."/risk-officer/mitigasi-plan"
             ];
         }
 
@@ -215,13 +253,15 @@ class GlobalController extends Controller
         if($jml_risk > 0){
             $data[] = [
                 'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
-                'jumlah' => $jml_risk
+                'jumlah' => $jml_risk,
+                'link' => url('/')."risk-owner/pengukuran-risiko"
             ];
         }
         if($jml_approval_risk_register > 0){
             $data[] = [
                 'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
-                'jumlah' => $jml_approval_risk_register
+                'jumlah' => $jml_approval_risk_register,
+                'link' => url('/')."risk-owner/risiko"
             ];
         }
 
@@ -261,7 +301,8 @@ class GlobalController extends Controller
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
-            'jumlah' => $jml_risk
+            'jumlah' => $jml_risk,
+            'link' => url('/')."/penilai/pengukuran-risiko"
         ]];
         if($jml_risk == 0){
             $data = [];
@@ -281,7 +322,8 @@ class GlobalController extends Controller
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko indhan sebanyak ',
-            'jumlah' => $jml_risk
+            'jumlah' => $jml_risk,
+            'link' => url('/')."/penilai-indhan/pengukuran-risiko-indhan"
         ]];
         if($jml_risk == 0){
             $data = [];
@@ -307,25 +349,29 @@ class GlobalController extends Controller
         if($approval_srisiko_indhan > 0){
             $data[] = [
                 'title' => 'Terdapat sumber risiko indhan yang belum disetujui sebanyak ',
-                'jumlah' => $approval_srisiko_indhan
+                'jumlah' => $approval_srisiko_indhan,
+                'link' => url('/')."/admin/sumber-risiko-indhan"
             ];
         }
         if($approval_pengajuan_mitigasi_indhan > 0){
             $data[] = [
-                'title' => 'Terdapat pengajuan mitigasi indhan yang belum disetujui sebanyak ',
-                'jumlah' => $approval_pengajuan_mitigasi_indhan
+                'title' => 'Terdapat pengajuan mitigasi yang belum disetujui sebanyak ',
+                'jumlah' => $approval_pengajuan_mitigasi_indhan,
+                'link' => url('/')."/admin/mitigasi-plan"
             ];
         }
         if($approval_risk_register_korporasi > 0){
             $data[] = [
                 'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
-                'jumlah' => $approval_risk_register_korporasi
+                'jumlah' => $approval_risk_register_korporasi,
+                'link' => url('/')."/admin/risk-register-korporasi"
             ];
         }
         if($approval_hasil_mitigasi > 0){
             $data[] = [
                 'title' => 'Terdapat hasil mitigasi yang belum disetujui sebanyak ',
-                'jumlah' => $approval_hasil_mitigasi
+                'jumlah' => $approval_hasil_mitigasi,
+                'link' => url('/')."/admin/approval-hasil-mitigasi"
             ];
         }
 

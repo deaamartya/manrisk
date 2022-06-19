@@ -118,7 +118,7 @@
             <div class="modal-body">
             <form method="POST" action="" id="form-delete-responden">
                 @csrf
-                Apakah Anda yakin ingin menghapus responden <b id="nama-responden"></b> ?
+                Apakah Anda yakin ingin menghapus penilaian <b id="nama-responden"></b> ?
                 <br>
             </div>
             <div class="modal-footer">
