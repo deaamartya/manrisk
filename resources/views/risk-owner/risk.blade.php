@@ -42,8 +42,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
                     <td>{!! nl2br($d->target) !!}</td>
-                    <td>{{ $d->penyusun }}</td>
-                    <td>{{ $d->pemeriksa }}</td>
+                    <td>{{ ($d->penyusun ? $d->penyusun->name : '-') }}</td>
+                    <td>{{ ($d->pemeriksa ? $d->pemeriksa->name : '-') }}</td>
                     <td>
                       <button class="btn btn-pill btn-success">
                         {{ count($d->risk_detail) }}

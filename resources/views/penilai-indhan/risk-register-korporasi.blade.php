@@ -75,8 +75,8 @@
                     <td>{{ $d->instansi }}</td>
                     <td>{{ date('d M Y (H:i)', strtotime($d->tanggal)) }}</td>
                     <td>{!! nl2br($d->target) !!}</td>
-                    <td>{{ $d->penyusun }}</td>
-                    <td>{{ $d->pemeriksa }}</td>
+                    <td>{{ ($d->penyusun ? $d->penyusun->name : '-') }}</td>
+                    <td>{{ ($d->pemeriksa ? $d->pemeriksa->name : '-') }}</td>
                     <td>{{ count($d->risk_detail) }}</td>
                     <td>
                       <a href="{{ route('penilai-indhan.detail-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">

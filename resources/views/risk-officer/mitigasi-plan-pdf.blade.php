@@ -125,7 +125,7 @@
 				</td>
 				<td rowspan="5" width="20%" height="" class="center">
 					<img src="data:image/png;base64,{{ $qrcode }}" height="90"><br><br>
-					<p class="f-10">Ditandangani secara elektronik oleh {{ $header->pemeriksa }}</p>
+					<p class="f-10">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}</p>
 				</td>
 			</tr>
 			<tr style="height: 10px;">
@@ -157,7 +157,7 @@
 					Disusun Oleh
 				</td>
 				<td width="49%" height="5" class="left pl-10p">
-					{{ $header->penyusun }}
+					{{ ($header->penyusun ? $header->penyusun->name : '-')->name }}
 				</td>
 			</tr>
 		</table>

@@ -133,7 +133,7 @@ $bulan = array (
 			</td>
 			<td width="20%" rowspan="5" class="center">
 				<img src="data:image/png;base64,{{ $qrcode }}" style="max-width:120px"><br><br>
-				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ $header->pemeriksa }}</p>
+				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}</p>
 			</td>
 		</tr>
 		<tr>
@@ -165,7 +165,7 @@ $bulan = array (
 				Disusun Oleh
 			</td>
 			<td class="left pl-10p">
-				{{ $header->penyusun }}
+				{{ ($header->penyusun ? $header->penyusun->name : '-')->name }}
 			</td>
 		</tr>
 	</table>

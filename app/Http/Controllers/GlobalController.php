@@ -168,6 +168,7 @@ class GlobalController extends Controller
                     ->count('pengukuran.id_p');
         $risk_detail = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->select('risk_detail.id_riskd')
+                        ->whereNull('risk_detail.deleted_at')
                         ->get();
         $rd = [];
         foreach ($risk_detail as $key => $value) {
@@ -262,6 +263,7 @@ class GlobalController extends Controller
                     ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                     ->where('s_risiko.tahun', date('Y'))
                     ->where('risk_detail.status_indhan', 1)
+                    ->whereNull('risk_detail.deleted_at')
                     ->count('pengukuran_indhan.id_p');
 
         $data = [[
@@ -281,6 +283,7 @@ class GlobalController extends Controller
                                     ->where('s_risiko.tahun', date('Y'))
                                     ->where('s_risiko.status_s_risiko', 0)
                                     ->where('risk_detail.status_indhan', 1)
+                                    ->whereNull('risk_detail.deleted_at')
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
         $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();

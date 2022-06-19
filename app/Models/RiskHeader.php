@@ -50,8 +50,8 @@ class RiskHeader extends Model
 		'tahun',
 		'tanggal',
 		'target',
-		'penyusun',
-		'pemeriksa',
+		'id_penyusun',
+		'id_pemeriksa',
 		'lampiran',
 		'company_id',
 		'status_h',
@@ -68,6 +68,16 @@ class RiskHeader extends Model
 		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
 
+	public function penyusun()
+	{
+		return $this->belongsTo(DefendidUser::class, 'id_penyusun');
+	}
+
+	public function pemeriksa()
+	{
+		return $this->belongsTo(DefendidUser::class, 'id_pemeriksa');
+	}
+
 	public function getMitigasiDetail() {
 		$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
         $mitigasi_logs = DB::raw("(
@@ -79,6 +89,7 @@ class RiskHeader extends Model
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
             ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
 			->where('d.id_riskh','=', $this->id_riskh)
+			->whereNull('d.deleted_at')
 			->where(function($q) use ($pengajuan) {
 				$q->where('d.r_awal','>=', 12)
 					->whereNotIn('d.id_riskd', $pengajuan);
@@ -96,6 +107,7 @@ class RiskHeader extends Model
 			->where('d.id_riskh', '=', $id)
 			->where('d.r_awal','>=', 12)
 			->whereOr('status_mitigasi', '=', 1)
+			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
 		return $jml;
 	}
@@ -105,6 +117,7 @@ class RiskHeader extends Model
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.id_riskh', '=', $id)
 			->where('status_mitigasi', '=', 1)
+			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
 		return $jml;
 	}

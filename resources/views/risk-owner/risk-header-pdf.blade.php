@@ -121,11 +121,11 @@
     		</td>
     		<td rowspan="4" width="16%" class="center">
     			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo2.png' }}" width="60"><br><br>
-				{{ $header->penyusun }}
+				{{ ($header->penyusun ? $header->penyusun->name : '-')->name }}
     		</td>
     		<td rowspan="4" width="20%" class="center">
     			<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo2.png' }}" width="60"><br><br>
-				{{ $header->pemeriksa }}
+				{{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}
     		</td>
     	</tr>
 		<tr>

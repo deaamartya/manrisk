@@ -40,9 +40,9 @@
                 <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($headers->tanggal)) }}</div>
                 <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{{ $headers->penyusun }}</div>
+                <div class="col-md-12 mb-2">{{ ($headers->penyusun ? $headers->penyusun->name : '-') }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
-                <div class="col-md-12">{{ $headers->pemeriksa }}</div>
+                <div class="col-md-12">{{ ($headers->pemeriksa ? $headers->pemeriksa->name : '-') }}</div>
               </div>
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>

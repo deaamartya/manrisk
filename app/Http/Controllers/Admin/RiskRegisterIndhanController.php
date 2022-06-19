@@ -105,11 +105,13 @@ class RiskRegisterIndhanController extends Controller
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
+                ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->get();
         $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
         ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
                 ->where('risk_detail.status_indhan', '=', 1)
+                ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->count();
             // dd($detail_risk);
@@ -125,21 +127,7 @@ class RiskRegisterIndhanController extends Controller
         $riskheader->update([
             'lampiran' => $filename,
         ]);
-        $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        // dd($headers);
-        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
-                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
-                ->where('risk_detail.status_indhan', '=', 1)
-                ->where('risk_header.tahun', '=', $request->tahun)
-                ->get();
-        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
-                ->where('risk_detail.status_indhan', '=', 1)
-                ->where('risk_header.tahun', '=', $request->tahun)
-                ->count();
-            // dd($detail_risk);
-        return redirect()->route('admin.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!', 'headers' => $headers,  'detail_risk' => $detail_risk, 'mitigasi' => $mitigasi]);
+        return redirect()->route('admin.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
     }
 
     public function print($id) {
@@ -149,6 +137,7 @@ class RiskRegisterIndhanController extends Controller
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
+                ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->get();
             // dd($detail_risk);

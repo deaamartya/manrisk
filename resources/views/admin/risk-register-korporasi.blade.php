@@ -75,8 +75,8 @@
                     <td>{{ $d->instansi }}</td>
                     <td>{{ date('d M Y', strtotime($d->tanggal)) }}</td>
                     <td>{!! nl2br($d->target) !!}</td>
-                    <td>{{ $d->penyusun }}</td>
-                    <td>{{ $d->pemeriksa }}</td>
+                    <td>{{ ($d->penyusun ? $d->penyusun->name : '-') }}</td>
+                    <td>{{ ($d->pemeriksa ? $d->pemeriksa->name : '-') }}</td>
                     <td>{{ count($d->risk_detail) }}</td>
                     <td>
                       <a href="{{ route('admin.detail-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
@@ -85,11 +85,12 @@
                       <a href="{{ route('admin.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
-                      @if($d->status_h_indhan == 0)
+                      @if($d->status_h == 1 && $d->status_h_indhan == 0)
                       <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
-                          @csrf
-                          <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
-                        <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
+                          <i data-feather="check-circle" class="me-2 small-icon"></i> Approval
+                        </button>
                       </form>
                       @endif
                     </td>

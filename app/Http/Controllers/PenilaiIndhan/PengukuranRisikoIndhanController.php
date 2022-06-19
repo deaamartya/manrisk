@@ -57,6 +57,7 @@ class PengukuranRisikoIndhanController extends Controller
         ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
         ->where('s_risiko.tahun', $tahun)
         ->where('risk_detail.status_indhan', 1)
+        ->whereNull('risk_detail.deleted_at')
         ->orderBy('s_risiko.id_s_risiko')
         ->get();
 
@@ -99,6 +100,7 @@ class PengukuranRisikoIndhanController extends Controller
                 ->join('defendid_pengukur as d', 'pengukuran_indhan.id_pengukur', 'd.id_pengukur')
                 ->join('perusahaan as p', 'd.company_id', 'p.company_id')
                 ->where('pengukuran_indhan.tahun_p', date('Y'))
+                ->whereNull('rd.deleted_at')
                 ->where('rd.status_indhan', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();

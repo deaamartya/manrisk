@@ -31,6 +31,7 @@ class HomeController extends Controller
             $counts_risiko = SRisiko::where('company_id', '=', Auth::user()->company_id)->count('id_s_risiko');
             $count_risiko = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
                 ->where('rd.company_id', Auth::user()->company_id)
+                ->whereNull('rd.deleted_at')
                 ->count('rd.id_riskd');
             if (Auth::user()->is_risk_officer) {
                 return view('risk-officer.index', compact("counts_risiko", "count_risiko"));
@@ -63,6 +64,7 @@ class HomeController extends Controller
             $count_risk = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
                 ->where('rd.company_id', $c->company_id)
                 ->where('rd.tahun', '=', $req->tahun)
+                ->whereNull('rd.deleted_at')
                 ->count('rd.id_riskd');
             array_push($total_risk, $count_risk);
 
@@ -71,6 +73,7 @@ class HomeController extends Controller
                 ->where('d.r_awal','>=', 12)
                 ->whereOr('status_mitigasi', '=', 1)
                 ->where('d.tahun', '=', $req->tahun)
+                ->whereNull('d.deleted_at')
                 ->count('d.id_riskd');
             array_push($mitigasi, $count_mitigasi);
 
@@ -80,6 +83,7 @@ class HomeController extends Controller
                 ->where('m.realisasi', '=', 100)
                 ->where('m.is_approved', '=', 1)
                 ->where('rd.tahun', '=', $req->tahun)
+                ->whereNull('rd.deleted_at')
                 ->count('rd.id_riskd');
             array_push($selesai_mitigasi, $done_mitigasi);
         }
