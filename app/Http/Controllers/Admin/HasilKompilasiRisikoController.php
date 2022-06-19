@@ -27,7 +27,7 @@ class HasilKompilasiRisikoController extends Controller
             $wr .= " AND du.company_id = ".$request->company_id;
         }
         if($request->filled('tahun')){
-            $wr .= " AND YEAR(p.tahun_p) = ".$request->tahun;
+            $wr .= " AND p.tahun_p = ".$request->tahun;
         }
         $data = DB::table('pengukuran as p')
         ->join('s_risiko as sr', 'sr.id_s_risiko', 'p.id_s_risiko')
