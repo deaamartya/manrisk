@@ -34,7 +34,7 @@ $(document).ready(function(){
     })
 
     $('.approve').on('click', function(){
-        let id = $(this).attr('id')
+        let id = $(this).attr('id').slice(8)
 
         $.ajax({
             type: 'PUT',
@@ -53,7 +53,11 @@ $(document).ready(function(){
                     showConfirmButton: false,
                     timer: 2000
                 });
-                $('#'+id).remove()
+                $('#approve_'+id).remove()
+                if(headers == 0){
+                    $('#status_h_indhan_0').remove()
+                    $('#status_h_indhan').append('<span class="badge badge-success" id="status_h_indhan_1"><i class="fa fa-check"></i> Approved Admin</span>')
+                }
             },
             error:function(data){
                 console.log(data);

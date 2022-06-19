@@ -121,6 +121,7 @@
 									<label class="col-sm-3 col-form-label">Penyusun</label>
 									<div class="col-sm-9">
                     <input type="text" class="form-control" name="penyusun" value="{{ Auth::user()->name }}" readonly/>
+                    <input type="hidden" class="form-control" name="id_penyusun" value="{{ Auth::user()->id_user }}"/>
 									</div>
 								</div>
               </div>
@@ -129,6 +130,7 @@
 									<label class="col-sm-3 col-form-label">Pemeriksa</label>
 									<div class="col-sm-9">
                     <input type="text" class="form-control" name="pemeriksa" value="{{ $risk_owner->name }}" readonly/>
+                    <input type="hidden" class="form-control" name="id_pemeriksa" value="{{ $risk_owner->id_user }}"/>
 									</div>
 								</div>
               </div>

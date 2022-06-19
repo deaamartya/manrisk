@@ -37,11 +37,15 @@ class RisikoController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         RiskHeader::insert([
             'id_user' => Auth::user()->id_user,
             'tahun' => $request->tahun,
             'target' => $request->target,
             'penyusun' => Auth::user()->name,
+            'id_penyusun' => Auth::user()->id_user,
+            'pemeriksa' => $request->pemeriksa,
+            'id_pemeriksa' => $request->id_pemeriksa,
             'tanggal' => date('Y-m-d'),
             'status_h' => 0,
             'created_at' => now(),

@@ -109,7 +109,7 @@
               <i data-feather="plus" class="me-2"></i>
               Tambah Detail Risiko
             </button>
-            <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button>
+            {{-- <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button> --}}
           </div>
           <div class="card-body">
             <div class="table-responsive">
