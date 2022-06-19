@@ -80,7 +80,7 @@
         </div>
         <div class="card">
           <div class="card-header">
-            <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button>
+            {{-- <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button> --}}
           </div>
           <div class="card-body">
             <div class="table-responsive">

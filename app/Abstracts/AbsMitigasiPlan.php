@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\RiskHeader;
 use App\Models\RiskDetail;
+use App\Models\MitigasiLogs;
 use Illuminate\Support\Arr;
 
 class AbsMitigasiPlan
@@ -62,6 +63,7 @@ class AbsMitigasiPlan
 
         $results['logs'] = $logs;
         $results['headers'] = $headers;
+        $results['risk_detail'] = $risk_detail;
 
         return $results;
     }
@@ -78,10 +80,22 @@ class AbsMitigasiPlan
 
     public static function approveHasilMitigasi($request, $id)
     {
-        $query = DB::table('mitigasi_logs')->where('id', $id)->update([
-            'is_approved' => 1,
+        $query = MitigasiLogs::findOrFail($id)->with('risk_detail:id_riskd')->first();
+        $rdetail = RiskDetail::findOrFail($query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
+
+        DB::beginTransaction();
+        RiskHeader::where('id_riskh', $rdetail->risk_header->id_riskh)->update([
+            'status_h_indhan' => 1,
             'updated_at' => Carbon::now()
         ]);
+        $query->is_approved = 1;
+        $query->updated_at = Carbon::now();
+        $query->save();
+        // $query = DB::table('mitigasi_logs')->where('id', $id)->update([
+        //     'is_approved' => 1,
+        //     'updated_at' => Carbon::now()
+        // ]);
+        DB::commit();
 
         return $query;
     }

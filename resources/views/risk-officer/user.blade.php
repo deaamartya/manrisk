@@ -25,20 +25,48 @@
                                     <th>No</th>
                                     <th>Perusahaan</th>
                                     <th>Nama</th>
+                                    <th>Jabatan</th>
                                     <th>Username</th>
-                                    <th>Jabatan / Role</th>
+                                    <th>Role</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($user as $u)
+                                @php
+                                    $role = [];
+                                    if($u->is_admin){
+                                        $role[] = 'Admin';
+                                    }
+                                    if($u->is_risk_officer){
+                                        $role[] = 'Risk Officer';
+                                    }
+                                    if($u->is_risk_owner){
+                                        $role[] = 'Risk Owner';
+                                    }
+                                    if($u->is_penilai){
+                                        $role[] = 'Penilai';
+                                    }
+                                    if($u->is_penilai_indhan){
+                                        $role[] = 'Penilai Indhan';
+                                    }
+                                @endphp
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $u->instansi }}</td>
                                     <td>{{ $u->name }}</td>
-                                    <td>{{ $u->username }}</td>
                                     <td>{{ $u->jabatan }}</td>
+                                    <td>{{ $u->username }}</td>
+                                    <td>
+                                        @foreach ($role as $index => $r)
+                                            @if($index == 0)
+                                                {{ $r }}
+                                            @else
+                                                , {{ $r }}
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td class="text-center field-status" id="{{ $u->id_user }}">
                                         @if($u->status_user == 1)
                                             <button class="btn btn-primary btn-xs status" type="button" id="status_{{ $u->id_user }}">Tidak Aktif</button>
@@ -82,6 +110,12 @@
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">NIP <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="text" name="nip" class="form-control" id="formNip">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Jabatan <span class="required"></span></label>
+                    <div class='col-md-9 col-sm-9 col-xs-12'>
+                        <input type="text" name="jabatan" class="form-control" id="formJabatan">
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -162,12 +196,12 @@
                     </div>
                 </div>
 
-                <div class="row mb-3 jabatan">
+                {{-- <div class="row mb-3 jabatan">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Jabatan <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <input type="text" name="jabatan" class="form-control" id="formJabatan">
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="modal-footer">
             <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>

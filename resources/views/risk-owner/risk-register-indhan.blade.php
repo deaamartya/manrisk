@@ -64,12 +64,12 @@
                       <a href="{{ route('risk-owner.print-risk-register-indhan', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success" title="Print">
                         <i data-feather="printer" class="small-icon"></i>
                       </a>
-                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
+                      {{-- <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#edit-header-{{ $d->id_riskh }}" title="Edit">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
-                      </button>
+                      </button> --}}
                       {{--
                       @if($d->status_h != 1)
                       <form action="{{ route('risk-owner.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">

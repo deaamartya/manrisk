@@ -25,16 +25,16 @@ class AbsDataMaster
         ->select(
             'defendid_user.*',
             'perusahaan.instansi',
-            DB::raw("
-                (CASE
-                    WHEN is_risk_officer = 1 THEN 'Risk Officer'
-                    WHEN is_penilai = 1 THEN 'Penilai'
-                    WHEN is_penilai_indhan = 1 THEN 'Penilai Indhan'
-                    WHEN is_risk_owner = 1 THEN 'Risk Owner'
-                    WHEN is_admin = 1 THEN 'Admin'
-                END
-                ) AS jabatan
-            ")
+            // DB::raw("
+            //     (CASE
+            //         WHEN is_risk_officer = 1 THEN 'Risk Officer'
+            //         WHEN is_penilai = 1 THEN 'Penilai'
+            //         WHEN is_penilai_indhan = 1 THEN 'Penilai Indhan'
+            //         WHEN is_risk_owner = 1 THEN 'Risk Owner'
+            //         WHEN is_admin = 1 THEN 'Admin'
+            //     END
+            //     ) AS role
+            // ")
         )
         ->get();
 
@@ -46,6 +46,7 @@ class AbsDataMaster
         $params = [
             'company_id' => $request->company_id,
             'name' => $request->name,
+            'jabatan' => $request->jabatan,
             'nip' => $request->nip,
             'username' => $request->username,
             'status_user' => 0,
