@@ -16,9 +16,8 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))->where('status_s_risiko', 1)->count();
-        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('tahun', date('Y'))
-                            ->where('status_s_risiko', 1)->limit(1)->get();
+        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->count();
+        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->limit(1)->get();
         // dd(count($data_sr));
         if(count($data_sr) > 0){
             $sr_exists = true;
@@ -50,7 +49,6 @@ class PengukuranRisikoController extends Controller
                 ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
                 ->join('defendid_user', 'defendid_pengukur.company_id','defendid_user.company_id')
                 ->where('defendid_user.id_user', Auth::user()->id_user)
-                ->where('pengukuran.tahun_p', date('Y'))
                 ->where('s_risiko.status_s_risiko', 1)
                 ->get();
                 // dd(count($sumber_risiko));
@@ -117,7 +115,6 @@ class PengukuranRisikoController extends Controller
                 ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
                 ->join('defendid_pengukur as d', 'pengukuran.id_pengukur', 'd.id_pengukur')
                 ->join('perusahaan as p', 'd.company_id', 'p.company_id')
-                ->where('pengukuran.tahun_p', date('Y'))
                 ->where('sr.status_s_risiko', '1')
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();

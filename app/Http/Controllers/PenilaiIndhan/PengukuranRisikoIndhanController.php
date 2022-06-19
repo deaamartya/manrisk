@@ -10,35 +10,38 @@ use App\Models\PengukuranIndhan;
 use App\Models\SRisiko;
 use PDF;
 use DB;
-
+use Auth;
 
 class PengukuranRisikoIndhanController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('s_risiko.tahun', date('Y'))->where('status_indhan', 1)->count();
-        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('s_risiko.tahun', date('Y'))->where('status_indhan', 1)->limit(1)->get();
-        // dd($jml_risk);
+        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->count();
+        $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->limit(1)->get();
+        // dd($data_sr);
         foreach($data_sr as $d){
+            // dd($d->id_s_risiko);
             $pengukuran = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
                 ->where('pengukuran_indhan.id_s_risiko', $d->id_s_risiko)->get();
-               
-            $jabatan = DefendidPengukur::join('defendid_user', 'defendid_pengukur.id_user', 'defendid_user.id_user')->where('defendid_user.is_penilai_indhan', 1)->get();
-
+            // dd($pengukuran);
+            // $jabatan = DefendidPengukur::join('defendid_user', 'defendid_pengukur.id_user', 'defendid_user.id_user')->where('defendid_user.is_penilai_indhan', 1)->get();
+            $pengukur = DefendidPengukur::where('id_user', Auth::user()->id_user)->get();
+            // dd($pengukur);
             $arr_pengukur = [];
-            foreach($jabatan as $i=>$j){
+            foreach($pengukur as $i=>$p){
                 $pengukur_risk = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
+                ->join('defendid_pengukur', 'pengukuran_indhan.id_pengukur', 'defendid_pengukur.id_pengukur')
                 ->where('pengukuran_indhan.id_s_risiko', $d->id_s_risiko)
-                ->where('pengukuran_indhan.nama_responden', $j->jabatan)
+                ->where('pengukuran_indhan.id_pengukur', $p->id_pengukur)
                 ->get();  
 
                 if(count($pengukur_risk) == 0){
-                        $arr_pengukur[] = $j;
+                        $arr_pengukur[] = $p;
                 }
             }
         // dd(count($arr_pengukur));
         }
-        return view('penilai-indhan.pengukuran-risiko-indhan', compact('jml_risk','data_sr','jabatan','pengukuran','arr_pengukur'));
+        return view('penilai-indhan.pengukuran-risiko-indhan', compact('jml_risk','data_sr','pengukuran','arr_pengukur'));
     }
 
 

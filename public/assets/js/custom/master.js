@@ -13,7 +13,7 @@ $(document).ready(function() {
                 var data = results.data
                 var srisiko_indhan = 0;
                 var mitigasi_indhan = 0;
-                var riskregister_indhan = 0;
+                var riskregister_korporasi = 0;
                 var hasil_mitigasi = 0;
                 let element = '';
                 for (let i = 0; i < data.length; i++) {
@@ -26,8 +26,8 @@ $(document).ready(function() {
                     if (data[i].title == 'Terdapat pengajuan mitigasi indhan yang belum disetujui sebanyak ') {
                         mitigasi_indhan += data[i].jumlah;
                     }
-                    if (data[i].title == 'Terdapat risk register indhan yang belum disetujui sebanyak ') {
-                        riskregister_indhan += data[i].jumlah;
+                    if (data[i].title == 'Terdapat risk register korporasi yang belum disetujui sebanyak ') {
+                        riskregister_korporasi += data[i].jumlah;
                     }
                     if (data[i].title == 'Terdapat hasil mitigasi yang belum disetujui sebanyak ') {
                         hasil_mitigasi += data[i].jumlah;
@@ -35,13 +35,22 @@ $(document).ready(function() {
 
                 }
 
-                $('.srisiko-indhan-notif').html(srisiko_indhan)
-                $('.mitigasi-indhan-notif').html(mitigasi_indhan)
-                $('.riskregister-indhan-notif').html(riskregister_indhan)
-                $('.hasil-mitigasi-notif').html(hasil_mitigasi)
-                $('.total-notif').html(data.length)
-                $('.body-notif').append(element)
-                $('.body-notif').append('<li></li>')
+                if (srisiko_indhan > 0) {
+                    $('.srisiko-indhan-notif').html(srisiko_indhan)
+                } else if (mitigasi_indhan > 0) {
+                    $('.mitigasi-indhan-notif').html(mitigasi_indhan)
+                } else if (riskregister_korporasi > 0) {
+                    $('.riskregister-korporasi-notif').html(riskregister_korporasi)
+                } else if (hasil_mitigasi > 0) {
+                    $('.hasil-mitigasi-notif').html(hasil_mitigasi)
+                }
+
+                if (data.length > 0) {
+                    $('.total-notif').html(data.length)
+                    $('.body-notif').append(element)
+                    $('.body-notif').append('<li></li>')
+                }
+
             }
         },
         error: function(data) {

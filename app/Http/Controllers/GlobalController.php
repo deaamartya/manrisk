@@ -286,7 +286,8 @@ class GlobalController extends Controller
                                     ->whereNull('risk_detail.deleted_at')
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
-        $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
+        // $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
+        $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)->count();
         $approval_hasil_mitigasi = DB::table('mitigasi_logs')->where('is_approved', 0)->count();
 
         $data = [];
@@ -302,10 +303,10 @@ class GlobalController extends Controller
                 'jumlah' => $approval_pengajuan_mitigasi_indhan
             ];
         }
-        if($approval_risk_register_indhan > 0){
+        if($approval_risk_register_korporasi > 0){
             $data[] = [
-                'title' => 'Terdapat risk register indhan yang belum disetujui sebanyak ',
-                'jumlah' => $approval_risk_register_indhan
+                'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
+                'jumlah' => $approval_risk_register_korporasi
             ];
         }
         if($approval_hasil_mitigasi > 0){

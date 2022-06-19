@@ -69,8 +69,7 @@
                       </button>
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskh }}" data-bs-toggle="modal" data-bs-target="#delete-header-{{ $d->id_riskh }}" title="Delete">
                         <i data-feather="trash-2" class="small-icon"></i>
-                      </button> --}}
-                      {{--
+                      </button>
                       @if($d->status_h != 1)
                       <form action="{{ route('risk-owner.approval-risk-register-indhan', $d->id_riskh) }}" method="POST">
                           @csrf

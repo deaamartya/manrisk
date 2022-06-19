@@ -137,6 +137,12 @@
                     </td>
                     <td>
                         @if($d->status_mitigasi == 0)
+                          <span class="badge badge-green me-2">Tidak Mitigasi</span>
+                        @else
+                          <span class="badge badge-danger me-2">Perlu Mitigasi</span>
+                        @endif
+                    {{--
+                        @if($d->status_mitigasi == 0)
                         <form action="{{ route('admin.mitigation', $d->id_riskd) }}" method="POST">
                           @csrf
                           <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
@@ -153,6 +159,7 @@
                           </button>
                         </form>
                         @endif
+                      --}}
                     </td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->indikator }}</td>

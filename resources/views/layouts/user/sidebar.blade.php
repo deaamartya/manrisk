@@ -181,7 +181,9 @@
 								{{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
 								<i data-feather="sidebar"></i>
 								<span>Mitigasi Plan</span>
+								@if(Auth::user()->is_admin)
 								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
+								@endif
 							</a>
 						</li>
 					@endif
@@ -214,14 +216,14 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
 							<i data-feather="sidebar"></i>
-							<span>Risk Register Korporasi</span>
+							<span>Risk Register Korp. </span>
+							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
 							<i data-feather="sidebar"></i>
 							<span>Risk Register INDHAN</span>
-							<label class="badge badge-secondary riskregister-indhan-notif" style="float: right;"></label>
 						</a>
 					</li>
 					@elseif(Auth::user()->is_penilai_indhan)

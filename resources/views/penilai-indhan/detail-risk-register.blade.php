@@ -109,7 +109,7 @@
                     <th>C Akhir</th>
                     <th>R Akhir</th>
                     <th>Status</th>
-                    <th>Aksi</th>
+                    <!-- <th>Aksi</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -118,40 +118,16 @@
                     <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
                     <td>
                         @if($d->status_indhan == 0)
-                        <form action="{{ route('penilai-indhan.korporate', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
-                            <i class="fa fa-times me-2"></i>Bukan INDHAN
-                          </button>
-                        </form>
+                          <span class="badge badge-danger me-2">Bukan INDHAN</span>
                         @elseif($d->status_indhan == 1)
-                        <form action="{{ route('penilai-indhan.unkorporate', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
-                            <i class="fa fa-check me-2"></i> INDHAN
-                          </button>
-                        </form>
+                          <span class="badge badge-green me-2">INDHAN</span>
                         @endif
                     </td>
                     <td>
                         @if($d->status_mitigasi == 0)
-                        <form action="{{ route('penilai-indhan.mitigation', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
-                            <i class="fa fa-times me-2"></i> Tidak Mitigasi
-                          </button>
-                        </form>
+                        <span class="badge badge-green me-2">Tidak Mitigasi</span>
                         @else
-                        <form action="{{ route('penilai-indhan.not-mitigation', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
-                            <i class="fa fa-check me-2"></i> Perlu Mitigasi
-                          </button>
-                        </form>
+                        <span class="badge badge-danger me-2">Perlu Mitigasi</span>
                         @endif
                     </td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
@@ -207,11 +183,11 @@
                           </button>
                         @endif
                     </td>
-                    <td>
+                    <!-- <td>
                       <button class="btn btn-sm btn-danger btn-delete d-flex align-items-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
                         <i class="fa fa-trash-o me-2"></i> Delete
                       </button>
-                    </td>
+                    </td> -->
                   </tr>
                   @endforeach
                 </tbody>

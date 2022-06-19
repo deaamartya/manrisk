@@ -73,7 +73,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $d->tahun }}</td>
                     <td>{{ $d->instansi }}</td>
-                    <td>{{ date('d M Y (H:i)', strtotime($d->tanggal)) }}</td>
+                    <td>{{ date('d M Y', strtotime($d->tanggal)) }}</td>
                     <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ ($d->penyusun ? $d->penyusun->name : '-') }}</td>
                     <td>{{ ($d->pemeriksa ? $d->pemeriksa->name : '-') }}</td>
@@ -85,6 +85,7 @@
                       <a href="{{ route('penilai-indhan.print-risk-register', $d->id_riskh) }}" target="_blank" class="btn btn-sm btn-success d-flex align-items-center">
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
+                      {{--
                       @if($d->status_h_indhan == 0)
                       <form action="{{ route('penilai-indhan.approval-risk-register', $d->id_riskh) }}" method="POST">
                           @csrf
@@ -92,6 +93,7 @@
                         <i data-feather="check-circle" class="me-2 small-icon"></i> Approval </button>
                       </form>
                       @endif
+                      --}}
                     </td>
                   </tr>
                   @endforeach
