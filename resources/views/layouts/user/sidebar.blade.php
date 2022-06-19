@@ -26,6 +26,20 @@
 							<div class="welcome-text">
 								<h6 class="lan-1">Welcome,</h6>
 								<p class="lan-2">
+									@php
+										$roles = ['Risk Officer', 'Penilai', 'Penilai Indhan', 'Risk Owner', 'Admin'];
+										$columns = [Auth::user()->is_risk_officer, Auth::user()->is_penilai, Auth::user()->is_penilai_indhan, Auth::user()->is_risk_owner, Auth::user()->is_admin];
+										$valid_roles = array_keys($columns, 1);
+										$c_role = count($valid_roles);
+									@endphp
+									@foreach($valid_roles as $i)
+										@php echo $roles[$i]; @endphp
+										@if ($c_role > 2 && $loop->iteration < $c_role - 1) @php echo ', ' @endphp @endif
+										@if ($c_role > 2 && $loop->iteration === $c_role - 1) @php echo 'dan ' @endphp @endif
+										@if ($c_role === 2 && $loop->iteration === 1) @php echo 'dan ' @endphp @endif
+									@endforeach
+								</p>
+								<p class="lan-2">
 									{{ Auth::user()->perusahaan->instansi }}
 								</p>
 							</div>

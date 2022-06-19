@@ -70,9 +70,9 @@
                   <span class="badge badge-success"><i class="fa fa-check"></i> Approved Risk Owner</span>
                   @endif
                   @if($headers->status_h_indhan == 0)
-                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval Admin</span>
+                  <span class="badge badge-warning"><i class="fa fa-warning"></i> Waiting Approval INDHAN</span>
                   @elseif($headers->status_h_indhan == 1)
-                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved Admin</span>
+                  <span class="badge badge-success"><i class="fa fa-check"></i> Approved INDHAN</span>
                   @endif
                 </div>
               </div>
