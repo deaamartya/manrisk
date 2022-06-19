@@ -129,8 +129,8 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Pemeriksa</label>
 									<div class="col-sm-9">
-                    <input type="text" class="form-control" name="pemeriksa" value="{{ $risk_owner->name }}" readonly/>
-                    <input type="hidden" class="form-control" name="id_pemeriksa" value="{{ $risk_owner->id_user }}"/>
+                    <input type="text" class="form-control" name="pemeriksa" value="{{ ($risk_owner ? $risk_owner->name : null) }}" readonly/>
+                    <input type="hidden" class="form-control" name="id_pemeriksa" value="{{ ($risk_owner ? $risk_owner->id_user : null) }}"/>
 									</div>
 								</div>
               </div>
