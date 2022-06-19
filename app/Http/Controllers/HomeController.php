@@ -7,6 +7,8 @@ use Auth;
 use App\Models\RiskHeader;
 use App\Models\Perusahaan;
 use App\Models\SRisiko;
+use DB;
+use App\Models\RiskDetail;
 
 class HomeController extends Controller
 {
@@ -33,8 +35,20 @@ class HomeController extends Controller
                 ->where('rd.company_id', Auth::user()->company_id)
                 ->whereNull('rd.deleted_at')
                 ->count('rd.id_riskd');
+            $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', Auth::user()->company_id)
+                ->where('status_mitigasi', '=', 1)
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            $count_done_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
+                ->where('rd.company_id', Auth::user()->company_id)
+                ->where('m.realisasi', '=', 100)
+                ->where('m.is_approved', '=', 1)
+                ->whereNull('rd.deleted_at')
+                ->count('rd.id_riskd');
             if (Auth::user()->is_risk_officer) {
-                return view('risk-officer.index', compact("counts_risiko", "count_risiko"));
+                return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi"));
             }
             if (Auth::user()->is_risk_owner) {
                 return view('risk-owner.index', compact("counts_risiko", "count_risiko"));
@@ -70,8 +84,7 @@ class HomeController extends Controller
 
             $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
                 ->where('d.company_id', $c->company_id)
-                ->where('d.r_awal','>=', 12)
-                ->whereOr('status_mitigasi', '=', 1)
+                ->where('status_mitigasi', '=', 1)
                 ->where('d.tahun', '=', $req->tahun)
                 ->whereNull('d.deleted_at')
                 ->count('d.id_riskd');
@@ -88,5 +101,29 @@ class HomeController extends Controller
             array_push($selesai_mitigasi, $done_mitigasi);
         }
         return response()->json([ "success" => true, "labels" => $labels, "total_risk" => $total_risk, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, ]);
+    }
+
+    public function dataKategoriRisiko(Request $req) {
+        $labels = [];
+        $count = [];
+        $kelompok_risk = RiskDetail::select('kr.id_risk', 'kr.risk', DB::raw('COUNT(risk_detail.id_riskd) AS count_risk'))
+            ->join('s_risiko as s','s.id_s_risiko','=','risk_detail.id_s_risiko')
+            ->join('konteks as k','k.id_konteks','=','s.id_konteks')
+            ->join('risk as kr', 'kr.id_risk', '=', 'k.id_risk')
+            ->where('risk_detail.company_id', Auth::user()->company_id)
+            ->where('risk_detail.tahun', '=', $req->tahun)
+            ->whereNull('risk_detail.deleted_at')
+            ->groupBy('kr.id_risk')
+            ->get();
+        $total_risk = RiskDetail::where('risk_detail.company_id', Auth::user()->company_id)
+        ->where('risk_detail.tahun', '=', $req->tahun)
+        ->whereNull('risk_detail.deleted_at')
+        ->count('id_riskd');
+        foreach ($kelompok_risk as $c) {
+            array_push($labels, $c->risk);
+            $count_risk = $c->count_risk / $total_risk * 100;
+            array_push($count, $count_risk);
+        }
+        return response()->json([ "success" => true, "labels" => $labels, "count" => $count ]);
     }
 }

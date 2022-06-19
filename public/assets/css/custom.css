@@ -20,12 +20,17 @@
     margin-bottom: 8px;
 }
 
+.sidebar-main-title .welcome-card .welcome-text {
+    width: 100%;
+}
+
 .sidebar-main-title .logo-circle img {
     height: 100%;
 }
 
 .page-wrapper .sidebar-main-title p {
     line-height: 1.5;
+    text-transform: none;
 }
 
 .page-wrapper .page-header .header-wrapper {
@@ -206,4 +211,12 @@ label {
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links .simplebar-wrapper .simplebar-mask .simplebar-content-wrapper .simplebar-content>li.sidebar-list .badge-danger:hover {
     color: white !important;
+}
+
+.ecommerce-widgets .fa {
+    background: linear-gradient(to right, var(--theme-deafult) 10%, #a927f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 2px;
+    font-size: 25px;
 }

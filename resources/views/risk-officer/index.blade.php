@@ -22,32 +22,99 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
-		<div class="col-lg-6">
-			<div class="card">
-				<div class="card-body">
-					<div class="d-flex justify-content-between">
-						<div>Jumlah Sumber Risiko Tahun Ini</div>
-						<h4>{{ $counts_risiko }}</h4>
+		<div class="col-xl-6 col-12 pb-0">
+			<div class="row">
+				<div class="col-lg-6 col-12 pb-3">
+					<div class="card o-hidden h-100 mb-0">
+						<div class="card-body">
+							<div class="ecommerce-widgets media">
+								<div class="media-body">
+									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko Korporasi</span></p>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $counts_risiko }}</span></h4>
+								</div>
+								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-12 pb-3">
+					<div class="card o-hidden h-100 mb-0">
+						<div class="card-body">
+							<div class="ecommerce-widgets media">
+								<div class="media-body">
+									<p class="f-w-500 font-roboto">Jumlah Risiko Korporasi</span></p>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_risiko }}</span></h4>
+								</div>
+								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-12 pb-3">
+					<div class="card o-hidden h-100 mb-0">
+						<div class="card-body">
+							<div class="ecommerce-widgets media">
+								<div class="media-body">
+									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_mitigasi }}</span></h4>
+								</div>
+								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-12 pb-3">
+					<div class="card o-hidden h-100 mb-0">
+						<div class="card-body">
+							<div class="media">
+								<div class="media-body">
+									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
+									<div class="progress-box">
+										<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_done_mitigasi }}</span></h4>
+									</div>
+									@if($count_mitigasi > 0)
+									<div class="progress sm-progress-bar progress-animate app-right d-flex justify-content-end">
+										<div class="progress-gradient-primary" role="progressbar" style="width: 35%" aria-valuenow="{{ intval($count_done_mitigasi / $count_mitigasi * 100) }}" aria-valuemin="0" aria-valuemax="100"><span class="font-primary">{{ intval($count_done_mitigasi / $count_mitigasi * 100) }}%</span><span class="animate-circle"></span></div>
+									</div>
+									@endif
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6">
-			<div class="card">
+		<div class="col-xl-6 col-12 pb-3">
+			<div class="card o-hidden h-100 mb-0">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<div>Jumlah Risiko Tahun Ini</div>
-						<h4>{{ $count_risiko }}</h4>
+						<h6>Kategori Risiko <span id="tahun-kat-risiko-title">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-kat-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+					<div class="chart-content">
+						<div id="basic-pie"></div>
+						<div id="basic-pie-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row second-chart-list third-news-update">
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
 						<h6>TEMUAN HASIL AUDIT TAHUN <span id="tahun-title">{{ date('Y') }}</span></h6>
 						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-risiko">
 								@for($i=0; $i<10; $i++)
 									@php $tahun = intval(2022 + $i); @endphp
@@ -56,21 +123,9 @@
 							</select>
 						</div>
 					</div>
-					<div class="small-bar">
-						<div class="small-chart flot-chart-container"></div>
-					</div>
-					<p>Keterangan</p>
-					<div>
-						<span style="background-color: #f54e49; color:#f54e49; margin-right: 8px; width: 8px; height: 8px;">ab</span>
-						<span>Jumlah Risiko</span>	
-					</div>
-					<div>
-						<span style="background-color: #3c88f7; color:#3c88f7; margin-right: 8px; width: 8px; height: 8px;">ab</span>
-						<span>Jumlah Mitigasi</span>	
-					</div>
-					<div>
-						<span style="background-color: #51bb25; color:#51bb25; margin-right: 8px; width: 8px; height: 8px;">ab</span>
-						<span>Jumlah Mitigasi Selesai</span>	
+					<div class="chart-content">
+						<div id="basic-bar"></div>
+						<div id="basic-bar-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
 					</div>
 				</div>
 			</div>
@@ -88,72 +143,145 @@
 <script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
 <script src="{{asset('assets/js/notify/index.js')}}"></script>
+<script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
+<script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
+<script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
+<script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var chart8;
+		var chart3;
 		function initBarChart(data) {
-			new Chartist.Bar('.small-chart', {
-				labels: data.labels,
-				series: [
-					data.total_risk,
-					data.mitigasi,
-					data.selesai_mitigasi,
-				]
-			}, {
-				seriesBarDistance: 15,
-				axisX: {
-					offset: 60
-				},
-				axisY: {
-					offset: 80,
-					labelInterpolationFnc: function(value) {
-						return value
+			var options3 = {
+					chart: {
+							height: 350,
+							type: 'bar',
+							toolbar:{
+								show: false
+							}
 					},
-					scaleMinSpace: 40
-				}
-			}).on('draw', function (chart) {
-				if (chart.type === 'bar') {
-					chart.element.attr({
-						style: 'width: 20px'
-					});
-				}
-			});
+					plotOptions: {
+							bar: {
+									horizontal: false,
+									endingShape: 'rounded',
+									columnWidth: '55%',
+							},
+					},
+					dataLabels: {
+							enabled: false
+					},
+					stroke: {
+							show: true,
+							width: 2,
+							colors: ['transparent']
+					},
+					series: [{
+							name: 'Total Risiko',
+							data: data.total_risk
+					}, {
+							name: 'Total Risiko Perlu Mitigasi',
+							data: data.mitigasi
+					}, {
+							name: 'Total Risiko Selesai Mitigasi',
+							data: data.selesai_mitigasi
+					}],
+					xaxis: {
+							categories: data.labels,
+					},
+					yaxis: {
+							title: {
+									text: ''
+							}
+					},
+					fill: {
+							opacity: 1
+
+					},
+					tooltip: {
+						y: {
+							formatter: function (val) {
+								return val
+							}
+						}
+					},
+					colors:[ CubaAdminConfig.primary , CubaAdminConfig.secondary , '#51bb25']
+			}
+
+			if (chart3) chart3.destroy();
+			chart3 = new ApexCharts(
+					document.querySelector("#basic-bar"),
+					options3
+			);
+			$("#basic-bar-loading").hide();
+			$("#basic-bar").show();
+			chart3.render();
+		}
+		function initPieChart(data) {
+			var options8 = {
+				chart: {
+						width: 380,
+						type: 'pie',
+				},
+				labels: data.labels,
+				series: data.count,
+				responsive: [{
+						breakpoint: 480,
+						options: {
+								chart: {
+										width: 200
+								},
+								legend: {
+										position: 'bottom'
+								}
+						}
+				}],
+				colors:[ CubaAdminConfig.primary , CubaAdminConfig.secondary , '#51bb25', '#a927f9', '#f8d62b']
+			}
+			
+			if (chart8) chart8.destroy();
+
+			chart8 = new ApexCharts(
+				document.querySelector("#basic-pie"),
+				options8
+			);
+			
+			$("#basic-pie-loading").hide();
+			$("#basic-pie").show();
+			chart8.render();
 		}
 		$('#tahun-risiko').change(function(){
-			const url = "{{ url('dashboard/dataRisiko') }}"
+			$("#basic-bar").hide();
+			$("#basic-bar-loading").show();
+			const url = "{{ url('dashboard/data-risiko') }}"
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-risiko').val() })
 				.done(function(result) {
 					$('#tahun-title').html($('#tahun-risiko').val());
-					new Chartist.Bar('.small-chart', {
-						labels: result.labels,
-						series: [
-							result.total_risk,
-							result.mitigasi,
-							result.selesai_mitigasi,
-						]
-					}, {
-						seriesBarDistance: 15,
-						axisX: {
-							offset: 60
-						},
-						axisY: {
-							offset: 80,
-							labelInterpolationFnc: function(value) {
-								return value
-							},
-							scaleMinSpace: 40
-						}
-					}).on('draw', function (chart) {
-						if (chart.type === 'bar') {
-							chart.element.attr({
-								style: 'width: 20px'
-							});
-						}
-					});
+					if (result.total_risk.length > 0) {
+						initBarChart(result);
+					} else {
+						$("#basic-bar-loading").hide();
+					}
+				});
+		});
+		$('#tahun-kat-risiko').change(function(){
+			$("#basic-pie").hide();
+			$("#basic-pie-loading").show();
+			const url = "{{ url('dashboard/data-kategori-risiko') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-kat-risiko').val() })
+				.done(function(result) {
+					$('#tahun-kat-risiko-title').html($('#tahun-kat-risiko').val());
+					if (result.count.length > 0) {
+						initPieChart(result);
+					} else {
+						$("#basic-pie-loading").hide();
+					}
 				});
 		});
 		const date = new Date();
 		$('#tahun-risiko').val(date.getUTCFullYear());
 		$('#tahun-risiko').change();
+		$('#tahun-kat-risiko').val(date.getUTCFullYear());
+		$('#tahun-kat-risiko').change();
 	});
 </script>
 @endsection

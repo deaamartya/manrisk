@@ -30,7 +30,8 @@ Route::post('forum-detail/store/{id}', [GlobalController::class, 'forum_detail_s
 // Get Notification
 Route::get('get-notification', [GlobalController::class, 'get_notification']);
 Route::get('document/verify/{token}', [VerifyController::class, 'getDecrypted']);
-Route::post('dashboard/dataRisiko', [HomeController::class, 'dataRisiko']);
+Route::post('dashboard/data-risiko', [HomeController::class, 'dataRisiko']);
+Route::post('dashboard/data-kategori-risiko', [HomeController::class, 'dataKategoriRisiko']);
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
