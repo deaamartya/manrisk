@@ -58,11 +58,9 @@
                     </td>
                     <td>
                       @if($d->status_h === 0)
-                      <a href="{{ route('risk-owner.risiko.approve', $d->id_riskh) }}">
-                        <button class="btn btn-sm btn-green d-flex align-items-center">
-                          <i data-feather="check-square" class="small-icon"></i>
-                        </button>
-                      </a>
+                      <button class="btn btn-sm btn-green d-flex align-items-center" data-bs-target="#approval-{{ $d->id_riskh }}" data-bs-toggle="modal">
+                        <i data-feather="check-square" class="small-icon"></i>
+                      </button>
                       @elseif($d->status_h === 1)
                       <span class="text-success">Disetujui</span>
                       @endif
@@ -83,6 +81,30 @@
     </div>
   </div>
 </div>
+@foreach($headers as $d)
+<div class="modal fade" id="approval-{{ $d->id_riskh }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Approval Risk Header</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="GET" action="{{ route('risk-owner.risiko.approve', $d->id_riskh) }}">
+        <div class="modal-body">
+          @csrf
+          Apakah Anda yakin menyetujui risk header tahun {{ $d->tahun }} dengan target :
+          <br>
+          {!! nl2br($d->target) !!}
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+          <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endforeach
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
