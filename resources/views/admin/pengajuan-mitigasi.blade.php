@@ -26,16 +26,10 @@
           <div class="card-body">
             <div class="row">
               <div class="col">
-                <span class="badge badge-blue me-2"> </span>Rendah
-              </div>
-              <div class="col">
-                <span class="badge badge-green me-2"> </span>Rendah-Menengah
+                <span class="badge badge-green me-2"> </span>Rendah
               </div>
               <div class="col">
                 <span class="badge badge-warning me-2"> </span>Menengah
-              </div>
-              <div class="col">
-                <span class="badge badge-orange me-2"> </span>Menengah-Tinggi
               </div>
               <div class="col">
                 <span class="badge badge-danger me-2"> </span>Tinggi
@@ -67,13 +61,9 @@
                     <td>{{ $d->risk_detail->sumber_risiko->s_risiko }}</td>
                     <td>
                       @if($d->risk_detail->r_awal < 6)
-                      <span class="badge badge-blue me-2">
-                      @elseif($d->risk_detail->r_awal < 12)
                       <span class="badge badge-green me-2">
-                      @elseif($d->risk_detail->r_awal < 16)
+                      @elseif($d->risk_detail->r_awal < 12)
                       <span class="badge badge-warning me-2">
-                      @elseif($d->risk_detail->r_awal < 20)
-                      <span class="badge badge-orange me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
