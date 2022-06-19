@@ -11,7 +11,7 @@
             border-radius: 0px 25px 25px 25px;
         }
         .card-forum:hover {
-            background-color: lightgrey;
+            background-color: #ebf2fb;
         }
         .body-form {
             font-size: 110%;
@@ -49,6 +49,42 @@
 <div class="container-fluid">
     <div class="col-sm-12">
         <div class="row">
+            <div class="col-md-4 form-forum">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Post Forum</h4>
+                        <form method="POST" action="{{ url('forum/store') }}" id="formUser">
+                            @csrf
+                            <div class="row mb-3">
+                                <label for="noarsip">Judul/Subject <span class="required"></span></label>
+                                <div class='col-md-12 col-sm-12 col-xs-12'>
+                                    <input type="text" name="subject" required="required" class="form-control" id="formSubject">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="noarsip">Isi <span class="required"></span></label>
+                                <div class='col-md-12 col-sm-12 col-xs-12'>
+                                    <textarea name="body" id="formBody" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="noarsip"></label>
+                                <div class='col-md-9 col-sm-9 col-xs-12'>
+                                    <input type="radio" name="display" value="0" checked>
+                                    <label for="">Private</label>
+                                    &nbsp;
+                                    <input type="radio" name="display" value="1">
+                                    <label for="">Public</label>
+                                </div>
+                            </div>
+                            <hr>
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>&nbsp;
+                            <button class="btn btn-primary" type="submit">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-sm-8">
                 @foreach ($data as $dt)
                     <div class="row">
@@ -85,41 +121,7 @@
 
                 {{ $data->onEachSide(5)->links() }}
             </div>
-            <div class="col-md-4 form-forum">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Post Forum</h4>
-                        <form method="POST" action="{{ url('forum/store') }}" id="formUser">
-                            @csrf
-                            <div class="row mb-3">
-                                <label for="noarsip">Judul/Subject <span class="required"></span></label>
-                                <div class='col-md-12 col-sm-12 col-xs-12'>
-                                    <input type="text" name="subject" required="required" class="form-control" id="formSubject">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="noarsip">Isi <span class="required"></span></label>
-                                <div class='col-md-12 col-sm-12 col-xs-12'>
-                                    <textarea name="body" id="formBody" class="form-control" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label for="noarsip"></label>
-                                <div class='col-md-9 col-sm-9 col-xs-12'>
-                                    <input type="radio" name="display" value="0" checked>
-                                    <label for="">Private</label>
-                                    &nbsp;
-                                    <input type="radio" name="display" value="1">
-                                    <label for="">Public</label>
-                                </div>
-                            </div>
-                            <hr>
-                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>&nbsp;
-                            <button class="btn btn-primary" type="submit">Simpan</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

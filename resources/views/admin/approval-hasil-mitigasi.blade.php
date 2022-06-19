@@ -1,6 +1,6 @@
 @extends('layouts.user.table')
 @section('title', 'Approval Hasil Mitigasi')
-@section('css')
+@section('style')
 <style>
     .badge-secondary-cust {
         background-color:#ea2087
@@ -49,13 +49,9 @@
                         <span class="badge badge-secondary-cust">L {{ number_format($data['risk_detail']->l_awal, 2) + 0 }}</span>
                         <span class="badge badge-secondary-cust">C {{ number_format($data['risk_detail']->c_awal, 2) + 0 }}</span>
                         @if($data['risk_detail']->r_awal < 6)
-                        <span class="badge badge-blue me-2">
-                        @elseif($data['risk_detail']->r_awal < 12)
                         <span class="badge badge-green me-2">
-                        @elseif($data['risk_detail']->r_awal < 16)
+                        @elseif($data['risk_detail']->r_awal < 12)
                         <span class="badge badge-warning me-2">
-                        @elseif($data['risk_detail']->r_awal < 20)
-                        <span class="badge badge-orange me-2">
                         @else
                         <span class="badge badge-danger me-2">
                         @endif
@@ -67,13 +63,9 @@
                         <span class="badge badge-secondary-cust">L {{ number_format($data['risk_detail']->l_akhir, 2) + 0 }}</span>
                         <span class="badge badge-secondary-cust">C {{ number_format($data['risk_detail']->c_akhir, 2) + 0 }}</span>
                         @if($data['risk_detail']->r_akhir < 6)
-                        <span class="badge badge-blue me-2">
-                        @elseif($data['risk_detail']->r_akhir < 12)
                         <span class="badge badge-green me-2">
-                        @elseif($data['risk_detail']->r_akhir < 16)
+                        @elseif($data['risk_detail']->r_akhir < 12)
                         <span class="badge badge-warning me-2">
-                        @elseif($data['risk_detail']->r_akhir < 20)
-                        <span class="badge badge-orange me-2">
                         @else
                         <span class="badge badge-danger me-2">
                         @endif
@@ -142,9 +134,15 @@
                                         </button>
                                         @endif
                                     </td>
+                                    @if(!$d->is_approved)
                                     <td align="center" style="width: 60px">
                                         <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}">
                                     </td>
+                                    @else
+                                    <td align="center" style="width: 60px">
+                                        <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly>
+                                    </td>
+                                    @endif
                                     <td align="center">
                                     @if(!$d->is_approved)
                                         <button class="btn btn-warning btn-sm approve" id="approve_{{ $d->id }}"><i class="feather feather-check-circle"></i> Approval</button>

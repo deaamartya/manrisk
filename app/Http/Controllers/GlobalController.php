@@ -239,12 +239,25 @@ class GlobalController extends Controller
 
     public function notif_penilai()
     {
+        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)
+                    ->where('status_s_risiko', 1)->get();
+        $id_s_risiko = [];
+        foreach($data_sr as $dt){
+            $id_s_risiko[] = $dt->id_s_risiko;
+        }
+        // dd($id_s_risiko);
         $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                     ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->where('defendid_pengukur.id_user', Auth::user()->id_user)
+                    ->whereIn('pengukuran.id_s_risiko', $id_s_risiko)
+                    // ->where('pengukuran.id_pengukur', Auth::user()->id_user)
                     ->where('s_risiko.tahun', date('Y'))
-                    ->where('s_risiko.status_s_risiko', 1)
                     ->count('pengukuran.id_p');
+        // $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+        //             ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+        //             ->where('defendid_pengukur.id_user', Auth::user()->id_user)
+        //             ->where('s_risiko.tahun', date('Y'))
+        //             ->where('s_risiko.status_s_risiko', 1)
+        //             ->count('pengukuran.id_p');
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',

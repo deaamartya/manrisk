@@ -53,6 +53,7 @@ $(document).ready(function(){
                     showConfirmButton: false,
                     timer: 2000
                 });
+                $('#'+id).attr('readonly', true)
                 $('#approve_'+id).remove()
                 if(headers == 0){
                     $('#status_h_indhan_0').remove()
