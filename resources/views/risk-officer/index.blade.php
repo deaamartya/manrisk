@@ -131,6 +131,30 @@
 			</div>
 		</div>
 	</div>
+	<div class="row second-chart-list third-news-update">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex justify-content-between">
+						<h6>TEMUAN HASIL AUDIT TAHUN <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-level-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+					<div class="chart-content">
+						<div id="basic-stacked-bar"></div>
+						<div id="basic-stacked-bar-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
@@ -151,6 +175,7 @@
 	$(document).ready(function(){
 		var chart8;
 		var chart3;
+		var chart9;
 		function initBarChart(data) {
 			var options3 = {
 					chart: {
@@ -249,6 +274,66 @@
 			$("#basic-pie").show();
 			chart8.render();
 		}
+		function initStackedBarChart(data) {
+			var options9 = {
+          series: [
+						{
+							name: 'High',
+							data: [data.countHigh]
+						}, {
+							name: 'Med',
+							data: [data.countMed]
+						}, {
+							name: 'Low',
+							data: [data.countLow]
+						},
+					],
+          chart: {
+          type: 'bar',
+          height: 350,
+          stacked: true,
+          zoom: {
+            enabled: true
+          }
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: 'bottom',
+              offsetX: -10,
+              offsetY: 0
+            }
+          }
+        }],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            borderRadius: 10
+          },
+        },
+        xaxis: {
+          type: 'category',
+          categories: [data.labels],
+        },
+        legend: {
+          position: 'right',
+          offsetY: 40
+        },
+        fill: {
+          opacity: 1
+        }
+			};
+
+			if (chart9) chart9.destroy();
+			chart9 = new ApexCharts(
+					document.querySelector("#basic-stacked-bar"),
+					options9
+			);
+			$("#basic-stacked-bar-loading").hide();
+			$("#basic-stacked-bar").show();
+			chart9.render();
+		}
 		$('#tahun-risiko').change(function(){
 			$("#basic-bar").hide();
 			$("#basic-bar-loading").show();
@@ -261,7 +346,7 @@
 					} else {
 						$("#basic-bar-loading").hide();
 					}
-				});
+			});
 		});
 		$('#tahun-kat-risiko').change(function(){
 			$("#basic-pie").hide();
@@ -275,13 +360,29 @@
 					} else {
 						$("#basic-pie-loading").hide();
 					}
-				});
+			});
+		});
+		$('#tahun-level-risiko').change(function(){
+			$("#basic-stacked-bar").hide();
+			$("#basic-stacked-bar-loading").show();
+			const url = "{{ url('dashboard/data-level-risiko') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-level-risiko').val() })
+				.done(function(result) {
+					$('#tahun-level-risiko-title').html($('#tahun-level-risiko').val());
+					if (result.risk_detail.length > 0) {
+						initStackedBarChart(result);
+					} else {
+						$("#basic-stacked-bar-loading").hide();
+					}
+			});
 		});
 		const date = new Date();
 		$('#tahun-risiko').val(date.getUTCFullYear());
 		$('#tahun-risiko').change();
 		$('#tahun-kat-risiko').val(date.getUTCFullYear());
 		$('#tahun-kat-risiko').change();
+		$('#tahun-level-risiko').val(date.getUTCFullYear());
+		$('#tahun-level-risiko').change();
 	});
 </script>
 @endsection

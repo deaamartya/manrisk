@@ -126,4 +126,20 @@ class HomeController extends Controller
         }
         return response()->json([ "success" => true, "labels" => $labels, "count" => $count ]);
     }
+
+    public function dataLevelRisiko(Request $req) {
+        $labels = ['Risk Level'];
+        $countHigh = 0;
+        $countMed = 0;
+        $countLow = 0;
+        $risk_detail = RiskDetail::where('company_id', Auth::user()->company_id)
+            ->whereNull('deleted_at')
+            ->get();
+        foreach ($risk_detail as $r) {
+            if ($r->r_awal < 6)  $countLow++;
+            elseif ($r->r_awal < 12)  $countMed++;
+            else $countHigh++;
+        }
+        return response()->json([ "success" => true, "labels" => $labels, "countHigh" => $countHigh, "countMed" => $countMed, "countLow" => $countLow, "risk_detail" => $risk_detail ]);
+    }
 }
