@@ -11,6 +11,9 @@ use Auth;
 use PDF;
 use App\Models\SRisiko;
 use App\Models\RiskDetail;
+use Illuminate\Support\Facades\Crypt;
+use DNS2D;
+use Session;
 
 class RiskController extends Controller
 {
@@ -79,7 +82,19 @@ class RiskController extends Controller
 
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $pdf = PDF::loadView('risk-owner.risk-header-pdf', compact('header'))->setPaper('a4', 'landscape');
+        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
+            "url='risk-officer/risiko/print/".$header->id_riskh."';".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
+            "instansi=".$header->perusahaan->instansi.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
+        );
+        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
+        $pdf = PDF::loadView('risk-owner.risk-header-pdf', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
+        Session::forget('is_bypass');
+        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
         return $pdf->stream('Laporan Manajemen Risiko '.$header->perusahaan->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 

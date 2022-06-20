@@ -60,6 +60,7 @@ class HasilKompilasiRisikoController extends Controller
         ->whereNull('A.deleted_at')
         ->groupBy('B.id_s_risiko')
         ->whereNull('rd.deleted_at')
+        ->whereNull('C.deleted_at')
         ->get();
 
         return DataTables::of($data)->make(true);

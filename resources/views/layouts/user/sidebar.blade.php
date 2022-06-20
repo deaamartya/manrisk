@@ -203,6 +203,15 @@
 							<label class="badge badge-secondary mitigasi-indhan-notif" style="float: right;"></label>
 						</a>
 					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName() == 'admin.mitigasi-plan-indhan.index' ? 'active' : '' }}" href="{{ route('admin.mitigasi-plan-indhan.index') }}">
+							<i data-feather="sidebar"></i>
+							<span>Mitigasi Plan Indhan</span>
+							@if(Auth::user()->is_admin)
+								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
+							@endif
+						</a>
+					</li>
 					@endif
 					@if(Auth::user()->is_risk_officer)
 					<li class="sidebar-list">

@@ -12,6 +12,7 @@ use \App\Http\Controllers\Admin\{
     RiskRegisterIndhanController,
     ApprovalHasilMitigasiController,
     MitigasiPlanController,
+    MitigasiPlanIndhanController,
 };
 
 use \App\Http\Controllers\{
@@ -74,6 +75,9 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::put('approval-hasil-mitigasi/approve/{id}', [ApprovalHasilMitigasiController::class, 'approvedHasilMitigasi']);
   Route::resource('approval-hasil-mitigasi', ApprovalHasilMitigasiController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
+  Route::resource('mitigasi-plan-indhan', MitigasiPlanIndhanController::class);
+  Route::post('getProgressIndhan', [MitigasiPlanIndhanController::class, 'getProgressData']);
+  Route::post('storeProgressIndhan', [MitigasiPlanIndhanController::class, 'insertProgress'])->name('storeProgress');
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
 });

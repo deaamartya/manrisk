@@ -92,9 +92,14 @@
       <form method="GET" action="{{ route('risk-owner.risiko.approve', $d->id_riskh) }}">
         <div class="modal-body">
           @csrf
-          Apakah Anda yakin menyetujui risk header tahun {{ $d->tahun }} dengan target :
+          Modul :
           <br>
           {!! nl2br($d->target) !!}
+          <br><br>
+          Dengan data :
+          <br>
+          <div class="badge badge-success">{{ count($d->risk_detail) }} Risiko</div>
+          <div class="badge badge-danger">{{ $d->migrateCount($d->id_riskh) }} Mitigasi</div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>

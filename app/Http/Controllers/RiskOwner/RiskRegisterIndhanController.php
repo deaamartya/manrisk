@@ -14,6 +14,8 @@ use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
 use Redirect;
+use DNS2D;
+use Illuminate\Support\Facades\Crypt;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -103,12 +105,14 @@ class RiskRegisterIndhanController extends Controller
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
+                ->whereNull('risk_header.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->get();
         $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
         ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
+                ->whereNull('risk_header.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->count();
             // dd($detail_risk);
@@ -129,17 +133,24 @@ class RiskRegisterIndhanController extends Controller
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        // dd($headers);
         $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
+                ->whereNull('risk_header.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->get();
-            // dd($detail_risk);
-        // $user = Auth::user();
-        $pdf = PDF::loadView('risk-owner.pdf-risk-register-indhan', compact('header', 'detail_risk'))->setPaper('a4', 'landscape');
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
+            "url='risk-owner/print-risk-register-indhan/".$header->id_riskh."';".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa : '-').";".
+            "instansi=".'Industri Pertahanan'.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".($header->penyusun ? $header->penyusun : '-').";"
+        );
+        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
+        $pdf = PDF::loadView('risk-owner.pdf-risk-register-indhan',  compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');
         // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
         return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
     }

@@ -62,7 +62,14 @@ class RiskRegisterKorporasiController extends Controller
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-korporasi/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
+            "url='admin/print-risk-register-korporasi/".$header->id_riskh."';".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
+            "instansi=".$header->perusahaan->instansi.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
+        );
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('admin.pdf-risk-register', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');

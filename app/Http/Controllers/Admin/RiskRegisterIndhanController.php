@@ -108,6 +108,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
+                ->whereNull('risk_header.deleted_at')
                 ->get();
         
         $detail_risk_indhan = RiskHeaderIndhan::join('risk_detail', 'risk_header_indhan.id_riskh', 'risk_detail.id_riskh' )     
@@ -161,10 +162,18 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
+                ->whereNull('risk_header.deleted_at')
                 ->get();
             // dd($detail_risk);
         // $user = Auth::user();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-indhan/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
+            "url='admin/print-risk-register-indhan/".$header->id_riskh."';".
+            "signed_by=".$header->pemeriksa.";".
+            "instansi=".'Industri Pertahanan'.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".$header->penyusun.";"
+        );
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');

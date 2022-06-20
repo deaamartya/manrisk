@@ -157,7 +157,7 @@ $bulan = array (
 				Disusun Oleh
 			</td>
 			<td width="49%" height="5" class="left pl-10p">
-				{{ ($header->penyusun ? $header->penyusun->name : '-')->name }}
+				{{ ($header->penyusun ? $header->penyusun->name : '-') }}
 			</td>
 		</tr>
 	</table>

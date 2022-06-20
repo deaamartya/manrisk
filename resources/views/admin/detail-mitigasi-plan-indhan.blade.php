@@ -24,26 +24,19 @@
           <div class="card-header">
             <div class="d-flex justify-content-between">
               <h5>ID HEADER # {{ $headers->id_riskh }}</h5>
-              <a href="{{ route('risk-officer.mitigasi-plan.print', $headers->id_riskh) }}" class="btn btn-sm btn-success" target="_blank">
-                <span class="flex-center">
-                  <i data-feather="printer" class="me-2"></i>Cetak
-                </span>
-              </a>
             </div>
           </div>
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <div class="col-md-4"><h6>Instansi</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{{ $headers->perusahaan->instansi }}</div>
                 <div class="col-md-4"><h6>Tahun Risiko</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ $headers->tahun }}</div>
                 <div class="col-md-4"><h6>Tanggal Dibuat</h6><hr class="hr-custom"></div>
                 <div class="col-md-12 mb-2">{{ date('d M Y', strtotime($headers->tanggal)) }}</div>
                 <div class="col-md-3"><h6>Penyusun</h6><hr class="hr-custom"></div>
-                <div class="col-md-12 mb-2">{{ ($headers->penyusun ? $headers->penyusun->name : '-') }}</div>
+                <div class="col-md-12 mb-2">{{ ($headers->penyusun ? $headers->penyusun : '-') }}</div>
                 <div class="col-md-3"><h6>Pemeriksa</h6><hr class="hr-custom"></div>
-                <div class="col-md-12">{{ ($headers->pemeriksa ? $headers->pemeriksa->name : '-') }}</div>
+                <div class="col-md-12">{{ ($headers->pemeriksa ? $headers->pemeriksa : '-') }}</div>
               </div>
               <div class="col-md-6">
                 <div class="col-md-5"><h6>Sasaran / Target</h6><hr class="hr-custom"></div>
@@ -171,15 +164,9 @@
                       </button>
                     </td>
                     <td>
-                      @if(auth()->user()->is_admin == 1)
-                        <a href="{{ url('admin/approval-mitigasi/'.$d->id_riskd) }}"><button class="btn btn-xs btn-info p-1 flex-center">
-                          <i data-feather="edit" class="small-icon" height="13"></i>
-                        </button></a>
-                      @else
-                        <button class="btn btn-xs btn-success p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
-                          <i data-feather="edit" class="small-icon" height="13"></i>
-                        </button>
-                      @endif
+                      <button class="btn btn-xs btn-success p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
+                        <i data-feather="edit" class="small-icon" height="13"></i>
+                      </button>
                     </td>
                   </tr>
                   @endforeach
@@ -192,7 +179,7 @@
     </div>
   </div>
 </div>
-@foreach($headers->risk_detail as $data)
+@foreach($headers->risk_detail() as $data)
 <div class="modal fade" id="edit-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -289,7 +276,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-              <form method="POST" action="{{ route('risk-officer.storeProgress') }}" enctype="multipart/form-data">
+              <form method="POST" action="{{ route('admin.storeProgress') }}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id_riskd" value="{{ $data->id_riskd }}"/>
                 <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}"/>
@@ -333,7 +320,6 @@
                 <th>Dibuat tanggal</th>
                 <th>Dokumen</th>
                 <th>Deskripsi</th>
-                <th>Status</th>
               </thead>
               <tbody>
               </tbody>
@@ -359,7 +345,7 @@
     var table;
     $(document).on('click', '.open-btn', function(){
       const id = $(this).attr('data-id')
-      const url = "{{ url('risk-officer/getProgress') }}";
+      const url = "{{ url('admin/getProgress') }}";
       table = $("#table-progress-"+id).DataTable({
         "destroy": true,
         "ajax": {

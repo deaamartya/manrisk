@@ -44,12 +44,12 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Instansi</th>
                     <th>Risiko</th>
                     <th>R Awal</th>
                     <th>Pemohon</th>
                     <th>Tipe Pengajuan</th>
                     <th>Alasan Pengajuan</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -57,7 +57,6 @@
                   @foreach($pengajuan as $d)
                   <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $d->pemohon->perusahaan->instansi }}</td>
                     <td>{{ $d->risk_detail->sumber_risiko->s_risiko }}</td>
                     <td>
                       @if($d->risk_detail->r_awal < 6)
@@ -79,6 +78,17 @@
                       @endif
                     </td>
                     <td>{{ $d->alasan }}</td>
+                    <td>
+                      @if($d->status === 1)
+                        @if($d->is_approved === 1)
+                          <div class="badge badge-success">Diterima</div>
+                        @elseif($d->is_approved === 0)
+                          <div class="badge badge-danger">Ditolak</div>
+                        @endif
+                      @elseif($d->status === 0)
+                        <div class="badge badge-danger">Admin belum menjawab pengajuan ini.</div>
+                      @endif
+                    </td>
                     <td class="column-action">
                       <button class="btn btn-xs btn-danger flex-center" data-id="{{ $d->id }}" data-bs-toggle="modal" data-bs-target="#detail-pengajuan-{{ $d->id }}">
                         <i data-feather="eye" class="small-icon" height="16"></i> Detail

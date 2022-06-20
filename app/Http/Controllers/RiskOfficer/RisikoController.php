@@ -64,8 +64,6 @@ class RisikoController extends Controller
     {
         $headers = RiskHeader::where('id_riskh', '=', $id)->first();
         $pilihan_s_risiko = SRisiko::where([
-            ['id_user', '=', Auth::user()->id_user],
-            ['tahun', '=', date('Y')],
             ['status_s_risiko', '=', 1],
             ['company_id', '=', Auth::user()->company_id],
         ])->orderBy('id_s_risiko')->get();
@@ -109,11 +107,11 @@ class RisikoController extends Controller
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
         $encrypted = url('document/verify/').'/'.Crypt::encryptString(
             "url='risk-officer/risiko/print/".$header->id_riskh."';".
-            "signed_by=".$header->pemeriksa.";".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
             "instansi=".$header->perusahaan->instansi.";".
             "tahun=".$header->tahun.";".
             "created_at=".$header->created_at.";".
-            "penyusun=".$header->penyusun.";"
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
         );
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');

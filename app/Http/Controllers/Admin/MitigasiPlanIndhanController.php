@@ -1,26 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\RiskOfficer;
+namespace App\Http\Controllers\Admin;
 
-use App\Abstracts\AbsMitigasiPlan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\RiskHeader;
-use Auth;
-use Illuminate\Support\Arr;
+use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
-use App\Models\MitigasiLogs;
+use MitigasiLogs;
 use Redirect;
-use Illuminate\Support\Facades\Crypt;
-use DNS2D;
-use Session;
-use App\Models\DefendidUser;
-use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
-use PDF;
-use App\Models\SRisiko;
-use App\Models\Pengukuran;
 
-class MitigasiPlanController extends Controller
+class MitigasiPlanIndhanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +18,25 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $headers = AbsMitigasiPlan::getAllData();
-        return view('risk-officer.mitigasi-plan', compact("headers"));
+        $headers = RiskHeaderIndhan::all();
+        $jml_risk = [];
+        foreach($headers as $h) {
+            $jml_risk[] = RiskDetail::where('tahun', '=', $h->tahun)
+                ->where('status_indhan', '=', 1)
+                ->count();
+        }
+        return view('admin.mitigasi-plan-indhan', compact('headers', 'jml_risk'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
@@ -41,9 +47,19 @@ class MitigasiPlanController extends Controller
      */
     public function show($id)
     {
-        $headers = AbsMitigasiPlan::getDataByIdRiskh($id);
-        // dd($headers);
-        return view('risk-officer.mitigasi-detail', compact("headers"));
+        $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
+        return view('admin.detail-mitigasi-plan-indhan', compact("headers"));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -55,10 +71,18 @@ class MitigasiPlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $query = AbsMitigasiPlan::updateRiskDetail($request, $id);
-        $id_header = $query['id_header'];
+        //
+    }
 
-        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 
     public function getProgressData(Request $request) {
@@ -69,20 +93,13 @@ class MitigasiPlanController extends Controller
             $data->data = [];
             $count = 0;
             foreach($logs as $c){
-                $status = '';
-                if ($c->is_approved == 1) {
-                    $status = '<div class="badge badge-success">Disetujui</div>';
-                } else {
-                    $status = '<div class="badge badge-danger">Belum Disetujui</div>';
-                }
                 if ($c->dokumen == null) {
                     $isi = [
                         $count + 1,
                         $c->realisasi,
                         date('d M Y', strtotime($c->created_at)),
                         '',
-                        $c->description ? $c->description : '-',
-                        $status
+                        $c->description ? $c->description : '-'
                     ];
                 } else {
                     $path = asset('document/mitigasi-progress/'. $c->dokumen);
@@ -91,8 +108,7 @@ class MitigasiPlanController extends Controller
                         $c->realisasi,
                         date('d M Y', strtotime($c->created_at)),
                         '<a href="'. $path. '"  target="_blank" class="btn btn-xs btn-info p-1">Lihat Dokumen</a>',
-                        $c->description ? $c->description : '-',
-                        $status
+                        $c->description ? $c->description : '-'
                     ];
                 }
                 array_push($data->data, $isi);
@@ -119,22 +135,5 @@ class MitigasiPlanController extends Controller
             'updated_at' => now(),
         ]);
         return Redirect::back()->with(['success-swal' => 'Progress Mitigasi berhasil ditambahkan.']);
-    }
-
-    public function print($id) {
-        $header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
-            "url='risk-officer/mitigasi-plan/print/".$header->id_riskh."';".
-            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
-            "instansi=".$header->perusahaan->instansi.";".
-            "tahun=".$header->tahun.";".
-            "created_at=".$header->created_at.";".
-            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
-        );
-        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
-        $pdf = PDF::loadView('risk-officer.mitigasi-plan-pdf', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
-        Session::forget('is_bypass');
-        return $pdf->stream('Hasil Mitigasi '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 }
