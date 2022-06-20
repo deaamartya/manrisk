@@ -76,7 +76,7 @@ class RiskRegisterKorporasiController extends Controller
         return $pdf->stream('Laporan Manajemen Risiko '.$header->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 
-    public function approval($id)
+    public function approve($id)
     {
         $risk_header = RiskHeader::where('id_riskh', '=', $id)->first();
         $risk_header->update([
@@ -85,6 +85,7 @@ class RiskRegisterKorporasiController extends Controller
         // dd($risk_header);
         return Redirect::back()->with(['success-swal' => 'Risk Header berhasil disetujui.']);
     }
+
 
     /**
      * Display the specified resource.

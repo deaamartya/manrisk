@@ -77,7 +77,11 @@
                     <td>{!! nl2br($d->target) !!}</td>
                     <td>{{ ($d->penyusun ? $d->penyusun->name : '-') }}</td>
                     <td>{{ ($d->pemeriksa ? $d->pemeriksa->name : '-') }}</td>
-                    <td>{{ count($d->risk_detail) }}</td>
+                    <td>
+                      <button class="btn btn-pill btn-success">
+                        {{ count($d->risk_detail) }}
+                      </button>
+                    </td>
                     <td>
                       <a href="{{ route('admin.detail-risk-register', $d->id_riskh) }}" class="btn btn-sm btn-primary d-flex align-items-center">
                         <i data-feather="eye" class="me-2 small-icon"></i> Detail
@@ -86,12 +90,15 @@
                         <i data-feather="printer" class="me-2 small-icon"></i> Print
                       </a>
                       @if($d->status_h == 1 && $d->status_h_indhan == 0)
-                      <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
+                      <!-- <form action="{{ route('admin.approval-risk-register', $d->id_riskh) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-warning d-flex align-items-center">
                           <i data-feather="check-circle" class="me-2 small-icon"></i> Approval
                         </button>
-                      </form>
+                      </form> -->
+                        <button class="btn btn-sm btn-warning d-flex align-items-center" data-bs-target="#approval-{{ $d->id_riskh }}" data-bs-toggle="modal">
+                          <i data-feather="check-square" class="me-2 small-icon"></i> Approval
+                        </button>
                       @endif
                     </td>
                   </tr>
@@ -106,6 +113,36 @@
     </div>
   </div>
 </div>
+
+@foreach($data_headers as $d)
+<div class="modal fade" id="approval-{{ $d->id_riskh }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Approval Risk Header</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="GET" action="{{ route('admin.risk-register-korporasi.approve', $d->id_riskh) }}">
+        <div class="modal-body">
+          @csrf
+          Modul :
+          <br>
+          {!! nl2br($d->target) !!}
+          <br><br>
+          Dengan data :
+          <br>
+          <div class="badge badge-success">{{ count($d->risk_detail) }} Risiko</div>
+          <div class="badge badge-danger">{{ $d->migrateCount($d->id_riskh) }} Mitigasi</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+          <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+@endforeach
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>

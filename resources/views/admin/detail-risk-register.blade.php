@@ -183,7 +183,11 @@
                     </td>
                     <td>{{ $d->peluang }}</td>
                     <td>{{ $d->tindak_lanjut }}</td>
-                    <td>{{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}</td>
+                    <td>
+                      @if($d->jadwal_mitigasi != null)
+                        {{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}
+                      @endif
+                    </td>
                     <td>{{ $d->pic }}</td>
                     <td>{{ $d->dokumen }}</td>
                     <td>{{ $d->l_akhir }}</td>

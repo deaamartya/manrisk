@@ -62,6 +62,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::post('risk-detail-mitigation/{id}', [RiskRegisterKorporasiController::class, 'mitigation'])->name('mitigation');
   Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterKorporasiController::class, 'notMitigation'])->name('not-mitigation');
   Route::delete('risk-detail-delete/{id}', [RiskRegisterKorporasiController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
+  Route::get('risk-register-korporasi/approve/{id}', [RiskRegisterKorporasiController::class, 'approve'])->name('risk-register-korporasi.approve');
 
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
