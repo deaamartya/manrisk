@@ -16,43 +16,78 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->count();
-        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->limit(1)->get();
-        // dd(count($data_sr));
+        // $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->count();
+        $jml_risk = 0;
+        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
+        // dd($data_sr);
+        $arr_pengukuran = [];
         if(count($data_sr) > 0){
             $sr_exists = true;
             foreach($data_sr as $d){
+                // $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                //             ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
+                //             ->get();
                 $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                            ->where('pengukuran.id_s_risiko', $d->id_s_risiko)->get();
-                // dd($pengukuran);
+                            ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
+                            ->groupBy('tahun', 'id_pengukur')
+                            ->get();
+                $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                            ->groupBy('tahun', 'id_pengukur')
+                            ->count();
+                // dd($jml_risk);  
+                if(count($pengukuran) > 0){
+                    foreach($pengukuran as $j=>$pk){
+                        $arr_pengukuran[$j] = $pk;
+                    }
+                }
+                // dd($arr_pengukuran);
                 $pengukur = DefendidPengukur::where('id_user', Auth::user()->id_user)->get();
 
                 $arr_pengukur = [];
+                $tahun = SRisiko::select('tahun')->distinct()->get();
+                // dd($tahun);
                 foreach($pengukur as $i=>$p){
-                    $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
-                    ->where('pengukuran.id_pengukur', $p->id_pengukur)
-                    ->get();  
+                    foreach($tahun as $j=>$t){
+                        $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                            ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                            ->where('tahun', $t->tahun)
+                            ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
+                            ->where('pengukuran.id_pengukur', $p->id_pengukur)
+                            ->get();  
 
-                    // dd(count($pengukur_risk));
-                    if(count($pengukur_risk) == 0){
-                            $arr_pengukur[] = $p;
-                    }
-                        
+                        $jml_risk_pengukur = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                                ->where('tahun', $t->tahun)
+                                ->where('pengukuran.id_pengukur', $p->id_pengukur)
+                                ->count();
+                        // dd($jml_risk_pengukur);
+                        // dd(count($pengukur_risk));
+                        if(count($pengukur_risk) == 0){
+                            $arr_pengukur = 
+                            [
+                                'id_pengukur' => $p->id_pengukur,
+                                'jabatan' => $p->jabatan,
+                                'tahun' => $t->tahun,
+                            ];
+                            
+                        }
                 }
-                // dd(count($arr_pengukur));
+                    
+                        
             }
-
+                dd(count($arr_pengukur));
+            }
+            // dd($arr_pengukuran);
+            // dd($jml_risk); 
             $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                 ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
                 ->join('defendid_user', 'defendid_pengukur.company_id','defendid_user.company_id')
-                ->where('defendid_user.id_user', Auth::user()->id_user)
+                // ->where('defendid_user.id_user', Auth::user()->id_user)
                 ->where('s_risiko.status_s_risiko', 1)
                 ->get();
                 // dd(count($sumber_risiko));
-                return view('risk-officer.pengukuran-risiko', compact('jml_risk','data_sr','pengukuran','arr_pengukur','sumber_risiko', 'sr_exists'));
+                return view('risk-officer.pengukuran-risiko', compact('jml_risk', 'jml_risk_pengukur','data_sr','arr_pengukuran','arr_pengukur','sumber_risiko', 'sr_exists'));
         }else{
             $sr_exists = false;
             return view('risk-officer.pengukuran-risiko', compact('sr_exists'));

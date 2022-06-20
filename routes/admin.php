@@ -64,6 +64,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
 
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
+  Route::post('detail-risk-register-indhan/store', [RiskRegisterIndhanController::class, 'storeDetail'])->name('risk-detail.store');
   Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');
   Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register-indhan');
   Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register-indhan');

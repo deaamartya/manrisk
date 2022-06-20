@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\RiskHeader;
 use App\Models\DefendidUser;
+use App\Models\PengukuranIndhan;
 use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\SRisiko;
@@ -17,6 +18,7 @@ use Redirect;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
+
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -99,8 +101,7 @@ class RiskRegisterIndhanController extends Controller
     {
         $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
         // dd($headers);
-        $detail_risk = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
+        $detail_risk = RiskHeader::join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
                 ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )     
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
@@ -108,14 +109,35 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->get();
-        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
+        
+        $detail_risk_indhan = RiskHeaderIndhan::join('risk_detail', 'risk_header_indhan.id_riskh', 'risk_detail.id_riskh' )     
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
-                ->where('risk_header.tahun', '=', $headers->tahun)
-                ->count();
+                ->where('risk_header_indhan.tahun', '=', $headers->tahun)
+                ->get();
+        // $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        // ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
+        //         ->where('risk_detail.status_indhan', '=', 1)
+        //         ->whereNull('risk_detail.deleted_at')
+        //         ->where('risk_header.tahun', '=', $headers->tahun)
+        //         ->count();
             // dd($detail_risk);
-        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
+        
+        $pilihan_s_risiko = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where([
+                ['status_indhan', '=', 1],
+            ])->orderBy('s_risiko.id_s_risiko')->get();
+
+        return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk', 'pilihan_s_risiko', 'detail_risk_indhan'));
+    }
+
+    public function storeDetail(Request $request)
+    {
+        $data = $request->except('_token');
+        $data['status_mitigasi'] = ($request->r_awal >= 12) ? 1 : 0;
+        RiskDetail::insert($data);
+        return Redirect::back()->with(['success-swal' => 'Risk INDHAN berhasil dibuat!']);
     }
 
     public function uploadLampiran(Request $request) {

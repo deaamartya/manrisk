@@ -73,7 +73,11 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex">
+            <button class="btn btn-lg btn-primary d-flex btn-add mr-4" style="margin-right: 10px;" data-bs-toggle="modal" data-bs-target="#create-risk">
+              <i data-feather="plus" class="me-2"></i>
+              Tambah Risiko INDHAN
+            </button>
             <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button>
           </div>
           <div class="card-body">
@@ -143,6 +147,44 @@
                   </tr>
                   @endforeach
                 @endif
+
+                @if($detail_risk_indhan != null )
+                  @foreach($detail_risk_indhan as $d2)
+                  <tr>
+                    <td>{{ $d2->id_risk .'-'. $d2->no_k }}</td>
+                    <td>{{ $d2->instansi }}</td>
+                    <td>{{ $d2->konteks }}</td>
+                    <td>{{ $d2->s_risiko }}</td>
+                    <td>{{ $d2->sebab }}</td>
+                    <td>{{ number_format($d2->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->c_awal, 2) + 0 }}</td>
+                    <td>
+                      @if($d2->r_awal < 6)
+                      <span class="badge badge-green me-2">
+                      @elseif($d2->r_awal < 12)
+                      <span class="badge badge-warning me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($d2->r_awal, 2) + 0 }}
+                      </span>
+                    </td>
+                    <td>
+                        @if($d2->r_awal >= 12)
+                          <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                            Ajukan Mitigasi
+                          </button> -->
+                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                        @elseif($d2->r_awal < 12)
+                          <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                            Tidak Mitigasi
+                          </button> -->
+                          <span class="badge badge-success">Aman</span>
+                        @endif
+                    </td>
+                  </tr>
+                  @endforeach
+                @endif
                 </tbody>
               </table>
             </div>
@@ -182,6 +224,39 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="insert-lampiran" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Input Lampiran Risiko</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" action="{{ route('admin.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
+          @csrf
+          <input type="hidden" name="id" value="{{ $headers->id_riskh }}">
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label">Lampiran</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="file" name="lampiran" required>
+                        </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Simpan</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -200,6 +275,117 @@
           <button class="btn btn-success" type="submit">Simpan</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="create-risk" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Risk INDHAN</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form action="{{ route('admin.risk-detail.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            <input type="hidden" name="tahun" value="{{ $headers->tahun }}">
+            <input type="hidden" name="status_indhan" value="1"> 
+            <input type="hidden" name="status_mitigasi" value="0">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Identifikasi</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Risiko</label>
+                    <select class="select2" name="id_s_risiko" required id="select-risiko">
+                      @foreach($pilihan_s_risiko as $p)
+                      <option value="{{ $p->id_s_risiko }}">{{ $p->tahun }} - {{ $p->s_risiko }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PPKH</label>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Indikator</label>
+                    <textarea class="form-control" name="indikator" placeholder="Masukkan Indikator"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Sebab</label>
+                    <textarea class="form-control" name="sebab" placeholder="Masukkan sebab"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko</label>
+                    <textarea class="form-control" name="dampak" placeholder="Masukkan dampak"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>UC / C</label>
+                    <select class="form-control" name="uc">
+                      <option value="UC">UC</option>
+                      <option value="C">C</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Pengendalian dan Penilaian Awal</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Pengendalian</label>
+                    <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>L</label>
+                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>C</label>
+                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>R</label>
+                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly >
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-5">
+                <div class="col-md-6">
+                  <h6>Peluang</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Peluang</label>
+                    <textarea class="form-control" name="peluang" placeholder="Masukkan peluang"></textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Penanganan</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Rencana Tindak Lanjut</label>
+                    <textarea class="form-control" name="tindak_lanjut"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Jadwal Pelaksanaan</label>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dokumen Terkait</label>
+                    <textarea class="form-control" name="dokumen"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" type="submit">Simpan</button>
+            </div>
+          </form>
     </div>
   </div>
 </div>

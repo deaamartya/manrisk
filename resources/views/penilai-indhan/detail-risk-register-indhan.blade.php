@@ -120,12 +120,12 @@
                           <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Tidak Perlu Mitigasi
                           </button> -->
-                          <span class="badge badge-success">Tidak Perlu Mitigasi</span>
+                          <span class="badge badge-success">Ajukan Mitigasi</span>
                         @elseif($d->r_awal < 12)
                           <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Ajukan Mitigasi
                           </button> -->
-                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                          <span class="badge badge-primary">Tidak Perlu Mitigasi</span>
                         @endif
                       @endif
                     </td>
