@@ -87,16 +87,11 @@ class RiskHeader extends Model
 			->join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
-            ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
+			->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
 			->where('d.id_riskh','=', $this->id_riskh)
 			->whereNull('d.deleted_at')
-			->where(function($q) use ($pengajuan) {
-				$q->where('d.r_awal','>=', 12)
-					->whereNotIn('d.id_riskd', $pengajuan);
-				$q->orWhere(function($q) use ($pengajuan) {
-					$q->whereIn('d.id_riskd', $pengajuan);
-				});
-			})
+			->whereNull('risk_header.deleted_at')
+			->where('d.status_mitigasi','=', 1)
 			->get();
 		return $details;
 	}
@@ -105,9 +100,9 @@ class RiskHeader extends Model
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.id_riskh', '=', $id)
-			->where('d.r_awal','>=', 12)
-			->whereOr('status_mitigasi', '=', 1)
+			->where('status_mitigasi', '=', 1)
 			->whereNull('d.deleted_at')
+			->whereNull('risk_header.deleted_at')
 			->count('d.id_riskd');
 		return $jml;
 	}
@@ -115,9 +110,13 @@ class RiskHeader extends Model
 	public function doneMigrateCount($id)
 	{
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->join('mitigasi_logs as l', 'l.id_riskd', '=', 'd.id_riskd')
 			->where('d.id_riskh', '=', $id)
 			->where('status_mitigasi', '=', 1)
+			->where('l.realisasi', '=', 100)
+			->where('l.is_approved', '=', 1)
 			->whereNull('d.deleted_at')
+			->whereNull('risk_header.deleted_at')
 			->count('d.id_riskd');
 		return $jml;
 	}

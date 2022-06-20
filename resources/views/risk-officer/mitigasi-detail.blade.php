@@ -24,7 +24,7 @@
           <div class="card-header">
             <div class="d-flex justify-content-between">
               <h5>ID HEADER # {{ $headers->id_riskh }}</h5>
-              <a href="{{ route('risk-officer.mitigasi-plan.print', $headers->id_riskh) }}" class="btn btn-sm btn-success">
+              <a href="{{ route('risk-officer.mitigasi-plan.print', $headers->id_riskh) }}" class="btn btn-sm btn-success" target="_blank">
                 <span class="flex-center">
                   <i data-feather="printer" class="me-2"></i>Cetak
                 </span>
@@ -176,7 +176,7 @@
                           <i data-feather="edit" class="small-icon" height="13"></i>
                         </button></a>
                       @else
-                        <button class="btn btn-xs btn-info p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
+                        <button class="btn btn-xs btn-success p-1 flex-center" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-mitigasi-{{ $d->id_riskd }}">
                           <i data-feather="edit" class="small-icon" height="13"></i>
                         </button>
                       @endif
@@ -273,7 +273,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit">Simpan</button>
+            <button class="btn btn-success" type="submit">Simpan</button>
           </div>
         </form>
     </div>

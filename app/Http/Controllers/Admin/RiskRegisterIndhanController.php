@@ -107,12 +107,14 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
+                ->whereNull('risk_header.deleted_at')
                 ->get();
         $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
         ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
+                ->whereNull('risk_header.deleted_at')
                 ->count();
             // dd($detail_risk);
         return view('admin.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
@@ -139,10 +141,18 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
+                ->whereNull('risk_header.deleted_at')
                 ->get();
             // dd($detail_risk);
         // $user = Auth::user();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString("url='admin/print-risk-register-indhan/".$header->id_riskh."';signed_by=[".$header->pemeriksa."]");
+        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
+            "url='admin/print-risk-register-indhan/".$header->id_riskh."';".
+            "signed_by=".$header->pemeriksa.";".
+            "instansi=".'Industri Pertahanan'.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".$header->penyusun.";"
+        );
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');

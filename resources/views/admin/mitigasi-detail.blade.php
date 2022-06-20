@@ -24,7 +24,7 @@
           <div class="card-header">
             <div class="d-flex justify-content-between">
               <h5>ID HEADER # {{ $headers->id_riskh }}</h5>
-              <a href="{{ route('admin.mitigasi-plan.print', $headers->id_riskh) }}" class="btn btn-sm btn-success">
+              <a href="{{ route('admin.mitigasi-plan.print', $headers->id_riskh) }}" class="btn btn-sm btn-success" target="_blank">
                 <span class="flex-center">
                   <i data-feather="printer" class="me-2"></i>Cetak
                 </span>
