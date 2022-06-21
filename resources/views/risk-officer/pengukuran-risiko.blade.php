@@ -32,6 +32,7 @@
                                 </tr>
                             </thead>
                         <tbody>
+                            {{--
                             @if(count($arr_pengukuran) > 0)
                                 @foreach($arr_pengukuran as $p)
                                     <tr>
@@ -89,6 +90,82 @@
                                                             for ($j=0; $j < sizeof($l_tahun); $j++) {  ?>
                                                                 <option value=" {{ $l_tahun[$j]  }}"> 
                                                                     {{ $l_tahun[$j] }} </option>  
+                                                            <?php }
+                                                            ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                                                    <button class="btn btn-primary" type="submit">Simpan</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                            --}}
+
+
+                            @if(count($pengukuran_1) > 0)
+                                @foreach($pengukuran_1 as $p)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $p->nama_responden }}</td>
+                                        <td>{{ date( "d/m/Y H:i:s", strtotime($p->tgl_penilaian)) }}</td>
+                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $jml_risk_pengukuran1[$loop->index] }}</td>
+                                        <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            @if(count($pengukuran_2) > 0)
+                                @foreach($pengukuran_2 as $p)
+                                    <tr>
+                                        <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
+                                        <td>{{ $p->jabatan }}</td>
+                                        <td></td>
+                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $jml_risk_pengukuran2[$loop->index] }}</td>
+                                        <td class="text-center">
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                        </td>
+                                    </tr>
+
+                                    <div class="modal fade" id="insert_responden{{ count($pengukuran_1) + $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title">Input Data Responden</h5>
+                                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
+                                                    @csrf
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
+                                                        <div class='col-md-9 col-sm-9 col-xs-12'>
+                                                        <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ $p->jabatan}}">
+                                                        <input type="hidden" name="id_responden" required="required" value="{{ $p->id_pengukur }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-md-3 col-sm-3 col-xs-12">Penilaian Tahun</label>
+                                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                                        <?php
+                                                            $l_tahun = array();
+                                                            $today = date("Y");
+                                                            $today_plus = date('Y', strtotime('+1 years'));
+                                                            array_push($l_tahun, $today);
+                                                            array_push($l_tahun, $today_plus);
+                                                            ?>
+                                                            <select class="form-control pull-left" name="tahun">
+                                                            <?php
+                                                            for ($j=0; $j < sizeof($l_tahun); $j++) {  ?>
+                                                                <option value=" {{ $l_tahun[$j]  }}">
+                                                                    {{ $l_tahun[$j] }} </option>
                                                             <?php }
                                                             ?>
                                                             </select>
