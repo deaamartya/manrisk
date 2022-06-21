@@ -23,6 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
 use Carbon\Carbon;
 use DB;
+use App\Models\Pengukuran;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -141,6 +142,7 @@ class RiskRegisterIndhanController extends Controller
     public function storeDetail(Request $request)
     {
         $data = $request->except('_token');
+        $data['company_id'] = 6;
         $data['status_mitigasi'] = ($request->r_awal >= 12) ? 1 : 0;
         RiskDetail::insert($data);
         return Redirect::back()->with(['success-swal' => 'Risk INDHAN berhasil dibuat!']);
@@ -238,5 +240,12 @@ class RiskRegisterIndhanController extends Controller
         DB::commit();
 
         return back()->with(['success-swal' => 'Risk Detail berhasil diimport!']);
+    }
+
+    public function getNilai(Request $request) {
+        $nilai_l = PengukuranIndhan::where('id_s_risiko', '=', $request->id)->avg('nilai_L');
+        $nilai_c = PengukuranIndhan::where('id_s_risiko', '=', $request->id)->avg('nilai_C');
+
+        return response()->json(['success' => true, 'nilai_l' => $nilai_l, "nilai_c" => $nilai_c]);
     }
 }

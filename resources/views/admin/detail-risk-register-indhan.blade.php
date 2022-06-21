@@ -399,6 +399,20 @@
     $("#table-risiko").DataTable({
       'order': [ 7, 'desc' ]
     });
+    $("#select-risiko").on('change', function(){
+      $.post(
+        "{{ url('admin/fetchNilaiRisiko') }}", {
+          _token: "{{ csrf_token() }}",
+          id: $(this).val()
+        }, function(result) {
+          console.log(result)
+          $("#l_awal").val(parseFloat(result.nilai_l).toFixed(2))
+          $("#c_awal").val(parseFloat(result.nilai_c).toFixed(2))
+          var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
+          $('#r_awal').val(mul.toFixed(2));
+        }
+      )
+    });
   })
   function cal() {
     var lawal = $('#l_awal').val();
