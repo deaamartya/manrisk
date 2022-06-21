@@ -116,7 +116,7 @@
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date( "d/m/Y H:i:s", strtotime($p->tgl_penilaian)) }}</td>
                                         <td>{{ $p->tahun}}</td>
-                                        <td class="text-center">{{ $jml_risk_pengukuran1[$loop->index] }}</td>
+                                        <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
                                 @endforeach
@@ -125,10 +125,10 @@
                                 @foreach($pengukuran_2 as $p)
                                     <tr>
                                         <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
-                                        <td>{{ $p->jabatan }}</td>
+                                        <td>{{ Auth::user()->defendid_pengukur->jabatan }}</td>
                                         <td></td>
                                         <td>{{ $p->tahun}}</td>
-                                        <td class="text-center">{{ $jml_risk_pengukuran2[$loop->index] }}</td>
+                                        <td class="text-center">{{ $p->jml_risk}}</td>
                                         <td class="text-center">
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
                                         </td>
@@ -147,7 +147,7 @@
                                                     <div class="row mb-3">
                                                         <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
                                                         <div class='col-md-9 col-sm-9 col-xs-12'>
-                                                        <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ $p->jabatan}}">
+                                                        <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ Auth::user()->defendid_pengukur->jabatan }}">
                                                         <input type="hidden" name="id_responden" required="required" value="{{ $p->id_pengukur }}">
                                                         </div>
                                                     </div>

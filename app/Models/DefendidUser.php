@@ -70,4 +70,7 @@ class DefendidUser extends Authenticatable
 		return $this->belongsTo(Perusahaan::class, 'company_id');
 	}
 	
+	public function defendid_pengukur(){
+		return $this->hasOne(DefendidPengukur::class, 'id_user');
+	}
 }
