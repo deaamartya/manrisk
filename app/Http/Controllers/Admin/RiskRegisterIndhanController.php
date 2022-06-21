@@ -18,7 +18,11 @@ use Redirect;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
-
+use App\Imports\RiskDetailImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\HeadingRowImport;
+use Carbon\Carbon;
+use DB;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -111,12 +115,13 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_header.deleted_at')
                 ->get();
         
-        $detail_risk_indhan = RiskHeaderIndhan::join('risk_detail', 'risk_header_indhan.id_riskh', 'risk_detail.id_riskh' )     
-                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+        $detail_risk_indhan = RiskDetail::join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->where('risk_detail.status_indhan', '=', 1)
+                ->where('risk_detail.company_id', '=', 6)
                 ->whereNull('risk_detail.deleted_at')
-                ->where('risk_header_indhan.tahun', '=', $headers->tahun)
+                ->where('risk_detail.tahun', '=', $headers->tahun)
                 ->get();
         // $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
         // ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
@@ -191,4 +196,47 @@ class RiskRegisterIndhanController extends Controller
     //     // dd($risk_header);
     //     return Redirect::back()->with(['success-swal' => 'Risk Header INDHAN berhasil disetujui.']);
     // }
+
+    public function import(Request $request)
+    {
+        $params = [];
+        $risk_detail = Excel::toArray(new RiskDetailImport, $request->file('file'));
+        for ($i=0; $i < count($risk_detail[0]); $i++) {
+            $params[] = [
+                'id_riskh' => null,
+                'company_id' => 6,
+                'tahun' => $risk_detail[0][$i]['tahun'],
+                'id_s_risiko' => $risk_detail[0][$i]['id_s_risiko'],
+                'ppkh' => $risk_detail[0][$i]['ppkh'],
+                'indikator' => $risk_detail[0][$i]['indikator'],
+                'sebab' => $risk_detail[0][$i]['sebab'],
+                'dampak' => $risk_detail[0][$i]['dampak'],
+                'uc' => $risk_detail[0][$i]['uc'],
+                'pengendalian' => $risk_detail[0][$i]['pengendalian'],
+                'l_awal' => $risk_detail[0][$i]['l_awal'],
+                'c_awal' => $risk_detail[0][$i]['c_awal'],
+                'r_awal' => $risk_detail[0][$i]['r_awal'],
+                'peluang' => $risk_detail[0][$i]['peluang'],
+                'tindak_lanjut' => $risk_detail[0][$i]['tindak_lanjut'],
+                'jadwal' => $risk_detail[0][$i]['jadwal'],
+                'pic' => $risk_detail[0][$i]['pic'],
+                'mitigasi' => $risk_detail[0][$i]['mitigasi'],
+                'jadwal_mitigasi' => $risk_detail[0][$i]['jadwal_mitigasi'],
+                'realisasi' => $risk_detail[0][$i]['realisasi'],
+                'keterangan' => $risk_detail[0][$i]['keterangan'],
+                'l_akhir' => $risk_detail[0][$i]['l_akhir'],
+                'c_akhir' => $risk_detail[0][$i]['c_akhir'],
+                'r_akhir' => $risk_detail[0][$i]['r_akhir'],
+                'status_indhan' => 1,
+                'status_mitigasi' => ($risk_detail[0][$i]['r_awal'] >= 12 ? 1 : 0),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+        }
+        DB::beginTransaction();
+        RiskDetail::insert($params);
+        DB::commit();
+
+        return back()->with(['success-swal' => 'Risk Detail berhasil diimport!']);
+    }
 }
