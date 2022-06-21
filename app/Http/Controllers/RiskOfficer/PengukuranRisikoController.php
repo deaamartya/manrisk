@@ -118,8 +118,6 @@ class PengukuranRisikoController extends Controller
                         ->get();
             // dd($pengukuran_1);
             
-
-            // dd($jml_risk_pengukuran1);
             $pengukuran_2 = Srisiko::leftJoin('pengukuran', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                             ->leftJoin('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
                             ->whereNotIn('s_risiko.id_s_risiko', $id_s_risiko_from_pengukuran)
@@ -127,19 +125,6 @@ class PengukuranRisikoController extends Controller
                             ->selectRaw('s_risiko.*, COUNT(s_risiko.id_s_risiko) as jml_risk, defendid_pengukur.*, pengukuran.nama_responden, pengukuran.tgl_penilaian, pengukuran.tahun_p')
                             ->get();
             // dd($pengukuran_2);
-
-            $jml_risk_pengukuran2  = [];
-            foreach($data_sr as $p2) {
-                $jml_risk_pengukuran2[] = Srisiko::leftJoin('pengukuran', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                ->leftJoin('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                ->where('tahun', '=', $p2->tahun)
-                ->where('defendid_pengukur.id_user', Auth::user()->id_user)
-                ->whereIn('pengukuran.id_s_risiko', $id_s_risiko)
-                ->groupBy('defendid_pengukur.id_pengukur', 's_risiko.tahun')
-                ->count();
-            }
-                
-            // dd($jml_risk_pengukuran2);
 
             $pengukuran = $pengukuran_1->merge($pengukuran_2);
 

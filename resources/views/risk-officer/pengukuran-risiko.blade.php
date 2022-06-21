@@ -130,10 +130,18 @@
                                         <td>{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk}}</td>
                                         <td class="text-center">
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button> -->
+                                            <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
+                                            @csrf
+                                                <input type="hidden" name="nama_responden" value="{{ Auth::user()->defendid_pengukur->jabatan }}">
+                                                <input type="hidden" name="id_responden" value="{{ Auth::user()->defendid_pengukur->id_pengukur }}">
+                                                <input type="hidden" name="tahun" value="{{ $p->tahun }}">
+                                                <button type="submit" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            </form>
                                         </td>
                                     </tr>
 
+                                    {{--
                                     <div class="modal fade" id="insert_responden{{ count($pengukuran_1) + $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -180,6 +188,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    --}}
                                 @endforeach
                             @endif
                             </tbody>
