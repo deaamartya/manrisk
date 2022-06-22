@@ -125,11 +125,12 @@
                                 @foreach($pengukuran_2 as $p)
                                     <tr>
                                         <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
-                                        <td>{{ Auth::user()->defendid_pengukur->jabatan }}</td>
+                                        <td>{{ $p->jabatan }}</td>
                                         <td></td>
                                         <td>{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk}}</td>
                                         <td class="text-center">
+                                            @if ($p->id_pengukur === Auth::user()->defendid_pengukur->id_pengukur)
                                             <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button> -->
                                             <form method="POST" action="{{route('risk-officer.penilaian-risiko') }}">
                                             @csrf
@@ -138,6 +139,7 @@
                                                 <input type="hidden" name="tahun" value="{{ $p->tahun }}">
                                                 <button type="submit" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
 
