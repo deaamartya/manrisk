@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use App\Models\Risk;
 use Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class SumberRisikoIndhanController extends Controller
 {
@@ -53,6 +54,10 @@ class SumberRisikoIndhanController extends Controller
             'catatan' => $request->catatan,
         ]);
 
-        return redirect()->route('admin.sumber-risiko-indhan')->with('updated-alert', 'Status verifikasi sumber risiko berhasil diubah.');
+        // return redirect()->route('admin.sumber-risiko-indhan')->with('updated-alert', 'Status verifikasi sumber risiko berhasil diubah.');
+
+        return Redirect::back()->with('updated-alert', 'Status verifikasi sumber risiko berhasil diubah.');
+
+        
     }
 }

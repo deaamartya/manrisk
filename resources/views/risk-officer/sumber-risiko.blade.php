@@ -82,8 +82,8 @@
                     <div class='col-md-9 col-sm-9 col-xs-12'>
                         <select class="form-select" name="tahun">
                         <?php
-                            $tahun = "2019";
-                            $bts_tahun = date("Y") + 4;
+                            $tahun = date("Y");
+                            $bts_tahun = $tahun + 4;
                             for ($i=$tahun; $i <= $bts_tahun ; $i++) { 
                             echo "<option value=".$i.">".$i."</option>";
                             }

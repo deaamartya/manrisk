@@ -16,8 +16,8 @@
     <div class="col-sm-12">
         <div class="card">
         <div class="card-header">
-            <form method="POST" action="{{route('admin.search-risiko') }}">
-                @csrf
+            <form method="GET" action="{{route('admin.search-risiko') }}">
+                {{--@csrf--}}
                 <div class="row">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Pilih Perusahaan<span class="required"></span></label>
                     <div class="col-md-5 col-sm-5 col-xs-12 select2-normal">
