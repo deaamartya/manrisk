@@ -5,6 +5,7 @@ namespace App\Http\Controllers\RiskOwner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Abstracts\AbsPengukuran;
 use App\Models\DefendidPengukur;
 use App\Models\Pengukuran;
 use App\Models\SRisiko;
@@ -16,46 +17,11 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        $jml_risk = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->count();
-        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->limit(1)->get();
-        // dd(count($data_sr));
-        if(count($data_sr) > 0){
-            $sr_exists = true;
-            foreach($data_sr as $d){
-                $pengukuran = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                            ->where('pengukuran.id_s_risiko', $d->id_s_risiko)->get();
-                // dd($pengukuran);
-                $pengukur = DefendidPengukur::where('id_user', Auth::user()->id_user)->get();
-
-                $arr_pengukur = [];
-                foreach($pengukur as $i=>$p){
-                    $pengukur_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->where('pengukuran.id_s_risiko', $d->id_s_risiko)
-                    ->where('pengukuran.id_pengukur', $p->id_pengukur)
-                    ->get();  
-
-                    // dd(count($pengukur_risk));
-                    if(count($pengukur_risk) == 0){
-                            $arr_pengukur[] = $p;
-                    }
-                        
-                }
-                // dd(count($arr_pengukur));
-            }
-
-            $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
-                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                ->join('defendid_user', 'defendid_pengukur.company_id','defendid_user.company_id')
-                ->where('defendid_user.id_user', Auth::user()->id_user)
-                ->where('s_risiko.status_s_risiko', 1)
-                ->get();
-                // dd(count($sumber_risiko));
-                return view('risk-owner.pengukuran-risiko', compact('jml_risk','data_sr','pengukuran','arr_pengukur','sumber_risiko', 'sr_exists'));
-        }else{
-            $sr_exists = false;
-            return view('risk-owner.pengukuran-risiko', compact('sr_exists'));
+        $results = AbsPengukuran::index('penilai');
+        if($results['sr_exists']){
+            return view('risk-owner.pengukuran-risiko', $results);
+        } else {
+            return view('risk-owner.pengukuran-risiko', $results);
         }
     }
 
@@ -78,7 +44,7 @@ class PengukuranRisikoController extends Controller
         ->get();
 
         return view('risk-owner.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
-    
+
     }
 
     public function penilaianRisikoStore(Request $request) {
@@ -92,8 +58,8 @@ class PengukuranRisikoController extends Controller
         ]);
 
         $id_s_risiko = $request->id_s_risk;
-        
-        for ($i=0; $i < count($id_s_risiko); $i++) { 
+
+        for ($i=0; $i < count($id_s_risiko); $i++) {
             Pengukuran::insert([
                 'tahun_p' => $request->tahun,
                 'id_s_risiko' => $request->id_s_risk[$i],
@@ -108,7 +74,7 @@ class PengukuranRisikoController extends Controller
     }
 
     public function generatePDF()
-    {   
+    {
         $data = Pengukuran::select('k.id_risk', 'k.konteks', 'sr.s_risiko', DB::raw('AVG(pengukuran.nilai_L) as L'), DB::raw('AVG(pengukuran.nilai_C) as C'), DB::raw('AVG(pengukuran.nilai_L) * AVG(pengukuran.nilai_C) as R'), DB::raw('count(pengukuran.nama_responden)'))
                 ->join('s_risiko as sr', 'pengukuran.id_s_risiko', 'sr.id_s_risiko')
                 ->join('konteks as k', 'sr.id_konteks', 'k.id_konteks')
