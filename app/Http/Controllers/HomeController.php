@@ -134,6 +134,7 @@ class HomeController extends Controller
         $countLow = 0;
         $risk_detail = RiskDetail::where('company_id', Auth::user()->company_id)
             ->whereNull('deleted_at')
+            ->where('risk_detail.tahun', '=', $req->tahun)
             ->get();
         foreach ($risk_detail as $r) {
             if ($r->r_awal < 6)  $countLow++;
