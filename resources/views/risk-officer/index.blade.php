@@ -112,7 +112,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>TEMUAN HASIL AUDIT TAHUN <span id="tahun-title">{{ date('Y') }}</span></h6>
+						<h6>Kompilasi Risiko Anggota Indhan <span id="tahun-title">{{ date('Y') }}</span></h6>
 						<div>
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-risiko">
@@ -136,7 +136,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>TEMUAN HASIL AUDIT TAHUN <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
+						<h6>Grafik Risiko berdasarkan Klasifikasi Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
 						<div>
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-level-risiko">
