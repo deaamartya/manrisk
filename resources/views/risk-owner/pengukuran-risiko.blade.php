@@ -22,13 +22,13 @@
                     <div class="table-responsive">
                         <table class="display" id="basic-1">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No</th>
                                     <th>Responden</th>
                                     <th>Tanggal Penilaian</th>
                                     <th>Manrisk Tahun</th>
                                     <th>Jumlah Dinilai</th>
-                                    <th></th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                         <tbody>
@@ -38,7 +38,7 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date( "d/m/Y H:i:s", strtotime($p->tgl_penilaian)) }}</td>
-                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
@@ -50,59 +50,22 @@
                                         <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
                                         <td>{{ $p->jabatan }}</td>
                                         <td></td>
-                                        <td>{{ $p->tahun }}</td>
+                                        <td class="text-center">{{ $p->tahun }}</td>
                                         <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center">
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            @if ($p->id_pengukur === Auth::user()->defendid_pengukur->id_pengukur)
+                                            <form method="POST" action="{{route('risk-owner.penilaian-risiko') }}">
+                                            @csrf
+                                                <input type="hidden" name="nama_responden" value="{{ Auth::user()->defendid_pengukur->jabatan }}">
+                                                <input type="hidden" name="id_responden" value="{{ Auth::user()->defendid_pengukur->id_pengukur }}">
+                                                <input type="hidden" name="tahun" value="{{ $p->tahun }}">
+                                                <button type="submit" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            </form>
+                                            @else
+                                            <span class="badge badge-danger">Belum Dinilai</span>
+                                            @endif
                                         </td>
                                     </tr>
-
-                                    <div class="modal fade" id="insert_responden{{ count($pengukuran_1) + $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title">Input Data Responden</h5>
-                                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <form method="POST" action="{{route('risk-owner.penilaian-risiko') }}">
-                                                    @csrf
-                                                    <div class="row mb-3">
-                                                        <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Nama Responden <span class="required"></span></label>
-                                                        <div class='col-md-9 col-sm-9 col-xs-12'>
-                                                        <input type="text" name="nama_responden" style="width: 100%;" required="required" class="form-control " readonly value="{{ $p->jabatan}}">
-                                                        <input type="hidden" name="id_responden" required="required" value="{{ $p->id_pengukur }}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-3">
-                                                        <label class="col-md-3 col-sm-3 col-xs-12">Penilaian Tahun</label>
-                                                        <div class="col-md-9 col-sm-9 col-xs-12">
-                                                        <?php
-                                                            $l_tahun = array();
-                                                            $today = date("Y");
-                                                            $today_plus = date('Y', strtotime('+1 years'));
-                                                            array_push($l_tahun, $today);
-                                                            array_push($l_tahun, $today_plus);
-                                                            ?>
-                                                            <select class="form-control pull-left" name="tahun">
-                                                            <?php
-                                                            for ($j=0; $j < sizeof($l_tahun); $j++) {  ?>
-                                                                <option value=" {{ $l_tahun[$j]  }}">
-                                                                    {{ $l_tahun[$j] }} </option>
-                                                            <?php }
-                                                            ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                                    <button class="btn btn-primary" type="submit">Simpan</button>
-                                                </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             @endif
                             </tbody>
@@ -132,7 +95,7 @@
             <div class="table-responsive">
                 <table class="display" id="basic-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>No</th>
                             <th>PIC</th>
                             <th>Konteks</th>
@@ -151,10 +114,10 @@
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->konteks }}</td>
                         <td>{{ $s->s_risiko }}</td>
-                        <td>{{ $s->tahun}}</td>
-                        <td>{{ round($s->nilai_L, 2) }}</td>
-                        <td>{{ round($s->nilai_C, 2) }}</td>
-                        <td>
+                        <td class="text-center">{{ $s->tahun}}</td>
+                        <td class="text-center">{{ round($s->nilai_L, 2) }}</td>
+                        <td class="text-center">{{ round($s->nilai_C, 2) }}</td>
+                        <td class="text-center">
                         {{ number_format(($s->nilai_L * $s->nilai_C),2) + 0 }}
                         </td>
                         <td class="text-center">

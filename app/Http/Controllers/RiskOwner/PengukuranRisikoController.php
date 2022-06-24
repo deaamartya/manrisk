@@ -17,7 +17,7 @@ class PengukuranRisikoController extends Controller
 {
     public function index()
     {
-        $results = AbsPengukuran::index('penilai');
+        $results = AbsPengukuran::index('risk_officer');
         if($results['sr_exists']){
             return view('risk-owner.pengukuran-risiko', $results);
         } else {
@@ -34,14 +34,21 @@ class PengukuranRisikoController extends Controller
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
 
+        $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+        ->where('p.id_pengukur', '=', $id_responden)
+        ->where('status_s_risiko', 1)
+        ->selectRaw('s_risiko.*, p.*')
+        ->pluck('id_s_risiko');
+
         $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
-        ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
-        ->join('risk as r', 'r.id_risk', 'k.id_risk')
-        ->where('s_risiko.company_id',  Auth::user()->company_id)
-        ->where('s_risiko.tahun', $tahun)
-        ->where('s_risiko.status_s_risiko', 1)
-        ->orderBy('s_risiko.id_s_risiko')
-        ->get();
+            ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
+            ->join('risk as r', 'r.id_risk', 'k.id_risk')
+            ->where('s_risiko.company_id',  Auth::user()->company_id)
+            ->where('s_risiko.tahun', $tahun)
+            ->where('s_risiko.status_s_risiko', 1)
+            ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->orderBy('s_risiko.id_s_risiko')
+            ->get();
 
         return view('risk-owner.penilaian-risiko', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
 
@@ -61,7 +68,7 @@ class PengukuranRisikoController extends Controller
 
         for ($i=0; $i < count($id_s_risiko); $i++) {
             Pengukuran::insert([
-                'tahun_p' => $request->tahun,
+                'tahun_p' => date('Y'),
                 'id_s_risiko' => $request->id_s_risk[$i],
                 'id_pengukur' => $request->id_responden,
                 'nama_responden' => $request->nama_responden,

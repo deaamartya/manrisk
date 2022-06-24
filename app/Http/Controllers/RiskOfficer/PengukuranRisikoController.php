@@ -69,7 +69,7 @@ class PengukuranRisikoController extends Controller
 
         for ($i=0; $i < count($id_s_risiko); $i++) {
             Pengukuran::insert([
-                'tahun_p' => $request->tahun,
+                'tahun_p' => date('Y'),
                 'id_s_risiko' => $request->id_s_risk[$i],
                 'id_pengukur' => $request->id_responden,
                 'nama_responden' => $request->nama_responden,

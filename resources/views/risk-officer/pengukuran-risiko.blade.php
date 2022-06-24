@@ -22,13 +22,13 @@
                     <div class="table-responsive">
                         <table class="display" id="basic-1">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No</th>
                                     <th>Responden</th>
                                     <th>Tanggal Penilaian</th>
                                     <th>Manrisk Tahun</th>
                                     <th>Jumlah Dinilai</th>
-                                    <th></th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                         <tbody>
@@ -39,7 +39,7 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date_format( $p->tgl_penilaian,"d/m/Y H:i:s") }}</td>
-                                        <td>{{ $p->tahun}}</td>
+                                        <td >{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
@@ -115,7 +115,7 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $p->nama_responden }}</td>
                                         <td>{{ date( "d/m/Y H:i:s", strtotime($p->tgl_penilaian)) }}</td>
-                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
@@ -127,7 +127,7 @@
                                         <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
                                         <td>{{ $p->jabatan }}</td>
                                         <td></td>
-                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk}}</td>
                                         <td class="text-center">
                                             @if ($p->id_pengukur === Auth::user()->defendid_pengukur->id_pengukur)
@@ -139,6 +139,8 @@
                                                 <input type="hidden" name="tahun" value="{{ $p->tahun }}">
                                                 <button type="submit" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
                                             </form>
+                                            @else
+                                            <span class="badge badge-danger">Belum Dinilai</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -220,7 +222,7 @@
             <div class="table-responsive">
                 <table class="display" id="basic-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>No</th>
                             <th>PIC</th>
                             <th>Konteks</th>
@@ -239,10 +241,10 @@
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->konteks }}</td>
                         <td>{{ $s->s_risiko }}</td>
-                        <td>{{ $s->tahun}}</td>
-                        <td>{{ round($s->nilai_L, 2) }}</td>
-                        <td>{{ round($s->nilai_C, 2) }}</td>
-                        <td>
+                        <td class="text-center">{{ $s->tahun}}</td>
+                        <td class="text-center">{{ round($s->nilai_L, 2) }}</td>
+                        <td class="text-center">{{ round($s->nilai_C, 2) }}</td>
+                        <td class="text-center">
                         {{ number_format(($s->nilai_L * $s->nilai_C),2) + 0 }}
                         </td>
                         <td class="text-center">

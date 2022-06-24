@@ -22,24 +22,23 @@
                     <div class="table-responsive">
                         <table class="display" id="basic-1">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No</th>
                                     <th>Tahun</th>
                                     <th>Tanggal Penilaian</th>
                                     <th>Manrisk Tahun</th>
                                     <th>Jumlah Dinilai</th>
-                                    <th></th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                         <tbody>
-
                             @if(count($pengukuran_1) > 0)
                                 @foreach($pengukuran_1 as $p)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $p->nama_responden }}</td>
+                                        <td class="text-center">{{ $p->tahun_p }}</td>
                                         <td>{{ date( "d/m/Y H:i:s", strtotime($p->tgl_penilaian)) }}</td>
-                                        <td>{{ $p->tahun}}</td>
+                                        <td class="text-center">{{ $p->tahun}}</td>
                                         <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center"><span class="badge badge-success">Sudah Dinilai</span></td>
                                     </tr>
@@ -49,15 +48,23 @@
                                 @foreach($pengukuran_2 as $p)
                                     <tr>
                                         <td class="text-center">{{ count($pengukuran_1) + $loop->iteration }}</td>
-                                        <td>{{ $p->tahun_p}}</td>
                                         <td></td>
-                                        <td>{{ $p->tahun }}</td>
+                                        <td></td>
+                                        <td class="text-center">{{ $p->tahun }}</td>
                                         <td class="text-center">{{ $p->jml_risk }}</td>
                                         <td class="text-center">
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#insert_responden{{ count($pengukuran_1) + $loop->iteration }}" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            @if ($p->id_pengukur === Auth::user()->defendid_pengukur->id_pengukur)
+                                            <form method="POST" action="{{route('penilai.penilaian-risiko') }}">
+                                            @csrf
+                                                <input type="hidden" name="nama_responden" value="{{ Auth::user()->defendid_pengukur->jabatan }}">
+                                                <input type="hidden" name="id_responden" value="{{ Auth::user()->defendid_pengukur->id_pengukur }}">
+                                                <input type="hidden" name="tahun" value="{{ $p->tahun }}">
+                                                <button type="submit" class="btn btn-danger btn-sm"> Mulai Penilaian</button>
+                                            </form>
+                                            @endif
                                         </td>
                                     </tr>
-
+                                    {{--
                                     <div class="modal fade" id="insert_responden{{ count($pengukuran_1) + $loop->iteration }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
@@ -104,6 +111,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    --}}
                                 @endforeach
                             @endif
                             </tbody>
@@ -111,10 +119,16 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-secondary mb-2" type="button" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>
-                    <a href="{{route('penilai.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
-                        <i class="fa fa-print"></i> Cetak Penilaian
-                    </a>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button class="btn btn-secondary" type="button" style="float:right;" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>                                        
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{route('penilai.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
+                                <i class="fa fa-print"></i> Cetak Penilaian
+                            </a> 
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,7 +141,7 @@
             <div class="table-responsive">
                 <table class="display" id="basic-2">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>No</th>
                             <th>PIC</th>
                             <th>Konteks</th>
@@ -136,7 +150,7 @@
                             <th>L Awal</th>
                             <th>C Awal</th>
                             <th>R Awal</th>
-                            <th class="text-center">Status</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -146,10 +160,10 @@
                         <td>{{ $s->nama }}</td>
                         <td>{{ $s->konteks }}</td>
                         <td>{{ $s->s_risiko }}</td>
-                        <td>{{ $s->tahun}}</td>
-                        <td>{{ number_format($s->nilai_L, 2) + 0 }}</td>
-                        <td>{{ number_format($s->nilai_C, 2) + 0 }}</td>
-                        <td>
+                        <td class="text-center">{{ $s->tahun}}</td>
+                        <td class="text-center">{{ number_format($s->nilai_L, 2) + 0 }}</td>
+                        <td class="text-center">{{ number_format($s->nilai_C, 2) + 0 }}</td>
+                        <td class="text-center">
                         {{ number_format(($s->nilai_L * $s->nilai_C),2) + 0 }}
                         </td>
                         <td class="text-center">
