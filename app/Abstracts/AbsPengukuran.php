@@ -13,7 +13,20 @@ class AbsPengukuran
 {
     public static function index($filter)
     {
-       
+        $wr = '1=1';
+        $wr_sr = 's_risiko.status_s_risiko = 1';
+        if($filter != 'risk_officer'){
+            if($filter == 'penilai' || $filter == 'penilai_indhan'){
+                $wr_sr .= " AND defendid_pengukur.id_user = ".Auth::user()->id_user;
+                $wr .= " AND defendid_pengukur.id_user = ".Auth::user()->id_user;
+            }
+        }
+        else{
+            $wr .= " AND defendid_pengukur.company_id = ".Auth::user()->company_id;
+        }
+
+        $data_pengukur = DefendidPengukur::whereRaw($wr)->get();
+
         if($filter == 'penilai_indhan'){
             // dd($data_sr);
             // foreach($data_sr as $d){
@@ -30,7 +43,7 @@ class AbsPengukuran
             //         ->join('defendid_pengukur', 'pengukuran_indhan.id_pengukur', 'defendid_pengukur.id_pengukur')
             //         ->where('pengukuran_indhan.id_s_risiko', $d->id_s_risiko)
             //         ->where('pengukuran_indhan.id_pengukur', $p->id_pengukur)
-            //         ->get();  
+            //         ->get();
 
             //         if(count($pengukur_risk) == 0){
             //                 $arr_pengukur[] = $p;
@@ -40,7 +53,6 @@ class AbsPengukuran
             // }
 
             $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->get();
-            $data_pengukur = DefendidPengukur::where('id_user', Auth::user()->id_user)->get();
             // dd($data_pengukur);
             if(count($data_sr) > 0){
                 $pengukuran_1 = [];
@@ -77,7 +89,7 @@ class AbsPengukuran
                         $s->id_pengukur = $dp->id_pengukur;
                         $pengukuran_2[] = $s;
                     }
-                    
+
                     // dd($pengukuran_2);
                 }
 
@@ -87,19 +99,8 @@ class AbsPengukuran
             }
 
         }else{
-            $wr = '1=1';
-            if($filter != 'risk_officer'){
-                // if($filter != 'penilai_indhan'){
-                    $wr .= " AND defendid_pengukur.id_user = ".Auth::user()->id_user;
-                // }
-            }
-            else{
-                $wr .= " AND defendid_pengukur.company_id = ".Auth::user()->company_id;
-            }
-
             $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
-            $data_pengukur = DefendidPengukur::whereRaw($wr)->get();
-
+            
             if(count($data_sr) > 0){
                 $sr_exists = true;
                 $pengukuran_1 = [];
@@ -136,20 +137,12 @@ class AbsPengukuran
                     }
                 }
 
-                if($filter == 'penilai'){
-                    $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->where('defendid_pengukur.id_user', Auth::user()->id_user)
-                    ->where('s_risiko.status_s_risiko', 1)
-                    ->get();
-                }else{
-                    $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->where('s_risiko.status_s_risiko', 1)
-                    ->get();
-                }
+                $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
+                                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                                ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                                ->whereRaw($wr_sr)
+                                ->get();
+
                 $results['data_sr'] = $data_sr;
                 $results['pengukuran_1'] = $pengukuran_1;
                 $results['pengukuran_2'] = $pengukuran_2;
@@ -159,7 +152,6 @@ class AbsPengukuran
                 $sr_exists = false;
             }
 
-            $results['sr_exists'] = $sr_exists;
             $results['sr_exists'] = $sr_exists;
 
         }
