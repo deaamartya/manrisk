@@ -92,7 +92,10 @@
                 <span class="badge badge-warning me-2"> </span>Menengah
               </div>
               <div class="col">
-                <span class="badge badge-danger me-2"> </span>Tinggi
+                <span class="badge badge-pink me-2"> </span>Tinggi
+              </div>
+              <div class="col">
+                <span class="badge badge-danger me-2"> </span>Ekstrim
               </div>
             </div>
           </div>

@@ -52,6 +52,8 @@
                         <span class="badge badge-green me-2">
                         @elseif($data['risk_detail']->r_awal < 12)
                         <span class="badge badge-warning me-2">
+                        @elseif($data['risk_detail']->r_awal < 16)
+                        <span class="badge badge-pink me-2">
                         @else
                         <span class="badge badge-danger me-2">
                         @endif
@@ -66,6 +68,8 @@
                         <span class="badge badge-green me-2">
                         @elseif($data['risk_detail']->r_akhir < 12)
                         <span class="badge badge-warning me-2">
+                        @elseif($data['risk_detail']->r_akhir < 16)
+                        <span class="badge badge-pink me-2">
                         @else
                         <span class="badge badge-danger me-2">
                         @endif

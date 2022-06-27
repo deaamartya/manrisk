@@ -13,6 +13,7 @@ use \App\Http\Controllers\Admin\{
     ApprovalHasilMitigasiController,
     MitigasiPlanController,
     MitigasiPlanIndhanController,
+    PetaRisikoController,
 };
 
 use \App\Http\Controllers\{
@@ -83,6 +84,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::post('storeProgressIndhan', [MitigasiPlanIndhanController::class, 'insertProgress'])->name('storeProgress');
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
+  Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
 });
 
 Route::middleware(['cekAdmin'])->name('admin.')->group(function () {

@@ -76,7 +76,10 @@
                 <span class="badge badge-warning me-2"> </span>Menengah
               </div>
               <div class="col">
-                <span class="badge badge-danger me-2"> </span>Tinggi
+                <span class="badge badge-pink me-2"> </span>Tinggi
+              </div>
+              <div class="col">
+                <span class="badge badge-danger me-2"> </span>Ekstrim
               </div>
             </div>
           </div>
@@ -175,6 +178,8 @@
                       <span class="badge badge-green me-2">
                       @elseif($d->r_awal < 12)
                       <span class="badge badge-warning me-2">
+                      @elseif($d->r_awal < 16)
+                      <span class="badge badge-pink me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
@@ -193,19 +198,17 @@
                     <td>{{ $d->l_akhir }}</td>
                     <td>{{ $d->c_akhir }}</td>
                     <td>
-                          @if($d->r_akhir < 6)
-                          <span class="badge badge-blue me-2">
-                          @elseif($d->r_akhir < 12)
-                          <span class="badge badge-green me-2">
-                          @elseif($d->r_akhir < 16)
-                          <span class="badge badge-warning me-2">
-                          @elseif($d->r_akhir < 20)
-                          <span class="badge badge-orange me-2">
-                          @else
-                          <span class="badge badge-danger me-2">
-                          @endif
-                          {{ number_format($d->r_akhir ,2) }}
-                          </span>
+                      @if($d->r_akhir < 6)
+                      <span class="badge badge-green me-2">
+                      @elseif($d->r_akhir < 12)
+                      <span class="badge badge-warning me-2">
+                      @elseif($d->r_akhir < 16)
+                      <span class="badge badge-pink me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($d->r_akhir ,2) }}
+                      </span>
                     </td>
                     <td>
                         @if($d->status == 0)

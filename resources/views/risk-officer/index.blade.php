@@ -108,7 +108,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-lg-12">
+		<div class="col-lg-8">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
@@ -130,14 +130,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row second-chart-list third-news-update">
-		<div class="col-lg-12">
+		<div class="col-lg-4">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
 						<h6>Grafik Risiko berdasarkan Klasifikasi Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
-						<div>
+						<div class="col-lg-3">
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-level-risiko">
 								@for($i=0; $i<10; $i++)
@@ -276,7 +274,12 @@
 		}
 		function initStackedBarChart(data) {
 			var options9 = {
+				colors : ['#dc3545', '#dd8c93', '#f8d62b', '#51bb25'],
           series: [
+						{
+							name: 'Extreme',
+							data: [data.countExtreme]
+						},
 						{
 							name: 'High',
 							data: [data.countHigh]

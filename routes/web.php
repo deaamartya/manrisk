@@ -32,7 +32,9 @@ Route::get('get-notification', [GlobalController::class, 'get_notification']);
 Route::get('document/verify/{token}', [VerifyController::class, 'getDecrypted']);
 Route::post('dashboard/data-risiko', [HomeController::class, 'dataRisiko']);
 Route::post('dashboard/data-kategori-risiko', [HomeController::class, 'dataKategoriRisiko']);
+Route::post('dashboard/data-kategori-risiko-indhan', [HomeController::class, 'dataKategoriRisikoIndhan']);
 Route::post('dashboard/data-level-risiko', [HomeController::class, 'dataLevelRisiko']);
+Route::post('dashboard/data-level-risiko-indhan', [HomeController::class, 'dataLevelRisikoIndhan']);
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {

@@ -188,6 +188,10 @@ label {
     background-color: #51bb25;
 }
 
+.badge-pink {
+    background-color: #dd8c93;
+}
+
 .flex-row-between-center {
     display: flex;
     justify-content: space-between;

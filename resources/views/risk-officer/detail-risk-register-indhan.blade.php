@@ -67,7 +67,10 @@
                 <span class="badge badge-warning me-2"> </span>Menengah
               </div>
               <div class="col">
-                <span class="badge badge-danger me-2"> </span>Tinggi
+                <span class="badge badge-pink me-2"> </span>Tinggi
+              </div>
+              <div class="col">
+                <span class="badge badge-danger me-2"> </span>Ekstrim
               </div>
             </div>
           </div>
@@ -109,6 +112,8 @@
                       <span class="badge badge-green me-2">
                       @elseif($d->r_awal < 12)
                       <span class="badge badge-warning me-2">
+                      @elseif($d->r_awal < 16)
+                      <span class="badge badge-pink me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
