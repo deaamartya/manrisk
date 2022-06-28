@@ -108,12 +108,14 @@
             }
         },
         xaxis: {
+            min: 0,
+            max: 5,
             tickAmount: 5,
             labels: {
                 formatter: function(val) {
                     return parseFloat(val).toFixed(1)
                 }
-            }
+            },
             // labels: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"],
             // categories: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"]
         },
