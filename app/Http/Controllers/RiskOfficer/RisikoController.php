@@ -11,6 +11,7 @@ use Auth;
 use PDF;
 use App\Models\SRisiko;
 use App\Models\Pengukuran;
+use App\Models\RiskDetail;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
@@ -63,10 +64,18 @@ class RisikoController extends Controller
     public function show($id)
     {
         $headers = RiskHeader::where('id_riskh', '=', $id)->first();
+        $s_risk_diinput = RiskDetail::where([
+            ['company_id', '=', Auth::user()->company_id],
+        ])->pluck('id_s_risiko');
+        // dd($s_risk_diinput);
         $pilihan_s_risiko = SRisiko::where([
             ['status_s_risiko', '=', 1],
             ['company_id', '=', Auth::user()->company_id],
-        ])->orderBy('id_s_risiko')->get();
+        ]
+        )
+        ->whereNotIn('id_s_risiko', $s_risk_diinput)
+        ->orderBy('id_s_risiko')->get();
+
         $s_risiko = Srisiko::where('tahun', '=', $headers->tahun)->where('company_id', '=', $headers->company_id)->limit(1)->first();
         $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
         $nilai_c = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_C');
