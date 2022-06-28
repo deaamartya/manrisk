@@ -20,9 +20,9 @@
         <div class="card-body">
           <div>
           <div class="chart-content">
-						<div id="basic-scatter"></div>
-						<div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
-					</div>
+                <div id="basic-scatter"></div>
+                <div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+            </div>
           </div>
           <div class="table-responsive">
             <table class="display" id="basic-1">
@@ -79,46 +79,56 @@
     console.log(med);
     console.log(high);
     console.log(extreme);
-    var chart3;
+    var chart;
     var options = {
-        series: [{
-        name: "Low",
-        data: low
-      },{
-        name: "Med",
-        data: med
-      },{
-        name: "High",
-        data: high
-      }, {
-        name: "Extreme",
-        data: extreme
-      }],
-      chart: {
-        height: 350,
-        type: 'scatter',
-        zoom: {
-          enabled: true,
-          type: 'xy'
+        series: [
+            {
+                name: "Low",
+                data: low
+            },
+            {
+                name: "Med",
+                data: med
+            },
+            {
+                name: "High",
+                data: high
+            },
+            {
+                name: "Extreme",
+                data: extreme
+            }
+        ],
+        chart: {
+            height: 350,
+            type: 'scatter',
+            zoom: {
+                enabled: true,
+                type: 'xy'
+            }
+        },
+        xaxis: {
+            tickAmount: 5,
+            labels: {
+                formatter: function(val) {
+                    return parseFloat(val).toFixed(1)
+                }
+            }
+            // labels: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"],
+            // categories: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"]
+        },
+        yaxis: {
+            tickAmount: 5,
         }
-      },
-      xaxis: {
-        tickAmount: 5,
-        labels: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"],
-        categories: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"]
-      },
-      yaxis: {
-        tickAmount: 5,
-      }
     };
-    if (chart3) chart3.destroy();
-    chart3 = new ApexCharts(
+    if (chart) chart.destroy();
+    chart = new ApexCharts(
         document.querySelector("#basic-scatter"),
         options
     );
     $("#basic-scatter-loading").hide();
     $("#basic-scatter").show();
-    chart3.render();
+    chart.render();
   });
 </script>
 @endsection
