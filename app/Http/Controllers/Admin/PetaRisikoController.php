@@ -17,26 +17,23 @@ class PetaRisikoController extends Controller
             ->whereNull('s_risiko.deleted_at')
             ->groupBy('s_risiko.id_s_risiko')
             ->get();
-        // $count_low = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-        //     ->where('d.company_id', $this->company_id)
-        //     ->where('r_awal', '<', 6)
-        //     ->whereNull('d.deleted_at')
-        //     ->count('d.id_riskd');
-        // $count_med = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-        //     ->where('d.company_id', $this->company_id)
-        //     ->where('r_awal', '<', 12)
-        //     ->whereNull('d.deleted_at')
-        //     ->count('d.id_riskd');
-        // $count_high = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-        //     ->where('d.company_id', $this->company_id)
-        //     ->where('r_awal', '<', 16)
-        //     ->whereNull('d.deleted_at')
-        //     ->count('d.id_riskd');
-        // $count_ext = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-        //     ->where('d.company_id', $this->company_id)
-        //     ->where('r_awal', '>=', 16)
-        //     ->whereNull('d.deleted_at')
-        //     ->count('d.id_riskd');
-        return view('admin.peta-risiko', compact("s_risiko"));
+        $data_low = [];
+        $data_med = [];
+        $data_high = [];
+        $data_extreme = [];
+        foreach($s_risiko as $s) {
+            if ($s->r_awal > 0 && $s->c_awal > 0) {
+                if ($s->r_awal < 6) {
+                    $data_low[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                } else if ($s->r_awal < 12) {
+                    $data_med[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                } else if ($s->r_awal < 16) {
+                    $data_high[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                } else {
+                    $data_extreme[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                }
+            }
+        }
+        return view('admin.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme"));
     }
 }
