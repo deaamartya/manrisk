@@ -162,6 +162,9 @@
                       @endif
                     </td>
                     <td>
+                      <button class="btn btn-sm btn-secondary btn-detail" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#detail-risk-{{ $d->id_riskd }}">
+                        <i data-feather="search" class="small-icon"></i>
+                      </button>
                       <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-risk-{{ $d->id_riskd }}">
                         <i data-feather="edit-2" class="small-icon"></i>
                       </button>
@@ -320,7 +323,101 @@
     </div>
   </div>
 </div>
+
 @foreach($headers->risk_detail as $data)
+<div class="modal fade" id="detail-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lihat Risk Detail</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Identifikasi</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Risiko</label>
+                    <input type="text" class="form-control" readonly value="{{ $data->sumber_risiko->s_risiko }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PPKH</label>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan" readonly>{{ $data->ppkh }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Indikator</label>
+                    <textarea class="form-control" name="indikator" placeholder="Masukkan Indikator" readonly>{{ $data->indikator }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Sebab</label>
+                    <textarea class="form-control" name="sebab" placeholder="Masukkan sebab" readonly>{{ $data->sebab }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko</label>
+                    <textarea class="form-control" name="dampak" placeholder="Masukkan dampak" readonly>{{ $data->dampak }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>UC / C</label>
+                    <input type="text" class="form-control" readonly value="{{ $data->uc }}">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Pengendalian dan Penilaian Awal</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Pengendalian</label>
+                    <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian" readonly>{{ $data->pengendalian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>L</label>
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>C</label>
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>R</label>
+                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) + 0 }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-5">
+                <div class="col-md-6">
+                  <h6>Peluang</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Peluang</label>
+                    <textarea class="form-control" name="peluang" placeholder="Masukkan peluang" readonly>{{ $data->peluang }}</textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Penanganan</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Rencana Tindak Lanjut</label>
+                    <textarea class="form-control" name="tindak_lanjut" readonly>{{ $data->tindak_lanjut }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Jadwal Pelaksanaan</label>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dokumen Terkait</label>
+                    <textarea class="form-control" name="dokumen" readonly>{{ $data->dokumen }}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+</div>
 @if (count($data->pengajuan_mitigasi) === 0)
 <div class="modal fade" id="pengajuan-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog" role="document">
