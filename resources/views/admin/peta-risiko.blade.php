@@ -1,6 +1,53 @@
 @extends('layouts.user.table')
 @section('title', 'Sumber Risiko')
 
+@section('custom-css')
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+    }
+
+    .highcharts-data-table th {
+    font-weight: 600;
+    padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+    padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+    background: #f1f7ff;
+    }
+</style>
+@endsection
+
 @section('breadcrumb-title')
 <h3>Lihat Sumber Risiko</h3>
 @endsection
@@ -20,8 +67,18 @@
         <div class="card-body">
           <div>
           <div class="chart-content">
-                <div id="basic-scatter"></div>
-                <div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="basic-scatter"></div>
+                        <div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="highcharts-donut"></div>
+                        <div id="highcharts-donut-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+                    </div>
+                </div>
+            </div>
             </div>
           </div>
           <div class="table-responsive">
@@ -69,6 +126,11 @@
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
     const low = @json($data_low);
@@ -79,6 +141,13 @@
     console.log(med);
     console.log(high);
     console.log(extreme);
+
+    var pieColors = (function () {
+        var colors = ['#0066ff', '#ff6600'];
+
+        return colors;
+    }());
+    
     var chart;
     var options = {
         series: [
@@ -131,6 +200,37 @@
     $("#basic-scatter-loading").hide();
     $("#basic-scatter").show();
     chart.render();
+
+    // donut
+    Highcharts.chart('highcharts-donut', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            }
+        },
+        title: {
+            text: 'Risiko Dengan Nilai R Tertinggi'
+        },
+        subtitle: {
+            text: 'Risiko keterlambatan kedatangan material'
+        },
+        plotOptions: {
+            pie: {
+                colors: pieColors,
+                innerSize: 100,
+                depth: 45
+            }
+        },
+        series: [{
+            name: 'Delivered amount',
+            data: [
+                ['Nilai R', 80.5644],
+                ['All', 19.4356]
+            ]
+        }]
+    });
   });
 </script>
 @endsection

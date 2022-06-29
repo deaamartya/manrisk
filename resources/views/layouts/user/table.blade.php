@@ -8,6 +8,7 @@
 @endsection
 
 @section('style')
+@yield('custom-css')
 @endsection
 
 @section('breadcrumb-title')
