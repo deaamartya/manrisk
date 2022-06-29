@@ -54,12 +54,25 @@ class RiskController extends Controller
     public function show($id)
     {
         $headers = RiskHeader::where('id_riskh', '=', $id)->first();
+        // $pilihan_s_risiko = SRisiko::where([
+        //     ['id_user', '=', Auth::user()->id_user],
+        //     ['tahun', '=', date('Y')],
+        //     ['status_s_risiko', '=', 1],
+        //     ['company_id', '=', Auth::user()->company_id],
+        // ])->orderBy('id_s_risiko')->get();
+
+        $s_risk_diinput = RiskDetail::where([
+            ['company_id', '=', Auth::user()->company_id],
+        ])->pluck('id_s_risiko');
+        // dd($s_risk_diinput);
         $pilihan_s_risiko = SRisiko::where([
-            ['id_user', '=', Auth::user()->id_user],
-            ['tahun', '=', date('Y')],
             ['status_s_risiko', '=', 1],
             ['company_id', '=', Auth::user()->company_id],
-        ])->orderBy('id_s_risiko')->get();
+        ]
+        )
+        ->whereNotIn('id_s_risiko', $s_risk_diinput)
+        ->orderBy('id_s_risiko')->get();
+
         return view('risk-owner.risk-detail', compact("headers", 'pilihan_s_risiko'));
     }
 

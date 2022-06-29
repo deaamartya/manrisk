@@ -110,12 +110,12 @@ label {
 }
 
 .text-red {
-  color: red;
+    color: red;
 }
 
 .btn-sm .small-icon {
-  width: auto;
-  height: 14px;
+    width: auto;
+    height: 14px;
 }
 
 .card .card-header,
@@ -139,6 +139,10 @@ label {
     color: white !important;
 }
 
+.btn-warning {
+    color: black !important;
+}
+
 .btn {
     padding: 8px 16px;
 }
@@ -152,16 +156,15 @@ label {
     margin: 4px 0;
 }
 
-#aksi-filter div .print{
+#aksi-filter div .print {
     float: right;
 }
 
 @media only screen and (max-width: 599px) {
-    #aksi-filter div{
+    #aksi-filter div {
         margin-bottom: 5px;
     }
-
-    #aksi-filter div .print{
+    #aksi-filter div .print {
         float: left;
     }
 }
@@ -174,6 +177,10 @@ label {
 .column-action {
     display: flex;
     gap: 8px;
+}
+
+.badge-warning {
+    color: black !important;
 }
 
 .badge-blue {
