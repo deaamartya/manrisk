@@ -69,18 +69,19 @@
           <div class="chart-content">
             <div class="col-sm-12">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6" align="center">
                         <div id="basic-scatter"></div>
                         <div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
                     </div>
-                    <div class="col-md-4">
-                        <div id="highcharts-donut"></div>
+                    <div class="col-md-6" align="center">
+                        <div id="highcharts-donut" style="width: 350px; height: 300px"></div>
                         <div id="highcharts-donut-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
                     </div>
                 </div>
             </div>
             </div>
           </div>
+          <br>
           <div class="table-responsive">
             <table class="display" id="basic-1">
               <thead>
@@ -137,10 +138,15 @@
     const med = @json($data_med);
     const high = @json($data_high);
     const extreme = @json($data_extreme);
+    const r_tertinggi = @json($r_tertinggi);
+    const r_total = @json($r_total);
+    const r_all = r_total - r_tertinggi;
     // console.log(low);
     // console.log(med);
     // console.log(high);
     // console.log(extreme);
+    // console.log(r_tertinggi);
+    console.log(r_all);
     var tahun = 'Tahun ';
     tahun += 2022;
 
@@ -219,8 +225,8 @@
                 [0.8, 'rgb(255, 51, 51)'],
             ]
             },
-            // width: 350,
-            // height: 300,
+            width: 350,
+            height: 300,
             type: 'scatter',
             zoomType: 'xy'
         },
@@ -366,8 +372,8 @@
         series: [{
             name: 'Delivered amount',
             data: [
-                ['Nilai R', 80.5644],
-                ['All', 19.4356]
+                ['Nilai R', r_tertinggi],
+                ['All', r_all]
             ]
         }]
     });

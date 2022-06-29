@@ -21,6 +21,8 @@ class PetaRisikoController extends Controller
         $data_med = [];
         $data_high = [];
         $data_extreme = [];
+        $val_r = [];
+        $r_total = 0;
         foreach($s_risiko as $s) {
             if ($s->r_awal > 0 && $s->c_awal > 0) {
                 if ($s->r_awal < 6) {
@@ -33,7 +35,10 @@ class PetaRisikoController extends Controller
                     $data_extreme[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
                 }
             }
+            $r_total += $s->r_awal;
+            $val_r[] = $s->r_awal;
         }
-        return view('admin.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme"));
+        $r_tertinggi = floatval(max($val_r));
+        return view('admin.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi'));
     }
 }
