@@ -137,69 +137,209 @@
     const med = @json($data_med);
     const high = @json($data_high);
     const extreme = @json($data_extreme);
-    console.log(low);
-    console.log(med);
-    console.log(high);
-    console.log(extreme);
+    // console.log(low);
+    // console.log(med);
+    // console.log(high);
+    // console.log(extreme);
+    var tahun = 'Tahun ';
+    tahun += 2022;
 
     var pieColors = (function () {
         var colors = ['#0066ff', '#ff6600'];
 
         return colors;
     }());
-    
-    var chart;
-    var options = {
-        series: [
-            {
-                name: "Low",
-                data: low
-            },
-            {
-                name: "Med",
-                data: med
-            },
-            {
-                name: "High",
-                data: high
-            },
-            {
-                name: "Extreme",
-                data: extreme
-            }
-        ],
+
+    // var chart;
+    // var options = {
+    //     series: [
+    //         {
+    //             name: "Low",
+    //             data: low
+    //         },
+    //         {
+    //             name: "Med",
+    //             data: med
+    //         },
+    //         {
+    //             name: "High",
+    //             data: high
+    //         },
+    //         {
+    //             name: "Extreme",
+    //             data: extreme
+    //         }
+    //     ],
+    //     chart: {
+    //         fill: {
+    //             colors: ['#F44336', '#E91E63', '#9C27B0']
+    //         },
+    //         height: 350,
+    //         type: 'scatter',
+    //         zoom: {
+    //             enabled: true,
+    //             type: 'xy'
+    //         }
+    //     },
+    //     xaxis: {
+    //         min: 0,
+    //         max: 5,
+    //         tickAmount: 5,
+    //         labels: {
+    //             formatter: function(val) {
+    //                 return parseFloat(val).toFixed(1)
+    //             }
+    //         },
+    //         // labels: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"],
+    //         // categories: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"]
+    //     },
+    //     yaxis: {
+    //         tickAmount: 5,
+    //     }
+    // };
+    // if (chart) chart.destroy();
+    // chart = new ApexCharts(
+    //     document.querySelector("#basic-scatter"),
+    //     options
+    // );
+    // $("#basic-scatter-loading").hide();
+    // $("#basic-scatter").show();
+    // chart.render();
+
+    // use highchart
+    setTimeout(function(){
+        var chart2 = Highcharts.chart('basic-scatter', {
         chart: {
-            height: 350,
+        backgroundColor: {
+            linearGradient: [90, 170, 200, 0],
+            stops: [
+                [0.1, 'rgb(0, 204, 0)'],
+                [0.2, 'rgb(255, 255, 0)'],
+                [0.7, 'rgb(255, 133, 51)'],
+                [0.8, 'rgb(255, 51, 51)'],
+            ]
+            },
+            // width: 350,
+            // height: 300,
             type: 'scatter',
-            zoom: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Grafik Risiko Divisi',
+            style:{
+            color: '#FFFFFF'
+            },
+        },
+        subtitle: {
+            text: tahun,
+            style:{
+            color: '#FFFFFF'
+            },
+        },
+        xAxis: {
+            title: {
                 enabled: true,
-                type: 'xy'
+                text: 'Likelihood (Awal)',
+                style:{
+                color: '#FFFFFF'
+                },
+            },
+
+            plotLines: [{
+                color: '#d9d9d9',
+                width: 1,
+                value: 1
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 2
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 3
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 4
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 5
+            }],
+
+            lineWidth:1,
+            min:0,
+            tickInterval: 1,
+            max: 5,
+        },
+        yAxis: {
+            title: {
+                text: 'Consequence (Awal)',
+                style:{
+                color: '#FFFFFF'
+                },
+            },
+
+            lineWidth:1,
+            min:0,
+            tickInterval: 1,
+            max: 5,
+            style:{
+            color: '#FFFFFF'
+            },
+    //        alternateGridColor: '#FDFFD5'
+        },
+
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormatter: function() {
+                    // console.log(this)
+                    var string = 'L : ' + this.x + '<br>';
+                    string += 'C : ' + this.y + '<br>';
+                    string += 'R : ' + this.x*this.y;
+                    return string;
+                }
+                }
             }
         },
-        xaxis: {
-            min: 0,
-            max: 5,
-            tickAmount: 5,
-            labels: {
-                formatter: function(val) {
-                    return parseFloat(val).toFixed(1)
-                }
-            },
-            // labels: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"],
-            // categories: ["0.0", "1.0", "2.0", "3.0", "4.0", "5.0"]
-        },
-        yaxis: {
-            tickAmount: 5,
-        }
-    };
-    if (chart) chart.destroy();
-    chart = new ApexCharts(
-        document.querySelector("#basic-scatter"),
-        options
-    );
-    $("#basic-scatter-loading").hide();
-    $("#basic-scatter").show();
-    chart.render();
+        //series: data
+        series: [{
+            color: 'rgba(0, 0, 255, .5)',
+                data: low
+            },{
+                color: 'rgba(255, 0, 0, .5)',
+                data: med
+            }, {
+                color: 'rgba(0, 255, 0, .5)',
+                data: high
+            }, {
+                color: 'rgba(255, 255, 0, .5)',
+                data: extreme
+                }]
+        });
+        $('#basic-scatter-loading').hide();
+    }, 3000);
 
     // donut
     Highcharts.chart('highcharts-donut', {
