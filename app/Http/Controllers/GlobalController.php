@@ -243,9 +243,11 @@ class GlobalController extends Controller
     public function notif_risk_owner()
     {
         $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->where('s_risiko.company_id', Auth::user()->company_id)
+                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                    // ->where('s_risiko.company_id', Auth::user()->company_id)
                     ->where('s_risiko.tahun', date('Y'))
                     ->where('s_risiko.status_s_risiko', 1)
+                    ->where('defendid_pengukur.id_user', Auth::user()->id_user)
                     ->count('pengukuran.id_p');
         $jml_approval_risk_register = RiskHeader::where(['company_id' => Auth::user()->company_id, 'status_h' => 0])->count();
 
@@ -254,14 +256,14 @@ class GlobalController extends Controller
             $data[] = [
                 'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
                 'jumlah' => $jml_risk,
-                'link' => url('/')."risk-owner/pengukuran-risiko"
+                'link' => url('/')."/risk-owner/pengukuran-risiko"
             ];
         }
         if($jml_approval_risk_register > 0){
             $data[] = [
                 'title' => 'Terdapat risk register korporasi yang belum disetujui sebanyak ',
                 'jumlah' => $jml_approval_risk_register,
-                'link' => url('/')."risk-owner/risiko"
+                'link' => url('/')."/risk-owner/risiko"
             ];
         }
 

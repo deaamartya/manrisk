@@ -18,7 +18,7 @@ $(document).ready(function() {
                 let element = '';
                 for (let i = 0; i < data.length; i++) {
                     element += `<li>` +
-                        `<a href='`+ data[i].link +`'><p><i class="fa fa-circle-o me-3 font-info"></i>` + data[i].title + data[i].jumlah + `</p></a>` +
+                        `<a href='` + data[i].link + `'><p><i class="fa fa-circle-o me-3 font-info"></i>` + data[i].title + data[i].jumlah + `</p></a>` +
                         `</li>`;
                     if (data[i].title == 'Terdapat sumber risiko indhan yang belum disetujui sebanyak ') {
                         srisiko_indhan += data[i].jumlah;
