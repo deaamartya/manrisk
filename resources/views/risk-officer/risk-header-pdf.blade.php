@@ -1,6 +1,11 @@
 <head>
 	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
 	<style>
+			@page {
+				size: 29.7cm 21cm;
+				margin: 0.25in;
+				padding: .5in;
+			}
 			.table-header tr td {
 				font-size: 12px;
 				text-align: center;
@@ -17,6 +22,20 @@
 			.table-3 tr td {
 				font-size: 13px;
 				vertical-align: middle;
+			}
+			.table-2 tr td {
+				white-space: nowrap;
+				height: 12px;
+			}
+			.qrcode-row {
+				height: 60px;
+				text-align: center;
+				font-size: 10px;
+			}
+			.row-target td {
+				height: auto !important;
+				padding: 5px;
+				padding-left: 10px;
 			}
 			.table-4 tr td {
 				border-right: 1px solid black;
@@ -107,13 +126,13 @@ $bulan = array (
 			<td height="40">
 				<b>RISK REGISTER {{ $user->perusahaan->instansi }} </b>
 			</td>
-			<td width="20%">
+			<td width="171">
 				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>
-	<table class="table-2" cellspacing="0" width="100%">
-		<tr>
+	<table class="table-2" cellpadding="0" cellspacing="0" width="100%" height="128">
+		<tr style="min-height:12px;" height="12">
 			<td width="15%" class="left pl-10p">
 				Instansi
 			</td>
@@ -131,8 +150,8 @@ $bulan = array (
 			<td class="left pl-10p">
 				@php echo tanggal_indonesia1(date('Y-m-d', strtotime($header->tanggal))); @endphp
 			</td>
-			<td width="20%" rowspan="5" class="center">
-				<img src="data:image/png;base64,{{ $qrcode }}" style="max-width:120px"><br><br>
+			<td rowspan="5" class="qrcode-row">
+				<img src="data:image/png;base64,{{ $qrcode }}" style="max-height:90px; border: 1px solid black;">
 				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}</p>
 			</td>
 		</tr>
@@ -152,11 +171,11 @@ $bulan = array (
 				{{ $header->tahun }}
 			</td>
 		</tr>
-		<tr>
+		<tr class="row-target">
 			<td width="15%" class="left pl-10p">
 				Sasaran / Target
 			</td>
-			<td height="80" class="left pl-10p">
+			<td class="left pl-10p">
 				@php echo nl2br($header->target) @endphp
 			</td>
 		</tr>

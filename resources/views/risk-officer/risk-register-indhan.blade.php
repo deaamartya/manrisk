@@ -20,12 +20,6 @@
       <!-- Zero Configuration  Starts-->
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header">
-            <button class="btn btn-lg btn-primary d-flex btn-add" data-bs-toggle="modal" data-bs-target="#create-header">
-              <i data-feather="plus" class="me-2"></i>
-              Tambah Risiko Header
-            </button>
-          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="display" id="basic-1">

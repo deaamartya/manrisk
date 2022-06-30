@@ -1,6 +1,11 @@
 <head>
 	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
 	<style>
+			@page {
+				size: 29.7cm 21cm;
+				margin: 0.25in;
+				padding: .5in;
+			}
 			.table-header tr td {
 				font-size: 12px;
 				text-align: center;
@@ -10,10 +15,30 @@
 				border: 1px solid black;
 				border-collapse: collapse;
 			}
+			.table-header tr td {
+				border-bottom: none;
+			}
 			.table-2 tr td,
 			.table-3 tr td {
-				font-size: 14px;
+				font-size: 13px;
 				vertical-align: middle;
+			}
+			.table-2 tr td {
+				white-space: nowrap;
+				height: 12px;
+			}
+			.qrcode-row {
+				height: 60px;
+				text-align: center;
+				font-size: 10px;
+			}
+			.row-target td {
+				height: auto !important;
+				padding: 5px;
+				padding-left: 10px;
+			}
+			.table-4 tr td {
+				border-right: 1px solid black;
 			}
 			.left {
 				text-align: left;
@@ -24,14 +49,20 @@
 			.pl-10p {
 				padding-left: 10px;
 			}
+			.p-10p {
+				padding: 10px;
+			}
+			.m-1 {
+				margin: 8px;
+			}
 			.f-13 {
 				font-size: 13px;
 			}
 			.f-12 {
-				font-size: 12px;
+				font-size: 10px;
 			}
 			.f-11 {
-				font-size: 11px;
+				font-size: 9px;
 			}
 			.f-10 {
 				font-size: 10px;
@@ -88,75 +119,75 @@ $bulan = array (
 	// var 0 = tanggal
 	// var 1 = bulan
 	// var 2 = tahun
-}
+}		
 @endphp
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
-					<td width="140">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="width:90px;" />
+			<td width="15%">
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 			<td width="70%" height="40">
 				<b>RENCANA PENGELOLAAN RISIKO (MITIGASI PLAN)</b>
 				{{-- <b>MITIGASI PLAN {{ $user->perusahaan->instansi }} </b> --}}
 			</td>
-			<td width="143">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="width:120px;" />
+			<td width="171">
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>
-	<table class="table-2" cellspacing="0" width="100%">
-		<tr style="height: 10px;">
-			<td class="left pl-10p">
+	<table class="table-2" cellpadding="0" cellspacing="0" width="100%" height="128">
+		<tr style="min-height:12px;" height="12">
+			<td width="15%" class="left pl-10p">
 				Instansi
 			</td>
-			<td class="left pl-10p" height="5">
+			<td class="left pl-10p">
 				{{ $header->perusahaan->instansi }}
 			</td>
-			<td class="left">
+			<td width="15%" class="left pl-10p">
 				Diperiksa &  Disetujui  Oleh
 			</td>
 		</tr>
-		<tr style="height: 10px;">
-			<td width="13%" class="left pl-10p">
+		<tr>
+			<td width="15%" class="left pl-10p">
 				Tanggal Penyusunan
 			</td>
-			<td width="49%" height="5" class="left pl-10p">
+			<td class="left pl-10p">
 				@php echo tanggal_indonesia(date('Y-m-d', strtotime($header->tanggal))); @endphp
 			</td>
-			<td rowspan="5" width="20%" height="" class="center">
-				<img src="data:image/png;base64,{{ $qrcode }}" height="90"><br><br>
-				<p class="f-10">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}</p>
-			</td>
-		</tr>
-		<tr style="height: 10px;">
-			<td width="13%" class="left pl-10p">
-				Tanggal Cetak
-			</td>
-			<td width="49%" height="5" class="left pl-10p">
-				@php echo tanggal_indonesia(date('Y-m-d')); @endphp
-			</td>
-		</tr>
-		<tr style="height: 10px;">
-			<td width="13%" class="left pl-10p" style="height: 10px;">
-				Tahun Periode
-			</td>
-			<td width="49%" height="5" class="left pl-10p" style="height: 10px;">
-				{{ $header->tahun }}
+			<td rowspan="5" class="qrcode-row">
+				<img src="data:image/png;base64,{{ $qrcode }}" style="max-height:90px; border: 1px solid black;">
+				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->name : '-') }}</p>
 			</td>
 		</tr>
 		<tr>
-			<td width="13%" class="left pl-10p">
+			<td width="15%" class="left pl-10p">
+				Tanggal Cetak
+			</td>
+			<td class="left pl-10p">
+				@php echo tanggal_indonesia(date('Y-m-d')); @endphp
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" class="left pl-10p">
+				Tahun Periode
+			</td>
+			<td class="left pl-10p">
+				{{ $header->tahun }}
+			</td>
+		</tr>
+		<tr class="row-target">
+			<td width="15%" class="left pl-10p">
 				Sasaran / Target
 			</td>
-			<td width="49%" height="80" style="font-size:12px;" class="left pl-10p">
+			<td class="left pl-10p">
 				@php echo nl2br($header->target) @endphp
 			</td>
 		</tr>
-		<tr style="height: 10px;">
-			<td width="13%" class="left pl-10p">
+		<tr>
+			<td width="15%" class="left pl-10p">
 				Disusun Oleh
 			</td>
-			<td width="49%" height="5" class="left pl-10p">
+			<td class="left pl-10p">
 				{{ ($header->penyusun ? $header->penyusun->name : '-') }}
 			</td>
 		</tr>

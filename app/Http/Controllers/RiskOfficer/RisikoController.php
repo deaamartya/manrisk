@@ -125,7 +125,7 @@ class RisikoController extends Controller
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');
-        // return view('risk-officer.risk-header-pdf', compact('header', 'user'));
+        // return view('risk-officer.risk-header-pdf', compact('header', 'user', 'qrcode'));
         return $pdf->stream('Laporan Rencana Pengelolaan Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
     }
 
