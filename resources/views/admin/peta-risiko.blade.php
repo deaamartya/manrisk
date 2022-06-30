@@ -331,16 +331,16 @@
         },
         //series: data
         series: [{
-            color: 'rgba(0, 0, 255, .5)',
+            color: '#51bb25',
                 data: low
             },{
-                color: 'rgba(255, 0, 0, .5)',
+                color: '#f8d62b',
                 data: med
             }, {
-                color: 'rgba(0, 255, 0, .5)',
+                color: '#dd8c93',
                 data: high
             }, {
-                color: 'rgba(255, 255, 0, .5)',
+                color: '#dc3545',
                 data: extreme
                 }]
         });
