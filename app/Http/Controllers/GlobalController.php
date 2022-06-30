@@ -197,11 +197,18 @@ class GlobalController extends Controller
 
     public function notif_risk_officer()
     {
-        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->where('s_risiko.company_id', Auth::user()->company_id)
-                    ->where('s_risiko.tahun', date('Y'))
-                    ->where('s_risiko.status_s_risiko', 1)
-                    ->count('pengukuran.id_p');
+        $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+        ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+        ->where('dp.id_user', Auth::user()->id_user)
+        ->where('status_s_risiko', 1)
+        ->pluck('s_risiko.id_s_risiko');
+        // dd($s_risk_dinilai);
+        $jml_risk = Srisiko::where('status_s_risiko', 1)
+            ->where('s_risiko.company_id', Auth::user()->company_id)
+            ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->count('s_risiko.id_s_risiko');
+        // dd($jml_risk);
+
         $risk_detail = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->select('risk_detail.id_riskd')
                         ->whereNull('risk_detail.deleted_at')
@@ -242,13 +249,18 @@ class GlobalController extends Controller
 
     public function notif_risk_owner()
     {
-        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    // ->where('s_risiko.company_id', Auth::user()->company_id)
-                    ->where('s_risiko.tahun', date('Y'))
-                    ->where('s_risiko.status_s_risiko', 1)
-                    ->where('defendid_pengukur.id_user', Auth::user()->id_user)
-                    ->count('pengukuran.id_p');
+        $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+                        ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+                        ->where('dp.id_user', Auth::user()->id_user)
+                        ->where('status_s_risiko', 1)
+                        ->pluck('s_risiko.id_s_risiko');
+        // dd($s_risk_dinilai);
+        $jml_risk = Srisiko::where('status_s_risiko', 1)
+                    ->where('s_risiko.company_id', Auth::user()->company_id)
+                    ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+                    ->count('s_risiko.id_s_risiko');
+        // dd($jml_risk);
+
         $jml_approval_risk_register = RiskHeader::where(['company_id' => Auth::user()->company_id, 'status_h' => 0])->count();
 
         $data = [];
@@ -281,25 +293,17 @@ class GlobalController extends Controller
 
     public function notif_penilai()
     {
-        $data_sr = Srisiko::where('company_id', Auth::user()->company_id)
-                    ->where('status_s_risiko', 1)->get();
-        $id_s_risiko = [];
-        foreach($data_sr as $dt){
-            $id_s_risiko[] = $dt->id_s_risiko;
-        }
-        // dd($id_s_risiko);
-        $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-                    ->whereIn('pengukuran.id_s_risiko', $id_s_risiko)
-                    // ->where('pengukuran.id_pengukur', Auth::user()->id_user)
-                    ->where('s_risiko.tahun', date('Y'))
-                    ->count('pengukuran.id_p');
-        // $jml_risk = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
-        //             ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
-        //             ->where('defendid_pengukur.id_user', Auth::user()->id_user)
-        //             ->where('s_risiko.tahun', date('Y'))
-        //             ->where('s_risiko.status_s_risiko', 1)
-        //             ->count('pengukuran.id_p');
+        $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+        ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+        ->where('dp.id_user', Auth::user()->id_user)
+        ->where('status_s_risiko', 1)
+        ->pluck('s_risiko.id_s_risiko');
+        // dd($s_risk_dinilai);
+        $jml_risk = Srisiko::where('status_s_risiko', 1)
+            ->where('s_risiko.company_id', Auth::user()->company_id)
+            ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->count('s_risiko.id_s_risiko');
+        // dd($jml_risk);
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko korporasi sebanyak ',
@@ -315,12 +319,19 @@ class GlobalController extends Controller
 
     public function notif_penilai_indhan()
     {
-        $jml_risk = PengukuranIndhan::join('s_risiko', 'pengukuran_indhan.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-                    ->where('s_risiko.tahun', date('Y'))
-                    ->where('risk_detail.status_indhan', 1)
-                    ->whereNull('risk_detail.deleted_at')
-                    ->count('pengukuran_indhan.id_p');
+        $s_risk_dinilai = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+        ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+        ->where('dp.id_user', Auth::user()->id_user)
+        ->where('status_indhan', 1)
+        ->pluck('s_risiko.id_s_risiko');
+
+        // dd($s_risk_dinilai);
+        $jml_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+            ->where('status_indhan', 1)
+            ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->count('s_risiko.id_s_risiko');
+        // dd($jml_risk);
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko indhan sebanyak ',
@@ -343,8 +354,8 @@ class GlobalController extends Controller
                                     ->whereNull('risk_detail.deleted_at')
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
-        // $approval_risk_register_indhan = RiskHeaderIndhan::where('status_h', 0)->count();
-        $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)->count();
+        $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)
+                                    ->where('status_h', 1)->count();
         $approval_hasil_mitigasi = DB::table('mitigasi_logs')->where('is_approved', 0)->count();
 
         $data = [];
