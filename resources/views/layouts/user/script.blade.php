@@ -3,6 +3,9 @@
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/bootstrap.bundle.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- Notify Loader -->
+<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
+<script src="{{asset('assets/js/notify/index.js')}}"></script>
 <!-- feather icon js-->
 <script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>
 <script src="{{asset('assets/js/icons/feather-icon/feather-icon.js')}}"></script>

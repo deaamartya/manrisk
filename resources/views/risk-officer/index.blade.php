@@ -162,9 +162,7 @@
 @section('script')
 <script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>
 <script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
-<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
-<script src="{{asset('assets/js/notify/index.js')}}"></script>
 <script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>

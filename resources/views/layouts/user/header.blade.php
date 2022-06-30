@@ -13,7 +13,7 @@
       </div>
     </form>
     <div class="header-logo-wrapper col-4 p-0">
-      <div class="logo-wrapper"><a href="{{ url('/') }}"><img class="img-fluid" src="{{asset('assets/images/logo/logo_company/logo1.png')}}" alt=""></a></div>
+      <div class="logo-wrapper"><a href="{{ url('/') }}"><img class="img-fluid" src="{{asset('assets/images/logo/logo_company/logo_INHAN.png')}}" alt=""></a></div>
       <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
     </div>
     <div class="nav-right col-8 pull-right right-header p-0">
