@@ -48,7 +48,8 @@ class HomeController extends Controller
                     ->where('m.is_approved', '=', 1)
                     ->whereNull('rd.deleted_at')
                     ->count('rd.id_riskd');
-                return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi"));
+                $company = Perusahaan::where('company_id', Auth::user()->company_id)->get();
+                return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
             if (Auth::user()->is_penilai_indhan) {
                 $counts_risiko = SRisiko::where('status_s_risiko', 1)->whereNull('deleted_at')->count('id_s_risiko');
@@ -66,7 +67,8 @@ class HomeController extends Controller
                     ->where('status_mitigasi', '=', 1)
                     ->whereNull('risk_detail.deleted_at')
                     ->count('risk_detail.id_riskd');
-                return view('penilai-indhan.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi"));
+                $company = Perusahaan::where('company_code', '!=', 'INHAN')->get();
+                return view('penilai-indhan.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
             if (Auth::user()->is_admin) {
                 $counts_risiko = SRisiko::where('status_s_risiko', 1)->whereNull('deleted_at')->count('id_s_risiko');

@@ -153,6 +153,75 @@
 			</div>
 		</div>
 	</div>
+	<div class="row second-chart-list third-news-update">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-body">
+					<h6>Peta Risiko</h6>
+					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+						<div class="row">
+						@foreach($company as $p)
+						<div class="col-xxl-4 col-lg-6">
+							<div class="project-box">
+								@php
+									$count_mitigasi_p = $p->getCountMitigasi();
+									$count_done_mitigasi_p = $p->getCountMitigasiDone();
+								@endphp
+								@if($count_done_mitigasi_p === $count_mitigasi_p)
+								<span class="badge badge-green">Done
+								@else
+								<span class="badge badge-primary">On Progress
+								@endif
+								</span>
+								<div class="media">
+										<img class="me-1 rounded"
+											src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
+											style="max-height: 30px">
+								</div>
+								<p>{{ $p->instansi }}</p>
+								<div class="row details">
+										<div class="col-6"><span>Risiko Rendah</span></div>
+										<div class="col-6">
+											<div class="badge badge-green mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countLow() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Sedang</span></div>
+										<div class="col-6">
+											<div class="badge badge-warning mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countMed() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Tinggi</span></div>
+										<div class="col-6">
+											<div class="badge badge-pink mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countHigh() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Ekstrem</span></div>
+										<div class="col-6">
+											<div class="badge badge-danger" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countExtreme() }}</div>
+										</div>
+										<div class="col-6"> <span>Mitigasi</span></div>
+										<div class="col-6 text-primary">{{ $p->getCountMitigasi() }}</div>
+										<div class="col-6"> <span>Selesai Mitigasi</span></div>
+										<div class="col-6 text-primary">{{ $p->getCountMitigasiDone() }}</div>
+								</div>
+								<div class="project-status mt-4">
+										<div class="media mb-0">
+											<p>{{ $p->mitigasiPercentage().'%' }}</p>
+											<div class="media-body text-end"><span>Done</span></div>
+										</div>
+										<div class="progress" style="height: 5px">
+											<div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+								</div>
+								<div class="row mt-3">
+									<a href="{{ route('admin.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+								</div>
+							</div>
+						</div>
+						@endforeach
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
