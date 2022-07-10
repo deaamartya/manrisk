@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 /**
  * Class Perusahaan
@@ -56,6 +57,7 @@ class Perusahaan extends Model
 			->where('d.company_id', $this->company_id)
 			->where('r_awal', '>', 1)
 			->where('r_awal', '<', 6)
+			// ->where('d.tahun', $req->tahun)
 			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
 	}

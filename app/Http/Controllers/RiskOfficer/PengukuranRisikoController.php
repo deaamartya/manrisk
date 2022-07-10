@@ -94,5 +94,4 @@ class PengukuranRisikoController extends Controller
         $pdf = PDF::loadView('risk-officer.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
         return $pdf->stream('Hasil Kompilasi Risiko.pdf');
     }
-
 }

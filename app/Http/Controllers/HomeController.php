@@ -130,6 +130,42 @@ class HomeController extends Controller
         return response()->json([ "success" => true, "labels" => $labels, "total_risk" => $total_risk, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, ]);
     }
 
+    public function dataRisikoKorporasi(Request $req) {
+        $companies = Perusahaan::where('company_id', Auth::user()->company_id)->limit(1)->get();
+        $labels = [];
+        $total_risk = [];
+        $mitigasi = [];
+        $selesai_mitigasi = [];
+        foreach ($companies as $c) {
+            array_push($labels, $c->instansi);
+            $count_risk = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                ->where('rd.company_id', $c->company_id)
+                ->where('rd.tahun', '=', $req->tahun)
+                ->whereNull('rd.deleted_at')
+                ->count('rd.id_riskd');
+            array_push($total_risk, $count_risk);
+
+            $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('status_mitigasi', '=', 1)
+                ->where('d.tahun', '=', $req->tahun)
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($mitigasi, $count_mitigasi);
+
+            $done_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
+                ->where('rd.company_id', $c->company_id)
+                ->where('m.realisasi', '=', 100)
+                ->where('m.is_approved', '=', 1)
+                ->where('rd.tahun', '=', $req->tahun)
+                ->whereNull('rd.deleted_at')
+                ->count('rd.id_riskd');
+            array_push($selesai_mitigasi, $done_mitigasi);
+        }
+        return response()->json([ "success" => true, "labels" => $labels, "total_risk" => $total_risk, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, ]);
+    }
+
     public function dataKategoriRisiko(Request $req) {
         $labels = [];
         $count = [];
