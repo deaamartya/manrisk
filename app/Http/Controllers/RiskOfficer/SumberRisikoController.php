@@ -49,7 +49,9 @@ class SumberRisikoController extends Controller
         'id_konteks' => $request->id_konteks,
         'id_user' => Auth::user()->id_user,
         'tahun' => $request->tahun,
-        'status_s_risiko' => 0
+        'status_s_risiko' => 0,
+        'created_at' => now(),
+        'updated_at' => now(),
       ]);
 
       return redirect()->route('risk-officer.sumber-risiko.index')->with('created-alert', 'Data sumber risiko berhasil disimpan.');
@@ -73,6 +75,7 @@ class SumberRisikoController extends Controller
       SRisiko::find($id)->update([
         's_risiko' => $request->s_risiko,
         'id_konteks' => $request->id_konteks,
+        'updated_at' => now(),
       ]);
 
       return redirect()->route('risk-officer.sumber-risiko.index')->with('updated-alert', 'Data sumber risiko berhasil diubah.');

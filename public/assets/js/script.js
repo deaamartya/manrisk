@@ -111,7 +111,9 @@
 })(jQuery);
 
 $('.loader-wrapper').fadeOut('slow', function () {
-    $(this).remove();
+    setTimeout(() => {
+        $(this).remove();
+    }, 1000);
 });
 
 $(window).on('scroll', function () {

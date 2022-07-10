@@ -54,6 +54,7 @@ class Perusahaan extends Model
 	public function countLow() {
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
+			->where('r_awal', '>', 1)
 			->where('r_awal', '<', 6)
 			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
@@ -62,6 +63,7 @@ class Perusahaan extends Model
 	public function countMed() {
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
+			->where('r_awal', '>=', 6)
 			->where('r_awal', '<', 12)
 			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
@@ -70,6 +72,7 @@ class Perusahaan extends Model
 	public function countHigh() {
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
+			->where('r_awal', '>=', 6)
 			->where('r_awal', '<', 16)
 			->whereNull('d.deleted_at')
 			->count('d.id_riskd');
