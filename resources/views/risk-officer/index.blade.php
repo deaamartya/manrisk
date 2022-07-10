@@ -154,14 +154,14 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-12">
+		<div class="col-6">
 			<div class="card">
 				<div class="card-body">
 					<h6>Peta Risiko</h6>
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
 						<div class="row">
 						@foreach($company as $p)
-						<div class="col-xxl-4 col-lg-6">
+						<div class="col-xxl-12 col-lg-12">
 							<div class="project-box">
 								@php
 									$count_mitigasi_p = $p->getCountMitigasi();

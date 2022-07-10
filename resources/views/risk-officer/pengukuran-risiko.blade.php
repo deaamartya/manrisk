@@ -200,11 +200,13 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <button class="btn btn-secondary" type="button" style="float:right;" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>                                        
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#daftarKlasifikasi">Daftar Klasifikasi</button>                                        
                         </div>
-                        <div class="col-sm-6">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
                             <a href="{{route('risk-officer.pengukuran-generatePDF') }}" class="btn btn-success" target="_blank">
                                 <i class="fa fa-print"></i> Cetak Penilaian
                             </a> 
@@ -271,8 +273,8 @@
 </div> 
 
 
-<div class="modal fade" id="daftarKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade bd-example-modal-lg" id="daftarKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h6 class="modal-title">Daftar Klasifikasi Kriteria Kemungkinan dan Dampak</h6>
@@ -283,8 +285,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-            
+    </div>            
 @endsection
