@@ -88,13 +88,13 @@ class AbsMitigasiPlan
             'status_h_indhan' => 1,
             'updated_at' => Carbon::now()
         ]);
-        $query->is_approved = 1;
-        $query->updated_at = Carbon::now();
-        $query->save();
-        // $query = DB::table('mitigasi_logs')->where('id', $id)->update([
-        //     'is_approved' => 1,
-        //     'updated_at' => Carbon::now()
-        // ]);
+        // $query->is_approved = 1;
+        // $query->updated_at = Carbon::now();
+        // $query->save();
+        DB::table('mitigasi_logs')->where('id', $id)->update([
+            'is_approved' => 1,
+            'updated_at' => Carbon::now()
+        ]);
         DB::commit();
 
         return $query;
