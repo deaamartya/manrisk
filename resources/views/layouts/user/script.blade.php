@@ -31,6 +31,14 @@
 {{-- Get Notification --}}
 <script type="text/javascript" src="{{asset('assets/js/custom/master.js')}}"></script>
 
+{{-- Session Time Out --}}
+<script>
+    var session_lifetime = '{{ env('SESSION_LIFETIME') }}'
+    setTimeout(() => {
+        location.href = APP_URL+"/login"
+    }, session_lifetime * 1000 * 60 + 2000);
+</script>
+
 
 {{-- @if(Route::current()->getName() == 'index')
 	<script src="{{asset('assets/js/layout-change.js')}}"></script>
