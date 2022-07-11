@@ -100,7 +100,8 @@ class AbsPengukuran
 
         }else{
             $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
-            
+            // dd(Auth::user()->company_id);
+            // dd($data_sr);
             if(count($data_sr) > 0){
                 $sr_exists = true;
                 $pengukuran_1 = [];
@@ -143,9 +144,11 @@ class AbsPengukuran
                                 ->whereRaw($wr_sr)
                                 ->get();
 
+                // dd($sumber_risiko);
                 $results['data_sr'] = $data_sr;
                 $results['pengukuran_1'] = $pengukuran_1;
                 $results['pengukuran_2'] = $pengukuran_2;
+                // dd($results['pengukuran_2']);
                 $results['sumber_risiko'] = $sumber_risiko;
             }
             else{
