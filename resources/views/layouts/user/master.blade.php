@@ -42,7 +42,7 @@
         <!-- Page Sidebar Start-->
         @include('layouts.user.sidebar')
         <!-- Page Sidebar Ends-->
-        <div class="page-body">
+        <div class="page-body" style="background-image: url('{{ asset('assets/images/bg-abs.png') }}'); background-size: 100% 100%; background-repeat: repeat;">
           <div class="container-fluid">
             <div class="page-title">
               <div class="row">
