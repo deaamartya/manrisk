@@ -173,7 +173,7 @@ $(document).ready(function(){
                     // $('.nip').hide()
                     $('.jabatan').hide()
                 }
-                $('#formMelakukanPenilaian').attr('disabled', 'disabled')
+                // $('#formMelakukanPenilaian').attr('disabled', 'disabled')
             },
             error:function(results){
                 console.log(results);

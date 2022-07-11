@@ -83,14 +83,27 @@ class AbsDataMaster
         else{
             DefendidUser::where('id_user', $id)->update($params);
             if($request->melakukan_penilaian == 1){
-                DefendidPengukur::where('id_user', $id)->update([
-                    'company_id' => $request->company_id,
-                    'id_user' => $id,
-                    'jabatan' => $request->jabatan,
-                    'nip' => $request->nip,
-                    'nama' => $request->name,
-                    'updated_at' => Carbon::now()
-                ]);
+                if(DefendidPengukur::where('id_user', $id)->exists()){
+                    DefendidPengukur::where('id_user', $id)->update([
+                        'company_id' => $request->company_id,
+                        'id_user' => $id,
+                        'jabatan' => $request->jabatan,
+                        'nip' => $request->nip,
+                        'nama' => $request->name,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
+                else{
+                    DefendidPengukur::insert([
+                        'company_id' => $request->company_id,
+                        'id_user' => $id_user,
+                        'jabatan' => $request->jabatan,
+                        'nip' => $request->nip,
+                        'nama' => $request->name,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
             }
             $results['messages'] = ['success-swal' => 'User berhasil diubah!'];
         }
