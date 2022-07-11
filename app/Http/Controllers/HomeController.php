@@ -35,57 +35,77 @@ class HomeController extends Controller
                 $count_risiko = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
                     ->where('rd.company_id', Auth::user()->company_id)
                     ->whereNull('rd.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
                     ->count('rd.id_riskd');
                 $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->where('d.tahun', date('Y'))
                     ->where('d.company_id', Auth::user()->company_id)
                     ->where('status_mitigasi', '=', 1)
                     ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
                     ->count('d.id_riskd');
-                $count_done_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
-                    ->where('rd.company_id', Auth::user()->company_id)
+                $count_done_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->join('mitigasi_logs as m', 'm.id_riskd', 'd.id_riskd')
+                    ->where('d.tahun', date('Y'))
+                    ->where('d.company_id', Auth::user()->company_id)
+                    ->where('status_mitigasi', '=', 1)
                     ->where('m.realisasi', '=', 100)
                     ->where('m.is_approved', '=', 1)
-                    ->whereNull('rd.deleted_at')
-                    ->count('rd.id_riskd');
+                    ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('d.id_riskd');
                 $company = Perusahaan::where('company_id', Auth::user()->company_id)->get();
                 return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
             if (Auth::user()->is_penilai_indhan) {
                 $counts_risiko = SRisiko::where('status_s_risiko', 1)->whereNull('deleted_at')->count('id_s_risiko');
-                $count_risiko = RiskDetail::where('status_indhan', 1) ->whereNull('deleted_at') ->count('id_riskd');
-                $count_mitigasi = RiskDetail::where('status_indhan', 1)
-                    ->where('tahun', date('Y'))
-                    ->where('status_mitigasi', '=', 1)
-                    ->whereNull('deleted_at')
-                    ->count('id_riskd');
-                $count_done_mitigasi = RiskDetail::where('status_indhan', 1)
-                    ->join('mitigasi_logs as m', 'm.id_riskd', 'risk_detail.id_riskd')
+                $count_risiko = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                    ->whereNull('rd.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('rd.id_riskd');
+                $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->where('d.tahun', date('Y'))
+                    ->where('d.status_mitigasi', '=', 1)
+                    ->where('d.status_indhan', 1)
+                    ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('d.id_riskd');
+                $count_done_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->join('mitigasi_logs as m', 'm.id_riskd', 'd.id_riskd')
+                    ->where('d.tahun', date('Y'))
+                    ->where('d.status_indhan', 1)
+                    ->where('d.status_mitigasi', '=', 1)
                     ->where('m.realisasi', '=', 100)
                     ->where('m.is_approved', '=', 1)
-                    ->where('tahun', date('Y'))
-                    ->where('status_mitigasi', '=', 1)
-                    ->whereNull('risk_detail.deleted_at')
-                    ->count('risk_detail.id_riskd');
+                    ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('d.id_riskd');
                 $company = Perusahaan::where('company_code', '!=', 'INHAN')->get();
                 return view('penilai-indhan.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
             if (Auth::user()->is_admin) {
                 $counts_risiko = SRisiko::where('status_s_risiko', 1)->whereNull('deleted_at')->count('id_s_risiko');
-                $count_risiko = RiskDetail::where('status_indhan', 1) ->whereNull('deleted_at') ->count('id_riskd');
-                $count_mitigasi = RiskDetail::where('status_indhan', 1)
-                    ->where('tahun', date('Y'))
-                    ->where('status_mitigasi', '=', 1)
-                    ->whereNull('deleted_at')
-                    ->count('id_riskd');
-                $count_done_mitigasi = RiskDetail::where('status_indhan', 1)
-                    ->join('mitigasi_logs as m', 'm.id_riskd', 'risk_detail.id_riskd')
+                $count_risiko = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                    ->whereNull('rd.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('rd.id_riskd');
+                $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->where('d.tahun', date('Y'))
+                    ->where('d.status_mitigasi', '=', 1)
+                    ->where('d.status_indhan', 1)
+                    ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('d.id_riskd');
+                $count_done_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                    ->join('mitigasi_logs as m', 'm.id_riskd', 'd.id_riskd')
+                    ->where('d.tahun', date('Y'))
+                    ->where('d.status_indhan', 1)
+                    ->where('d.status_mitigasi', '=', 1)
                     ->where('m.realisasi', '=', 100)
                     ->where('m.is_approved', '=', 1)
-                    ->where('tahun', date('Y'))
-                    ->where('status_mitigasi', '=', 1)
-                    ->whereNull('risk_detail.deleted_at')
-                    ->count('risk_detail.id_riskd');
+                    ->whereNull('d.deleted_at')
+                    ->whereNull('risk_header.deleted_at')
+                    ->count('d.id_riskd');
                 $company = Perusahaan::where('company_code', '!=', 'INHAN')->get();
                 return view('admin.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
@@ -202,8 +222,8 @@ class HomeController extends Controller
             ->groupBy('kr.id_risk')
             ->get();
         $total_risk = RiskDetail::where('tahun', '=', $req->tahun)
-        ->whereNull('deleted_at')
-        ->count('id_riskd');
+            ->whereNull('deleted_at')
+            ->count('id_riskd');
         foreach ($kelompok_risk as $c) {
             array_push($labels, $c->risk);
             $count_risk = $c->count_risk / $total_risk * 100;
@@ -218,9 +238,11 @@ class HomeController extends Controller
         $countHigh = 0;
         $countMed = 0;
         $countLow = 0;
-        $risk_detail = RiskDetail::where('company_id', Auth::user()->company_id)
-            ->whereNull('deleted_at')
-            ->where('risk_detail.tahun', '=', $req->tahun)
+        $risk_detail = RiskHeader::where('risk_header.company_id', Auth::user()->company_id)
+            ->join('risk_detail as rd', 'rd.id_riskh', '=', 'risk_header.id_riskh')
+            ->whereNull('risk_header.deleted_at')
+            ->whereNull('rd.deleted_at')
+            ->where('rd.tahun', '=', $req->tahun)
             ->get();
         foreach ($risk_detail as $r) {
             if ($r->r_awal < 6)  $countLow++;
@@ -237,8 +259,10 @@ class HomeController extends Controller
         $countHigh = 0;
         $countMed = 0;
         $countLow = 0;
-        $risk_detail = RiskDetail::whereNull('deleted_at')
-            ->where('tahun', '=', $req->tahun)
+        $risk_detail = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', '=', 'risk_header.id_riskh')
+            ->whereNull('risk_header.deleted_at')
+            ->whereNull('rd.deleted_at')
+            ->where('rd.tahun', '=', $req->tahun)
             ->get();
         foreach ($risk_detail as $r) {
             if ($r->r_awal < 6)  $countLow++;

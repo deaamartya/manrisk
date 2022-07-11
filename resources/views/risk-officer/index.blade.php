@@ -23,10 +23,10 @@
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-6 col-12 pb-0">
-			<div class="row">
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+			<div class="card o-hidden mb-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-6 col-12 pb-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko Korporasi</span></p>
@@ -35,11 +35,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 pb-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Korporasi</span></p>
@@ -48,11 +44,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 pb-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
@@ -61,11 +53,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 pb-3">
 							<div class="media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
@@ -219,7 +207,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between mb-3">
-						<h6>Grafik Risiko berdasarkan Klasifikasi Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
+						<h6>Kompilasi Tingkat Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
 						<div class="col-lg-3">
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-level-risiko">
@@ -341,7 +329,12 @@
 								}
 						}
 				}],
-				colors:[ CubaAdminConfig.primary , CubaAdminConfig.secondary , '#51bb25', '#a927f9', '#f8d62b']
+				colors:[
+					'#f54e49', '#827397', '#8CC0DE', '#3A5BA0',
+					'#AEDBCE', '#C499BA', '#FFCD38', '#B4E197',
+					'#FFA1A1', '#A0BCC2', '#5F7161', '#92B4EC',
+					'#FF8D29', '#FF8B8B', '#94B49F', '#937DC2'
+				]
 			}
 			
 			if (chart8) chart8.destroy();

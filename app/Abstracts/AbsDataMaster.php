@@ -96,7 +96,7 @@ class AbsDataMaster
                 else{
                     DefendidPengukur::insert([
                         'company_id' => $request->company_id,
-                        'id_user' => $id_user,
+                        'id_user' => $id,
                         'jabatan' => $request->jabatan,
                         'nip' => $request->nip,
                         'nama' => $request->name,
