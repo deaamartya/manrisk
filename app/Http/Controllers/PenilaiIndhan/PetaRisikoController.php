@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RiskOfficer;
+namespace App\Http\Controllers\PenilaiIndhan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,12 +9,11 @@ use DB;
 
 class PetaRisikoController extends Controller
 {
-    public function show($id, Request $req) {
+    public function show($id) {
         $s_risiko = SRisiko::
             select('s_risiko.*', DB::raw('COALESCE(AVG(p.nilai_L), 0) as l_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) as c_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) * COALESCE(AVG(p.nilai_L), 0) as r_awal'))
             ->leftJoin('pengukuran as p', 's_risiko.id_s_risiko', '=', 'p.id_s_risiko')
             ->where('s_risiko.company_id', '=', $id)
-            ->where('s_risiko.tahun', '=', $req->tahun_risk)
             ->whereNull('s_risiko.deleted_at')
             ->groupBy('s_risiko.id_s_risiko')
             ->get();
@@ -41,7 +40,6 @@ class PetaRisikoController extends Controller
             $val_r[] = $s->r_awal;
         }
         if (count($val_r) > 1) $r_tertinggi = floatval(max($val_r));
-        $tahun_req = $req->tahun_risk;
-        return view('risk-officer.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi', 'tahun_req'));
+        return view('penilai-indhan.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi'));
     }
 }

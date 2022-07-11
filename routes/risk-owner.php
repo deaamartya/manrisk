@@ -5,6 +5,7 @@ use \App\Http\Controllers\RiskOwner\{
   PengukuranRisikoController,
   RiskController,
   RiskRegisterIndhanController,
+  PetaRisikoController,
 };
 
 use \App\Http\Controllers\{
@@ -21,7 +22,8 @@ Route::middleware(['auth', 'cekRiskOwner'])->name('risk-owner.')->group(function
   Route::get('risiko/toggle-indhan/{id}', [RiskController::class, 'toggleIndhan'])->name('toggleIndhan');
   Route::get('risiko/approve/{id}', [RiskController::class, 'approve'])->name('risiko.approve');
   Route::get('risiko/print/{id}', [RiskController::class, 'print'])->name('risiko.print');
-  
+  Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
+
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
   Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');

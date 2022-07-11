@@ -157,7 +157,18 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<h6>Peta Risiko</h6>
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Peta Risiko Tahun <span id="tahun-title-peta">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-petarisiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
 						<div class="row">
 						@foreach($company as $p)
@@ -211,7 +222,7 @@
 										</div>
 								</div>
 								<div class="row mt-3">
-									<a href="{{ route('admin.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+									<a href="{{ route('penilai-indhan.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
 								</div>
 							</div>
 						</div>

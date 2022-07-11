@@ -157,7 +157,18 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-body">
-					<h6>Peta Risiko</h6>
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Peta Risiko Tahun <span id="tahun-title-peta">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-petarisiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
 						<div class="row">
 						@foreach($company as $p)
@@ -182,24 +193,24 @@
 								<div class="row details">
 										<div class="col-6"><span>Risiko Rendah</span></div>
 										<div class="col-6">
-											<div class="badge badge-green mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countLow() }}</div>
+											<div id="risiko-rendah-{{ $p->company_id }}" class="badge badge-green mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countLow() }}</div>
 										</div>
 										<div class="col-6"><span>Risiko Sedang</span></div>
 										<div class="col-6">
-											<div class="badge badge-warning mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countMed() }}</div>
+											<div id="risiko-sedang-{{ $p->company_id }}" class="badge badge-warning mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countMed() }}</div>
 										</div>
 										<div class="col-6"><span>Risiko Tinggi</span></div>
 										<div class="col-6">
-											<div class="badge badge-pink mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countHigh() }}</div>
+											<div id="risiko-tinggi-{{ $p->company_id }}" class="badge badge-pink mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countHigh() }}</div>
 										</div>
 										<div class="col-6"><span>Risiko Ekstrem</span></div>
 										<div class="col-6">
-											<div class="badge badge-danger" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countExtreme() }}</div>
+											<div id="risiko-ekstrem-{{ $p->company_id }}" class="badge badge-danger" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countExtreme() }}</div>
 										</div>
 										<div class="col-6"> <span>Mitigasi</span></div>
-										<div class="col-6 text-primary">{{ $p->getCountMitigasi() }}</div>
+										<div id="mitigasi-{{ $p->company_id }}" class="col-6 text-primary">{{ $p->getCountMitigasi() }}</div>
 										<div class="col-6"> <span>Selesai Mitigasi</span></div>
-										<div class="col-6 text-primary">{{ $p->getCountMitigasiDone() }}</div>
+										<div id="selesai-mitigasi-{{ $p->company_id }}" class="col-6 text-primary">{{ $p->getCountMitigasiDone() }}</div>
 								</div>
 								<div class="project-status mt-4">
 										<div class="media mb-0">
@@ -425,6 +436,27 @@
 					}
 			});
 		});
+
+		$('#tahun-petarisiko').change(function(){
+			const url = "{{ url('dashboard/data-petarisiko-indhan') }}";
+			// console.log($('#tahun-petarisiko').val());
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-petarisiko').val() })
+				.done(function(result) {
+					console.log(result);
+					$('#tahun-title-peta').html($('#tahun-petarisiko').val());
+					$('#tahun-risk').val($('#tahun-petarisiko').val());
+					$('#risiko-rendah').html(result.risiko_rendah);
+					$('#risiko-sedang').html(result.risiko_sedang);
+					$('#risiko-tinggi').html(result.risiko_tinggi);
+					$('#risiko-ekstrem').html(result.risiko_ekstrem);
+					$('#mitigasi').html(result.mitigasi);
+					$('#selesai-mitigasi').html(result.selesai_mitigasi);
+					$('#progress-mitigasi').html(result.progress_mitigasi);
+					$('#progress-mitigasi').attr('aria-valuenow', result.progress_mitigasi).css('width', result.progress_mitigasi+'%');
+			});
+		});
+
+
 		$('#tahun-kat-risiko').change(function(){
 			$("#basic-pie").hide();
 			$("#basic-pie-loading").show();

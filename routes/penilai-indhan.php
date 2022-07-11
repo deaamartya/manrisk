@@ -5,6 +5,7 @@ use \App\Http\Controllers\PenilaiIndhan\{
   PengukuranRisikoIndhanController,
   RiskRegisterKorporasiController,
   RiskRegisterIndhanController,
+  PetaRisikoController,
 };
 
 use \App\Http\Controllers\{
@@ -28,6 +29,8 @@ Route::name('penilai-indhan.')->group(function () {
     Route::post('risk-detail-mitigation/{id}', [RiskRegisterKorporasiController::class, 'mitigation'])->name('mitigation');
     Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterKorporasiController::class, 'notMitigation'])->name('not-mitigation');
     Route::delete('risk-detail-delete/{id}', [RiskRegisterKorporasiController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
+
+    Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
 
     Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
     Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');

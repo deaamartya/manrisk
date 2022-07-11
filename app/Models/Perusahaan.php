@@ -57,7 +57,6 @@ class Perusahaan extends Model
 			->where('d.company_id', $this->company_id)
 			->where('r_awal', '>', 1)
 			->where('r_awal', '<', 6)
-			// ->where('d.tahun', $req->tahun)
 			->whereNull('risk_header.deleted_at')
 			->whereNull('d.deleted_at')
 			->count('d.id_riskd');

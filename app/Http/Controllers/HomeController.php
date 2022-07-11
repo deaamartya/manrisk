@@ -186,6 +186,150 @@ class HomeController extends Controller
         return response()->json([ "success" => true, "labels" => $labels, "total_risk" => $total_risk, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, ]);
     }
 
+    public function dataPetaRisikoKorporasi(Request $req) {
+        $company = Perusahaan::where('company_id', Auth::user()->company_id)->pluck('company_id');
+        $risiko_rendah = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.company_id', $company)
+			->where('r_awal', '>', 1)
+			->where('r_awal', '<', 6)
+			->where('d.tahun', $req->tahun)
+			->whereNull('risk_header.deleted_at')
+			->whereNull('d.deleted_at')
+			->count('d.id_riskd');
+
+        $risiko_sedang = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->where('d.company_id', $company)
+			->where('r_awal', '>=', 6)
+			->where('r_awal', '<', 12)
+            ->where('d.tahun', $req->tahun)
+			->whereNull('risk_header.deleted_at')
+			->whereNull('d.deleted_at')
+			->count('d.id_riskd');
+
+        $risiko_tinggi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+            ->where('d.company_id', $company)
+            ->where('r_awal', '>=', 12)
+            ->where('r_awal', '<', 16)
+            ->where('d.tahun', $req->tahun)
+            ->whereNull('risk_header.deleted_at')
+            ->whereNull('d.deleted_at')
+            ->count('d.id_riskd');
+
+        $risiko_ekstrem = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+            ->where('d.company_id', $company)
+            ->where('r_awal', '>=', 16)
+            ->where('d.tahun', $req->tahun)
+            ->whereNull('risk_header.deleted_at')
+            ->whereNull('d.deleted_at')
+            ->count('d.id_riskd');
+        
+        $mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+            ->where('d.company_id', $company)
+            ->where('status_mitigasi', '=', 1)
+            ->where('d.tahun', $req->tahun)
+            ->whereNull('d.deleted_at')
+            ->count('d.id_riskd');
+        
+        $selesai_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+            ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
+            ->where('rd.company_id', $company)
+            ->where('m.realisasi', '=', 100)
+            ->where('m.is_approved', '=', 1)
+            ->where('rd.tahun', $req->tahun)
+            ->whereNull('rd.deleted_at')
+            ->count('rd.id_riskd');
+        
+		if ($mitigasi < 1) {
+			$progress_mitigasi = 100;
+		}
+		else{
+            $progress_mitigasi = intval($selesai_mitigasi / $mitigasi * 100);
+        }
+
+        return response()->json([ "success" => true, "risiko_rendah" => $risiko_rendah, "risiko_sedang" => $risiko_sedang, "risiko_tinggi" => $risiko_tinggi, "risiko_ekstrem" => $risiko_ekstrem, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, "progress_mitigasi" => $progress_mitigasi]);
+    }
+
+    public function dataPetaRisikoIndhan(Request $req) {
+        $companies = Perusahaan::limit(5)->get();
+        $labels = [];
+        $risiko_rendah = [];
+        $risiko_sedang = [];
+        $risiko_tinggi = [];
+        $risiko_ekstrem = [];
+        $mitigasi = [];
+        $selesai_mitigasi = [];
+        $progress_mitigasi = [];
+        foreach ($companies as $c) {
+            array_push($labels, $c->instansi);
+            $count_risiko_rendah = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('r_awal', '>', 1)
+                ->where('r_awal', '<', 6)
+                ->where('d.tahun', $req->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($risiko_rendah, $count_risiko_rendah);
+
+            $count_risiko_sedang = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('r_awal', '>=', 6)
+                ->where('r_awal', '<', 12)
+                ->where('d.tahun', $req->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($risiko_sedang, $count_risiko_sedang);
+
+            $count_risiko_tinggi= RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('r_awal', '>=', 12)
+                ->where('r_awal', '<', 16)
+                ->where('d.tahun', $req->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($risiko_tinggi, $count_risiko_tinggi);
+
+            $count_risiko_ekstrem = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('r_awal', '>=', 16)
+                ->where('d.tahun', $req->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($risiko_ekstrem, $count_risiko_ekstrem);
+
+            $count_mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+                ->where('d.company_id', $c->company_id)
+                ->where('status_mitigasi', '=', 1)
+                ->where('d.tahun', '=', $req->tahun)
+                ->whereNull('d.deleted_at')
+                ->count('d.id_riskd');
+            array_push($mitigasi, $count_mitigasi);
+
+            $done_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+                ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
+                ->where('rd.company_id', $c->company_id)
+                ->where('m.realisasi', '=', 100)
+                ->where('m.is_approved', '=', 1)
+                ->where('rd.tahun', '=', $req->tahun)
+                ->whereNull('rd.deleted_at')
+                ->count('rd.id_riskd');
+            array_push($selesai_mitigasi, $done_mitigasi);
+
+            if ($count_mitigasi < 1) {
+                $count_progress_mitigasi = 100;
+            }
+            else{
+                $count_progress_mitigasi = intval($done_mitigasi / $count_mitigasi * 100);
+            }
+            array_push($progress_mitigasi, $count_progress_mitigasi);
+        }
+
+        return response()->json([ "success" => true, "labels" => $labels, "risiko_rendah" => $risiko_rendah, "risiko_sedang" => $risiko_sedang, "risiko_tinggi" => $risiko_tinggi, "risiko_ekstrem" => $risiko_ekstrem, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, "progress_mitigasi" => $progress_mitigasi]);
+    }
+
     public function dataKategoriRisiko(Request $req) {
         $labels = [];
         $count = [];

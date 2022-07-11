@@ -150,7 +150,6 @@
     console.log(r_all);
     var tahun = 'Tahun ';
     tahun += tahun_req;
-    
 
     var pieColors = (function () {
         var colors = ['#0066ff', '#ff6600'];

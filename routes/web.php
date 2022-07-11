@@ -36,6 +36,8 @@ Route::post('dashboard/data-kategori-risiko', [HomeController::class, 'dataKateg
 Route::post('dashboard/data-kategori-risiko-indhan', [HomeController::class, 'dataKategoriRisikoIndhan']);
 Route::post('dashboard/data-level-risiko', [HomeController::class, 'dataLevelRisiko']);
 Route::post('dashboard/data-level-risiko-indhan', [HomeController::class, 'dataLevelRisikoIndhan']);
+Route::post('dashboard/data-petarisiko-korporasi', [HomeController::class, 'dataPetaRisikoKorporasi']);
+Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPetaRisikoIndhan']);
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {

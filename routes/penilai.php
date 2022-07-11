@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Penilai\{
-  PengukuranRisikoController
+  PengukuranRisikoController,
+  PetaRisikoController,
 };
 
 use \App\Http\Controllers\{
@@ -15,5 +16,5 @@ Route::name('penilai.')->group(function () {
   Route::get('generate-pdf', [PengukuranRisikoController::class, 'generatePDF'])->name('pengukuran-generatePDF');
   Route::post('penilaian-risiko', [PengukuranRisikoController::class, 'penilaianRisiko'])->name('penilaian-risiko');
   Route::post('penilaian-risiko-store', [PengukuranRisikoController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-store');
-  
+  Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
 });

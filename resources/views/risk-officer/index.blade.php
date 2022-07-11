@@ -142,12 +142,14 @@
 											$count_mitigasi_p = $p->getCountMitigasi();
 											$count_done_mitigasi_p = $p->getCountMitigasiDone();
 										@endphp
-										@if($count_done_mitigasi_p === $count_mitigasi_p)
-										<span class="badge badge-green">Done
-										@else
-										<span class="badge badge-primary">On Progress
-										@endif
-										</span>
+										<div id="badge-progress">
+											@if($count_done_mitigasi_p === $count_mitigasi_p)
+											<span class="badge badge-green">Done
+											@else
+											<span class="badge badge-primary">On Progress
+											@endif
+											</span>
+										</div>
 										<div class="media">
 												<img class="me-1 rounded"
 													src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
@@ -182,16 +184,29 @@
 													<div class="media-body text-end"><span>Done</span></div>
 												</div>
 												<div class="progress" style="height: 5px">
-													<div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+													<div id="progress-mitigasi" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 										</div>
 										<div class="row mt-3">
-											<!-- <form method="post" action="{{ route('risk-officer.peta-risiko', $p->company_id) }}">
-												@csrf
-												<input type="hidden" id="tahun-risk" name="tahun_risk" value="">
+											@if(Auth::user()->is_risk_officer)
+												<form method="get" action="{{ route('risk-officer.peta-risiko', $p->company_id) }}">
+											@elseif(Auth::user()->is_risk_owner)
+												<form method="get" action="{{ route('risk-owner.peta-risiko', $p->company_id) }}">
+											@elseif(Auth::user()->is_penilai)
+												<form method="get" action="{{ route('penilai.peta-risiko', $p->company_id) }}">
+											@endif
+												<input type="hidden" id="tahun-risk" name="tahun_risk" value="{{ date('Y') }}">
 												<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
-											</form> -->
-											<a href="{{ route('risk-officer.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+											</form>
+											{{--
+											@if(Auth::user()->is_risk_officer)
+												<a href="{{ route('risk-officer.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+											@elseif(Auth::user()->is_risk_owner)
+												<a href="{{ route('risk-owner.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+											@elseif(Auth::user()->is_penilai)
+												<a href="{{ route('penilai.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+											@endif
+											--}}
 										</div>
 									</div>
 								</div>
@@ -429,12 +444,27 @@
 		});
 
 		$('#tahun-petarisiko').change(function(){
-			const url = "{{ url('dashboard/data-petarisiko-korporasi') }}"
+			const url = "{{ url('dashboard/data-petarisiko-korporasi') }}";
+			console.log($('#tahun-petarisiko').val());
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-petarisiko').val() })
 				.done(function(result) {
 					$('#tahun-title-peta').html($('#tahun-petarisiko').val());
 					$('#tahun-risk').val($('#tahun-petarisiko').val());
 					$('#risiko-rendah').html(result.risiko_rendah);
+					$('#risiko-sedang').html(result.risiko_sedang);
+					$('#risiko-tinggi').html(result.risiko_tinggi);
+					$('#risiko-ekstrem').html(result.risiko_ekstrem);
+					$('#mitigasi').html(result.mitigasi);
+					$('#selesai-mitigasi').html(result.selesai_mitigasi);
+					$('#mitigasi-percentage').html(result.progress_mitigasi);
+					$('#progress-mitigasi').attr('aria-valuenow', result.progress_mitigasi).css('width', result.progress_mitigasi+'%');
+
+					if(result.selesai_mitigasi == result.mitigasi){
+						$('#badge-progress').html('<span class="badge badge-green">Done</span>');
+					}else{
+						$('#badge-progress').html('<span class="badge badge-primary">On Progress</span>');
+					}
+					
 			});
 		});
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RiskOfficer;
+namespace App\Http\Controllers\Penilai;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -42,6 +42,6 @@ class PetaRisikoController extends Controller
         }
         if (count($val_r) > 1) $r_tertinggi = floatval(max($val_r));
         $tahun_req = $req->tahun_risk;
-        return view('risk-officer.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi', 'tahun_req'));
+        return view('penilai.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi', 'tahun_req'));
     }
 }
