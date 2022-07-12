@@ -59,6 +59,14 @@
 							<span>Dashboard</span>
 						</a>
 					</li>
+					@elseif(Auth::user()->is_admin)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
+							<i data-feather="home"></i>
+							<span>Dashboard</span>
+							<!-- <label class="badge badge-secondary total-notif" style="float: right;"></label> -->
+						</a>
+					</li>
 					@elseif(Auth::user()->is_penilai)
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai.dashboard' ? 'active' : '' }}" href="{{route('penilai.dashboard')}}">
@@ -71,14 +79,6 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.dashboard' ? 'active' : '' }}" href="{{route('penilai-indhan.dashboard')}}">
 							<i data-feather="home"></i>
 							<span>Dashboard</span>
-						</a>
-					</li>
-					@elseif(Auth::user()->is_admin)
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
-							<i data-feather="home"></i>
-							<span>Dashboard</span>
-							<!-- <label class="badge badge-secondary total-notif" style="float: right;"></label> -->
 						</a>
 					</li>
 					@endif
@@ -151,12 +151,14 @@
 						@endif
 					</li>
 					@if(Auth::user()->is_penilai_indhan)
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
-							<i data-feather="edit"></i>
-							<span>Pengukuran Risiko Indhan</span>
-						</a>
-					</li>
+						@if(!Auth::user()->is_risk_officer && !Auth::user()->is_risk_owner && !Auth::user()->is_penilai && !Auth::user()->is_admin)
+						<li class="sidebar-list">
+							<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
+								<i data-feather="edit"></i>
+								<span>Pengukuran Risiko Indhan</span>
+							</a>
+						</li>
+						@endif
 					@endif
 					@if(Auth::user()->is_risk_officer)
 					<li class="sidebar-list">
@@ -168,6 +170,46 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('risk-officer.risk-register-indhan.index')}}">
 							<i data-feather="list"></i>
+							<span>Risk Register INDHAN</span>
+						</a>
+					</li>
+					@elseif(Auth::user()->is_risk_owner)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
+							<i data-feather="list"></i>
+							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('risk-owner.risk-register-indhan.index')}}">
+							<i data-feather="list"></i>
+							<span>Risk Register INDHAN</span>
+						</a>
+					</li>
+					@elseif(Auth::user()->is_admin)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register Korp. </span>
+							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register INDHAN</span>
+						</a>
+					</li>
+					@elseif(Auth::user()->is_penilai_indhan)
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-korporasi' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-korporasi')}}">
+							<i data-feather="sidebar"></i>
+							<span>Risk Register Korporasi</span>
+						</a>
+					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-indhan.index')}}">
+							<i data-feather="sidebar"></i>
 							<span>Risk Register INDHAN</span>
 						</a>
 					</li>
@@ -226,54 +268,12 @@
 						</a>
 					</li>
 					@endif
-					@if(Auth::user()->is_admin)
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
-							<i data-feather="sidebar"></i>
-							<span>Risk Register Korp. </span>
-							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
-						</a>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('admin.risk-register-indhan.index')}}">
-							<i data-feather="sidebar"></i>
-							<span>Risk Register INDHAN</span>
-						</a>
-					</li>
-					@elseif(Auth::user()->is_penilai_indhan)
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-korporasi' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-korporasi')}}">
-							<i data-feather="sidebar"></i>
-							<span>Risk Register Korporasi</span>
-						</a>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('penilai-indhan.risk-register-indhan.index')}}">
-							<i data-feather="sidebar"></i>
-							<span>Risk Register INDHAN</span>
-						</a>
-					</li>
-					@endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">
 							<i data-feather="list"></i>
 							<span>Forum</span>
 						</a>
 					</li>
-					@if(Auth::user()->is_risk_owner)
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
-							<i data-feather="list"></i>
-							<span>Risk Register Korporasi</span>
-						</a>
-					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risk-register-indhan.index' ? 'active' : '' }}" href="{{route('risk-owner.risk-register-indhan.index')}}">
-							<i data-feather="list"></i>
-							<span>Risk Register INDHAN</span>
-						</a>
-					</li>
-					@endif
 				</ul>
 			</div>
 		</nav>
