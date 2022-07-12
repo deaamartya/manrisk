@@ -89,11 +89,16 @@
                             <li>
                                 <a class="sidebar-link sidebar-title link-nav
                                 {{ Route::currentRouteName() == 'admin.user' ? 'active' : Route::currentRouteName() == 'risk-officer.user' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.user') : route('risk-officer.user') }}">
-
                                     <span>User</span>
                                 </a>
                             </li>
-                            @if(Auth::user()->is_admin)
+							@if(Auth::user()->is_risk_officer)
+							<li>
+								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
+									<span>Sumber Risiko</span>
+								</a>
+							</li>
+                            @elseif(Auth::user()->is_admin)
                             <li>
                                 <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.perusahaan' ? 'active' : '' }}" href="{{route('admin.perusahaan')}}">
 
@@ -112,25 +117,16 @@
                                     <span>Konteks</span>
                                 </a>
                             </li>
+							<li>
+								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
+							
+									<span>Sumber Risiko</span>
+									<label class="badge badge-secondary srisiko-indhan-notif" style="float: right;"></label>
+								</a>
+							</li>
                             @endif
                         </ul>
                     </li>
-					@endif
-					@if(Auth::user()->is_risk_officer || Auth::user()->is_admin )
-					<li class="sidebar-list">
-						@if(Auth::user()->is_risk_officer)
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
-							<i data-feather="list"></i>
-							<span>Sumber Risiko</span>
-						</a>
-						@elseif(Auth::user()->is_admin)
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
-							<i data-feather="list"></i>
-							<span>Sumber Risiko</span>
-							<label class="badge badge-secondary srisiko-indhan-notif" style="float: right;"></label>
-						</a>
-						@endif
-					</li>
 					@endif
 					<li class="sidebar-list">
 						@if(Auth::user()->is_risk_officer)
