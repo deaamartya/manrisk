@@ -224,8 +224,8 @@
 										</div>
 								</div>
 								<div class="row mt-3">
-									<form method="get" action="{{ route('admin.peta-risiko', $p->company_id) }}">
-										<input type="hidden" id="tahun-risk" name="tahun_risk" value="{{ date('Y') }}">
+									<form method="get" action="{{ route('penilai-indhan.peta-risiko', $p->company_id) }}">
+										<input type="hidden" id="tahun-risk-{{ $p->company_id }}" name="tahun_risk" value="{{ date('Y') }}">
 										<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
 									</form>
 									<!-- <a href="{{ route('admin.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a> -->
@@ -443,9 +443,9 @@
 				.done(function(result) {
 					// console.log(result);
 					$('#tahun-title-peta').html($('#tahun-petarisiko').val());
-					$('#tahun-risk').val($('#tahun-petarisiko').val());
 					// console.log($('#tahun-risk').val());
 					for(var i = 1; i<=result.companies.length; i++){
+						$('#tahun-risk-'+result.companies[i-1].company_id).val($('#tahun-petarisiko').val());
 						$('#risiko-rendah-'+result.companies[i-1].company_id).html(result.risiko_rendah[i-1]);
 						$('#risiko-sedang-'+result.companies[i-1].company_id).html(result.risiko_sedang[i-1]);
 						$('#risiko-tinggi-'+result.companies[i-1].company_id).html(result.risiko_tinggi[i-1]);

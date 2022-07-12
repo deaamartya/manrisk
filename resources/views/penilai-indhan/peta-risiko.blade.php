@@ -141,6 +141,7 @@
     const r_tertinggi = @json($r_tertinggi);
     const r_total = @json($r_total);
     const r_all = r_total - r_tertinggi;
+    const tahun_req = @json($tahun_req);
     // console.log(low);
     // console.log(med);
     // console.log(high);
@@ -148,7 +149,7 @@
     // console.log(r_tertinggi);
     console.log(r_all);
     var tahun = 'Tahun ';
-    tahun += 2022;
+    tahun += tahun_req;
 
     var pieColors = (function () {
         var colors = ['#0066ff', '#ff6600'];
