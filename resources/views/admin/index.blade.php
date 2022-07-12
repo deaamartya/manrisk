@@ -349,14 +349,14 @@
 					'#FF8D29', '#FF8B8B', '#94B49F', '#937DC2'
 				]
 			}
-			
+
 			if (chart8) chart8.destroy();
 
 			chart8 = new ApexCharts(
 				document.querySelector("#basic-pie"),
 				options8
 			);
-			
+
 			$("#basic-pie-loading").hide();
 			$("#basic-pie").show();
 			chart8.render();
@@ -448,28 +448,28 @@
 			// console.log($('#tahun-petarisiko').val());
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-petarisiko').val() })
 				.done(function(result) {
-					console.log(result);
+					// console.log(result);
 					$('#tahun-title-peta').html($('#tahun-petarisiko').val());
 					$('#tahun-risk').val($('#tahun-petarisiko').val());
 					// console.log($('#tahun-risk').val());
-					for(var i = 1; i<=count(result.companies); i++){
-						$('#risiko-rendah-'+i).html(result.risiko_rendah);
-						$('#risiko-sedang'+i).html(result.risiko_sedang);
-						$('#risiko-tinggi'+i).html(result.risiko_tinggi);
-						$('#risiko-ekstrem'+i).html(result.risiko_ekstrem);
-						$('#mitigasi'+i).html(result.mitigasi);
-						$('#selesai-mitigasi'+i).html(result.selesai_mitigasi);
-						$('#mitigasi-percentage'+i).html(result.progress_mitigasi);
-						$('#progress-mitigasi'+i).attr('aria-valuenow', result.progress_mitigasi).css('width', result.progress_mitigasi+'%');
+					for(var i = 1; i<=result.companies.length; i++){
+						$('#risiko-rendah-'+result.companies[i-1].company_id).html(result.risiko_rendah[i-1]);
+						$('#risiko-sedang-'+result.companies[i-1].company_id).html(result.risiko_sedang[i-1]);
+						$('#risiko-tinggi-'+result.companies[i-1].company_id).html(result.risiko_tinggi[i-1]);
+						$('#risiko-ekstrem-'+result.companies[i-1].company_id).html(result.risiko_ekstrem[i-1]);
+						$('#mitigasi-'+result.companies[i-1].company_id).html(result.mitigasi[i-1]);
+						$('#selesai-mitigasi-'+result.companies[i-1].company_id).html(result.selesai_mitigasi[i-1]);
+						$('#mitigasi-percentage-'+result.companies[i-1].company_id).html(result.progress_mitigasi[i-1]);
+						$('#progress-mitigasi-'+result.companies[i-1].company_id).attr('aria-valuenow', result.progress_mitigasi[i-1]).css('width', result.progress_mitigasi[i-1]+'%');
 
-						if(result.selesai_mitigasi == result.mitigasi){
-							$('#badge-progress'+i).html('<span class="badge badge-green">Done</span>');
+						if(result.selesai_mitigasi[i-1] == result.mitigasi[i-1]){
+							$('#badge-progress-'+result.companies[i-1].company_id).html('<span class="badge badge-green">Done</span>');
 						}else{
-							$('#badge-progress'+i).html('<span class="badge badge-primary">On Progress</span>');
+							$('#badge-progress-'+result.companies[i-1].company_id).html('<span class="badge badge-primary">On Progress</span>');
 						}
 					}
-					
-					
+
+
 			});
 		});
 
