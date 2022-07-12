@@ -190,7 +190,7 @@ class HomeController extends Controller
         $company = Perusahaan::where('company_id', Auth::user()->company_id)->pluck('company_id');
         $risiko_rendah = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $company)
-			->where('r_awal', '>', 1)
+			->where('r_awal', '>=', 1)
 			->where('r_awal', '<', 6)
 			->where('d.tahun', $req->tahun)
 			->whereNull('risk_header.deleted_at')
@@ -261,7 +261,7 @@ class HomeController extends Controller
         foreach ($companies as $c) {
             $count_risiko_rendah = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
                 ->where('d.company_id', $c->company_id)
-                ->where('r_awal', '>', 1)
+                ->where('r_awal', '>=', 1)
                 ->where('r_awal', '<', 6)
                 ->where('d.tahun', $req->tahun)
                 ->whereNull('risk_header.deleted_at')
