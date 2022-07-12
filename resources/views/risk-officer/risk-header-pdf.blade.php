@@ -71,11 +71,17 @@
 			.p-0 {
 				padding: 0;
 			}
+			.m-0 {
+				margin: 0;
+			}
 			.border-top-none {
 				border-top: none !important;
 			}
 			.border-bottom-none {
 				border-bottom: none !important;
+			}
+			.border-bottom-1 {
+				border-bottom: 1px solid black;
 			}
 			.border-right-none {
 				border-right: none !important;
@@ -152,7 +158,9 @@ $bulan = array (
 			</td>
 			<td rowspan="5" class="qrcode-row">
 				<img src="data:image/png;base64,{{ $qrcode }}" style="max-height:90px; border: 1px solid black;">
-				<p class="f-10 m-1">Ditandangani secara elektronik oleh {{ ($header->pemeriksa ? $header->pemeriksa->jabatan : '') }} - {{ ($header->pemeriksa ? $header->pemeriksa->name : '') }}</p>
+				<p class="f-10 m-1">Ditandangani secara elektronik oleh </p>
+				<p class="f-10 m-0">{{ ($header->pemeriksa ? $header->pemeriksa->name : '') }}</p>
+				<p class="f-10 m-1">{{ ($header->pemeriksa ? $header->pemeriksa->jabatan : '') }}</p>
 			</td>
 		</tr>
 		<tr>
