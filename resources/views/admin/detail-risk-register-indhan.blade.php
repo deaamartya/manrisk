@@ -297,7 +297,7 @@
             @csrf
             <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
             <input type="hidden" name="tahun" value="{{ $headers->tahun }}">
-            <input type="hidden" name="status_indhan" value="1"> 
+            <input type="hidden" name="status_indhan" value="1">
             <input type="hidden" name="status_mitigasi" value="0">
             <div class="modal-body">
               <div class="row">

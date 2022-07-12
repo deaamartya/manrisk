@@ -146,18 +146,20 @@
                       {{ number_format($d->r_awal, 2) + 0 }}
                       </span>
                     </td>
-                    <td>
+                    <td align="center">
                       @if(count($d->pengajuan_mitigasi) === 1)
                       <span>Aksi Mitigasi telah diajukan</span>
                       @else
                         @if($d->r_awal >= 12)
-                          <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                          <span class="badge badge-success">Aman</span>
+                        {{-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Tidak Perlu Mitigasi
-                          </button>
+                        </button> --}}
                         @elseif($d->r_awal < 12)
-                          <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                          {{-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Ajukan Mitigasi
-                          </button>
+                          </button> --}}
                         @endif
                       @endif
                     </td>
@@ -170,6 +172,9 @@
                       </button>
                       <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
                         <i data-feather="trash-2" class="small-icon"></i>
+                      </button>
+                      <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                        <i data-feather="info" class="small-icon"></i>
                       </button>
                     </td>
                   </tr>
