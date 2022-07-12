@@ -251,7 +251,6 @@ class HomeController extends Controller
 
     public function dataPetaRisikoIndhan(Request $req) {
         $companies = Perusahaan::limit(5)->get();
-        $labels = [];
         $risiko_rendah = [];
         $risiko_sedang = [];
         $risiko_tinggi = [];
@@ -260,7 +259,6 @@ class HomeController extends Controller
         $selesai_mitigasi = [];
         $progress_mitigasi = [];
         foreach ($companies as $c) {
-            array_push($labels, $c->instansi);
             $count_risiko_rendah = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
                 ->where('d.company_id', $c->company_id)
                 ->where('r_awal', '>', 1)
@@ -327,7 +325,7 @@ class HomeController extends Controller
             array_push($progress_mitigasi, $count_progress_mitigasi);
         }
 
-        return response()->json([ "success" => true, "labels" => $labels, "risiko_rendah" => $risiko_rendah, "risiko_sedang" => $risiko_sedang, "risiko_tinggi" => $risiko_tinggi, "risiko_ekstrem" => $risiko_ekstrem, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, "progress_mitigasi" => $progress_mitigasi]);
+        return response()->json([ "success" => true, "companies" => $companies, "risiko_rendah" => $risiko_rendah, "risiko_sedang" => $risiko_sedang, "risiko_tinggi" => $risiko_tinggi, "risiko_ekstrem" => $risiko_ekstrem, "mitigasi" => $mitigasi, "selesai_mitigasi" => $selesai_mitigasi, "progress_mitigasi" => $progress_mitigasi]);
     }
 
     public function dataKategoriRisiko(Request $req) {

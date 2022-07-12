@@ -178,12 +178,14 @@
 									$count_mitigasi_p = $p->getCountMitigasi();
 									$count_done_mitigasi_p = $p->getCountMitigasiDone();
 								@endphp
-								@if($count_done_mitigasi_p === $count_mitigasi_p)
-								<span class="badge badge-green">Done
-								@else
-								<span class="badge badge-primary">On Progress
-								@endif
-								</span>
+								<div id="badge-progress-{{ $p->company_id }}">
+									@if($count_done_mitigasi_p === $count_mitigasi_p)
+									<span class="badge badge-green">Done
+									@else
+									<span class="badge badge-primary">On Progress
+									@endif
+									</span>
+								</div>
 								<div class="media">
 										<img class="me-1 rounded"
 											src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
@@ -214,15 +216,19 @@
 								</div>
 								<div class="project-status mt-4">
 										<div class="media mb-0">
-											<p>{{ $p->mitigasiPercentage().'%' }}</p>
+											<p id="mitigasi-percentage-{{ $p->company_id }}">{{ $p->mitigasiPercentage().'%' }}</p>
 											<div class="media-body text-end"><span>Done</span></div>
 										</div>
 										<div class="progress" style="height: 5px">
-											<div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+											<div id="progress-mitigasi-{{ $p->company_id }}" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 										</div>
 								</div>
 								<div class="row mt-3">
-									<a href="{{ route('admin.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+									<form method="get" action="{{ route('admin.peta-risiko', $p->company_id) }}">
+										<input type="hidden" id="tahun-risk" name="tahun_risk" value="{{ date('Y') }}">
+										<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
+									</form>
+									<!-- <a href="{{ route('admin.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a> -->
 								</div>
 							</div>
 						</div>
@@ -445,14 +451,25 @@
 					console.log(result);
 					$('#tahun-title-peta').html($('#tahun-petarisiko').val());
 					$('#tahun-risk').val($('#tahun-petarisiko').val());
-					$('#risiko-rendah').html(result.risiko_rendah);
-					$('#risiko-sedang').html(result.risiko_sedang);
-					$('#risiko-tinggi').html(result.risiko_tinggi);
-					$('#risiko-ekstrem').html(result.risiko_ekstrem);
-					$('#mitigasi').html(result.mitigasi);
-					$('#selesai-mitigasi').html(result.selesai_mitigasi);
-					$('#progress-mitigasi').html(result.progress_mitigasi);
-					$('#progress-mitigasi').attr('aria-valuenow', result.progress_mitigasi).css('width', result.progress_mitigasi+'%');
+					// console.log($('#tahun-risk').val());
+					for(var i = 1; i<=count(result.companies); i++){
+						$('#risiko-rendah-'+i).html(result.risiko_rendah);
+						$('#risiko-sedang'+i).html(result.risiko_sedang);
+						$('#risiko-tinggi'+i).html(result.risiko_tinggi);
+						$('#risiko-ekstrem'+i).html(result.risiko_ekstrem);
+						$('#mitigasi'+i).html(result.mitigasi);
+						$('#selesai-mitigasi'+i).html(result.selesai_mitigasi);
+						$('#mitigasi-percentage'+i).html(result.progress_mitigasi);
+						$('#progress-mitigasi'+i).attr('aria-valuenow', result.progress_mitigasi).css('width', result.progress_mitigasi+'%');
+
+						if(result.selesai_mitigasi == result.mitigasi){
+							$('#badge-progress'+i).html('<span class="badge badge-green">Done</span>');
+						}else{
+							$('#badge-progress'+i).html('<span class="badge badge-primary">On Progress</span>');
+						}
+					}
+					
+					
 			});
 		});
 
