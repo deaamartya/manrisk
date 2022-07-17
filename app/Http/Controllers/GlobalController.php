@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Perusahaan;
-use App\Models\Srisiko;
+use App\Models\SRisiko as Srisiko;
 use App\Models\Pengukuran;
 use App\Models\PengukuranIndhan;
 use App\Models\RiskHeader;
@@ -190,6 +190,11 @@ class GlobalController extends Controller
             foreach($data_admin as $da){
                 $data[] = $da;
             }
+        }
+
+        // Notif/Alert kondisi risiko yang melewati jatuh tempo
+        if(!Auth::user()->is_admin){
+            
         }
 
         return response()->json(['message' => 'ok', 'data' => $data], 200);

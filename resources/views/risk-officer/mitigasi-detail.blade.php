@@ -305,11 +305,22 @@
                     <h6>Tambah Progress Baru</h6>
                   </div>
                 </div>
-                <div class="mb-3 row">
+                {{-- <div class="mb-3 row">
                   <label class="col-sm-3 col-form-label">Prosentase</label>
                   <div class="col-sm-9">
                     <input type="number" name="prosentase" class="form-control" required min="1" max="100"/>
                   </div>
+                </div> --}}
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">Prosentase</label>
+                    <div class="col-sm-9">
+                      <select name="prosentase" class="form-control" required>
+                          <option value="25">25 %</option>
+                          <option value="50">50 %</option>
+                          <option value="75">75 %</option>
+                          <option value="100">100 %</option>
+                      </select>
+                    </div>
                 </div>
                 <div class="mb-3 row">
                   <label class="col-sm-3 col-form-label">Dokumen</label>

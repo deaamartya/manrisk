@@ -80,8 +80,8 @@ class AbsMitigasiPlan
 
     public static function approveHasilMitigasi($request, $id)
     {
-        $query = MitigasiLogs::findOrFail($id)->with('risk_detail:id_riskd')->first();
-        $rdetail = RiskDetail::findOrFail($query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
+        $query = MitigasiLogs::where('id', $id)->with('risk_detail:id_riskd')->first();
+        $rdetail = RiskDetail::where('id_riskd', $query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
 
         DB::beginTransaction();
         RiskHeader::where('id_riskh', $rdetail->risk_header->id_riskh)->update([
@@ -93,6 +93,7 @@ class AbsMitigasiPlan
         // $query->save();
         DB::table('mitigasi_logs')->where('id', $id)->update([
             'is_approved' => 1,
+            'realisasi' => $request->realisasi,
             'updated_at' => Carbon::now()
         ]);
         DB::commit();

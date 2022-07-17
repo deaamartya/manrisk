@@ -139,12 +139,19 @@
                                         @endif
                                     </td>
                                     @if(!$d->is_approved)
-                                    <td align="center" style="width: 60px">
-                                        <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}">
+                                    <td align="center" style="width: 60px" id="data_realisasi">
+                                        <select name="prosentase" class="form-control" id="realisasi_{{ $d->id }}" required>
+                                            <option {{ $d->realisasi == '25' ? 'selected' : '' }} value="25">25 %</option>
+                                            <option {{ $d->realisasi == '50' ? 'selected' : '' }} value="50">50 %</option>
+                                            <option {{ $d->realisasi == '75' ? 'selected' : '' }} value="75">75 %</option>
+                                            <option {{ $d->realisasi == '100' ? 'selected' : '' }} value="100">100 %</option>
+                                        </select>
+                                        {{-- <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}"> --}}
                                     </td>
                                     @else
                                     <td align="center" style="width: 60px">
-                                        <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly>
+                                        {{ $d->realisasi }}
+                                        {{-- <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly> --}}
                                     </td>
                                     @endif
                                     <td align="center">

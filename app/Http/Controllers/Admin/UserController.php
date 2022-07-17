@@ -21,11 +21,13 @@ class UserController extends Controller
         $req = [
             'company_id' => 'required',
             'username' => 'required',
+            'jabatan' => 'required',
         ];
 
         $msg = [
             'company_id.required' => 'Perusahaan tidak boleh kosong',
             'username.required' => 'Nama user tidak boleh kosong'
+            'jabatan.required' => 'Jabatan user tidak boleh kosong'
         ];
 
         $request->validate($req, $msg);

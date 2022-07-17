@@ -115,7 +115,7 @@
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Jabatan <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
-                        <input type="text" name="jabatan" class="form-control" id="formJabatan">
+                        <input type="text" name="jabatan" class="form-control" id="formJabatan" required>
                     </div>
                 </div>
                 <div class="row mb-3">
