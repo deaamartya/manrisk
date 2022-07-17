@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Risk;
+use App\Models\Kontek;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -52,7 +53,11 @@ class RisikoController extends Controller
     public function delete(Request $request)
     {
         try {
-            Risk::where('id_risk', $request->id_risk)->update(['deleted_at' => Carbon::now()]);
+            $count = Kontek::where('id_risk', $request->id_resiko)->count('id_konteks');
+            if ($count > 0) {
+                return back()->with(["error-swal" => 'Risiko ini tidak dapat dihapus karena data risiko digunakan pada konteks']);
+            }
+            Risk::where('id_risk', $request->id_resiko)->update(['deleted_at' => Carbon::now()]);
         } catch (\ErrorException $e) {
             return back()->with(["error-swal" => $e->getMessage()]);
         }

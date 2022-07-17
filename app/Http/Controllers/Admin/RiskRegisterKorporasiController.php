@@ -9,6 +9,7 @@ use App\Models\RiskDetail;
 use App\Models\RiskHeaderIndhan;
 use App\Models\DefendidUser;
 use App\Models\SRisiko;
+use App\Models\PengajuanMitigasi;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
@@ -144,10 +145,13 @@ class RiskRegisterKorporasiController extends Controller
 
     public function deleteRiskDetail($id, Request $request)
     {
+        $count = PengajuanMitigasi::where('id_riskd', $id)->count('id');
+        if ($count > 0) {
+            return back()->with(["error-swal" => 'Risiko ini tidak dapat dihapus karena data risiko digunakan pada pengajuan mitigasi']);
+        }
         RiskDetail::destroy($id);
         $id_risk = $request->id_risk;
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil dihapus.']);
     }
-
 
 }

@@ -36,7 +36,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('/risiko', [RisikoController::class, 'index'])->name('risiko');
   Route::get('/risiko/get-risiko/{id?}', [RisikoController::class, 'get_risiko'])->name('risiko-get-risiko');
   Route::post('/risiko/store/{id?}', [RisikoController::class, 'store'])->name('risiko-store');
-  Route::put('/risiko/delete-risiko', [RisikoController::class, 'delete'])->name('risiko-delete');
+  Route::post('/risiko/delete-risiko', [RisikoController::class, 'delete'])->name('risiko-delete');
 
   Route::get('/hasil-kompilasi-risiko', [HasilKompilasiRisikoController::class, 'index'])->name('hasil-kompilasi-risiko');
   Route::post('/delete-responden/{id}', [HasilKompilasiRisikoController::class, 'delete_responden'])->name('delete-responden');
