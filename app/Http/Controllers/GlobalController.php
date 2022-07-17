@@ -213,8 +213,13 @@ class GlobalController extends Controller
                 }
             }
 
+            $temp = DB::raw("(
+                SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+            ) as mitigasi_logs");
             $total_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+            ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
             ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
+            ->where('mitigasi_logs.final_realisasi', '<', 100)
             ->count('mitigasi.id_riskd');
 
             if($total_jatuh_tempo > 0){
