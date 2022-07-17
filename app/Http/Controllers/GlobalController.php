@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Perusahaan;
-use App\Models\SRisiko as SRisiko;
+use App\Models\SRisiko;
 use App\Models\Pengukuran;
 use App\Models\PengukuranIndhan;
 use App\Models\RiskHeader;
@@ -72,7 +72,7 @@ class GlobalController extends Controller
 
         DB::table('forum_detail')->where('id_forum', $id)->delete();
         DB::table('forum')->where('id', $id)->delete();
-        
+
         DB::commit();
         return back()->with(['success-swal' => 'Forum berhasil dihapus!']);
     }
@@ -217,7 +217,7 @@ class GlobalController extends Controller
             ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
             ->count('mitigasi.id_riskd');
 
-            if(count($total_jatuh_tempo) > 0){
+            if($total_jatuh_tempo > 0){
                 $data[] = [
                     'title' => 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ',
                     'jumlah' => $total_jatuh_tempo,

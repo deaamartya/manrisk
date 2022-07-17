@@ -47,7 +47,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('/konteks', [KonteksController::class, 'index'])->name('konteks');
   Route::get('/konteks/get-konteks/{id}', [KonteksController::class, 'get_konteks'])->name('konteks-get-konteks');
   Route::post('/konteks/store/{id?}', [KonteksController::class, 'store'])->name('konteks-store');
-  Route::put('/konteks/delete-konteks', [KonteksController::class, 'delete'])->name('konteks-delete');
+  Route::post('/konteks/delete-konteks', [KonteksController::class, 'delete'])->name('konteks-delete');
   Route::get('sumber-risiko-indhan', [SumberRisikoIndhanController::class, 'index'])->name('sumber-risiko-indhan');
   Route::get('sumber-risiko-indhan/search', [SumberRisikoIndhanController::class, 'searchRisiko'])->name('search-risiko');
   Route::post('sumber-risiko-indhan/approval/{id}', [SumberRisikoIndhanController::class, 'approvalRisiko'])->name('approval-risiko');
