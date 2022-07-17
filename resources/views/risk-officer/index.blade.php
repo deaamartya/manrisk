@@ -23,10 +23,10 @@
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-6 col-12 pb-0">
-			<div class="card o-hidden mb-0">
+			<div class="card o-hidden">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-lg-6 col-12 pb-3">
+						<div class="col-lg-6 col-12 py-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko Korporasi</span></p>
@@ -35,7 +35,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
 						</div>
-						<div class="col-lg-6 col-12 pb-3">
+						<div class="col-lg-6 col-12 py-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Korporasi</span></p>
@@ -44,7 +44,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
 						</div>
-						<div class="col-lg-6 col-12 pb-3">
+						<div class="col-lg-6 col-12 py-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
@@ -53,7 +53,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
 						</div>
-						<div class="col-lg-6 col-12 pb-3">
+						<div class="col-lg-6 col-12 py-3">
 							<div class="media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
@@ -96,123 +96,123 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-lg-8">
+		<div class="col-lg-4">
 			<div class="card">
 				<div class="card-body">
-					<div class="row">
-						<div class="col-lg-6 col-12">
-							<div class="row d-flex justify-content-between mb-3">
-								<div class="col-lg-9 col-12">
-									<h6>Risiko Korporasi - {{ Auth::user()->perusahaan->instansi }} <span id="tahun-title">{{ date('Y') }}</span></h6>	
+					<div class="row d-flex justify-content-between mb-3">
+						<div class="col-lg-9 col-12">
+							<h6>Risiko Korporasi - {{ Auth::user()->perusahaan->instansi }} <span id="tahun-title">{{ date('Y') }}</span></h6>	
+						</div>
+						<div class="col-lg-3 col-12">
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+					<div class="chart-content">
+						<div id="basic-bar"></div>
+						<div id="basic-bar-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Peta Risiko Tahun <span id="tahun-title-peta">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-petarisiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+						<div class="row">
+						@foreach($company as $p)
+						<div class="col-xxl-12 col-lg-12">
+							<div class="project-box">
+								@php
+									$count_mitigasi_p = $p->getCountMitigasi();
+									$count_done_mitigasi_p = $p->getCountMitigasiDone();
+								@endphp
+								<div id="badge-progress">
+									@if($count_done_mitigasi_p === $count_mitigasi_p)
+									<span class="badge badge-green">Done
+									@else
+									<span class="badge badge-primary">On Progress
+									@endif
+									</span>
 								</div>
-								<div class="col-lg-3 col-12">
-									<span class="f-w-500 font-roboto">Tahun : </span>
-									<select class="form-control" id="tahun-risiko">
-										@for($i=0; $i<10; $i++)
-											@php $tahun = intval(2022 + $i); @endphp
-											<option value="{{ $tahun }}">{{ $tahun }}</option>
-										@endfor
-									</select>
+								<div class="media">
+										<img class="me-1 rounded"
+											src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
+											style="max-height: 30px">
 								</div>
-							</div>
-							<div class="chart-content">
-								<div id="basic-bar"></div>
-								<div id="basic-bar-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+								<p>{{ $p->instansi }}</p>
+								<div class="row details">
+										<div class="col-6"><span>Risiko Rendah</span></div>
+										<div class="col-6">
+											<div id="risiko-rendah" class="badge badge-green mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countLow() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Sedang</span></div>
+										<div class="col-6">
+											<div id="risiko-sedang" class="badge badge-warning mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countMed() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Tinggi</span></div>
+										<div class="col-6">
+											<div id="risiko-tinggi" class="badge badge-pink mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countHigh() }}</div>
+										</div>
+										<div class="col-6"><span>Risiko Ekstrem</span></div>
+										<div class="col-6">
+											<div id="risiko-ekstrem" class="badge badge-danger" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countExtreme() }}</div>
+										</div>
+										<div class="col-6"> <span>Mitigasi</span></div>
+										<div id="mitigasi" class="col-6 text-primary">{{ $p->getCountMitigasi() }}</div>
+										<div class="col-6"> <span>Selesai Mitigasi</span></div>
+										<div id="selesai-mitigasi"  class="col-6 text-primary">{{ $p->getCountMitigasiDone() }}</div>
+								</div>
+								<div class="project-status mt-4">
+										<div class="media mb-0">
+											<p id="mitigasi-percentage" >{{ $p->mitigasiPercentage().'%' }}</p>
+											<div class="media-body text-end"><span>Done</span></div>
+										</div>
+										<div class="progress" style="height: 5px">
+											<div id="progress-mitigasi" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+										</div>
+								</div>
+								<div class="row mt-3">
+									@if(Auth::user()->is_risk_officer)
+										<form method="get" action="{{ route('risk-officer.peta-risiko', $p->company_id) }}">
+									@elseif(Auth::user()->is_risk_owner)
+										<form method="get" action="{{ route('risk-owner.peta-risiko', $p->company_id) }}">
+									@elseif(Auth::user()->is_penilai)
+										<form method="get" action="{{ route('penilai.peta-risiko', $p->company_id) }}">
+									@endif
+										<input type="hidden" id="tahun-risk" name="tahun_risk" value="{{ date('Y') }}">
+										<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
+									</form>
+									{{--
+									@if(Auth::user()->is_risk_officer)
+										<a href="{{ route('risk-officer.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+									@elseif(Auth::user()->is_risk_owner)
+										<a href="{{ route('risk-owner.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+									@elseif(Auth::user()->is_penilai)
+										<a href="{{ route('penilai.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
+									@endif
+									--}}
+								</div>
 							</div>
 						</div>
-						<div class="col-lg-6 col-12">
-							<div class="d-flex justify-content-between mb-3">
-								<h6>Peta Risiko Tahun <span id="tahun-title-peta">{{ date('Y') }}</span></h6>
-								<div>
-									<span class="f-w-500 font-roboto">Tahun : </span>
-									<select class="form-control" id="tahun-petarisiko">
-										@for($i=0; $i<10; $i++)
-											@php $tahun = intval(2022 + $i); @endphp
-											<option value="{{ $tahun }}">{{ $tahun }}</option>
-										@endfor
-									</select>
-								</div>
-							</div>
-							<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
-								<div class="row">
-								@foreach($company as $p)
-								<div class="col-xxl-12 col-lg-12">
-									<div class="project-box">
-										@php
-											$count_mitigasi_p = $p->getCountMitigasi();
-											$count_done_mitigasi_p = $p->getCountMitigasiDone();
-										@endphp
-										<div id="badge-progress">
-											@if($count_done_mitigasi_p === $count_mitigasi_p)
-											<span class="badge badge-green">Done
-											@else
-											<span class="badge badge-primary">On Progress
-											@endif
-											</span>
-										</div>
-										<div class="media">
-												<img class="me-1 rounded"
-													src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
-													style="max-height: 30px">
-										</div>
-										<p>{{ $p->instansi }}</p>
-										<div class="row details">
-												<div class="col-6"><span>Risiko Rendah</span></div>
-												<div class="col-6">
-													<div id="risiko-rendah" class="badge badge-green mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countLow() }}</div>
-												</div>
-												<div class="col-6"><span>Risiko Sedang</span></div>
-												<div class="col-6">
-													<div id="risiko-sedang" class="badge badge-warning mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countMed() }}</div>
-												</div>
-												<div class="col-6"><span>Risiko Tinggi</span></div>
-												<div class="col-6">
-													<div id="risiko-tinggi" class="badge badge-pink mr-2" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countHigh() }}</div>
-												</div>
-												<div class="col-6"><span>Risiko Ekstrem</span></div>
-												<div class="col-6">
-													<div id="risiko-ekstrem" class="badge badge-danger" style="opacity: 1; position:initial; top:unset; right: unset;">{{ $p->countExtreme() }}</div>
-												</div>
-												<div class="col-6"> <span>Mitigasi</span></div>
-												<div id="mitigasi" class="col-6 text-primary">{{ $p->getCountMitigasi() }}</div>
-												<div class="col-6"> <span>Selesai Mitigasi</span></div>
-												<div id="selesai-mitigasi"  class="col-6 text-primary">{{ $p->getCountMitigasiDone() }}</div>
-										</div>
-										<div class="project-status mt-4">
-												<div class="media mb-0">
-													<p id="mitigasi-percentage" >{{ $p->mitigasiPercentage().'%' }}</p>
-													<div class="media-body text-end"><span>Done</span></div>
-												</div>
-												<div class="progress" style="height: 5px">
-													<div id="progress-mitigasi" class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{ $p->mitigasiPercentage().'%' }}" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-										</div>
-										<div class="row mt-3">
-											@if(Auth::user()->is_risk_officer)
-												<form method="get" action="{{ route('risk-officer.peta-risiko', $p->company_id) }}">
-											@elseif(Auth::user()->is_risk_owner)
-												<form method="get" action="{{ route('risk-owner.peta-risiko', $p->company_id) }}">
-											@elseif(Auth::user()->is_penilai)
-												<form method="get" action="{{ route('penilai.peta-risiko', $p->company_id) }}">
-											@endif
-												<input type="hidden" id="tahun-risk" name="tahun_risk" value="{{ date('Y') }}">
-												<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
-											</form>
-											{{--
-											@if(Auth::user()->is_risk_officer)
-												<a href="{{ route('risk-officer.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
-											@elseif(Auth::user()->is_risk_owner)
-												<a href="{{ route('risk-owner.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
-											@elseif(Auth::user()->is_penilai)
-												<a href="{{ route('penilai.peta-risiko', $p->company_id) }}" class="btn btn-success">Lihat Peta Risiko</a>
-											@endif
-											--}}
-										</div>
-									</div>
-								</div>
-								@endforeach
-								</div>
-							</div>
+						@endforeach
 						</div>
 					</div>
 				</div>
@@ -328,7 +328,7 @@
 		function initPieChart(data) {
 			var options8 = {
 				chart: {
-						width: 380,
+						width: 500,
 						type: 'pie',
 				},
 				labels: data.labels,

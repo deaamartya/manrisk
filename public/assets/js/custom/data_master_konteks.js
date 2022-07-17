@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $.ajax({
         type: 'GET',
-        url: APP_URL+'/admin/resiko/get-resiko',
+        url: APP_URL+'/admin/risiko/get-risiko',
         dataType: 'json',
         data: {},
         success: function (results) {
@@ -9,7 +9,7 @@ $(document).ready(function(){
             // $('#formIdRisk').append('<option selected disabled>Pilih resiko . . </option>');
             for(let i=0;i<results.length;i++){
                 $('#formIdRisk').append(
-                    '<option value="'+results[i].id_risk+'" id="option'+results[i].id_risk+'">'+results[i].id_risk+'</option>'
+                    '<option value="'+results[i].id_risk+'" id="option'+results[i].id_risk+'">'+results[i].id_risk+' - '+results[i].risk+'</option>'
                 );
             }
         },

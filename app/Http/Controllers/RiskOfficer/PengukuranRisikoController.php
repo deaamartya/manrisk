@@ -35,7 +35,7 @@ class PengukuranRisikoController extends Controller
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
 
-        $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+        $s_risk_dinilai = SRisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
             ->where('p.id_pengukur', '=', $id_responden)
             ->where('status_s_risiko', 1)
             ->selectRaw('s_risiko.*, p.*')

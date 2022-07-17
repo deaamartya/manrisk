@@ -52,7 +52,7 @@ class AbsPengukuran
             // // dd(count($arr_pengukur));
             // }
 
-            $data_sr = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->get();
+            $data_sr = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->get();
             // dd($data_pengukur);
             if(count($data_sr) > 0){
                 $pengukuran_1 = [];
@@ -60,28 +60,34 @@ class AbsPengukuran
 
                 foreach($data_pengukur as $dp) {
                     // get all id_s_risiko yang sudah dinilai
-                    $s_risk_dinilai = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                    $s_risk_dinilai = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('p.id_pengukur', '=', $dp->id_pengukur)
                         ->where('status_indhan', 1)
                         ->selectRaw('s_risiko.*, p.*')
+                        ->whereNull('s_risiko.deleted_at')
+                        ->whereNull('risk_detail.deleted_at')
                         ->pluck('id_s_risiko');
                     // count id_s_risiko yang sudah dinilai group by tahun
-                    $s_risk_dinilai_yearly = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                    $s_risk_dinilai_yearly = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('p.id_pengukur', '=', $dp->id_pengukur)
                         ->where('status_indhan', 1)
                         ->groupBy('s_risiko.tahun')
                         ->selectRaw('s_risiko.*, COUNT(s_risiko.id_s_risiko) as jml_risk, p.*')
+                        ->whereNull('s_risiko.deleted_at')
+                        ->whereNull('risk_detail.deleted_at')
                         ->get();
                     foreach($s_risk_dinilai_yearly as $s) {
                         $pengukuran_1[] = $s;
                     }
-                    $s_risk = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                    $s_risk = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->where('status_indhan', 1)
                         ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
                         ->groupBy('s_risiko.tahun')
                         ->selectRaw('s_risiko.*, COUNT(s_risiko.id_s_risiko) as jml_risk')
+                        ->whereNull('s_risiko.deleted_at')
+                        ->whereNull('risk_detail.deleted_at')
                         ->get();
                     foreach($s_risk as $s) {
                         $s->nama_responden = $dp->nama;
@@ -99,7 +105,7 @@ class AbsPengukuran
             }
 
         }else{
-            $data_sr = Srisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
+            $data_sr = SRisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
             // dd(Auth::user()->company_id);
             // dd($data_sr);
             if(count($data_sr) > 0){
@@ -109,26 +115,31 @@ class AbsPengukuran
 
                 foreach($data_pengukur as $dp) {
                     // get all id_s_risiko yang sudah dinilai
-                    $s_risk_dinilai = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+                    $s_risk_dinilai = SRisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('p.id_pengukur', '=', $dp->id_pengukur)
                         ->where('status_s_risiko', 1)
                         ->selectRaw('s_risiko.*, p.*')
+                        ->whereNull('s_risiko.deleted_at')
+                        ->whereNull('p.deleted_at')
                         ->pluck('id_s_risiko');
                     // count id_s_risiko yang sudah dinilai group by tahun
-                    $s_risk_dinilai_yearly = Srisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+                    $s_risk_dinilai_yearly = SRisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                         ->where('p.id_pengukur', '=', $dp->id_pengukur)
                         ->where('status_s_risiko', 1)
                         ->groupBy('s_risiko.tahun')
                         ->selectRaw('s_risiko.*, COUNT(s_risiko.id_s_risiko) as jml_risk, p.*')
+                        ->whereNull('s_risiko.deleted_at')
+                        ->whereNull('p.deleted_at')
                         ->get();
                     foreach($s_risk_dinilai_yearly as $s) {
                         $pengukuran_1[] = $s;
                     }
-                    $s_risk = Srisiko::where('status_s_risiko', 1)
+                    $s_risk = SRisiko::where('status_s_risiko', 1)
                         ->where('s_risiko.company_id', $dp->company_id)
                         ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
                         ->groupBy('s_risiko.tahun')
                         ->selectRaw('s_risiko.*, COUNT(s_risiko.id_s_risiko) as jml_risk')
+                        ->whereNull('s_risiko.deleted_at')
                         ->get();
                     foreach($s_risk as $s) {
                         $s->nama_responden = $dp->nama;
@@ -142,6 +153,9 @@ class AbsPengukuran
                                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                                 ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
                                 ->whereRaw($wr_sr)
+                                ->whereNull('s_risiko.deleted_at')
+                                ->whereNull('defendid_pengukur.deleted_at')
+                                ->whereNull('pengukuran.deleted_at')
                                 ->get();
 
                 // dd($sumber_risiko);

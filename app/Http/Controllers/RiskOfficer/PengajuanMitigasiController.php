@@ -41,6 +41,7 @@ class PengajuanMitigasiController extends Controller
         PengajuanMitigasi::insert([
             'id_user' => Auth::user()->id_user,
             'id_riskd' => $request->id_risk_detail,
+            'company_id' => Auth::user()->company_id,
             'alasan' => $request->alasan,
             'is_approved' => false,
             'tipe_pengajuan' => $request->tipe_pengajuan,

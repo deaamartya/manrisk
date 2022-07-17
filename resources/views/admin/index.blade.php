@@ -22,11 +22,11 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
-		<div class="col-xl-6 col-12 pb-0">
-			<div class="row">
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+		<div class="col-xl-6 col-12 pb-0 h-100">
+			<div class="card o-hidden mb-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko INDHAN</span></p>
@@ -35,11 +35,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko INDHAN</span></p>
@@ -48,11 +44,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
@@ -61,11 +53,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
@@ -108,7 +96,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-12 col-lg-8">
+		<div class="col-12 col-lg-6">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
@@ -130,7 +118,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-lg-4">
+		<div class="col-12 col-lg-6">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
@@ -326,7 +314,7 @@
 		function initPieChart(data) {
 			var options8 = {
 				chart: {
-						width: 380,
+						width: 500,
 						type: 'pie',
 				},
 				labels: data.labels,
@@ -367,19 +355,19 @@
           series: [
 						{
 							name: 'Low',
-							data: [data.countLow]
+							data: data.countLow
 						},
 						{
 							name: 'Med',
-							data: [data.countMed]
+							data: data.countMed
 						},
 						{
 							name: 'High',
-							data: [data.countHigh]
+							data: data.countHigh
 						},
 						{
 							name: 'Extreme',
-							data: [data.countExtreme]
+							data: data.countExtreme
 						},
 					],
           chart: {
@@ -408,7 +396,7 @@
         },
         xaxis: {
           type: 'category',
-          categories: [data.labels],
+          categories: data.labels,
         },
         legend: {
           position: 'right',
@@ -495,7 +483,7 @@
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-level-risiko').val() })
 				.done(function(result) {
 					$('#tahun-level-risiko-title').html($('#tahun-level-risiko').val());
-					if (result.risk_detail.length > 0) {
+					if (result.labels.length > 0) {
 						initStackedBarChart(result);
 					} else {
 						$("#basic-stacked-bar-loading").hide();

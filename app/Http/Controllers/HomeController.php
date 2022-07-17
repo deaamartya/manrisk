@@ -396,22 +396,35 @@ class HomeController extends Controller
     }
 
     public function dataLevelRisikoIndhan(Request $req) {
-        $labels = ['Risk Level'];
-        $countExtreme = 0;
-        $countHigh = 0;
-        $countMed = 0;
-        $countLow = 0;
-        $risk_detail = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', '=', 'risk_header.id_riskh')
-            ->whereNull('risk_header.deleted_at')
-            ->whereNull('rd.deleted_at')
-            ->where('rd.tahun', '=', $req->tahun)
-            ->get();
-        foreach ($risk_detail as $r) {
-            if ($r->r_awal < 6)  $countLow++;
-            elseif ($r->r_awal < 12)  $countMed++;
-            elseif ($r->r_awal < 16)  $countHigh++;
-            else $countExtreme++;
+        $companies = Perusahaan::where('company_code', '!=', 'INHAN')->get();
+        $labels = [];
+        $dataExtreme = [];
+        $dataHigh = [];
+        $dataMed = [];
+        $dataLow = [];
+        foreach ($companies as $c) {
+            $risk_detail = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', '=', 'risk_header.id_riskh')
+                ->whereNull('risk_header.deleted_at')
+                ->whereNull('rd.deleted_at')
+                ->where('rd.tahun', '=', $req->tahun)
+                ->where('risk_header.company_id', $c->company_id)
+                ->get();
+            array_push($labels, $c->instansi);
+            $countExtreme = 0;
+            $countHigh = 0;
+            $countMed = 0;
+            $countLow = 0;
+            foreach ($risk_detail as $r) {
+                if ($r->r_awal < 6)  $countLow++;
+                elseif ($r->r_awal < 12)  $countMed++;
+                elseif ($r->r_awal < 16)  $countHigh++;
+                else $countExtreme++;
+            }
+            array_push($dataExtreme, $countExtreme);
+            array_push($dataHigh, $countHigh);
+            array_push($dataMed, $countMed);
+            array_push($dataLow, $countLow);
         }
-        return response()->json([ "success" => true, "labels" => $labels,"countExtreme" => $countExtreme, "countHigh" => $countHigh, "countMed" => $countMed, "countLow" => $countLow, "risk_detail" => $risk_detail ]);
+        return response()->json([ "success" => true, "labels" => $labels,"countExtreme" => $dataExtreme, "countHigh" => $dataHigh, "countMed" => $dataMed, "countLow" => $dataLow ]);
     }
 }

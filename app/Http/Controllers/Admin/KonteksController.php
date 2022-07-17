@@ -59,6 +59,10 @@ class KonteksController extends Controller
     public function delete(Request $request)
     {
         try {
+            $count = SRisiko::where('id_konteks', $request->id_konteks)->count('id_s_risiko');
+            if ($count > 0) {
+                return back()->with(["error-swal" => 'Konteks ini tidak dapat dihapus karena masih dipakai oleh sumber risiko']);
+            }
             Kontek::where('id_konteks', $request->id_konteks)->update(['deleted_at' => Carbon::now()]);
         } catch (\ErrorException $e) {
             return back()->with(["error-swal" => $e->getMessage()]);

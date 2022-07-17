@@ -30,7 +30,7 @@ class PengukuranRisikoIndhanController extends Controller
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
 
-        $s_risk_dinilai = Srisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        $s_risk_dinilai = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                     ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                     ->where('p.id_pengukur', '=', $id_responden)
                     ->where('status_indhan', 1)
