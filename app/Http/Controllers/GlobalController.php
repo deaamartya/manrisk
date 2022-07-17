@@ -10,6 +10,7 @@ use App\Models\RiskHeader;
 use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\PengajuanMitigasi;
+use App\Models\Mitigasi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -194,7 +195,32 @@ class GlobalController extends Controller
 
         // Notif/Alert kondisi risiko yang melewati jatuh tempo
         if(!Auth::user()->is_admin){
-            
+            if(Auth::user()->is_risk_officer){
+                $segment = '/risk-officer/pengukuran-risiko';
+            }
+            else{
+                if(Auth::user()->is_penilai){
+                    $segment = '/penilai/pengukuran-risiko';
+                }
+                else if(Auth::user()->is_penilai_indhan){
+                    $segment = '/penilai-indhan/pengukuran-risiko-indhan';
+                }
+                else if(Auth::user()->is_risk_owner){
+                    $segment = '/risk-owner/pengukuran-risiko';
+                }
+            }
+
+            $total_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+            ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
+            ->count('mitigasi.id_riskd');
+
+            if(count($total_jatuh_tempo) > 0){
+                $data[] = [
+                    'title' => 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ',
+                    'jumlah' => $total_jatuh_tempo,
+                    'link' => url('/').$segment
+                ];
+            }
         }
 
         return response()->json(['message' => 'ok', 'data' => $data], 200);
