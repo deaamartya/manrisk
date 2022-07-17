@@ -31,6 +31,7 @@ class SumberRisikoIndhanController extends Controller
                     ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
                     ->where('s_risiko.id_user',  $request->id_user) // perusahaan yg dipilih
                     ->where('s_risiko.tahun', $request->tahun)
+                    ->whereNull('s_risiko.deleted_at')
                     ->orderBy('s_risiko.id_s_risiko')
                     ->get();
         $perusahaan_filter = $request->id_user;

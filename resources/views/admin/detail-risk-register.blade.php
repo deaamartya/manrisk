@@ -121,21 +121,13 @@
                     <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
                     <td>
                         @if($d->status_indhan == 0)
-                        <form action="{{ route('admin.korporate', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
+                          <button class="btn btn-sm btn-pill btn-green d-flex align-items-center" data-bs-target="#bukan-indhan-{{ $d->id_riskd }}" data-bs-toggle="modal">
                             <i class="fa fa-times me-2"></i>Bukan INDHAN
                           </button>
-                        </form>
                         @elseif($d->status_indhan == 1)
-                        <form action="{{ route('admin.unkorporate', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
-                            <i class="fa fa-check me-2"></i> INDHAN
+                        <button class="btn btn-sm btn-pill btn-danger d-flex align-items-center" data-bs-target="#indhan-{{ $d->id_riskd }}" data-bs-toggle="modal">
+                            <i class="fa fa-check me-2"></i>INDHAN
                           </button>
-                        </form>
                         @endif
                     </td>
                     <td>
@@ -239,6 +231,48 @@
 </div>
 
 @foreach($headers->risk_detail as $data)
+<div class="modal fade" id="bukan-indhan-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Status INDHAN</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="GET" action="{{ route('admin.risk-register-korporasi.indhan', $data->id_riskd) }}">
+        <div class="modal-body">
+        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+          Apakah Anda yakin menyimpan risiko ini sebagai risiko INDHAN?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+          <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="indhan-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Konfirmasi Status INDHAN</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="GET" action="{{ route('admin.risk-register-korporasi.non-indhan', $data->id_riskd) }}">
+        <div class="modal-body">
+        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+          Apakah Anda yakin menyimpan risiko ini sebagai risiko BUKAN INDHAN?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+          <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="delete-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -29,7 +29,7 @@ class UserController extends Controller
 
         $msg = [
             'company_id.required' => 'Perusahaan tidak boleh kosong',
-            'username.required' => 'Nama user tidak boleh kosong'
+            'username.required' => 'Nama user tidak boleh kosong',
             'jabatan.required' => 'Jabatan user tidak boleh kosong'
         ];
 

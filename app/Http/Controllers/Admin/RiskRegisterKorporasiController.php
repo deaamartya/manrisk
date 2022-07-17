@@ -102,7 +102,7 @@ class RiskRegisterKorporasiController extends Controller
         return view('admin.detail-risk-register', compact('headers'));
     }
 
-    public function korporate($id, Request $request)
+    public function indhan($id, Request $request)
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([
@@ -112,7 +112,7 @@ class RiskRegisterKorporasiController extends Controller
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil diubah menjadi INDHAN.']);
     }
 
-    public function unKorporate($id, Request $request)
+    public function nonIndhan($id, Request $request)
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $risk_detail->update([

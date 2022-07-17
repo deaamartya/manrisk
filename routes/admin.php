@@ -58,8 +58,8 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('detail-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'show'])->name('detail-risk-register');
   Route::get('print-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'print'])->name('print-risk-register');
   Route::post('approval-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'approval'])->name('approval-risk-register');
-  Route::post('risk-detail-korporate/{id}', [RiskRegisterKorporasiController::class, 'korporate'])->name('korporate');
-  Route::post('risk-detail-unkorporate/{id}', [RiskRegisterKorporasiController::class, 'unKorporate'])->name('unkorporate');
+  Route::get('risk-detail-indhan/{id}', [RiskRegisterKorporasiController::class, 'indhan'])->name('risk-register-korporasi.indhan');
+  Route::get('risk-detail-non-indhan/{id}', [RiskRegisterKorporasiController::class, 'nonIndhan'])->name('risk-register-korporasi.non-indhan');
   Route::post('risk-detail-mitigation/{id}', [RiskRegisterKorporasiController::class, 'mitigation'])->name('mitigation');
   Route::post('risk-detail-not-mitigation/{id}', [RiskRegisterKorporasiController::class, 'notMitigation'])->name('not-mitigation');
   Route::delete('risk-detail-delete/{id}', [RiskRegisterKorporasiController::class, 'deleteRiskDetail'])->name('risk-detail-delete');
