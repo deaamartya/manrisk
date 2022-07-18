@@ -3,6 +3,7 @@
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/date-picker.css')}}">
 @endsection
 
 @section('page-title')
@@ -237,6 +238,10 @@
                   <h6>Identifikasi</h6>
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Risiko</label>
                     <select class="select2" name="id_s_risiko" required id="select-risiko">
                       @foreach($pilihan_s_risiko as $p)
@@ -257,6 +262,10 @@
                     <textarea class="form-control" name="sebab" placeholder="Masukkan sebab"></textarea>
                   </div>
                   <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="number" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
                     <textarea class="form-control" name="dampak" placeholder="Masukkan dampak"></textarea>
                   </div>
@@ -274,6 +283,10 @@
                   <div class="form-group pt-2">
                     <label>Pengendalian</label>
                     <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian" placeholder="Masukkan penilaian"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
@@ -307,11 +320,27 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan"></textarea>
+                    <!-- <input type="date" class="form-control" name="jadwal" > -->
+                    
+                    <!-- <div class="mb-3 row">
+                      <label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label> -->
+                      <!-- <div class="col-sm-9"> -->
+                        <div class="date-picker">
+                          <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" data-language="en" name="jadwal">
+                        </div>
+                      <!-- </div> -->
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="number" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu" placeholder="Masukkan dampak"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi"></textarea>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
@@ -344,6 +373,10 @@
                   <h6>Identifikasi</h6>
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja" readonly>{{ $data->sasaran_kinerja }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Risiko</label>
                     <input type="text" class="form-control" readonly value="{{ $data->sumber_risiko->s_risiko }}">
                   </div>
@@ -360,6 +393,10 @@
                     <textarea class="form-control" name="sebab" placeholder="Masukkan sebab" readonly>{{ $data->sebab }}</textarea>
                   </div>
                   <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="text" class="form-control" readonly value="{{ number_format($data->dampak_kuantitatif,2,',','.') }}"> 
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
                     <textarea class="form-control" name="dampak" placeholder="Masukkan dampak" readonly>{{ $data->dampak }}</textarea>
                   </div>
@@ -374,6 +411,10 @@
                   <div class="form-group pt-2">
                     <label>Pengendalian</label>
                     <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian" readonly>{{ $data->pengendalian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian" readonly>{{ $data->penilaian }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
@@ -407,7 +448,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" readonly>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ date('Y-m-d', strtotime($data->jadwal))}}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="text" class="form-control" value="{{ number_format($data->dampak_kuantitatif_residu,2,',','.') }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu" readonly>{{ $data->dampak_residu }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
@@ -481,11 +530,15 @@
                   <h6>Identifikasi</h6>
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Risiko</label>
                     <select class="select2" name="id_s_risiko" required>
                       @foreach($pilihan_s_risiko as $p)
                       <option value="{{ $p->id_s_risiko }}"
-                        @if ($p->id_s_risiko === $data->id_s_risiko)
+                        @if($p->id_s_risiko === $data->id_s_risiko)
                         selected
                         @endif
                       >{{ $p->tahun }} - {{ $p->s_risiko }}</option>
@@ -505,6 +558,10 @@
                     <textarea class="form-control" name="sebab" placeholder="Masukkan sebab">{{ $data->sebab }}</textarea>
                   </div>
                   <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="number" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
                     <textarea class="form-control" name="dampak" placeholder="Masukkan dampak">{{ $data->dampak }}</textarea>
                   </div>
@@ -522,6 +579,10 @@
                   <div class="form-group pt-2">
                     <label>Pengendalian</label>
                     <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian">{{ $data->pengendalian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian">{{ $data->penilaian }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
@@ -555,7 +616,18 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}">
+                    <!-- <input type="date" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}"> -->
+                    <div class="date-picker">
+                          <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
+                        </div>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="number" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu">{{ $data->dampak_residu }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
@@ -602,6 +674,8 @@
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/summernote/summernote.min.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
 <script>
   $(document).ready(function(){
     $(".select2").select2();

@@ -246,6 +246,12 @@
 									</div>
 								</div>
                 <div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Biaya Penanganan</label>
+									<div class="col-sm-9">
+                    <input type="number" class="form-control" name="biaya_penanganan" required value="{{ $data->biaya_penanganan }}">
+									</div>
+								</div>
+                <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Keterangan</label>
 									<div class="col-sm-9">
                     <textarea class="form-control" name="keterangan" required>{{ $data->keterangan }}</textarea>

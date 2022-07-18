@@ -357,7 +357,8 @@ $bulan = array (
 			<td width="4%" class="center f-11">
 				{{ $rd->sumber_risiko->konteks->id_risk }}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-12">
+				{{ $rd->sasaran_kinerja}}
 			</td>
 			<td width="4%" class="center f-12">
 				{{ $rd->sumber_risiko->konteks->id_risk }}-{{ $rd->sumber_risiko->konteks->no_k }}
@@ -374,7 +375,7 @@ $bulan = array (
 			<td width="4%" class="f-12">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}
 			</td>
-			<td width="4%"></td>
+			<td width="4%" class="f-12">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
 			<td width="4%" class="f-12">
 				{!! nl2br($rd->dampak) !!}
 			</td>
@@ -384,7 +385,7 @@ $bulan = array (
 			<td width="4%" class="f-11">
 				{!! wordwrap(nl2br($rd->pengendalian), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="center f-11"></td>
+			<td width="4%" class="center f-11">{{ $rd->penilaian}}</td>
 			<td width="1%" class="center f-11">
 				{{ number_format($rd->l_awal, 2) + 0 }}
 			</td>
@@ -412,8 +413,8 @@ $bulan = array (
 			<td width="1%" class="center f-11">
 				{{ number_format($rd->r_akhir, 2) + 0 }}
 			</td>
-			<td width="4%"></td>
-			<td width="4%"></td>
+			<td width="4%" class="f-12">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
+			<td width="4%" class="f-12">{{ $rd->dampak_residu}}</td>
 			<td width="4%" class="center f-11">
 				{{ $rd->pic }}
 			</td>
