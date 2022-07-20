@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterTableMitigasiAddBiayaPenangananColumn extends Migration
+class AlterTableRiskDetailAddBiayaPenangananColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterTableMitigasiAddBiayaPenangananColumn extends Migration
      */
     public function up()
     {
-        Schema::table('mitigasi', function (Blueprint $table) {
-            $table->integer('biaya_penanganan')->after('progress');
+        Schema::table('risk_detail', function (Blueprint $table) {
+            $table->integer('biaya_penanganan')->after('dampak_residu')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AlterTableMitigasiAddBiayaPenangananColumn extends Migration
      */
     public function down()
     {
-        Schema::table('mitigasi', function (Blueprint $table) {
-            $table->dropColumn('biaya_penanganan');
+        Schema::table('risk_detail', function (Blueprint $table) {
+            $table->dropColumn('biaya_penanganan')->after('dampak_residu')->nullable();
         });
     }
 }

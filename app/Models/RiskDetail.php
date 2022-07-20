@@ -63,7 +63,10 @@ class RiskDetail extends Model
 		'r_akhir' => 'float',
 		'status' => 'int',
 		'status_mitigasi' => 'int',
-		'status_indhan' => 'int'
+		'status_indhan' => 'int',
+		'dampak_kuantitatif' => 'int',
+		'dampak_kuantitatif_residu' => 'int',
+		'biaya_penanganan' => 'int'
 	];
 
 	protected $dates = [
@@ -76,10 +79,13 @@ class RiskDetail extends Model
 		'id_s_risiko',
 		'ppkh',
 		'indikator',
+		'sasaran_kinerja',
 		'sebab',
+		'dampak_kuantitatif',
 		'dampak',
 		'uc',
 		'pengendalian',
+		'penilaian',
 		'l_awal',
 		'c_awal',
 		'r_awal',
@@ -95,6 +101,9 @@ class RiskDetail extends Model
 		'l_akhir',
 		'c_akhir',
 		'r_akhir',
+		'dampak_kuantitatif_residu',
+		'dampak_residu',
+		'biaya_penanganan',
 		'status',
 		'u_file',
 		'status_mitigasi',

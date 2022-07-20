@@ -448,7 +448,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ date('Y-m-d', strtotime($data->jadwal))}}" readonly>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ date('d M Y', strtotime($data->jadwal))}}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
@@ -535,14 +535,8 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
-                    <select class="select2" name="id_s_risiko" required>
-                      @foreach($pilihan_s_risiko as $p)
-                      <option value="{{ $p->id_s_risiko }}"
-                        @if($p->id_s_risiko === $data->id_s_risiko)
-                        selected
-                        @endif
-                      >{{ $p->tahun }} - {{ $p->s_risiko }}</option>
-                      @endforeach
+                    <select id="select-risk-edit-{{ $data->id_riskd }}" class="select2" name="id_s_risiko" required>
+                      <!-- <option value=""></option> -->
                     </select>
                   </div>
                   <div class="form-group pt-2">
@@ -696,6 +690,44 @@
         }
       )
     });
+
+    $(".btn-edit").on('click', function(){
+      var id_risk = $(this).attr("data-id");
+      console.log("id_risk :" + id_risk);
+      $.post(
+          "{{ url('risk-officer/getRisikoSelected') }}", {
+            _token: "{{ csrf_token() }}",
+            id:  id_risk
+          }, function(result) {
+            console.log(result);
+            // console.log(result.s_risk_selected[0].id_s_risiko);
+            // console.log(result.id_s_risiko);
+            // for(var i = 1; i<=result.companies.length; i++){
+						// $('#tahun-risk-'+result.companies[i-1].company_id).val($('#tahun-petarisiko').val());
+						// $('#risiko-rendah-'+result.companies[i-1].company_id).html(result.risiko_rendah[i-1]);
+					
+						// $('#progress-mitigasi-'+result.companies[i-1].company_id).attr('aria-valuenow', result.progress_mitigasi[i-1]).css('width', result.progress_mitigasi[i-1]+'%');
+            // if(result.selesai_mitigasi[i-1] == result.mitigasi[i-1]){
+						// 	$('#badge-progress-'+result.companies[i-1].company_id).html('<span class="badge badge-green">Done</span>');
+						// }else{
+						// 	$('#badge-progress-'+result.companies[i-1].company_id).html('<span class="badge badge-primary">On Progress</span>');
+						// }
+            console.log("cek 1 : "+result.all_s_risiko[0].id_s_risiko);
+            console.log("cek select awal : "+  $("#select-risk-edit-"+id_risk).val());
+
+            for(var i = 1; i<=result.all_s_risiko.length; i++){
+              $('#select-risk-edit-'+id_risk).html('<option value="'+result.all_s_risiko[i-1].id_s_risiko+'">'+result.all_s_risiko[i-1].tahun+' - '+result.all_s_risiko[i-1].s_risiko+'</option>');
+					  }
+
+            console.log("cek select akhir : "+  $("#select-risk-edit-"+id_risk).val());
+
+         
+            
+            
+          }
+        )
+    });
+    
   })
   function cal() {
     var lawal = $('#l_awal').val();

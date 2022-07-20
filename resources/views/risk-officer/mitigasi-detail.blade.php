@@ -116,6 +116,7 @@
                     <th>Mitigasi</th>
                     <th>Jadwal Pelaksanaan</th>
                     <th>% Realisasi</th>
+                    <th>Biaya Penanganan</th>
                     <th>Keterangan</th>
                     <th>Dokumen</th>
                     <th></th>
@@ -162,14 +163,19 @@
                       @endif
                     </td>
                     <td>
-                      @if($d->jadwal_mitigasi === null) -
-                      @else {{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}
+                      @if($d->jadwal === null) -
+                      @else {{ date('d M Y', strtotime($d->jadwal)) }}
                       @endif
                     </td>
                     <td>
                         @if($d->final_realisasi === null) -
                         @else {{ $d->final_realisasi ?? $d->realisasi }}%
                         @endif
+                    </td>
+                    <td>
+                      @if($d->biaya_penanganan === null) -
+                      @else {{ number_format($d->biaya_penanganan,2,',','.') }}
+                      @endif
                     </td>
                     <td>{{ $d->keterangan }}</td>
                     <td>
@@ -241,7 +247,7 @@
 									<label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label>
 									<div class="col-sm-9">
                     <div class="date-picker">
-                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal_mitigasi" value="{{ date('Y-m-d', strtotime($data->jadwal_mitigasi)) }}">
+                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal" value="{{ date('Y-m-d', strtotime($data->jadwal)) }}">
                     </div>
 									</div>
 								</div>

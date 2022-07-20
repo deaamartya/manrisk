@@ -76,10 +76,19 @@ class RisikoController extends Controller
         ->whereNotIn('id_s_risiko', $s_risk_diinput)
         ->orderBy('id_s_risiko')->get();
 
+        $count_pilihan_s_risk = count($pilihan_s_risiko); 
+
+        $pilihan_s_risiko_edit = SRisiko::where([
+            ['status_s_risiko', '=', 1],
+            ['company_id', '=', Auth::user()->company_id],
+        ]
+        )
+        ->orderBy('id_s_risiko')->get();
+
         $s_risiko = SRisiko::where('tahun', '=', $headers->tahun)->where('company_id', '=', $headers->company_id)->limit(1)->first();
         $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
         $nilai_c = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_C');
-        return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko', 'nilai_l', 'nilai_c'));
+        return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko', 'nilai_l', 'nilai_c', 'count_pilihan_s_risk' , 'pilihan_s_risiko_edit'));
     }
 
     /**
@@ -146,5 +155,31 @@ class RisikoController extends Controller
         $nilai_c = Pengukuran::where('id_s_risiko', '=', $request->id)->avg('nilai_C');
 
         return response()->json(['success' => true, 'nilai_l' => $nilai_l, "nilai_c" => $nilai_c]);
+    }
+
+    public function getRisikoSelected(Request $request) {
+        $s_risk_selected = RiskDetail::where([
+            ['id_riskd', '=', $request->id],
+        ])->pluck('id_s_risiko');
+
+        $all_s_risiko = SRisiko::where([
+            ['status_s_risiko', '=', 1],
+            ['company_id', '=', Auth::user()->company_id],
+        ]
+        )
+        ->orderBy('id_s_risiko')->get();
+
+        $s_risk_diinput = RiskDetail::where([
+            ['company_id', '=', Auth::user()->company_id],
+        ])->pluck('id_s_risiko');
+        $pilihan_s_risiko = SRisiko::where([
+            ['status_s_risiko', '=', 1],
+            ['company_id', '=', Auth::user()->company_id],
+        ]
+        )
+        ->whereNotIn('id_s_risiko', $s_risk_diinput)
+        ->orderBy('id_s_risiko')->get();
+
+        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko,'pilihan_s_risiko ' => $pilihan_s_risiko ]);
     }
 }

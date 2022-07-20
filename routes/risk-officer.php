@@ -43,6 +43,7 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
   Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
+  Route::post('getRisikoSelected', [RisikoController::class, 'getRisikoSelected']);
 
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');

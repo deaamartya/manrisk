@@ -58,7 +58,7 @@ class MitigasiPlanController extends Controller
         $query = AbsMitigasiPlan::updateRiskDetail($request, $id);
         $id_header = $query['id_header'];
 
-        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header);
+        return redirect()->route('risk-officer.mitigasi-plan.show', $id_header)->with(['success-swal' => 'Data Mitigasi berhasil diubah.']);
     }
 
     public function getProgressData(Request $request) {
