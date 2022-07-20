@@ -224,6 +224,9 @@ $bulan = array (
 				% Realisasi
 			</td>
 			<td width="3%" class="center f-11">
+    			Biaya Penanganan
+    		</td>
+			<td width="3%" class="center f-11">
 				Level Risiko Akhir
 			</td>
 			<td width="7%" class="center f-11">
@@ -258,6 +261,9 @@ $bulan = array (
 			<td class="center f-11">
 				(9)
 			</td>
+			<td class="center f-11">
+				(10)
+			</td>
 		</tr>
 	@foreach($header->risk_detail as $rd)
 	<tr class="content">
@@ -265,11 +271,11 @@ $bulan = array (
 			{{ $rd->sumber_risiko->konteks->id_risk }}
 		</td>
 		<td class="center f-11">
-							{{ $rd->indikator }}
+			{{ $rd->indikator }}
 		</td>
-					<td class="center f-11">
-							{{ round(($rd->l_awal*$rd->c_awal), 0) }}
-					</td>
+		<td class="center f-11">
+			{{ round(($rd->l_awal*$rd->c_awal), 0) }}
+		</td>
 		<td width="6%" class="center f-11">
 			{!! nl2br($rd->tindak_lanjut) !!}
 		</td>
@@ -277,21 +283,24 @@ $bulan = array (
 			{{ $rd->pic }}
 		</td>
 		<td width="6%" class="center f-10">
-							@if($rd->jadwal_mitigasi)
-					{{ date('d F Y', strtotime($rd->jadwal_mitigasi)) }}
-							@else
-									-
-							@endif
+			@if($rd->jadwal_mitigasi)
+				{{ date('d F Y', strtotime($rd->jadwal_mitigasi)) }}
+			@else
+					-
+			@endif
 		</td>
-					<td class="center f-11">
-							{{ $rd->realisasi }}
-					</td>
-					<td class="center f-11">
-							{{ round(($rd->l_akhir*$rd->c_akhir), 0) }}
-					</td>
-					<td class="center f-11">
-							{{ $rd->keterangan }}
-					</td>
+		<td class="center f-11">
+			{{ $rd->realisasi }}
+		</td>
+		<td class="center f-11">
+			{{ number_format($rd->biaya_penanganan,2,',','.') }}
+		</td>
+		<td class="center f-11">
+			{{ round(($rd->l_akhir*$rd->c_akhir), 0) }}
+		</td>
+		<td class="center f-11">
+			{{ $rd->keterangan }}
+		</td>
 	</tr>
 	@endforeach
 	</table>

@@ -3,6 +3,7 @@
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/select2.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/date-picker.css')}}">
 @endsection
 
 @section('page-title')
@@ -152,7 +153,7 @@
                   </tr>
                   @endforeach
                 @endif
-
+{{--
                 @if($detail_risk_indhan != null )
                   @foreach($detail_risk_indhan as $d2)
                   <tr>
@@ -192,6 +193,7 @@
                   </tr>
                   @endforeach
                 @endif
+                --}}
                 </tbody>
               </table>
             </div>
@@ -305,6 +307,10 @@
                   <h6>Identifikasi</h6>
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
                     <label>Risiko</label>
                     <select class="select2" name="id_s_risiko" required id="select-risiko">
                       @foreach($pilihan_s_risiko as $p)
@@ -323,6 +329,10 @@
                   <div class="form-group pt-2">
                     <label>Sebab</label>
                     <textarea class="form-control" name="sebab" placeholder="Masukkan sebab"></textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -344,6 +354,10 @@
                     <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian"></textarea>
                   </div>
                   <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian" placeholder="Masukkan penilaian"></textarea>
+                  </div>
+                  <!-- <div class="form-group pt-2">
                     <label>L</label>
                     <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L">
                   </div>
@@ -354,6 +368,18 @@
                   <div class="form-group pt-2">
                     <label>R</label>
                     <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly >
+                  </div> -->
+                  <div class="form-group pt-2">
+                    <label>L</label>
+                    <input type="number" class="form-control" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>C</label>
+                    <input type="number" class="form-control" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>R</label>
+                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
                   </div>
                 </div>
               </div>
@@ -375,7 +401,17 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan"></textarea>
+                      <div class="date-picker">
+                        <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" data-language="en" name="jadwal">
+                      </div>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu" placeholder="Masukkan dampak"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
@@ -400,6 +436,8 @@
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
 <script src="{{asset('assets/summernote/summernote.min.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
+<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
 <script>
   $(document).ready(function(){
     $(".select2").select2();

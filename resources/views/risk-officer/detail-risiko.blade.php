@@ -263,7 +263,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
+                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -332,7 +332,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
+                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
@@ -552,7 +552,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
+                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -616,7 +616,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
+                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>

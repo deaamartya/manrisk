@@ -223,6 +223,9 @@
     		<td width="6%" class="center f-12">
     			% Realisasi
     		</td>
+			<td width="3%" class="center f-11">
+    			Biaya Penanganan
+    		</td>
     		<td width="3%" class="center f-11">
     			Level Risiko Akhir
     		</td>
@@ -258,6 +261,9 @@
     		<td class="center f-11">
     			(9)
     		</td>
+			<td class="center f-11">
+    			(10)
+    		</td>
     	</tr>
 		@foreach($header->risk_detail as $rd)
 		<tr class="content">
@@ -285,6 +291,9 @@
 			</td>
             <td class="center f-11">
                 {{ $rd->realisasi }}
+            </td>
+			<td class="center f-11">
+				{{ number_format($rd->biaya_penanganan,2,',','.') }}
             </td>
             <td class="center f-11">
                 {{ round(($rd->l_akhir*$rd->c_akhir), 0) }}
