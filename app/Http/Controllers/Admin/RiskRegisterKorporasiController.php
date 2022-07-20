@@ -10,6 +10,7 @@ use App\Models\RiskHeaderIndhan;
 use App\Models\DefendidUser;
 use App\Models\SRisiko;
 use App\Models\PengajuanMitigasi;
+use App\Models\MitigasiLogs;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
@@ -87,13 +88,6 @@ class RiskRegisterKorporasiController extends Controller
         return Redirect::back()->with(['success-swal' => 'Risk Header berhasil disetujui.']);
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $headers = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
@@ -146,8 +140,9 @@ class RiskRegisterKorporasiController extends Controller
     public function deleteRiskDetail($id, Request $request)
     {
         $count = PengajuanMitigasi::where('id_riskd', $id)->count('id');
+        $count += MitigasiLogs::where('id_riskd', $id)->count('id');
         if ($count > 0) {
-            return back()->with(["error-swal" => 'Risiko ini tidak dapat dihapus karena data risiko digunakan pada pengajuan mitigasi']);
+            return back()->with(["error-swal" => 'Risiko ini tidak dapat dihapus karena data risiko digunakan pada pengajuan mitigasi dan atau log mitigasi']);
         }
         RiskDetail::destroy($id);
         $id_risk = $request->id_risk;

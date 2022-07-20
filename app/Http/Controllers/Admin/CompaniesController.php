@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Perusahaan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\DefendidUser;
+use App\Models\DefendidPengukur;
+use App\Models\RiskHeader;
+use App\Models\SRisiko;
+use App\Models\PengajuanMitigasi;
+use App\Models\RiskDetail;
 
 class CompaniesController extends Controller
 {
@@ -52,7 +58,17 @@ class CompaniesController extends Controller
     public function delete(Request $request)
     {
         try {
-            Perusahaan::where('company_id', $request->company_id)->update(['deleted_at' => Carbon::now()]);
+            $checkUser = DefendidUser::where('company_id', $request->company_id)->exists();
+            $checkPengukur = DefendidPengukur::where('company_id', $request->company_id)->exists();
+            $checkHeader = RiskHeader::where('company_id', $request->company_id)->exists();
+            $checkSRisiko = SRisiko::where('company_id', $request->company_id)->exists();
+            $checkPengajuan = PengajuanMitigasi::where('company_id', $request->company_id)->exists();
+            $checkDetail = RiskDetail::where('company_id', $request->company_id)->exists();
+            if (!$checkUser && !$checkPengukur && !$checkHeader && !$checkSRisiko && !$checkPengajuan && !$checkDetail) {
+                Perusahaan::where('company_id', $request->company_id)->update(['deleted_at' => Carbon::now()]);
+            } else {
+                return back()->with(["error-swal" => 'Data masih digunakan pada user, pengukur, risk header, sumber risiko, pengajuan mitigasi atau risk detail. Mohon hapus data yang menggunakan perusahaan ini terlebih dahulu.']);
+            }
         } catch (\ErrorException $e) {
             return back()->with(["error-swal" => $e->getMessage()]);
         }
