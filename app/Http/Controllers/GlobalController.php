@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class GlobalController extends Controller
 {
@@ -198,31 +199,35 @@ class GlobalController extends Controller
 
         // Notif/Alert kondisi risiko yang melewati jatuh tempo
         if(!Auth::user()->is_admin){
-            if(Auth::user()->is_risk_officer){
-                $segment = '/risk-officer/pengukuran-risiko';
-            }
-            else{
-                if(Auth::user()->is_penilai){
-                    $segment = '/penilai/pengukuran-risiko';
-                }
-                else if(Auth::user()->is_penilai_indhan){
-                    $segment = '/penilai-indhan/pengukuran-risiko-indhan';
-                }
-                else if(Auth::user()->is_risk_owner){
-                    $segment = '/risk-owner/pengukuran-risiko';
-                }
-            }
-
+            // if(Auth::user()->is_risk_officer){
+            //     $segment = '/risk-officer/pengukuran-risiko';
+            // }
+            // else{
+            //     if(Auth::user()->is_penilai){
+            //         $segment = '/penilai/pengukuran-risiko';
+            //     }
+            //     else if(Auth::user()->is_penilai_indhan){
+            //         $segment = '/penilai-indhan/pengukuran-risiko-indhan';
+            //     }
+            //     else if(Auth::user()->is_risk_owner){
+            //         $segment = '/risk-owner/pengukuran-risiko';
+            //     }
+            // }
+            $segment = "/deadline-mitigasi";
             $temp = DB::raw("(
                 SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
             ) as mitigasi_logs");
-            $total_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+            $mitigasi_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
             ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
             ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
             ->where('mitigasi_logs.final_realisasi', '<', 100)
-            ->count('mitigasi.id_riskd');
+            ->select('risk_detail.id_riskd', 'risk_detail.mitigasi')
+            ->get();
 
+            Session::forget('deadline-mitigasi');
+            $total_jatuh_tempo = count($mitigasi_jatuh_tempo);
             if($total_jatuh_tempo > 0){
+                Session::put('deadline-mitigasi', $mitigasi_jatuh_tempo);
                 $data[] = [
                     'title' => 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ',
                     'jumlah' => $total_jatuh_tempo,
@@ -431,5 +436,32 @@ class GlobalController extends Controller
         return $data;
     }
 
+    public function deadlineMitigasi()
+    {
+        $temp = DB::raw("(
+            SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+        ) as mitigasi_logs");
 
+        $data = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+        ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+        ->leftJoin('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        ->leftJoin('konteks', 'konteks.id_konteks', 's_risiko.id_konteks')
+        ->leftJoin('perusahaan', 'perusahaan.company_id', 'risk_detail.company_id')
+        ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
+        ->where('mitigasi_logs.final_realisasi', '<', 100)
+        ->selectRaw('
+            konteks.id_risk,
+            konteks.no_k,
+            s_risiko.s_risiko,
+            risk_detail.mitigasi,
+            risk_detail.jadwal_mitigasi,
+            mitigasi_logs.final_realisasi,
+            perusahaan.instansi,
+            risk_detail.tahun
+        ')
+        ->get();
+        // dd($data);
+
+        return view('deadline_mitigasi', compact('data'));
+    }
 }

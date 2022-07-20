@@ -119,7 +119,7 @@
                             </li>
 							<li>
 								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
-							
+
 									<span>Sumber Risiko</span>
 									<label class="badge badge-secondary srisiko-indhan-notif" style="float: right;"></label>
 								</a>
@@ -264,6 +264,15 @@
 						</a>
 					</li>
 					@endif
+                    @if(Auth::user()->is_admin || Auth::user()->is_risk_officer)
+                    <li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='deadline-mitigasi.index' ? 'active' : '' }}" href="{{route('deadline-mitigasi.index')}}">
+							<i data-feather="file-text"></i>
+							<span class="me-4p">Deadline Mitigasi</span>
+                            <label class="badge badge-secondary deadline-mitigasi-notif" style="float: right;"></label>
+						</a>
+					</li>
+                    @endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">
 							<i data-feather="list"></i>

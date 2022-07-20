@@ -77,6 +77,13 @@
               @endif
             </div>
             @endif
+            @if(Session::has('deadline-mitigasi'))
+                @foreach(Session::get('deadline-mitigasi') as $dm)
+                    <a href="{{ url('deadline-mitigasi') }}"><div class="alert alert-info">
+                        <span style="font-weight: bold">{{ $dm->mitigasi }}</span> Telah Jatuh Tempo. Mohon Segera Dicek!
+                    </div></a>
+                @endforeach
+            @endif
           </div>
           <!-- Container-fluid starts-->
           @yield('content')

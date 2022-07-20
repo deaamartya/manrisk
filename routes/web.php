@@ -39,6 +39,9 @@ Route::post('dashboard/data-level-risiko-indhan', [HomeController::class, 'dataL
 Route::post('dashboard/data-petarisiko-korporasi', [HomeController::class, 'dataPetaRisikoKorporasi']);
 Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPetaRisikoIndhan']);
 
+// Menu Deadline Mitigasi
+Route::get('deadline-mitigasi', [GlobalController::class, 'deadlineMitigasi'])->name('deadline-mitigasi.index');
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (! in_array($locale, ['en', 'de', 'es','fr','pt', 'cn', 'ae'])) {

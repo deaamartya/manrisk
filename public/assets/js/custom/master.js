@@ -15,6 +15,7 @@ $(document).ready(function() {
                 var mitigasi_indhan = 0;
                 var riskregister_korporasi = 0;
                 var hasil_mitigasi = 0;
+                var deadline_mitigasi = 0;
                 let element = '';
                 for (let i = 0; i < data.length; i++) {
                     element += `<li>` +
@@ -32,6 +33,9 @@ $(document).ready(function() {
                     if (data[i].title == 'Terdapat hasil mitigasi yang belum disetujui sebanyak ') {
                         hasil_mitigasi += data[i].jumlah;
                     }
+                    if (data[i].title == 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ') {
+                        deadline_mitigasi += data[i].jumlah;
+                    }
 
                 }
 
@@ -43,6 +47,8 @@ $(document).ready(function() {
                     $('.riskregister-korporasi-notif').html(riskregister_korporasi)
                 } else if (hasil_mitigasi > 0) {
                     $('.hasil-mitigasi-notif').html(hasil_mitigasi)
+                } else if (deadline_mitigasi > 0) {
+                    $('.deadline-mitigasi-notif').html(deadline_mitigasi)
                 }
 
                 if (data.length > 0) {
