@@ -115,7 +115,7 @@ class HomeController extends Controller
     }
 
     public function dataRisiko(Request $req) {
-        $companies = Perusahaan::limit(5)->get();
+        $companies = Perusahaan::where('company_code', '!=', 'INHAN')->get();
         $labels = [];
         $total_risk = [];
         $mitigasi = [];
@@ -250,7 +250,7 @@ class HomeController extends Controller
     }
 
     public function dataPetaRisikoIndhan(Request $req) {
-        $companies = Perusahaan::limit(5)->get();
+        $companies = Perusahaan::where('company_code', '!=', 'INHAN')->get();
         $risiko_rendah = [];
         $risiko_sedang = [];
         $risiko_tinggi = [];

@@ -22,11 +22,11 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
-		<div class="col-xl-6 col-12 pb-0">
-			<div class="row">
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+		<div class="col-xl-6 col-12 pb-0 h-100">
+			<div class="card o-hidden mb-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko INDHAN</span></p>
@@ -35,11 +35,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko INDHAN</span></p>
@@ -48,11 +44,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
@@ -61,11 +53,7 @@
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 col-12 pb-3">
-					<div class="card o-hidden h-100 mb-0">
-						<div class="card-body">
+						<div class="col-lg-6 col-12 py-4">
 							<div class="media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
@@ -108,7 +96,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-lg-8">
+		<div class="col-12 col-lg-6">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
@@ -130,11 +118,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-4">
+		<div class="col-12 col-lg-6">
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>Grafik Risiko berdasarkan Klasifikasi Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
+						<h6>Kompilasi Tingkat Risiko Tahun <span id="tahun-level-risiko-title">{{ date('Y') }}</span></h6>
 						<div class="col-lg-3">
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-level-risiko">
@@ -224,7 +212,7 @@
 										</div>
 								</div>
 								<div class="row mt-3">
-									<form method="get" action="{{ route('penilai-indhan.peta-risiko', $p->company_id) }}">
+									<form method="get" action="{{ route('admin.peta-risiko', $p->company_id) }}">
 										<input type="hidden" id="tahun-risk-{{ $p->company_id }}" name="tahun_risk" value="{{ date('Y') }}">
 										<button class="btn btn-success" type="submit" style="width: 100%; margin:auto;">Lihat Peta Risiko</button>
 									</form>
@@ -326,7 +314,7 @@
 		function initPieChart(data) {
 			var options8 = {
 				chart: {
-						width: 380,
+						width: 500,
 						type: 'pie',
 				},
 				labels: data.labels,
@@ -342,7 +330,12 @@
 								}
 						}
 				}],
-				colors:[ CubaAdminConfig.primary , CubaAdminConfig.secondary , '#51bb25', '#a927f9', '#f8d62b']
+				colors:[
+					'#f54e49', '#827397', '#8CC0DE', '#3A5BA0',
+					'#AEDBCE', '#C499BA', '#FFCD38', '#B4E197',
+					'#FFA1A1', '#A0BCC2', '#5F7161', '#92B4EC',
+					'#FF8D29', '#FF8B8B', '#94B49F', '#937DC2'
+				]
 			}
 
 			if (chart8) chart8.destroy();
@@ -358,21 +351,23 @@
 		}
 		function initStackedBarChart(data) {
 			var options9 = {
-				colors : ['#dc3545', '#dd8c93', '#f8d62b', '#51bb25'],
+				colors : ['#51bb25','#f8d62b', '#dd8c93','#dc3545'],
           series: [
 						{
-							name: 'Extreme',
-							data: [data.countExtreme]
+							name: 'Low',
+							data: data.countLow
+						},
+						{
+							name: 'Med',
+							data: data.countMed
 						},
 						{
 							name: 'High',
-							data: [data.countHigh]
-						}, {
-							name: 'Med',
-							data: [data.countMed]
-						}, {
-							name: 'Low',
-							data: [data.countLow]
+							data: data.countHigh
+						},
+						{
+							name: 'Extreme',
+							data: data.countExtreme
 						},
 					],
           chart: {
@@ -401,7 +396,7 @@
         },
         xaxis: {
           type: 'category',
-          categories: [data.labels],
+          categories: data.labels,
         },
         legend: {
           position: 'right',
@@ -436,7 +431,7 @@
 			});
 		});
 
-        $('#tahun-petarisiko').change(function(){
+		$('#tahun-petarisiko').change(function(){
 			const url = "{{ url('dashboard/data-petarisiko-indhan') }}";
 			// console.log($('#tahun-petarisiko').val());
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-petarisiko').val() })
@@ -466,6 +461,7 @@
 			});
 		});
 
+
 		$('#tahun-kat-risiko').change(function(){
 			$("#basic-pie").hide();
 			$("#basic-pie-loading").show();
@@ -483,11 +479,11 @@
 		$('#tahun-level-risiko').change(function(){
 			$("#basic-stacked-bar").hide();
 			$("#basic-stacked-bar-loading").show();
-			const url = "{{ url('dashboard/data-level-risiko') }}"
+			const url = "{{ url('dashboard/data-level-risiko-indhan') }}"
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-level-risiko').val() })
 				.done(function(result) {
 					$('#tahun-level-risiko-title').html($('#tahun-level-risiko').val());
-					if (result.risk_detail.length > 0) {
+					if (result.labels.length > 0) {
 						initStackedBarChart(result);
 					} else {
 						$("#basic-stacked-bar-loading").hide();
