@@ -107,6 +107,10 @@ class RisikoController extends Controller
      */
     public function destroy($id)
     {
+        $count = RiskDetail::where('id_riskh', '=', $id)->count('id_riskh');
+        if ($count > 0) {
+            return back()->with(["error-swal" => 'Data ini masih digunakan pada detail risiko. Mohon hapus detail risiko terlebih dahulu']);
+        }
         RiskHeader::destroy($id);
         return redirect()->route('risk-officer.risiko.index')->with(['success-swal' => 'Risk Header berhasil dihapus!']);
     }

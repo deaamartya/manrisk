@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use App\Models\Risk;
+use App\Models\PengukuranIndhan;
+use App\Models\Pengukuran;
+use App\Models\RiskDetail;
 use Auth;
 
 class SumberRisikoController extends Controller
@@ -90,6 +93,12 @@ class SumberRisikoController extends Controller
      */
     public function destroy($id)
     {
+      $count = PengukuranIndhan::where('id_s_risiko', '=', $id)->count('id_s_risiko');
+      $count += Pengukuran::where('id_s_risiko', '=', $id)->count('id_s_risiko');
+      $count += RiskDetail::where('id_s_risiko', '=', $id)->count('id_s_risiko');
+      if ($count > 0) {
+        return back()->with(["error-swal" => 'Data ini masih digunakan pada detail risiko, pengukuran dan atau pengukuran Indhan. Mohon hapus data yang menggunakan sumber risiko ini terlebih dahulu.']);
+      }
       SRisiko::find($id)->delete();
       return redirect()->route('risk-officer.sumber-risiko.index')->with('deleted-alert', 'Data sumber risiko telah dihapus.');
     }

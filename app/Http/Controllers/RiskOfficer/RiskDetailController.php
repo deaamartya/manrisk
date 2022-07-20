@@ -9,6 +9,8 @@ use Redirect;
 use App\Imports\RiskDetailImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\HeadingRowImport;
+use App\Models\PengajuanMitigasi;
+use App\Models\MitigasiLogs;
 
 class RiskDetailController extends Controller
 {
@@ -48,6 +50,11 @@ class RiskDetailController extends Controller
      */
     public function destroy($id)
     {
+        $count = PengajuanMitigasi::where('id_riskd', '=', $id)->count('id_riskd');
+        $count += MitigasiLogs::where('id_riskd', '=', $id)->count('id_riskd');
+        if ($count > 0) {
+            return back()->with(["error-swal" => 'Data ini masih digunakan pada pengajuan mitigasi atau log mitigasi. Mohon hapus data yang menggunakan  risiko ini terlebih dahulu.']);
+        }
         RiskDetail::destroy($id);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dihapus!']);
     }
