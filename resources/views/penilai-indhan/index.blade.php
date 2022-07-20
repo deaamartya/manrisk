@@ -23,7 +23,7 @@
 <div class="container-fluid">
 	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-6 col-12 pb-0 h-100">
-			<div class="card o-hidden mb-0">
+			<div class="card o-hidden">
 				<div class="card-body">
 					<div class="row">
 						<div class="col-lg-6 col-12 py-4">
