@@ -386,11 +386,12 @@ class GlobalController extends Controller
 
     public function notif_admin()
     {
-        $approval_srisiko_indhan = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-                                    ->where('s_risiko.tahun', date('Y'))
-                                    ->where('s_risiko.status_s_risiko', 0)
-                                    ->where('risk_detail.status_indhan', 1)
-                                    ->whereNull('risk_detail.deleted_at')
+        $approval_srisiko_indhan = SRisiko::
+        //join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+                                    // where('s_risiko.tahun', date('Y'))
+                                    where('s_risiko.status_s_risiko', 0)
+                                    // ->where('risk_detail.status_indhan', 1)
+                                    // ->whereNull('risk_detail.deleted_at')
                                     ->count('s_risiko.id_s_risiko');
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
         $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)
@@ -400,7 +401,7 @@ class GlobalController extends Controller
         $data = [];
         if($approval_srisiko_indhan > 0){
             $data[] = [
-                'title' => 'Terdapat sumber risiko indhan yang belum disetujui sebanyak ',
+                'title' => 'Terdapat sumber risiko yang belum disetujui sebanyak ',
                 'jumlah' => $approval_srisiko_indhan,
                 'link' => url('/')."/admin/sumber-risiko-indhan"
             ];
