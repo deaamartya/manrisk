@@ -137,10 +137,11 @@ class RiskRegisterIndhanController extends Controller
             ])->orderBy('s_risiko.id_s_risiko')->get();
         $s_risiko = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                 ->where('s_risiko.tahun', '=', $headers->tahun)
-                ->where('s_risiko.company_id', 'risk_detail.company_id')
+                // ->where('s_risiko.company_id', 'risk_detail.company_id')
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->limit(1)->first();
         // dd($s_risiko);
+        // dd($headers->tahun);
         if($s_risiko != null){
             $nilai_l = PengukuranIndhan::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
             $nilai_c = PengukuranIndhan::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_C');
