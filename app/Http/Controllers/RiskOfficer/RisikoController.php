@@ -172,14 +172,15 @@ class RisikoController extends Controller
         $s_risk_diinput = RiskDetail::where([
             ['company_id', '=', Auth::user()->company_id],
         ])->pluck('id_s_risiko');
+
         $pilihan_s_risiko = SRisiko::where([
             ['status_s_risiko', '=', 1],
             ['company_id', '=', Auth::user()->company_id],
         ]
         )
-        ->whereNotIn('id_s_risiko', $s_risk_diinput)
-        ->orderBy('id_s_risiko')->get();
+        ->whereIn('id_s_risiko', $s_risk_diinput)
+        ->orderBy('id_s_risiko')->pluck('id_s_risiko');
 
-        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko,'pilihan_s_risiko ' => $pilihan_s_risiko ]);
+        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko,'pilihan_s_risiko' => $pilihan_s_risiko ]);
     }
 }
