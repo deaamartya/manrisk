@@ -15,6 +15,7 @@
     <!-- Zero Configuration  Starts-->
     <div class="col-sm-12">
     @if($sr_exists)
+        @if(Auth::user()->defendid_pengukur)
         <div class="card">
         <div class="card-header">
             <div class="row">
@@ -139,8 +140,11 @@
             </div>
             </div>
             @else
-            <div class="alert alert-danger">Sumber risiko untuk perusahaan ini pada tahun {{ date('Y') }} belum tersedia.</div>
+            <div class="alert alert-danger">Maaf Anda belum memiliki akses sebagai penilai untuk pengukuran. Silahkan hubungi risk officer / admin untuk mengatur ulang hak akses Anda.</div>
             @endif
+        @else
+        <div class="alert alert-danger">Sumber risiko untuk perusahaan ini belum tersedia. Silahkan menambahkan sumber risiko terlebih dahulu.</div>
+        @endif
         </div>
     </div>
 </div>

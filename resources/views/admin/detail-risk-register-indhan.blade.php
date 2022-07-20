@@ -110,19 +110,22 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($nilai_l, 2) + 0 }}</td>
-                    <td>{{ number_format($nilai_c, 2) + 0 }}</td>
+                    <td>{{ number_format($d->nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d->nilai_c, 2) + 0 }}</td>
+                    @php
+                      $nilai_r = number_format($d->nilai_l * $d->nilai_c, 2) + 0;
+                    @endphp
                     <td>
-                      @if($d->r_awal < 6)
+                      @if($nilai_r < 6)
                       <span class="badge badge-green me-2">
-                      @elseif($d->r_awal < 12)
+                      @elseif($nilai_r < 12)
                       <span class="badge badge-warning me-2">
-                      @elseif($d->r_awal < 16)
+                      @elseif($nilai_r < 16)
                       <span class="badge badge-pink me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($nilai_l * $nilai_c, 2) + 0 }}
+                      {{ number_format($nilai_r, 2) + 0 }}
                       </span>
                     </td>
                     <td>
@@ -153,7 +156,7 @@
                   </tr>
                   @endforeach
                 @endif
-{{--
+
                 @if($detail_risk_indhan != null )
                   @foreach($detail_risk_indhan as $d2)
                   <tr>
@@ -193,7 +196,7 @@
                   </tr>
                   @endforeach
                 @endif
-                --}}
+                
                 </tbody>
               </table>
             </div>
@@ -357,29 +360,17 @@
                     <label>Penilaian</label>
                     <textarea class="form-control" name="penilaian" placeholder="Masukkan penilaian"></textarea>
                   </div>
-                  <!-- <div class="form-group pt-2">
+                  <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L">
+                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()"  name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C">
+                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()"  name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly >
-                  </div> -->
-                  <div class="form-group pt-2">
-                    <label>L</label>
-                    <input type="number" class="form-control" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}" readonly>
-                  </div>
-                  <div class="form-group pt-2">
-                    <label>C</label>
-                    <input type="number" class="form-control" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}" readonly>
-                  </div>
-                  <div class="form-group pt-2">
-                    <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
+                    <input type="number" class="form-control" min="1" max="5" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
                   </div>
                 </div>
               </div>
