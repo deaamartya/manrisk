@@ -165,6 +165,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
+							<label class="badge badge-secondary pengukuran-risiko-indhan-notif" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -178,6 +179,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
+							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
