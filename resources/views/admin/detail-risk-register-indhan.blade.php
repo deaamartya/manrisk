@@ -579,7 +579,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="text" class="form-control" name="r_awal" id="r_awal_{{ $data->id_riskd }}" step="0.01" placeholder="Nilai R" value="{{ number_format($data->r_awal, 2) + 0 }}">
+                    <input type="text" class="form-control" name="r_awal" id="r_awal_{{ $data->id_riskd }}" step="0.01" placeholder="Nilai R" value="{{ number_format($data->r_awal, 2) + 0 }}" readonly>
                   </div>
                 </div>
               </div>
@@ -711,10 +711,17 @@
           _token: "{{ csrf_token() }}",
           id: $(this).val()
         }, function(result) {
-          $("#l_awal_"+id).val(parseFloat(result.nilai_l).toFixed(2))
-          $("#c_awal_"+id).val(parseFloat(result.nilai_c).toFixed(2))
-          var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
-          $('#r_awal_'+id).val(mul.toFixed(2));
+          if(result.nilai_l && result.nilai_c != null){
+            $("#l_awal_"+id).val(parseFloat(result.nilai_l).toFixed(2))
+            $("#c_awal_"+id).val(parseFloat(result.nilai_c).toFixed(2))
+            var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
+            $('#r_awal_'+id).val(mul.toFixed(2));
+          }else{
+            $("#l_awal_"+id).val('')
+            $("#c_awal_"+id).val('')
+            $('#r_awal_'+id).val('');
+          }
+         
         }
       )
     });
