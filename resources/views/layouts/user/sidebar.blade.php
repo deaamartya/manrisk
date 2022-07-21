@@ -133,16 +133,19 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
+							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
 						</a>
 						@elseif(Auth::user()->is_risk_owner)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-owner.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
+							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
 						</a>
 						@elseif(Auth::user()->is_penilai)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai.pengukuran-risiko' ? 'active' : '' }}" href="{{route('penilai.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
+							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
 						</a>
 						@endif
 					</li>
@@ -152,6 +155,7 @@
 							<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
 								<i data-feather="edit"></i>
 								<span>Pengukuran Risiko Indhan</span>
+								<label class="badge badge-secondary pengukuran-risiko-indhan-notif" style="float: right;"></label>
 							</a>
 						</li>
 						@endif
@@ -224,6 +228,9 @@
 								{{ Route::currentRouteName() == 'admin.approval-hasil-mitigasi.index' ? 'active' : Route::currentRouteName() == 'risk-officer.mitigasi-plan.index' ? 'active' : '' }}" href="{{ Auth::user()->is_admin ? route('admin.approval-hasil-mitigasi.index') : route('risk-officer.mitigasi-plan.index') }}">
 								<i data-feather="sidebar"></i>
 								<span>Mitigasi Plan</span>
+								@if(Auth::user()->is_risk_officer)
+								<label class="badge badge-secondary mitigasi-risiko-notif" style="float: right;"></label>
+								@endif
 								@if(Auth::user()->is_admin)
 								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
 								@endif

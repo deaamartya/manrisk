@@ -12,10 +12,13 @@ $(document).ready(function() {
             if (results.message == 'ok') {
                 var data = results.data
                 var srisiko_indhan = 0;
+                var pengukuran_risiko = 0;
+                var pengukuran_risiko_indhan = 0;
                 var mitigasi_indhan = 0;
                 var riskregister_korporasi = 0;
                 var hasil_mitigasi = 0;
                 var deadline_mitigasi = 0;
+                var mitigasi_risiko = 0;
                 let element = '';
                 for (let i = 0; i < data.length; i++) {
                     element += `<li>` +
@@ -36,6 +39,15 @@ $(document).ready(function() {
                     if (data[i].title == 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ') {
                         deadline_mitigasi += data[i].jumlah;
                     }
+                    if (data[i].title == 'Terdapat pengukuran risiko korporasi sebanyak ') {
+                        pengukuran_risiko += data[i].jumlah;
+                    }
+                    if (data[i].title == 'Terdapat pengukuran risiko indhan sebanyak ') {
+                        pengukuran_risiko_indhan += data[i].jumlah;
+                    }
+                    if (data[i].title == 'Terdapat detail risiko yang belum dimitigasi sebanyak ') {
+                        mitigasi_risiko += data[i].jumlah;
+                    }
 
                 }
 
@@ -49,6 +61,12 @@ $(document).ready(function() {
                     $('.hasil-mitigasi-notif').html(hasil_mitigasi)
                 } else if (deadline_mitigasi > 0) {
                     $('.deadline-mitigasi-notif').html(deadline_mitigasi)
+                } else if (pengukuran_risiko > 0) {
+                    $('.pengukuran-risiko-notif').html(pengukuran_risiko)
+                } else if (pengukuran_risiko_indhan > 0) {
+                    $('.pengukuran-risiko-indhan-notif').html(pengukuran_risiko_indhan)
+                } else if (mitigasi_risiko > 0) {
+                    $('.mitigasi-risiko-notif').html(mitigasi_risiko)
                 }
 
                 if (data.length > 0) {
