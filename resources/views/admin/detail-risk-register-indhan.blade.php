@@ -98,7 +98,7 @@
                     <th>C</th>
                     <th>R</th>
                     <th>Status</th>
-                    <!-- <th>Aksi</th> -->
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -145,14 +145,8 @@
                         @endif
                       {{-- @endif --}}
                     </td>
-                    <!-- <td>
-                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-risk-{{ $d->id_riskd }}">
-                        <i data-feather="edit-2" class="small-icon"></i>
-                      </button>
-                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
-                        <i data-feather="trash-2" class="small-icon"></i>
-                      </button>
-                    </td> -->
+                    <td>
+                    </td>
                   </tr>
                   @endforeach
                 @endif
@@ -182,16 +176,21 @@
                     </td>
                     <td>
                         @if($d2->r_awal >= 12)
-                          <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
-                            Ajukan Mitigasi
-                          </button> -->
                           <span class="badge badge-primary">Ajukan Mitigasi</span>
                         @elseif($d2->r_awal < 12)
-                          <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
-                            Tidak Mitigasi
-                          </button> -->
                           <span class="badge badge-success">Aman</span>
                         @endif
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d2->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-risk-{{ $d2->id_riskd }}">
+                        <i data-feather="edit-2" class="small-icon"></i>
+                      </button>
+                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d2->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d2->id_riskd }}">
+                        <i data-feather="trash-2" class="small-icon"></i>
+                      </button>
+                      <button class="btn btn-sm btn-secondary btn-detail" data-id="{{ $d2->id_riskd }}" data-bs-toggle="modal" data-bs-target="#detail-risk-{{ $d2->id_riskd }}">
+                        <i data-feather="search" class="small-icon"></i>
+                      </button>
                     </td>
                   </tr>
                   @endforeach
@@ -206,38 +205,6 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="insert-lampiran" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Input Lampiran Risiko</h5>
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="POST" action="{{ route('admin.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
-          @csrf
-          <input type="hidden" name="id" value="{{ $headers->id_riskh }}">
-          <div class="modal-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="mb-3 row">
-                        <label class="col-sm-3 col-form-label">Lampiran</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="file" name="lampiran" required>
-                        </div>
-                    </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit">Simpan</button>
-          </div>
-        </form>
-    </div>
-  </div>
-</div>
-
-
 <div class="modal fade" id="insert-lampiran" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -362,11 +329,11 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()"  name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
+                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()" step="0.01" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()"  name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}">
+                    <input type="number" class="form-control" min="1" max="5" onkeyup="cal()" step="0.01" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
@@ -423,6 +390,271 @@
     </div>
   </div>
 </div>
+
+@foreach($detail_risk_indhan as $data)
+<div class="modal fade" id="detail-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lihat Risk Detail</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+            <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Identifikasi</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja" readonly>{{ $data->sasaran_kinerja }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Risiko</label>
+                    <input type="text" class="form-control" readonly value="{{ $data->sumber_risiko->s_risiko }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PPKH</label>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan" readonly>{{ $data->ppkh }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Indikator</label>
+                    <textarea class="form-control" name="indikator" placeholder="Masukkan Indikator" readonly>{{ $data->indikator }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Sebab</label>
+                    <textarea class="form-control" name="sebab" placeholder="Masukkan sebab" readonly>{{ $data->sebab }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="text" class="form-control" readonly value="{{ number_format($data->dampak_kuantitatif,2,',','.') }}"> 
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko</label>
+                    <textarea class="form-control" name="dampak" placeholder="Masukkan dampak" readonly>{{ $data->dampak }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>UC / C</label>
+                    <input type="text" class="form-control" readonly value="{{ $data->uc }}">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Pengendalian dan Penilaian Awal</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Pengendalian</label>
+                    <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian" readonly>{{ $data->pengendalian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian" readonly>{{ $data->penilaian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>L</label>
+                    <input type="number" class="form-control" name="l_awal" id="l_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>C</label>
+                    <input type="number" class="form-control" name="c_awal" id="c_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>R</label>
+                    <input type="number" class="form-control" name="r_awal" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) + 0 }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-5">
+                <div class="col-md-6">
+                  <h6>Peluang</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Peluang</label>
+                    <textarea class="form-control" name="peluang" placeholder="Masukkan peluang" readonly>{{ $data->peluang }}</textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Penanganan</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Rencana Tindak Lanjut</label>
+                    <textarea class="form-control" name="tindak_lanjut" readonly>{{ $data->tindak_lanjut }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Jadwal Pelaksanaan</label>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ date('d M Y', strtotime($data->jadwal))}}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="text" class="form-control" value="{{ number_format($data->dampak_kuantitatif_residu,2,',','.') }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu" readonly>{{ $data->dampak_residu }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}" readonly>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dokumen Terkait</label>
+                    <textarea class="form-control" name="dokumen" readonly>{{ $data->dokumen }}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="edit-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Risk Detail</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form action="{{ route('admin.risk-detail.update', $data->id_riskd) }}" method="POST">
+            @method('PUT')
+            @csrf
+            <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Identifikasi</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Sasaran Kinerja</label>
+                    <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Risiko</label>
+                    <select id="select-risk-edit-{{ $data->id_riskd }}" class="select2 select-edit-risiko" data-id="{{ $data->id_riskd }}" name="id_s_risiko" required>
+                    </select>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PPKH</label>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan">{{ $data->ppkh }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Indikator</label>
+                    <textarea class="form-control" name="indikator" placeholder="Masukkan Indikator">{{ $data->indikator }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Sebab</label>
+                    <textarea class="form-control" name="sebab" placeholder="Masukkan sebab">{{ $data->sebab }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif</label>
+                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko</label>
+                    <textarea class="form-control" name="dampak" placeholder="Masukkan dampak">{{ $data->dampak }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>UC / C</label>
+                    <select class="form-control" name="uc">
+                      <option @if($data->UC == 'UC') selected @endif>UC</option>
+                      <option @if($data->UC == 'C') selected @endif>C</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Pengendalian dan Penilaian Awal</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Pengendalian</label>
+                    <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian">{{ $data->pengendalian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Penilaian</label>
+                    <textarea class="form-control" name="penilaian">{{ $data->penilaian }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>L</label>
+                    <input type="text" class="form-control" onkeyup="calEdit({{ $data->id_riskd }})" step="0.01" name="l_awal" id="l_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>C</label>
+                    <input type="text" class="form-control" onkeyup="calEdit({{ $data->id_riskd }})" step="0.01" name="c_awal" id="c_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>R</label>
+                    <input type="text" class="form-control" name="r_awal" id="r_awal_{{ $data->id_riskd }}" step="0.01" placeholder="Nilai R" value="{{ number_format($data->r_awal, 2) + 0 }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-5">
+                <div class="col-md-6">
+                  <h6>Peluang</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Peluang</label>
+                    <textarea class="form-control" name="peluang" placeholder="Masukkan peluang">{{ $data->peluang }}</textarea>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h6>Penanganan</h6>
+                  <hr class="hr-custom">
+                  <div class="form-group pt-2">
+                    <label>Rencana Tindak Lanjut</label>
+                    <textarea class="form-control" name="tindak_lanjut">{{ $data->tindak_lanjut }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Jadwal Pelaksanaan</label>
+                    <!-- <input type="date" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}"> -->
+                    <div class="date-picker">
+                          <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
+                        </div>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>IDR Kuantitatif Residual</label>
+                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dampak Risiko Residual</label>
+                    <textarea class="form-control" name="dampak_residu">{{ $data->dampak_residu }}</textarea>
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>PIC</label>
+                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}">
+                  </div>
+                  <div class="form-group pt-2">
+                    <label>Dokumen Terkait</label>
+                    <textarea class="form-control" name="dokumen">{{ $data->dokumen }}</textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" type="submit">Simpan</button>
+            </div>
+          </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="delete-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Risk Detail</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('admin.risk-detail.destroy', $data->id_riskd) }}" method="POST">
+          @method('DELETE')
+          @csrf
+          <div class="modal-body">
+            <p>Apakah Anda yakin ingin menghapus risk detail dengan risiko {{ $data->sumber_risiko->s_risiko }}?</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit">Hapus</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+@endforeach
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
@@ -441,7 +673,6 @@
           _token: "{{ csrf_token() }}",
           id: $(this).val()
         }, function(result) {
-          console.log(result)
           $("#l_awal").val(parseFloat(result.nilai_l).toFixed(2))
           $("#c_awal").val(parseFloat(result.nilai_c).toFixed(2))
           var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
@@ -449,16 +680,54 @@
         }
       )
     });
-  })
+    $(".btn-edit").on('click', function(){
+      var id_risk = $(this).attr("data-id");
+      $.post(
+          "{{ url('admin/getRisikoSelected') }}", {
+            _token: "{{ csrf_token() }}",
+            id:  id_risk
+          }, function(result) {
+            $('#select-risk-edit-'+id_risk).empty();
+
+            for(var i = 0; i<result.all_s_risiko.length; i++){
+              var is_selected = false;
+              if(result.all_s_risiko[i].id_s_risiko == result.s_risk_selected ){
+                is_selected = true;
+              }
+              var cekInclude = result.pilihan_s_risiko.includes(result.all_s_risiko[i].id_s_risiko);
+              if ( cekInclude == false || result.all_s_risiko[i].id_s_risiko == result.s_risk_selected ) {
+                var text = result.all_s_risiko[i].tahun+" - "+ result.all_s_risiko[i].s_risiko;
+                var option = new Option(text, result.all_s_risiko[i].id_s_risiko, false, is_selected);
+                $('#select-risk-edit-'+id_risk).append(option).trigger("change");
+              }
+					  }
+          }
+        )
+    });
+    $(".select-edit-risiko").on('change', function(){
+      const id = $(this).attr("data-id");
+      $.post(
+        "{{ url('admin/fetchNilaiRisiko') }}", {
+          _token: "{{ csrf_token() }}",
+          id: $(this).val()
+        }, function(result) {
+          $("#l_awal_"+id).val(parseFloat(result.nilai_l).toFixed(2))
+          $("#c_awal_"+id).val(parseFloat(result.nilai_c).toFixed(2))
+          var mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
+          $('#r_awal_'+id).val(mul.toFixed(2));
+        }
+      )
+    });
+  });
   function cal() {
-    var lawal = $('#l_awal').val();
-    var cawal = $('#c_awal').val();
+    var lawal = parseFloat($('#l_awal').val());
+    var cawal = parseFloat($('#c_awal').val());
     var mul = lawal * cawal;
     $('#r_awal').val(mul);
   }
   function calEdit(id) {
-    var lawal = $('#l_awal_'+id).val();
-    var cawal = $('#c_awal_'+id).val();
+    var lawal = parseFloat($('#l_awal_'+id).val());
+    var cawal = parseFloat($('#c_awal_'+id).val());
     var mul = lawal * cawal;
     $('#r_awal_'+id).val(mul);
   }

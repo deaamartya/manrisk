@@ -24,6 +24,7 @@ use Maatwebsite\Excel\HeadingRowImport;
 use Carbon\Carbon;
 use DB;
 use App\Models\Pengukuran;
+use App\Models\MitigasiLogs;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -275,5 +276,62 @@ class RiskRegisterIndhanController extends Controller
         $nilai_c = Pengukuran::where('id_s_risiko', '=', $request->id)->avg('nilai_C');
 
         return response()->json(['success' => true, 'nilai_l' => $nilai_l, "nilai_c" => $nilai_c]);
+    }
+
+    public function getRisikoSelected(Request $request) {
+        $s_risk_selected = RiskDetail::where([
+            ['id_riskd', '=', $request->id],
+        ])->pluck('id_s_risiko');
+
+        $all_s_risiko = SRisiko::join('risk_detail', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko')
+        ->whereNull('risk_detail.deleted_at')
+        ->whereNull('s_risiko.deleted_at')
+        ->where([
+            ['status_s_risiko', '=', 1],
+            ['status_indhan', '=', 0],
+        ])
+        ->orderBy('s_risiko.id_s_risiko')->get();
+
+        $s_risiko_terpakai = SRisiko::join('risk_detail', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko')
+        ->whereNull('risk_detail.deleted_at')
+        ->whereNull('s_risiko.deleted_at')
+        ->where([
+            ['status_s_risiko', '=', 1],
+            ['status_indhan', '=', 0],
+            ['risk_detail.company_id', '=', 6],
+        ])
+        ->orderBy('s_risiko.id_s_risiko')->pluck('s_risiko.id_s_risiko');
+
+        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko, 'pilihan_s_risiko' => $s_risiko_terpakai]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDetail(Request $request, $id)
+    {
+        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
+        $risk_detail->update($request->except('_token'));
+        return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil diubah!']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyDetail($id)
+    {
+        $count = MitigasiLogs::where('id_riskd', '=', $id)->count('id_riskd');
+        if ($count > 0) {
+            return back()->with(["error-swal" => 'Data ini masih digunakan pada log mitigasi. Mohon hapus data yang menggunakan risiko ini terlebih dahulu.']);
+        }
+        RiskDetail::destroy($id);
+        return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dihapus!']);
     }
 }

@@ -152,12 +152,12 @@
                       <span>Aksi Mitigasi telah diajukan</span>
                       @else
                         @if($d->r_awal >= 12)
-                          <span class="badge badge-success">Aman</span>
+                          <span class="badge badge-primary">Ajukan Mitigasi</span>
                         {{-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Tidak Perlu Mitigasi
                         </button> --}}
                         @elseif($d->r_awal < 12)
-                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                          <span class="badge badge-success">Aman</span>
                           {{-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Ajukan Mitigasi
                           </button> --}}

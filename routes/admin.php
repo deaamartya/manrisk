@@ -72,7 +72,11 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('print-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'print'])->name('print-risk-register-indhan');
   Route::post('approval-risk-register-indhan/{id}', [RiskRegisterIndhanController::class, 'approval'])->name('approval-risk-register-indhan');
 
+  Route::put('updateDetail/{id}', [RiskRegisterIndhanController::class, 'updateDetail'])->name('risk-detail.update');
+  Route::delete('destroyDetail/{id}', [RiskRegisterIndhanController::class, 'destroyDetail'])->name('risk-detail.destroy');
+
   Route::post('fetchNilaiRisiko', [RiskRegisterIndhanController::class, 'getNilai']);
+  Route::post('getRisikoSelected', [RiskRegisterIndhanController::class, 'getRisikoSelected']);
 
   Route::get('approval-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'progressMitigasi']);
   Route::put('approval-hasil-mitigasi/persetujuan-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'approvalHasilMitigasi']);
