@@ -24,6 +24,11 @@ class RiskDetailController extends Controller
     {
         $data = $request->except('_token');
         $data['status_mitigasi'] = ($request->r_awal >= 12) ? 1 : 0;
+        $inputan_idr = preg_replace("/[^0-9]/", "", $request->dampak_kuantitatif);
+        $data['dampak_kuantitatif'] = (int) $inputan_idr;
+        $inputan_idr_residu = preg_replace("/[^0-9]/", "", $request->dampak_kuantitatif_residu);
+        $data['dampak_kuantitatif_residu'] = (int) $inputan_idr_residu;
+
         RiskDetail::insert($data);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dibuat!']);
     }
@@ -38,7 +43,14 @@ class RiskDetailController extends Controller
     public function update(Request $request, $id)
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $risk_detail->update($request->except('_token'));
+
+        $data = $request->except('_token');
+        $inputan_idr = preg_replace("/[^0-9]/", "", $request->dampak_kuantitatif);
+        $data['dampak_kuantitatif'] = (int) $inputan_idr;
+        $inputan_idr_residu = preg_replace("/[^0-9]/", "", $request->dampak_kuantitatif_residu);
+        $data['dampak_kuantitatif_residu'] = (int) $inputan_idr_residu;
+
+        $risk_detail->update($data);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil diubah!']);
     }
 

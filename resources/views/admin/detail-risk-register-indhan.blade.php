@@ -355,12 +355,12 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Rencana Tindak Lanjut</label>
-                    <textarea class="form-control" name="tindak_lanjut"></textarea>
+                    <textarea class="form-control" name="tindak_lanjut" placeholder="Masukkan rencana tindak lanjut"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
                       <div class="date-picker">
-                        <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" data-language="en" name="jadwal">
+                        <input class="datepicker-here form-control digits" type="text" placeholder="Pilih Tanggal" data-language="en" name="jadwal">
                       </div>
                   </div>
                   <div class="form-group pt-2">
@@ -373,11 +373,11 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi"></textarea>
+                    <textarea class="form-control" name="pic" placeholder="PIC divisi"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
-                    <textarea class="form-control" name="dokumen"></textarea>
+                    <textarea class="form-control" name="dokumen" placeholder="Masukkan dokumen terkait"></textarea>
                   </div>
                 </div>
               </div>
@@ -493,7 +493,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}" readonly>
+                    <textarea class="form-control" name="pic" readonly>{{ $data->pic }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
@@ -616,7 +616,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}">
+                    <textarea class="form-control" name="pic">{{ $data->pic }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>

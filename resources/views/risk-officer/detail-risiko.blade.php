@@ -239,7 +239,7 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja"></textarea>
+                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja" required ></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
@@ -251,27 +251,27 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PPKH</label>
-                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan"></textarea>
+                    <textarea class="form-control" name="ppkh" required placeholder="Masukkan Peraturan Perundangan dan Kebutuhan Harapan"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Indikator</label>
-                    <textarea class="form-control" name="indikator" placeholder="Masukkan Indikator"></textarea>
+                    <textarea class="form-control" name="indikator" required placeholder="Masukkan Indikator"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Sebab</label>
-                    <textarea class="form-control" name="sebab" placeholder="Masukkan sebab"></textarea>
+                    <textarea class="form-control" name="sebab" required placeholder="Masukkan sebab"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
+                    <input type="text" id="idr_kuantitatif" required class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
-                    <textarea class="form-control" name="dampak" placeholder="Masukkan dampak"></textarea>
+                    <textarea class="form-control" required name="dampak" placeholder="Masukkan dampak"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>UC / C</label>
-                    <select class="form-control" name="uc">
+                    <select class="form-control" required name="uc">
                       <option value="UC">UC</option>
                       <option value="C">C</option>
                     </select>
@@ -282,23 +282,23 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Pengendalian</label>
-                    <textarea class="form-control" name="pengendalian" placeholder="Masukkan pengendalian"></textarea>
+                    <textarea class="form-control" required name="pengendalian" placeholder="Masukkan pengendalian"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Penilaian</label>
-                    <textarea class="form-control" name="penilaian" placeholder="Masukkan penilaian"></textarea>
+                    <textarea class="form-control" required name="penilaian" placeholder="Masukkan penilaian"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}" readonly>
+                    <input type="number" required class="form-control" onkeyup="cal()" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}" readonly>
+                    <input type="number" required class="form-control" onkeyup="cal()" name="c_awal" id="c_awal" placeholder="Nilai C" value="{{ number_format($nilai_c, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
+                    <input type="number" required class="form-control" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
                   </div>
                 </div>
               </div>
@@ -308,7 +308,7 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Peluang</label>
-                    <textarea class="form-control" name="peluang" placeholder="Masukkan peluang"></textarea>
+                    <textarea class="form-control" required name="peluang" placeholder="Masukkan peluang"></textarea>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -316,7 +316,7 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Rencana Tindak Lanjut</label>
-                    <textarea class="form-control" name="tindak_lanjut"></textarea>
+                    <textarea class="form-control" required name="tindak_lanjut" placeholder="Masukkan rencana tindak lanjut"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
@@ -326,25 +326,25 @@
                       <label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label> -->
                       <!-- <div class="col-sm-9"> -->
                         <div class="date-picker">
-                          <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" data-language="en" name="jadwal">
+                          <input class="datepicker-here form-control digits" required type="text" placeholder="Pilih Tanggal" data-language="en" name="jadwal">
                         </div>
                       <!-- </div> -->
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
+                    <input type="text" id="idr_kuantitatif_residu" required class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
-                    <textarea class="form-control" name="dampak_residu" placeholder="Masukkan dampak"></textarea>
+                    <textarea class="form-control" required name="dampak_residu" placeholder="Masukkan dampak"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi">
+                    <textarea class="form-control" required name="pic" placeholder="Masukkan PIC divisi"></textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
-                    <textarea class="form-control" name="dokumen"></textarea>
+                    <textarea class="form-control" required name="dokumen" placeholder="Masukkan dokumen terkait"></textarea>
                   </div>
                 </div>
               </div>
@@ -382,7 +382,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PPKH</label>
-                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan" readonly>{{ $data->ppkh }}</textarea>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Peraturan Perundangan dan Kebutuhan Harapan" readonly>{{ $data->ppkh }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Indikator</label>
@@ -448,7 +448,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ date('d M Y', strtotime($data->jadwal))}}" readonly>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Pilih Tanggal" value="{{ date('d M Y', strtotime($data->jadwal))}}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
@@ -460,7 +460,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}" readonly>
+                    <textarea class="form-control" name="pic" readonly>{{ $data->pic }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
@@ -540,7 +540,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PPKH</label>
-                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Penyebab Temuan">{{ $data->ppkh }}</textarea>
+                    <textarea class="form-control" name="ppkh" placeholder="Masukkan Peraturan Perundangan dan Kebutuhan Harapan">{{ $data->ppkh }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Indikator</label>
@@ -552,7 +552,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
+                    <input type="text" id="idr_kuantitatif_edit" name="dampak_kuantitatif" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -611,12 +611,12 @@
                     <label>Jadwal Pelaksanaan</label>
                     <!-- <input type="date" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}"> -->
                     <div class="date-picker">
-                          <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
+                          <input class="datepicker-here form-control digits" type="text" placeholder="Pilih Tanggal" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
                         </div>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
+                    <input type="text" id="idr_kuantitatif_residu_edit" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}" name="dampak_kuantitatif_residu">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
@@ -624,7 +624,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>PIC</label>
-                    <input type="text" class="form-control" name="pic" placeholder="PIC divisi" value="{{ $data->pic }}">
+                    <textarea class="form-control" name="pic">{{ $data->pic }}</textarea>
                   </div>
                   <div class="form-group pt-2">
                     <label>Dokumen Terkait</label>
@@ -735,8 +735,47 @@
           }
         )
     });
-    
+
   })
+
+  // format rupiah uang idr kuantitatif
+    var idr = document.getElementById("idr_kuantitatif");
+    idr.addEventListener("keydown", function(e) {
+      idr.value = convertRupiah(this.value, "");
+    });
+
+    var idr_edit = document.getElementById("idr_kuantitatif_edit");
+    idr_edit.addEventListener("keydown", function(e) {
+      // console.log("masuk js");
+      idr_edit.value = convertRupiah(this.value, "");
+    });
+
+    var idr_residu = document.getElementById("idr_kuantitatif_residu");
+    idr_residu.addEventListener("keydown", function(e) {
+      idr_residu.value = convertRupiah(this.value, "");
+    });
+
+    var idr_residu_edit = document.getElementById("idr_kuantitatif_residu_edit");
+    idr_residu_edit.addEventListener("keydown", function(e) {
+      idr_residu_edit.value = convertRupiah(this.value, "");
+    });
+    
+    function convertRupiah(angka, prefix) {
+      var number_string = angka.replace(/[^,\d]/g, "").toString(),
+        split  = number_string.split(","),
+        sisa   = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    
+      if (ribuan) {
+        separator = sisa ? "." : "";
+        rupiah += separator + ribuan.join(".");
+      }
+    
+      rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+      return prefix == undefined ? rupiah : rupiah ? prefix + rupiah : "";
+    }
+
   function cal() {
     var lawal = $('#l_awal').val();
     var cawal = $('#c_awal').val();

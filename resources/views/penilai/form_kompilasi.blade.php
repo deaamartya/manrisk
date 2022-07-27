@@ -28,7 +28,7 @@
             <thead>
                 <tr class="text-center">
                     <td colspan="2">
-                        <img src="{{ public_path('assets/images/logo_bumn.png') }}" style="width:120px;">
+                        <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo_bumn.png' }}" style="width:120px;">
                     </td>
                     <td>
                         <b>Hasil Kompilasi Risiko</b>
@@ -36,7 +36,7 @@
                         {{ $data[0]->company_code }} - {{ $data[0]->instansi }} Tahun {{ $data[0]->tahun_p }}
                     </td>
                     <td colspan="3">
-                        <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$data[0]->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
+                        <img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_'.$data[0]->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
                     </td>
                 </tr>
             </thead>

@@ -1,5 +1,5 @@
 <head>
-	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
 	<style>
 			@page {
 				size: 29.7cm 21cm;
@@ -130,14 +130,14 @@ $bulan = array (
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
 			<td width="15%">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 			<td width="70%" height="40">
 				<b>RENCANA PENGELOLAAN RISIKO (MITIGASI PLAN)</b>
 				{{-- <b>MITIGASI PLAN {{ $user->perusahaan->instansi }} </b> --}}
 			</td>
 			<td width="171">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>

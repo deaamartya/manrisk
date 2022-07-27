@@ -28,9 +28,9 @@ class SumberRisikoController extends Controller
                       ->orderBy('s_risiko.id_s_risiko')
                       ->get();
       $risiko = Risk::join('konteks', 'risk.id_risk', 'konteks.id_risk')
-        // ->where('tahun_konteks', '=', date('Y'))
         ->orderBy('risk.id_risk')
         ->get();
+      // dd(count($risiko));
       return view('risk-officer.sumber-risiko', compact('sumber_risiko', 'risiko'));
     }
 

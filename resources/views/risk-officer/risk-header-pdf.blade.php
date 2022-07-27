@@ -1,5 +1,5 @@
 <head>
-	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/css/vendors/bootstrap/bootstrap.css' }}"> --}}
 	<style>
 			@page {
 				size: 29.7cm 21cm;
@@ -127,13 +127,13 @@ $bulan = array (
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
 			<td width="15%">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 			<td height="40">
 				<b>RISK REGISTER {{ $user->perusahaan->instansi }} </b>
 			</td>
 			<td width="171">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_'.$user->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>
@@ -385,7 +385,9 @@ $bulan = array (
 			<td width="4%" class="f-11">
 				{!! wordwrap(nl2br($rd->pengendalian), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="center f-11">{{ $rd->penilaian}}</td>
+			<td width="4%" class="center f-11">
+				{!! wordwrap(nl2br($rd->penilaian), 14, '<br />', true) !!}
+			</td>
 			<td width="1%" class="center f-11">
 				{{ number_format($rd->l_awal, 2) + 0 }}
 			</td>
@@ -414,8 +416,8 @@ $bulan = array (
 				{{ number_format($rd->r_akhir, 2) + 0 }}
 			</td>
 			<td width="4%" class="center f-12">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
-			<td width="4%" class="f-12">{{ $rd->dampak_residu}}</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="f-12">{!! nl2br($rd->dampak_residu) !!}</td>
+			<td width="4%" class="center f-11" style="white-space: pre-line">
 				{{ $rd->pic }}
 			</td>
 			<td width="4%" class="center f-11">

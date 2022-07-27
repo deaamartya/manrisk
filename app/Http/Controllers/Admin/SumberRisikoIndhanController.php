@@ -15,7 +15,13 @@ class SumberRisikoIndhanController extends Controller
     public function index()
     {
       $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->groupBy('defendid_user.company_id')->orderBy('company_code')->get();
-      $sumber_risiko = null;
+      $sumber_risiko = SRisiko::join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                    ->join('defendid_user', 's_risiko.id_user', 'defendid_user.id_user')
+                    ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
+                    ->where('s_risiko.status_s_risiko', 0)
+                    ->whereNull('s_risiko.deleted_at')
+                    ->orderBy('s_risiko.id_s_risiko')
+                    ->get();
       $perusahaan_filter = null;
       return view('admin.sumber-risiko-indhan', compact('perusahaan','sumber_risiko', 'perusahaan_filter'));
     }
@@ -29,11 +35,13 @@ class SumberRisikoIndhanController extends Controller
         $sumber_risiko = SRisiko::join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                     ->join('defendid_user', 's_risiko.id_user', 'defendid_user.id_user')
                     ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                    ->where('s_risiko.id_user',  $request->id_user) // perusahaan yg dipilih
+                    // ->where('s_risiko.id_user',  $request->id_user) // perusahaan yg dipilih
+                    ->where('s_risiko.company_id',  $request->id_user) // perusahaan yg dipilih
                     ->where('s_risiko.tahun', $request->tahun)
                     ->whereNull('s_risiko.deleted_at')
                     ->orderBy('s_risiko.id_s_risiko')
                     ->get();
+        // dd($sumber_risiko);
         $perusahaan_filter = $request->id_user;
         $perusahaan = DefendidUser::join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')->where('is_admin', 0)->groupBy('defendid_user.company_id')->orderBy('company_code')->get();
         return view('admin.sumber-risiko-indhan', compact('perusahaan','sumber_risiko', 'perusahaan_filter'));

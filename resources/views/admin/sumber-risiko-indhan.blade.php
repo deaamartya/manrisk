@@ -23,7 +23,7 @@
                     <div class="col-md-5 col-sm-5 col-xs-12 select2-normal">
                         <select class="js-example-basic-single col-sm-12" name="id_user" >
                             @foreach($perusahaan as $p)
-                            <option value="{{ $p->id_user }}"  @if($p->company_id == $perusahaan_filter) selected @endif>{{ $p->company_code }} - {{ $p->instansi }}</option>
+                            <option value="{{ $p->company_id }}"  @if($p->company_id == $perusahaan_filter) selected @endif>{{ $p->company_code }} - {{ $p->instansi }}</option>
                             @endforeach
                         </select>
                     </div>

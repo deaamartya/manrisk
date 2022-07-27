@@ -98,9 +98,9 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
+                    <label class="col-md-3 col-sm-3 col-xs-12">Konteks Organisasi</label>
                     <div class="col-md-9 col-sm-9 col-xs-12">
-                        <select class="js-example-basic-single col-sm-12" name="id_konteks" >
+                        <select class="js-example-basic-single col-sm-12" name="id_konteks" required>
                             @foreach($risiko as $r)
                             <option value="{{ $r->id_konteks }}">{{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})</option>
                             @endforeach
@@ -136,9 +136,9 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-md-3 col-sm-3 col-xs-12">Select</label>
+                        <label class="col-md-3 col-sm-3 col-xs-12">Konteks Organisasi</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select class="js-example-basic-single col-sm-12" name="id_konteks">
+                            <select class="js-example-basic-single col-sm-12" name="id_konteks" required>
                                 @foreach($risiko as $r)
                                 <option value="{{ $r->id_konteks }}" @if($s->id_konteks == $r->id_konteks) selected @endif>
                                     {{ $r->id_risk }} - {{ $r->risk }} ({{ $r->konteks }})
