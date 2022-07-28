@@ -18,7 +18,7 @@ $(document).ready(function(){
         }
     });
 
-    $('.field-status button').on('click', function(){
+    $('#basic-1 tbody').on('click', '.field-status button', function(){
         let id = $(this).attr('id').slice(7)
         $.ajax({
             type: 'PUT',
@@ -86,7 +86,7 @@ $(document).ready(function(){
         $('#tambahUser').modal('show')
     })
 
-    $('.edit').on('click', function(){
+    $('#basic-1 tbody').on('click', '.edit', function(){
         let id = $(this).attr('id').slice(5)
         $('#judul_modal').html('Edit User')
         $('#formUser').attr('action', APP_URL+'/'+head_url+'/user/store/'+id)

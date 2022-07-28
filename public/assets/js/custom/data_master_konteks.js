@@ -33,7 +33,7 @@ $(document).ready(function(){
         $('#tambahKonteks').modal('show')
     })
 
-    $('.edit').on('click', function(){
+    $('#basic-1 tbody').on('click', '.edit', function(){
         let id = $(this).attr('id').slice(5)
         $('#judul_modal').html('Edit Konteks')
         $('#formKonteks').attr('action', APP_URL+'/admin/konteks/store/'+id)
@@ -64,7 +64,7 @@ $(document).ready(function(){
         $('#tambahKonteks').modal('show')
     })
 
-    $('.delete').on('click', function(){
+    $('#basic-1 tbody').on('click', '.delete', function(){
         let id = $(this).attr('id').slice(7)
 
         $.ajax({

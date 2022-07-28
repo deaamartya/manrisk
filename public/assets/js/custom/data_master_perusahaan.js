@@ -12,7 +12,7 @@ $(document).ready(function(){
         $('#tambahPerusahaan').modal('show')
     })
 
-    $('.edit').on('click', function(){
+    $('#basic-1 tbody').on('click', '.edit', function(){
         let id = $(this).attr('id').slice(5)
         $('#judul_modal').html('Edit Perusahaan')
         $('#formPerusahaan').attr('action', APP_URL+'/admin/perusahaan/store/'+id)
@@ -40,7 +40,7 @@ $(document).ready(function(){
         $('#tambahPerusahaan').modal('show')
     })
 
-    $('.delete').on('click', function(){
+    $('#basic-1 tbody').on('click', '.delete', function(){
         let id = $(this).attr('id').slice(7)
 
         $.ajax({
