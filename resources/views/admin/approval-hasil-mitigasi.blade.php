@@ -123,6 +123,7 @@
                                     <th>Deskripsi</th>
                                     <th>Dokumen</th>
                                     <th>% Realisasi</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -156,7 +157,16 @@
                                         {{-- <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly> --}}
                                     </td>
                                     @endif
-                                    <td align="center">
+                                    <td id="status">
+                                        @if($d->is_approved == 0)
+                                            -
+                                        @elseif($d->is_approved == 1)
+                                            Disetujui
+                                        @else
+                                            Tidak Disetujui
+                                        @endif
+                                    </td>
+                                    <td align="center" style="width: 250px">
                                     @if($d->is_approved == 0)
                                       <button class="btn btn-warning btn-sm approve" id="approve_{{ $d->id }}"><i class="fa fa-check"></i> Approve</button>
                                       <button class="btn btn-danger btn-sm not-approve" id="not_approve_{{ $d->id }}"><i class="fa fa-close"></i> Not Approve</button>

@@ -58,12 +58,13 @@ $(document).ready(function() {
                 $('#' + id).attr('readonly', true)
                 $('#approve_' + id).remove()
                 $('#not_approve_' + id).remove()
-                if (headers == 0) {
-                    $('#status_h_indhan_0').remove()
-                    $('#status_h_indhan').append('<span class="badge badge-success" id="status_h_indhan_1"><i class="fa fa-check"></i> Approved Admin</span>')
-                }
+                // if (headers == 0) {
+                //     $('#status_h_indhan_0').remove()
+                //     $('#status_h_indhan').append('<span class="badge badge-success" id="status_h_indhan_1"><i class="fa fa-check"></i> Approved Admin</span>')
+                // }
                 $('#realisasi_' + id).remove()
                 $('#data_realisasi').html(total_realisasi)
+                $('#status').html('Disetujui')
             },
             error: function(data) {
                 console.log(data);
@@ -72,7 +73,7 @@ $(document).ready(function() {
     })
 
     $('.not-approve').on('click', function() {
-        let id = $(this).attr('id').slice(8)
+        let id = $(this).attr('id').slice(12)
         let total_realisasi = $('#realisasi_' + id).val()
 
         $.ajax({
@@ -96,12 +97,9 @@ $(document).ready(function() {
                 $('#' + id).attr('readonly', true)
                 $('#approve_' + id).remove()
                 $('#not_approve_' + id).remove()
-                if (headers == 0) {
-                    $('#status_h_indhan_0').remove()
-                    $('#status_h_indhan').append('<span class="badge badge-danger" id="status_h_indhan_2"><i class="fa fa-close"></i>Not Approved Admin</span>')
-                }
                 $('#realisasi_' + id).remove()
                 $('#data_realisasi').html(total_realisasi)
+                $('#status').html('Tidak Disetujui')
             },
             error: function(data) {
                 console.log(data);

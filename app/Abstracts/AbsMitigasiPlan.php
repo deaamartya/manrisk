@@ -80,14 +80,14 @@ class AbsMitigasiPlan
 
     public static function approveHasilMitigasi($request, $id)
     {
-        $query = MitigasiLogs::where('id', $id)->with('risk_detail:id_riskd')->first();
-        $rdetail = RiskDetail::where('id_riskd', $query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
+        // $query = MitigasiLogs::where('id', $id)->with('risk_detail:id_riskd')->first();
+        // $rdetail = RiskDetail::where('id_riskd', $query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
 
         DB::beginTransaction();
-        RiskHeader::where('id_riskh', $rdetail->risk_header->id_riskh)->update([
-            'status_h_indhan' => 1,
-            'updated_at' => Carbon::now()
-        ]);
+        // RiskHeader::where('id_riskh', $rdetail->risk_header->id_riskh)->update([
+        //     'status_h_indhan' => 1,
+        //     'updated_at' => Carbon::now()
+        // ]);
         // $query->is_approved = 1;
         // $query->updated_at = Carbon::now();
         // $query->save();
@@ -98,23 +98,12 @@ class AbsMitigasiPlan
         ]);
         DB::commit();
 
-        return $query;
+        return response()->json(['message' => 'Data berhasil disetujui.'], 200);
     }
 
     public static function notApproveHasilMitigasi($request, $id)
     {
-        $query = MitigasiLogs::where('id', $id)->with('risk_detail:id_riskd')->first();
-        var_dump($query);
-        $rdetail = RiskDetail::where('id_riskd', $query->risk_detail->id_riskd)->with('risk_header:id_riskh')->first();
-
         DB::beginTransaction();
-        RiskHeader::where('id_riskh', $rdetail->risk_header->id_riskh)->update([
-            'status_h_indhan' => 2,
-            'updated_at' => Carbon::now()
-        ]);
-        // $query->is_approved = 1;
-        // $query->updated_at = Carbon::now();
-        // $query->save();
         DB::table('mitigasi_logs')->where('id', $id)->update([
             'is_approved' => 2,
             'realisasi' => $request->realisasi,
@@ -122,6 +111,6 @@ class AbsMitigasiPlan
         ]);
         DB::commit();
 
-        return $query;
+        return response()->json(['message' => 'Data berhasil tidak disetujui.'], 200);
     }
 }
