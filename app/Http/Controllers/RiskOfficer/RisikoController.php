@@ -75,10 +75,15 @@ class RisikoController extends Controller
         )
         ->whereNotIn('id_s_risiko', $s_risk_diinput)
         ->orderBy('id_s_risiko')->get();
-
-        $s_risiko = SRisiko::where('tahun', '=', $headers->tahun)->where('company_id', '=', $headers->company_id)->limit(1)->first();
-        $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
-        $nilai_c = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_C');
+ 
+        if(count($pilihan_s_risiko)>1){
+            $s_risiko = $pilihan_s_risiko[0];
+            $nilai_l = Pengukuran::where('id_s_risiko', '=', $pilihan_s_risiko[0]->id_s_risiko)->avg('nilai_L');
+            $nilai_c = Pengukuran::where('id_s_risiko', '=', $pilihan_s_risiko[0]->id_s_risiko)->avg('nilai_C');
+        }else{
+            $nilai_l=0;
+            $nilai_c=0;
+        }
         return view('risk-officer.detail-risiko', compact("headers", 'pilihan_s_risiko', 'nilai_l', 'nilai_c'));
     }
 
