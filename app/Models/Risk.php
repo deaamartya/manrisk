@@ -29,4 +29,9 @@ class Risk extends Model
 	protected $fillable = [
 		'risk'
 	];
+
+	public function konteks()
+	{
+		return $this->hasMany(Kontek::class, 'id_konteks');
+	}
 }

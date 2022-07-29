@@ -100,6 +100,8 @@
                         <span class="badge badge-warning" id="status_h_indhan_0"><i class="fa fa-warning"></i> Waiting Approval Admin</span>
                         @elseif($data['headers']->status_h_indhan == 1)
                         <span class="badge badge-success" id="status_h_indhan_1"><i class="fa fa-check"></i> Approved Admin</span>
+                        @elseif($data['headers']->status_h_indhan == 2)
+                        <span class="badge badge-danger" id="status_h_indhan_2"><i class="fa fa-close"></i> Not Approved Admin</span>
                         @endif
                       </div>
                     </div>
@@ -155,8 +157,9 @@
                                     </td>
                                     @endif
                                     <td align="center">
-                                    @if(!$d->is_approved)
-                                        <button class="btn btn-warning btn-sm approve" id="approve_{{ $d->id }}"><i class="feather feather-check-circle"></i> Approval</button>
+                                    @if($d->is_approved == 0)
+                                      <button class="btn btn-warning btn-sm approve" id="approve_{{ $d->id }}"><i class="fa fa-check"></i> Approve</button>
+                                      <button class="btn btn-danger btn-sm not-approve" id="not_approve_{{ $d->id }}"><i class="fa fa-close"></i> Not Approve</button>
                                     @endif
                                     </td>
                                 </tr>

@@ -65,4 +65,10 @@ class ApprovalHasilMitigasiController extends Controller
 
         return response()->json($result);
     }
+
+    public function notApprovedHasilMitigasi(Request $request, $id){
+        $result = AbsMitigasiPlan::notApproveHasilMitigasi($request, $id);
+
+        return response()->json($result);
+    }
 }

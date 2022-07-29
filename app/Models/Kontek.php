@@ -43,4 +43,9 @@ class Kontek extends Model
 	{
 		return $this->hasMany(SRisiko::class, 'id_s_risiko');
 	}
+
+	public function risk()
+	{
+		return $this->belongsTo(Risk::class, 'id_risk');
+	}
 }

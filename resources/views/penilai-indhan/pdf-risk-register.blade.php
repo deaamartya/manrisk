@@ -364,7 +364,7 @@ $bulan = array (
 				{{ $rd->sasaran_kinerja}}
 			</td>
 			<td width="4%" class="center f-12">
-				{{ $rd->sumber_risiko->konteks->id_risk }}-{{ $rd->sumber_risiko->konteks->no_k }}
+				{{ $rd->sumber_risiko->konteks->risk->risk }}
 			</td>
 			<td width="4%" class="f-12">
 				{{ $rd->sumber_risiko->konteks->konteks }}

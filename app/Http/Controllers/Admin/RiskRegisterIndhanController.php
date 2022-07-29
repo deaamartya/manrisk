@@ -195,6 +195,7 @@ class RiskRegisterIndhanController extends Controller
         $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+                ->join('risk', 'konteks.id_risk', 'risk.id_risk' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)

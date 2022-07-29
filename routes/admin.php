@@ -81,6 +81,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('approval-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'progressMitigasi']);
   Route::put('approval-hasil-mitigasi/persetujuan-mitigasi/{id}', [ApprovalHasilMitigasiController::class, 'approvalHasilMitigasi']);
   Route::put('approval-hasil-mitigasi/approve/{id}', [ApprovalHasilMitigasiController::class, 'approvedHasilMitigasi']);
+  Route::put('approval-hasil-mitigasi/not-approve/{id}', [ApprovalHasilMitigasiController::class, 'notApprovedHasilMitigasi']);
   Route::resource('approval-hasil-mitigasi', ApprovalHasilMitigasiController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
   Route::resource('mitigasi-plan-indhan', MitigasiPlanIndhanController::class);
