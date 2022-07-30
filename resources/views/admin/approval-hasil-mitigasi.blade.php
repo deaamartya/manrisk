@@ -157,7 +157,7 @@
                                         {{-- <input type="number" class="realisasi" value="{{ $d->realisasi }}" id="{{ $d->id }}" readonly> --}}
                                     </td>
                                     @endif
-                                    <td id="status">
+                                    <td id="status_{{ $d->id }}">
                                         @if($d->is_approved == 0)
                                             -
                                         @elseif($d->is_approved == 1)

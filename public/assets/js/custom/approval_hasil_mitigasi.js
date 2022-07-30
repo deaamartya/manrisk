@@ -64,7 +64,7 @@ $(document).ready(function() {
                 // }
                 $('#realisasi_' + id).remove()
                 $('#data_realisasi').html(total_realisasi)
-                $('#status').html('Disetujui')
+                $('#status_'+id).html('Disetujui')
             },
             error: function(data) {
                 console.log(data);
@@ -99,7 +99,7 @@ $(document).ready(function() {
                 $('#not_approve_' + id).remove()
                 $('#realisasi_' + id).remove()
                 $('#data_realisasi').html(total_realisasi)
-                $('#status').html('Tidak Disetujui')
+                $('#status_'+id).html('Tidak Disetujui')
             },
             error: function(data) {
                 console.log(data);
