@@ -487,15 +487,23 @@ class GlobalController extends Controller
         'created_at' => now(),
       ]);
 
-      return redirect()->route('status-proses.index')->with('created-alert', 'Status proses terkini berhasil ditambahkan.');
+      return redirect()->route('status-proses.index')->with(['success-swal' => 'Status proses terkini berhasil disimpan!']);
     }
 
     public function updateStatusProses(Request $request, $id)
     {
+        // dd($request->tahun);
       $request->validate([
         'tahun' => 'required',
         'id_proses' => 'required',
       ]);
+
+    //   $status_proses = StatusProses::where('id_status_proses', '=', $id)->first();
+    //   $status_proses->update([
+    //         'tahun' => $request->tahun,
+    //         'id_proses' => $request->id_proses,
+    //         'updated_at' => now(),
+    //     ]);
 
       StatusProses::find($id)->update([
         'tahun' => $request->tahun,
@@ -503,6 +511,6 @@ class GlobalController extends Controller
         'updated_at' => now(),
       ]);
 
-      return redirect()->route('status-proses.index')->with('updated-alert', 'Status proses terkini berhasil diubah.');
+      return redirect()->route('status-proses.index')->with(['success-swal' => 'Status proses terkini berhasil diubah!']);
     }
 }

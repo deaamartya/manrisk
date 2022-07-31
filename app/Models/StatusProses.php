@@ -14,7 +14,7 @@ class StatusProses extends Model
 
 	protected $fillable = [
 		'tahun',
-		'status_proses',
+		'id_proses',
 	];
 
     public function proses_manrisk()
