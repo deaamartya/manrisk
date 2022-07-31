@@ -241,10 +241,11 @@
                     <label>Sasaran Kinerja</label>
                     <!-- <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja" required ></textarea> -->
                     <select class="select2" name="sasaran_kinerja" required>
-                      {{--@foreach($sasaran $s)
-                      <option value="{{ $s->sasaran }}">{{ $s->sasaran }}</option>
-                      @endforeach
-                      --}}
+                      @if(count($sasaran) > 0)
+                        @foreach($sasaran as $val)
+                          <option value="{{ $val }}">{{ $val }}</option>
+                        @endforeach
+                      @endif
                     </select>
                   </div>
                   <div class="form-group pt-2">
@@ -537,7 +538,14 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea>
+                    <!-- <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea> -->
+                    <select class="select2" name="sasaran_kinerja" required>
+                      @if(count($sasaran) > 0)
+                        @foreach($sasaran as $val)
+                          <option value="{{ $val }}" @if($data->sasaran_kinerja == $val) selected @endif>{{ $val }}</option>
+                        @endforeach
+                      @endif
+                    </select>
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>

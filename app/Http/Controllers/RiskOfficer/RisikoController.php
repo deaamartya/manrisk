@@ -76,9 +76,10 @@ class RisikoController extends Controller
         ->whereNotIn('id_s_risiko', $s_risk_diinput)
         ->orderBy('id_s_risiko')->get();
 
-        $sasaran = RiskHeader::selectRaw('substring_index(target,"\r\n",1) as sasaran_awal, substring_index(target,"\r\n",-1) as sasaran_terakhir')
-                ->where('id_riskh', '=', $id)->get();
-        // dd($sasaran);
+        $target = RiskHeader::where('id_riskh', '=', $id)->pluck('target')->first();
+        $sasaran = explode("\r\n", $target); 
+        //  dd(count($sasaran));
+
         if(count($pilihan_s_risiko)>1){
             $s_risiko = $pilihan_s_risiko[0];
             $nilai_l = Pengukuran::where('id_s_risiko', '=', $pilihan_s_risiko[0]->id_s_risiko)->avg('nilai_L');

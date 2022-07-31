@@ -28,11 +28,12 @@
             @endif
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="display" id="table-risiko">
+                    <table class="display" id="table-status">
                         <thead>
                             <tr>
                                 <th>Tahun</th>
                                 <th>Proses Terkini</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,31 +154,31 @@
 <script>
   $(document).ready(function(){
     // $(".select2").select2();
-    $("#table-risiko").DataTable({
-      'order': [ 0, 'desc' ]
+    $("#table-status").DataTable({
+    //   'order': [ 0, 'desc' ]
     });
-    var table;
-    $(document).on('click', '.open-btn', function(){
-      const id = $(this).attr('data-id')
-      const url = "{{ url('admin/getProgress') }}";
-      table = $("#table-progress-"+id).DataTable({
-        "destroy": true,
-        "ajax": {
-          "url": url,
-          "type": "post",
-          "data": {
-            "_token": "{{ csrf_token() }}",
-            "id": id
-          }
-        }
-      })
-    })
+    // var table;
+    // $(document).on('click', '.open-btn', function(){
+    //   const id = $(this).attr('data-id')
+    //   const url = "{{ url('admin/getProgress') }}";
+    //   table = $("#table-progress-"+id).DataTable({
+    //     "destroy": true,
+    //     "ajax": {
+    //       "url": url,
+    //       "type": "post",
+    //       "data": {
+    //         "_token": "{{ csrf_token() }}",
+    //         "id": id
+    //       }
+    //     }
+    //   })
+    // })
   })
-  function cal(id) {
-    var lawal = $('#l_akhir_'+id).val();
-    var cawal = $('#c_akhir_'+id).val();
-    var mul = lawal * cawal;
-    $('#r_akhir_'+id).val(mul);
-  }
+//   function cal(id) {
+//     var lawal = $('#l_akhir_'+id).val();
+//     var cawal = $('#c_akhir_'+id).val();
+//     var mul = lawal * cawal;
+//     $('#r_akhir_'+id).val(mul);
+//   }
 </script>
 @endsection

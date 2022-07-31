@@ -240,6 +240,65 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="col-xl-3 risk-col xl-100 box-col-12">
+			<div class="card total-users">
+				<div class="card-header card-no-border">
+				<h5>Risk Factor</h5>
+				<div class="card-header-right">
+					<ul class="list-unstyled card-option">
+					<li><i class="fa fa-spin fa-cog"></i></li>
+					<li><i class="view-html fa fa-code"></i></li>
+					<li><i class="icofont icofont-maximize full-card"></i></li>
+					<li><i class="icofont icofont-minus minimize-card"></i></li>
+					<li><i class="icofont icofont-refresh reload-card"></i></li>
+					<li><i class="icofont icofont-error close-card"></i></li>
+					</ul>
+				</div>
+				</div>
+				<div class="card-body pt-0">
+				<div class="apex-chart-container goal-status text-center row">
+					<div class="rate-card col-xl-12">
+					<div class="goal-chart">
+						<div id="riskfactorchart"></div>
+					</div>
+					<div class="goal-end-point">
+						<ul>
+						<li class="mt-0 pt-0">
+							<h6 class="font-primary">As From</h6>
+							<h6 class="f-w-400">{{ date('Y') }}</h6>
+						</li>
+						<li>
+							<h6 class="mb-2 f-w-400">Total IDR Kuantitatif</h6>
+							<h5 class="mb-0">$94,000.20</h5>
+						</li>
+						</ul>
+					</div>
+					</div>
+					<ul class="col-xl-12">
+					<li>
+						<div class="goal-detail">
+						<h6> <span class="font-primary">Goal Archive : </span>$91,000.000</h6>
+						<div class="progress sm-progress-bar progress-animate">
+							<div class="progress-gradient-primary" role="progressbar" style="width: 60%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						</div>
+						<div class="goal-detail mb-0">
+						<h6><span class="font-primary">Duration: </span>9 Month</h6>
+						<div class="progress sm-progress-bar progress-animate">
+							<div class="progress-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						</div>
+					</li>
+					<li>
+						<div class="btn-download btn btn-gradient f-w-500">Risk details</div>
+					</li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -255,6 +314,7 @@
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<script src="{{asset('assets/js/dashboard/dashboard_2.js')}}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var chart8;
