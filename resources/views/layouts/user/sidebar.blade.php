@@ -281,6 +281,12 @@
                             <label class="badge badge-secondary deadline-mitigasi-notif" style="float: right;"></label>
 						</a>
 					</li>
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='status-proses.index' ? 'active' : '' }}" href="{{route('status-proses.index')}}">
+							<i data-feather="file-text"></i>
+							<span class="me-4p">Status Proses Terkini</span>
+						</a>
+					</li>
                     @endif
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='forum' ? 'active' : '' }}" href="{{route('forum')}}">

@@ -80,7 +80,7 @@
                 <div class="row mb-3">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Tahun <span class="required"></span></label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
-                        <select class="form-select" name="tahun">
+                        <select class="form-select" name="tahun" required>
                         <?php
                             $tahun = date("Y");
                             $bts_tahun = $tahun + 4;
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
                     <button class="btn btn-primary" type="submit">Simpan</button>
                 </div>
                 </form>
@@ -173,7 +173,7 @@
                     <div class="text-red">Data yang dihapus tidak dapat dikembalikan.</div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
                     <button class="btn btn-primary" type="submit">Ya, hapus!</button>
                 </div>
                 </form>

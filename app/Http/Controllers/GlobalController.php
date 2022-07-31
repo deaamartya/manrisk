@@ -11,6 +11,8 @@ use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\PengajuanMitigasi;
 use App\Models\Mitigasi;
+use App\Models\ProsesManrisk;
+use App\Models\StatusProses;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -463,5 +465,44 @@ class GlobalController extends Controller
         // dd($data);
 
         return view('deadline_mitigasi', compact('data'));
+    }
+
+    public function statusProses()
+    {
+        $status_proses = StatusProses::all();
+        $proses = ProsesManrisk::all();
+        return view('status_proses', compact('status_proses', 'proses'));
+    }
+
+    public function storeStatusProses(Request $request)
+    {
+      $request->validate([
+        'tahun' => 'required',
+        'id_proses' => 'required',
+      ]);
+
+      StatusProses::insert([
+        'tahun' => $request->tahun,
+        'id_proses' => $request->id_proses,
+        'created_at' => now(),
+      ]);
+
+      return redirect()->route('status-proses.index')->with('created-alert', 'Status proses terkini berhasil ditambahkan.');
+    }
+
+    public function updateStatusProses(Request $request, $id)
+    {
+      $request->validate([
+        'tahun' => 'required',
+        'id_proses' => 'required',
+      ]);
+
+      StatusProses::find($id)->update([
+        'tahun' => $request->tahun,
+        'id_proses' => $request->id_proses,
+        'updated_at' => now(),
+      ]);
+
+      return redirect()->route('status-proses.index')->with('updated-alert', 'Status proses terkini berhasil diubah.');
     }
 }

@@ -239,7 +239,13 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja" required ></textarea>
+                    <!-- <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja" required ></textarea> -->
+                    <select class="select2" name="sasaran_kinerja" required>
+                      {{--@foreach($sasaran $s)
+                      <option value="{{ $s->sasaran }}">{{ $s->sasaran }}</option>
+                      @endforeach
+                      --}}
+                    </select>
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>

@@ -42,6 +42,11 @@ Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPet
 // Menu Deadline Mitigasi
 Route::get('deadline-mitigasi', [GlobalController::class, 'deadlineMitigasi'])->name('deadline-mitigasi.index');
 
+// Menu Status Proses
+Route::get('status-proses', [GlobalController::class, 'statusProses'])->name('status-proses.index');
+Route::post('insert-status-proses', [GlobalController::class, 'storeStatusProses'])->name('status-proses.store');
+Route::put('edit-status-proses/{id}', [GlobalController::class, 'updateStatusProses'])->name('status-proses.update');
+
 //Language Change
 Route::get('lang/{locale}', function ($locale) {
     if (! in_array($locale, ['en', 'de', 'es','fr','pt', 'cn', 'ae'])) {
