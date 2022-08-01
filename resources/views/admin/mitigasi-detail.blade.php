@@ -118,6 +118,9 @@
                     <th>% Realisasi</th>
                     <th>Keterangan</th>
                     <th>Dokumen</th>
+                    @if(auth()->user()->is_admin == 1)
+                    <th>Perlu Approve</th>
+                    @endif
                     <th></th>
                   </tr>
                 </thead>
@@ -179,6 +182,13 @@
                       </button>
                       @endif
                     </td>
+                    @if (auth()->user()->is_admin == 1)
+                    <td class="text-center">
+                        <div class="btn btn-info btn-pill btn-xs status">
+                            {{ $d->need_approve }}
+                        </div>
+                    </td>
+                    @endif
                     <td>
                       @if(auth()->user()->is_admin == 1)
                         <a href="{{ url('admin/approval-mitigasi/'.$d->id_riskd) }}"><button class="btn btn-xs btn-info p-1 flex-center">
