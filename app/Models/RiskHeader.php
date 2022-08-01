@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Auth;
 
 /**
  * Class RiskHeader
@@ -110,6 +111,10 @@ class RiskHeader extends Model
 
 	public function doneMigrateCount($id)
 	{
+        $wr = '1=1';
+        if(Auth::user()->is_risk_officer){
+            $wr .= " AND d.company_id = ".Auth::user()->company_id;
+        }
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('mitigasi_logs as l', 'l.id_riskd', '=', 'd.id_riskd')
 			->where('d.id_riskh', '=', $id)
@@ -118,6 +123,7 @@ class RiskHeader extends Model
 			->where('l.is_approved', '=', 1)
 			->whereNull('d.deleted_at')
 			->whereNull('risk_header.deleted_at')
+            ->whereRaw($wr)
 			->count('d.id_riskd');
 		return $jml;
 	}

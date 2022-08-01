@@ -222,14 +222,14 @@ class HomeController extends Controller
             ->whereNull('risk_header.deleted_at')
             ->whereNull('d.deleted_at')
             ->count('d.id_riskd');
-        
+
         $mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
             ->where('d.company_id', $company)
             ->where('status_mitigasi', '=', 1)
             ->where('d.tahun', $req->tahun)
             ->whereNull('d.deleted_at')
             ->count('d.id_riskd');
-        
+
         $selesai_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
             ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
             ->where('rd.company_id', $company)
@@ -238,7 +238,7 @@ class HomeController extends Controller
             ->where('rd.tahun', $req->tahun)
             ->whereNull('rd.deleted_at')
             ->count('rd.id_riskd');
-        
+
 		if ($mitigasi < 1) {
 			$progress_mitigasi = 100;
 		}
