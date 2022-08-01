@@ -27,7 +27,7 @@
      <div class="col-sm-12 col-md-9 col-lg-6 p-3 col-card">
        <div class="card">
          <div class="card-body text-center">
-            <img src="{{ asset('assets/images/logo/logo_company/logo_inhan.png') }}" style="width:120px;" class="mb-2" />
+            <img src="{{ asset('assets/images/logo/logo_company/logo_INHAN.png') }}" style="width:120px;" class="mb-2" />
             <div class="verified-content mb-3">
               <h6>Sistem Informasi Manajemen Risiko</h6>
               <hr>

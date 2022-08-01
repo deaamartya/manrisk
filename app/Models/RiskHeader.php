@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
+use Auth;
 
 /**
  * Class RiskHeader
@@ -83,11 +84,15 @@ class RiskHeader extends Model
         $mitigasi_logs = DB::raw("(
             SELECT realisasi as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1
         ) as mitigasi_logs");
-		$details = self::select('d.*', 'sr.*', 'k.*', DB::raw('max(mitigasi_logs.final_realisasi) as final_realisasi'))
+        $need_approve = DB::raw("(
+            SELECT id as need_approve, id_riskd FROM mitigasi_logs WHERE is_approved = 0
+        ) as need_approve");
+		$details = self::select('d.*', 'sr.*', 'k.*', DB::raw('max(mitigasi_logs.final_realisasi) as final_realisasi'), DB::raw('count(need_approve.need_approve) as need_approve'))
 			->join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
 			->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
+			->leftJoin($need_approve, 'need_approve.id_riskd', 'd.id_riskd')
 			->where('d.id_riskh','=', $this->id_riskh)
 			->whereNull('d.deleted_at')
 			->whereNull('risk_header.deleted_at')
@@ -110,12 +115,30 @@ class RiskHeader extends Model
 
 	public function doneMigrateCount($id)
 	{
+        $wr = '1=1';
+        if(Auth::user()->is_risk_officer){
+            $wr .= " AND d.company_id = ".Auth::user()->company_id;
+        }
 		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('mitigasi_logs as l', 'l.id_riskd', '=', 'd.id_riskd')
 			->where('d.id_riskh', '=', $id)
 			->where('status_mitigasi', '=', 1)
 			->where('l.realisasi', '=', 100)
 			->where('l.is_approved', '=', 1)
+			->whereNull('d.deleted_at')
+			->whereNull('risk_header.deleted_at')
+            ->whereRaw($wr)
+			->count('d.id_riskd');
+		return $jml;
+	}
+
+	public function needApproval()
+	{
+		$jml = self::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->join('mitigasi_logs as l', 'l.id_riskd', '=', 'd.id_riskd')
+			->where('d.id_riskh', '=', $this->id_riskh)
+			->where('status_mitigasi', '=', 1)
+			->where('l.is_approved', '=', 0)
 			->whereNull('d.deleted_at')
 			->whereNull('risk_header.deleted_at')
 			->count('d.id_riskd');

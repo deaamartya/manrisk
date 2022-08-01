@@ -15,10 +15,12 @@ class StatusProses extends Model
 	protected $fillable = [
 		'tahun',
 		'id_proses',
+		'company_id'
 	];
 
-    public function proses_manrisk()
+	public function proses_manrisk()
 	{
 		return $this->belongsTo(ProsesManrisk::class, 'id_proses');
 	}
+	
 }

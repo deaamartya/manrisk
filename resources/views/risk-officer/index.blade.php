@@ -21,6 +21,33 @@
 
 @section('content')
 <div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Status Proses - {{ Auth::user()->perusahaan->instansi }} Tahun <span id="tahun-status-proses-title">{{ date('Y') }}</span></h6>
+						<div class="col-lg-3">
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-status-proses">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+					<div class="chart-content">
+						<div class="stepwizard">
+							<div class="stepwizard-row setup-panel" id="status-proses">
+							</div>
+							<div id="status-proses-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-6 col-12 pb-0">
 			<div class="card o-hidden">
@@ -635,6 +662,7 @@
 					}
 			});
 		});
+
 		$('#tahun-level-risiko').change(function(){
 			$("#basic-stacked-bar").hide();
 			$("#basic-stacked-bar-loading").show();
@@ -700,6 +728,35 @@
 			return rupiah
 		}
 
+		$('#tahun-status-proses').change(function() {
+			$("#status-proses").hide();
+			$("#status-proses-loading").show();
+			$('#status-proses').html("");
+			const url = "{{ url('dashboard/data-status-proses') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-status-proses').val() })
+				.done(function(result) {
+					$('#tahun-status-proses-title').html($('#tahun-status-proses').val());
+					for(let i=0; i < result.list.length;i++) {
+						let data = result.list[i]
+						let code = '<div class="stepwizard-step"><a class="btn '
+						if (result.data) {
+							if (Number(result.data.id_proses) >= Number(data.id_proses)) {
+								code = code + 'btn-green" '; 
+							} else {
+								code = code + 'btn-primary" ';
+							}
+						} else {
+							code = code + 'btn-primary" ';
+						}
+						code = code + 'href="#">' + Number(i + 1) + '</a>'
+						code = code + '<p>' + data.nama_proses + '</p>'
+						$('#status-proses').append(code);
+						$('#status-proses').show();
+					}
+					$("#status-proses-loading").hide();
+			});
+		});
+
 		const date = new Date();
 		$('#tahun-risiko').val(date.getUTCFullYear());
 		$('#tahun-risiko').change();
@@ -709,6 +766,8 @@
 		$('#tahun-level-risiko').change();
 		$('#tahun-biaya-risiko').val(date.getUTCFullYear());
 		$('#tahun-biaya-risiko').change();
+		$('#tahun-status-proses').val(date.getUTCFullYear());
+		$('#tahun-status-proses').change();
 	});
 </script>
 @endsection

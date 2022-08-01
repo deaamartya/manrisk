@@ -9,6 +9,8 @@ use App\Models\Perusahaan;
 use App\Models\SRisiko;
 use DB;
 use App\Models\RiskDetail;
+use App\Models\StatusProses;
+use App\Models\ProsesManrisk;
 
 class HomeController extends Controller
 {
@@ -301,14 +303,14 @@ class HomeController extends Controller
             ->whereNull('risk_header.deleted_at')
             ->whereNull('d.deleted_at')
             ->count('d.id_riskd');
-        
+
         $mitigasi = RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
             ->where('d.company_id', $company)
             ->where('status_mitigasi', '=', 1)
             ->where('d.tahun', $req->tahun)
             ->whereNull('d.deleted_at')
             ->count('d.id_riskd');
-        
+
         $selesai_mitigasi = RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
             ->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
             ->where('rd.company_id', $company)
@@ -317,7 +319,7 @@ class HomeController extends Controller
             ->where('rd.tahun', $req->tahun)
             ->whereNull('rd.deleted_at')
             ->count('rd.id_riskd');
-        
+
 		if ($mitigasi < 1) {
 			$progress_mitigasi = 100;
 		}
@@ -574,4 +576,27 @@ class HomeController extends Controller
     }
 
    
+    public function dataStatusProses(Request $request) {
+        $proses_list = ProsesManrisk::all();
+        $data = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
+            ->where('company_id', '=', Auth::user()->company_id)
+            ->where('tahun', '=', $request->tahun)
+            ->first();
+        return response()->json([ "success" => true, "data" => $data, "list" => $proses_list ]);
+    }
+
+    public function dataStatusProsesIndhan(Request $request) {
+        $companies = Perusahaan::where('company_code', '!=', 'INHAN')->get();
+        $proses_list = ProsesManrisk::all();
+        $i = 0;
+        $data = [];
+        foreach ($companies as $c) {
+            $data[$i] = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
+                ->where('company_id', '=', $c->company_id)
+                ->where('tahun', '=', $request->tahun)
+                ->first();
+            $i++;
+        }
+        return response()->json([ "success" => true, "list" => $proses_list, "data" => $data, 'company' => $companies ]);
+    }
 }

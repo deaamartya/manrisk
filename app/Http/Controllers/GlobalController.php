@@ -468,7 +468,7 @@ class GlobalController extends Controller
 
     public function statusProses()
     {
-        $status_proses = StatusProses::all();
+        $status_proses = StatusProses::where('company_id', '=', Auth::user()->company_id)->get();
         $proses = ProsesManrisk::all();
         return view('status_proses', compact('status_proses', 'proses'));
     }
@@ -482,6 +482,7 @@ class GlobalController extends Controller
 
       StatusProses::insert([
         'tahun' => $request->tahun,
+        'company_id' => Auth::user()->company_id,
         'id_proses' => $request->id_proses,
         'created_at' => now(),
       ]);
