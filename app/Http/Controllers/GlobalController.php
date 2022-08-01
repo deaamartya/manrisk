@@ -462,7 +462,6 @@ class GlobalController extends Controller
             risk_detail.tahun
         ')
         ->get();
-        // dd($data);
 
         return view('deadline_mitigasi', compact('data'));
     }
@@ -492,18 +491,10 @@ class GlobalController extends Controller
 
     public function updateStatusProses(Request $request, $id)
     {
-        // dd($request->tahun);
       $request->validate([
         'tahun' => 'required',
         'id_proses' => 'required',
       ]);
-
-    //   $status_proses = StatusProses::where('id_status_proses', '=', $id)->first();
-    //   $status_proses->update([
-    //         'tahun' => $request->tahun,
-    //         'id_proses' => $request->id_proses,
-    //         'updated_at' => now(),
-    //     ]);
 
       StatusProses::find($id)->update([
         'tahun' => $request->tahun,

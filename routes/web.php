@@ -38,6 +38,7 @@ Route::post('dashboard/data-level-risiko', [HomeController::class, 'dataLevelRis
 Route::post('dashboard/data-level-risiko-indhan', [HomeController::class, 'dataLevelRisikoIndhan']);
 Route::post('dashboard/data-petarisiko-korporasi', [HomeController::class, 'dataPetaRisikoKorporasi']);
 Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPetaRisikoIndhan']);
+Route::post('dashboard/data-biaya-risiko-korporasi', [HomeController::class, 'dataBiayaRisikoKorporasi']);
 
 // Menu Deadline Mitigasi
 Route::get('deadline-mitigasi', [GlobalController::class, 'deadlineMitigasi'])->name('deadline-mitigasi.index');
