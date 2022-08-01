@@ -81,9 +81,9 @@ class RiskHeader extends Model
 	public function getMitigasiDetail() {
 		$pengajuan = PengajuanMitigasi::where('is_approved', '=', 1)->pluck('id_riskd');
         $mitigasi_logs = DB::raw("(
-            SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+            SELECT realisasi as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1
         ) as mitigasi_logs");
-		$details = self::select('d.*', 'sr.*', 'k.*', 'mitigasi_logs.final_realisasi')
+		$details = self::select('d.*', 'sr.*', 'k.*', DB::raw('max(mitigasi_logs.final_realisasi) as final_realisasi'))
 			->join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
@@ -92,6 +92,7 @@ class RiskHeader extends Model
 			->whereNull('d.deleted_at')
 			->whereNull('risk_header.deleted_at')
 			->where('d.status_mitigasi','=', 1)
+            ->groupBy('d.id_riskd')
 			->get();
 		return $details;
 	}
