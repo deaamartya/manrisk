@@ -9,6 +9,8 @@ use App\Models\Perusahaan;
 use App\Models\SRisiko;
 use DB;
 use App\Models\RiskDetail;
+use App\Models\StatusProses;
+use App\Models\ProsesManrisk;
 
 class HomeController extends Controller
 {
@@ -426,5 +428,29 @@ class HomeController extends Controller
             array_push($dataLow, $countLow);
         }
         return response()->json([ "success" => true, "labels" => $labels,"countExtreme" => $dataExtreme, "countHigh" => $dataHigh, "countMed" => $dataMed, "countLow" => $dataLow ]);
+    }
+
+    public function dataStatusProses(Request $request) {
+        $proses_list = ProsesManrisk::all();
+        $data = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
+            ->where('company_id', '=', Auth::user()->company_id)
+            ->where('tahun', '=', $request->tahun)
+            ->first();
+        return response()->json([ "success" => true, "data" => $data, "list" => $proses_list ]);
+    }
+
+    public function dataStatusProsesIndhan(Request $request) {
+        $companies = Perusahaan::where('company_code', '!=', 'INHAN')->get();
+        $proses_list = ProsesManrisk::all();
+        $i = 0;
+        $data = [];
+        foreach ($companies as $c) {
+            $data[$i] = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
+                ->where('company_id', '=', $c->company_id)
+                ->where('tahun', '=', $request->tahun)
+                ->first();
+            $i++;
+        }
+        return response()->json([ "success" => true, "list" => $proses_list, "data" => $data, 'company' => $companies ]);
     }
 }
