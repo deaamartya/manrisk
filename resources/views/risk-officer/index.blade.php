@@ -293,8 +293,8 @@
 						</div>
 						<div class="goal-end-point">
 							<ul>
-							<li class="mt-0 pt-0">
-								<h6 class="font-primary">As From</h6>
+							<li class="mt-3 pt-0">
+								<h6 class="font-primary" id="company_name">{{ Auth::user()->perusahaan->instansi }}</h6>
 								<h6 class="f-w-400" id="tahun-biaya-risiko-text">{{ date('Y') }}</h6>
 							</li>
 							<li>
@@ -525,10 +525,8 @@
 		}
 
 		function initBiayaRisikoChart(data) {
-			// var company_code = <?php echo json_encode($company_code) ?>;
-			// console.log(company_code);
 			var options4 = {
-				series: [data],
+				series: [data.percent],
 				chart: {
 					height: 350,
 					type: 'radialBar',
@@ -543,7 +541,6 @@
 						hollow: {
 							margin: 6,
 							size: '50%',
-							// image: '../assets/images/logo/logo_company/logo_'+company_code+'.png',
 							image: '../assets/images/dashboard-2/radial-image.png',
 							imageWidth: 140,
 							imageHeight: 140,
@@ -685,6 +682,7 @@
 				.done(function(result) {
 					// console.log("result : "+result.total_idr_indhan);
 					$('#tahun-biaya-risiko-text').html($('#tahun-biaya-risiko').val());
+					$('#company_name').html(result.company);
 					if(result.total_idr_indhan != null){
 						var rupiah_indhan = rupiahFormat(result.total_idr_indhan);
 						$('#idr_kuantitatif_indhan').html(rupiah_indhan);
@@ -714,7 +712,7 @@
 					}
 					
 					if (result.percent != 0) {
-						initBiayaRisikoChart(result.percent);
+						initBiayaRisikoChart(result);
 					} else{
 						initBiayaRisikoChart(0);
 					}

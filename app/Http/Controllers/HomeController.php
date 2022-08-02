@@ -510,26 +510,6 @@ class HomeController extends Controller
     }
 
     public function dataBiayaRisikoKorporasi(Request $req) {
-        // $labels = [];
-        // $count = [];
-        // $kelompok_risk = RiskDetail::select('kr.id_risk', 'kr.risk', DB::raw('COUNT(risk_detail.id_riskd) AS count_risk'))
-        //     ->join('s_risiko as s','s.id_s_risiko','=','risk_detail.id_s_risiko')
-        //     ->join('konteks as k','k.id_konteks','=','s.id_konteks')
-        //     ->join('risk as kr', 'kr.id_risk', '=', 'k.id_risk')
-        //     ->where('risk_detail.company_id', Auth::user()->company_id)
-        //     ->where('risk_detail.tahun', '=', $req->tahun)
-        //     ->whereNull('risk_detail.deleted_at')
-        //     ->groupBy('kr.id_risk')
-        //     ->get();
-        // $total_risk = RiskDetail::where('risk_detail.company_id', Auth::user()->company_id)
-        // ->where('risk_detail.tahun', '=', $req->tahun)
-        // ->whereNull('risk_detail.deleted_at')
-        // ->count('id_riskd');
-        // foreach ($kelompok_risk as $c) {
-        //     array_push($labels, $c->risk);
-        //     $count_risk = $c->count_risk / $total_risk * 100;
-        //     array_push($count, $count_risk);
-        // }
         $total_idr_indhan = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
             ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
             ->where('rd.tahun','=', $req->tahun)
@@ -570,9 +550,10 @@ class HomeController extends Controller
         }else{
             $percent =  0;
         }
-        
 
-        return response()->json([ "success" => true, "total_idr_indhan" => $total_idr_indhan, "total_idr_company" => $total_idr_company, "total_idr_company" => $total_idr_company , "total_idr_residu" => $total_idr_residu , "total_biaya_mitigasi" => $total_biaya_mitigasi , "percent" => $percent ]);
+        $company = Perusahaan::where('company_id', Auth::user()->company_id)->pluck('instansi')->first();
+
+        return response()->json([ "success" => true, "total_idr_indhan" => $total_idr_indhan, "total_idr_company" => $total_idr_company, "total_idr_company" => $total_idr_company , "total_idr_residu" => $total_idr_residu , "total_biaya_mitigasi" => $total_biaya_mitigasi , "percent" => $percent, "company" => $company ]);
     }
 
    
