@@ -30,6 +30,7 @@ Route::post('forum-detail/store/{id}', [GlobalController::class, 'forum_detail_s
 // Get Notification
 Route::get('get-notification', [GlobalController::class, 'get_notification']);
 Route::get('document/verify/{token}', [VerifyController::class, 'getDecrypted']);
+Route::post('dashboard/data-jumlah-risiko', [HomeController::class, 'dataJumlahRisiko']);
 Route::post('dashboard/data-risiko', [HomeController::class, 'dataRisiko']);
 Route::post('dashboard/data-risiko-korporasi', [HomeController::class, 'dataRisikoKorporasi']);
 Route::post('dashboard/data-kategori-risiko', [HomeController::class, 'dataKategoriRisiko']);
@@ -39,6 +40,7 @@ Route::post('dashboard/data-level-risiko-indhan', [HomeController::class, 'dataL
 Route::post('dashboard/data-petarisiko-korporasi', [HomeController::class, 'dataPetaRisikoKorporasi']);
 Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPetaRisikoIndhan']);
 Route::post('dashboard/data-biaya-risiko-korporasi', [HomeController::class, 'dataBiayaRisikoKorporasi']);
+Route::post('dashboard/data-biaya-risiko-indhan', [HomeController::class, 'dataBiayaRisikoIndhan']);
 Route::post('dashboard/data-status-proses', [HomeController::class, 'dataStatusProses']);
 Route::post('dashboard/data-status-proses-indhan', [HomeController::class, 'dataStatusProsesIndhan']);
 

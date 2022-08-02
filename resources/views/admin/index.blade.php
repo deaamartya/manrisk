@@ -76,7 +76,7 @@
 			<div class="card o-hidden h-100 mb-0">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>Kategori Risiko <span id="tahun-kat-risiko-title">{{ date('Y') }}</span></h6>
+						<h6>Kategori Risiko Tahun <span id="tahun-kat-risiko-title">{{ date('Y') }}</span></h6>
 						<div>
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-kat-risiko">
@@ -100,7 +100,7 @@
 			<div class="card">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>Kompilasi Risiko Anggota Indhan <span id="tahun-title">{{ date('Y') }}</span></h6>
+						<h6>Kompilasi Risiko Anggota Indhan Tahun <span id="tahun-title">{{ date('Y') }}</span></h6>
 						<div>
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-risiko">
@@ -190,7 +190,7 @@
 						</div>
 					</div>
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
-						<div class="row">
+						<div class="row d-flex justify-content-center">
 						@foreach($company as $p)
 						<div class="col-xxl-4 col-lg-6">
 							<div class="project-box">
@@ -261,69 +261,79 @@
 	</div>
 	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-3 risk-col xl-100 box-col-12">
-				<div class="card total-users">
-					<div class="card-header card-no-border">
-						<div class="d-flex justify-content-between mb-3">
-							<h6>Biaya Kerugian & Mitigasi Risiko</h6>
-							<div class="col-lg-2">
-								<span class="f-w-500 font-roboto">Tahun : </span>
-								<select class="form-control" id="tahun-biaya-risiko">
-									@for($i=0; $i<10; $i++)
-										@php $tahun = intval(2022 + $i); @endphp
-										<option value="{{ $tahun }}">{{ $tahun }}</option>
-									@endfor
-								</select>
-							</div>
+			<div class="card total-users">
+				<div class="card-header card-no-border">
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Biaya Kerugian & Mitigasi Risiko Tahun <span id="tahun-biaya-risiko-text">{{ date('Y') }}</span></h6>
+						<div class="col-lg-2">
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-biaya-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
 						</div>
 					</div>
-					<div class="card-body pt-0">
-						<div class="apex-chart-container goal-status text-center row">
-							<div class="rate-card col-xl-12">
-							<div class="goal-chart">
-								<div id="riskfactorchart"></div>
-							</div>
-							<div class="goal-end-point">
-								<ul>
-								<li class="mt-0 pt-0">
-									<h6 class="font-primary">As From</h6>
-									<h6 class="f-w-400" id="tahun-biaya-risiko-text">{{ date('Y') }}</h6>
-								</li>
-								<li>
-									<h6 class="mb-2 f-w-400">Total IDR Kuantitatif INDHAN</h6>
-									<h5 class="mb-0" id="idr_kuantitatif_indhan">Rp</h5>
-								</li>
-								</ul>
-							</div>
-							</div>
-							<ul class="col-xl-12">
-							<li>
-								<div class="goal-detail">
-									<h6> <span class="font-primary">Total IDR Kuantitatif : </span><span id="idr_kuantitatif_company">Rp</span></h6>
-									<div class="progress sm-progress-bar progress-animate">
-										<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
+				</div>
+				<div class="card-body pt-0">
+					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+						<div class="row d-flex justify-content-center">
+						@foreach($company as $p)
+						<div class="col-xxl-4 col-lg-6">
+							<div class="project-box">
+								<div class="media d-flex justify-content-center">
+									<img class="me-1 rounded"
+										src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
+										style="max-height: 30px;">
 								</div>
-								<div class="goal-detail">
-									<h6><span class="font-primary">Total IDR Kuantitatif Residual : </span><span id="idr_kuantitatif_residu">Rp</span></h6>
-									<div class="progress sm-progress-bar progress-animate">
-										<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								<p class="mb-4 text-center">{{ $p->instansi }}</p>
+								<div class="apex-chart-container goal-status text-center">
+									<div class="rate-card">
+										<div class="goal-chart">
+											<div id="biayarisikochart_{{ $p->company_id }}"></div>
+										</div>
+										<div class="goal-end-point">
+											<ul>
+											<li class="mt-0 pt-0"></li>
+											<li>
+												<h6 class="mb-2 f-w-400">Total IDR Kuantitatif INDHAN</h6>
+												<h5 class="mb-0" id="idr_kuantitatif_indhan_{{ $p->company_id }}">Rp</h5>
+											</li>
+											</ul>
+										</div>
 									</div>
+									<ul>
+										<li>
+											<div class="goal-detail">
+												<h6> <span class="font-primary">Total IDR Kuantitatif : </span><span id="idr_kuantitatif_company_{{ $p->company_id }}">Rp</span></h6>
+												<div class="progress sm-progress-bar progress-animate">
+													<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="goal-detail">
+												<h6><span class="font-primary">Total IDR Kuantitatif Residual : </span><span id="idr_kuantitatif_residu_{{ $p->company_id }}">Rp</span></h6>
+												<div class="progress sm-progress-bar progress-animate">
+													<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="goal-detail mb-0">
+												<h6><span class="font-primary">Total Biaya Mitigasi : </span><span id="biaya_mitigasi_{{ $p->company_id }}">Rp</span></h6>
+												<div class="progress sm-progress-bar progress-animate">
+													<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+											</div>
+										</li>
+									</ul>
 								</div>
-								<div class="goal-detail mb-0">
-									<h6><span class="font-primary">Total Biaya Mitigasi : </span><span id="biaya_mitigasi">Rp</span></h6>
-									<div class="progress sm-progress-bar progress-animate">
-										<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<!-- <div class="btn-download btn btn-gradient f-w-500">Risk details</div> -->
-							</li>
-							</ul>
+							</div>
+						</div>
+						@endforeach
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
 	</div>
 </div>
 <script type="text/javascript">
@@ -344,7 +354,7 @@
 		var chart8;
 		var chart3;
 		var chart9;
-		var chart4;
+		var chart4 = [];
 		function initBarChart(data) {
 			var options3 = {
 					chart: {
@@ -516,83 +526,87 @@
 			chart9.render();
 		}
 
-		function initBiayaRisikoChart(data) {
-			var options4 = {
-				series: [data],
-				chart: {
-					height: 350,
-					type: 'radialBar',
-					offsetY: -10,
-				},
-
-				plotOptions: {
-					radialBar: {
-						startAngle: -135,
-						endAngle: 135,
-						inverseOrder: true,
-						hollow: {
-							margin: 5,
-							size: '60%',
-							image: '../assets/images/dashboard-2/radial-image.png',
-							imageWidth: 140,
-							imageHeight: 140,
-							imageClipped: false,
-						},
-						track: {
-							opacity: 0.4,
-							colors: CubaAdminConfig.primary
-						},
-						dataLabels: {
-							enabled: false,
-							enabledOnSeries: undefined,
-							formatter: function(val, opts) {
-								return val + "%"
-							},
-							textAnchor: 'middle',
-							distributed: false,
-							offsetX: 0,
-							offsetY: 0,
-
-							style: {
-								fontSize: '14px',
-								fontFamily: 'Helvetica, Arial, sans-serif',
-								fill: ['#2b2b2b'],
-
-							},
-						},
-					}
-				},
-
-				fill: {
-					type: 'gradient',
-					gradient: {
-						shade: 'light',
-						shadeIntensity: 0.15,
-						inverseColors: false,
-						opacityFrom: 1,
-						opacityTo: 1,
-						stops: [0, 100],
-						gradientToColors: ['#a927f9'],
-						type: 'horizontal'
+		function initBiayaRisikoChart(data, index) {
+			// console.log('data.percent init :'+data.percent);
+			// console.log('index init :'+index);
+			// console.log('data.percent[index] init :'+data.percent[index]);
+				var options4 = {
+					series: [data.percent[index]],
+					chart: {
+						height: 350,
+						type: 'radialBar',
+						offsetY: -10,
 					},
-				},
-				stroke: {
-					dashArray: 15,
-					strokecolor: ['#ffffff']
-				},
 
-				labels: ['Risk loss rate'],
-				colors: [CubaAdminConfig.primary],
-			};
+					plotOptions: {
+						radialBar: {
+							startAngle: -135,
+							endAngle: 135,
+							inverseOrder: true,
+							hollow: {
+								margin: 5,
+								size: '60%',
+								image: '../assets/images/dashboard-2/radial-image.png',
+								imageWidth: 140,
+								imageHeight: 140,
+								imageClipped: false,
+							},
+							track: {
+								opacity: 0.4,
+								colors: CubaAdminConfig.primary
+							},
+							dataLabels: {
+								enabled: false,
+								enabledOnSeries: undefined,
+								formatter: function(val, opts) {
+									return val + "%"
+								},
+								textAnchor: 'middle',
+								distributed: false,
+								offsetX: 0,
+								offsetY: 0,
+
+								style: {
+									fontSize: '14px',
+									fontFamily: 'Helvetica, Arial, sans-serif',
+									fill: ['#2b2b2b'],
+
+								},
+							},
+						}
+					},
+
+					fill: {
+						type: 'gradient',
+						gradient: {
+							shade: 'light',
+							shadeIntensity: 0.15,
+							inverseColors: false,
+							opacityFrom: 1,
+							opacityTo: 1,
+							stops: [0, 100],
+							gradientToColors: ['#a927f9'],
+							type: 'horizontal'
+						},
+					},
+					stroke: {
+						dashArray: 15,
+						strokecolor: ['#ffffff']
+					},
+
+					labels: ['Risk loss rate'],
+					colors: [CubaAdminConfig.primary],
+				};
+				
+				console.log('data.companies[index].companyid : '+data.companies[index].company_id);
+				
+				if (chart4[index]) chart4[index].destroy();
+					chart4[index] = new ApexCharts(
+						document.querySelector("#biayarisikochart_"+data.companies[index].company_id),
+						options4
+					);
+					chart4[index].render();
 			
-
-			if (chart4) chart4.destroy();
-			chart4 = new ApexCharts(
-				document.querySelector("#riskfactorchart"),
-				options4
-			);
-
-			chart4.render();
 		}
 
 		$('#tahun-risiko').change(function(){
@@ -671,44 +685,39 @@
 		});
 
 		$('#tahun-biaya-risiko').change(function(){
-			// console.log("tahun : "+$('#tahun-biaya-risiko').val());
-			const url = "{{ url('dashboard/data-biaya-risiko-korporasi') }}"
+			const url = "{{ url('dashboard/data-biaya-risiko-indhan') }}"
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-biaya-risiko').val() })
 				.done(function(result) {
-					// console.log("result : "+result.total_idr_indhan);
+					// console.log("result : "+result.companies[0]);
 					$('#tahun-biaya-risiko-text').html($('#tahun-biaya-risiko').val());
-					if(result.total_idr_indhan != null){
-						var rupiah_indhan = rupiahFormat(result.total_idr_indhan);
-						$('#idr_kuantitatif_indhan').html(rupiah_indhan);
-					}else{
-						$('#idr_kuantitatif_indhan').html('Rp'+0);
-					}
 
-					if(result.total_idr_company != null){
-						var rupiah_company = rupiahFormat(result.total_idr_company);
-						$('#idr_kuantitatif_company').html(rupiah_company);
-					}else{
-						$('#idr_kuantitatif_company').html('Rp'+0);
-					}
-
-					if(result.total_idr_residu != null){
-						var rupiah_residu = rupiahFormat(result.total_idr_residu);
-						$('#idr_kuantitatif_residu').html(rupiah_residu);
-					}else{
-						$('#idr_kuantitatif_residu').html('Rp'+0);
-					}
-
-					if(result.total_biaya_mitigasi != null){
-						var rupiah_mitigasi = rupiahFormat(result.total_biaya_mitigasi);
-						$('#biaya_mitigasi').html(rupiah_mitigasi);
-					}else{
-						$('#biaya_mitigasi').html('Rp'+0);
-					}
-					
-					if (result.percent != 0) {
-						initBiayaRisikoChart(result.percent);
-					} else{
-						initBiayaRisikoChart(0);
+					for(let i = 0; i < result.companies.length; i++){
+						initBiayaRisikoChart(result, i);
+						if(result.total_idr_indhan != null){
+							var rupiah_indhan = rupiahFormat(result.total_idr_indhan);
+							$('#idr_kuantitatif_indhan_'+ result.companies[i].company_id).html(rupiah_indhan);
+						}else{
+							$('#idr_kuantitatif_indhan_'+ result.companies[i].company_id).html('Rp'+0);
+						}
+						if(result.total_idr_company[i] != null){
+							var rupiah_company = rupiahFormat(result.total_idr_company[i]);
+							$('#idr_kuantitatif_company_'+ result.companies[i].company_id).html(rupiah_company);
+						}else{
+							$('#idr_kuantitatif_company_'+ result.companies[i].company_id).html('Rp'+0);
+						}
+						if(result.total_idr_residu[i] != null){
+							var rupiah_residu = rupiahFormat(result.total_idr_residu[i]);
+							$('#idr_kuantitatif_residu_'+ result.companies[i].company_id).html(rupiah_residu);
+						}else{
+							$('#idr_kuantitatif_residu_'+ result.companies[i].company_id).html('Rp'+0);
+						}
+						if(result.total_biaya_mitigasi[i] != null){
+							var rupiah_mitigasi = rupiahFormat(result.total_biaya_mitigasi[i]);
+							$('#biaya_mitigasi_'+ result.companies[i].company_id).html(rupiah_mitigasi);
+						}else{
+							$('#biaya_mitigasi_'+ result.companies[i].company_id).html('Rp'+0);
+						}
+						
 					}
 			});
 		});
@@ -719,6 +728,7 @@
 			const rupiah = 'Rp' + convert.join('.').split('').reverse().join('') + ',00'
 			return rupiah
 		}
+
 		$('#tahun-status-proses').change(function() {
 			$(".status-proses").hide();
 			$("#status-proses-loading").show();

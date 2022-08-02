@@ -52,12 +52,24 @@
 		<div class="col-xl-6 col-12 pb-0">
 			<div class="card o-hidden">
 				<div class="card-body">
+					<div class="d-flex justify-content-between">
+						<h6>Jumlah Risiko Tahun <span id="tahun-jumlah-risiko-title">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-jumlah-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-6 col-12 py-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
-									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko Korporasi</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $counts_risiko }}</span></h4>
+									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko Korporasi</p>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_sumber_risiko">{{ $counts_risiko }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
@@ -66,7 +78,7 @@
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Korporasi</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_risiko }}</span></h4>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_korporasi">{{ $count_risiko }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
@@ -74,8 +86,8 @@
 						<div class="col-lg-6 col-12 py-3">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
-									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_mitigasi }}</span></h4>
+									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi</span></p>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_mitigasi">{{ $count_mitigasi }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
@@ -85,7 +97,7 @@
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
 									<div class="progress-box">
-										<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_done_mitigasi }}</span></h4>
+										<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_selesai_mitigasi">{{ $count_done_mitigasi }}</span></h4>
 									</div>
 									@if($count_mitigasi > 0)
 									<div class="progress sm-progress-bar progress-animate app-right d-flex justify-content-end">
@@ -103,7 +115,7 @@
 			<div class="card o-hidden h-100 mb-0">
 				<div class="card-body">
 					<div class="d-flex justify-content-between">
-						<h6>Kategori Risiko <span id="tahun-kat-risiko-title">{{ date('Y') }}</span></h6>
+						<h6>Kategori Risiko Tahun <span id="tahun-kat-risiko-title">{{ date('Y') }}</span></h6>
 						<div>
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-kat-risiko">
@@ -128,7 +140,7 @@
 				<div class="card-body">
 					<div class="row d-flex justify-content-between mb-3">
 						<div class="col-lg-9 col-12">
-							<h6>Risiko Korporasi - {{ Auth::user()->perusahaan->instansi }} <span id="tahun-title">{{ date('Y') }}</span></h6>	
+							<h6>Risiko Korporasi - {{ Auth::user()->perusahaan->instansi }} Tahun <span id="tahun-title">{{ date('Y') }}</span></h6>	
 						</div>
 						<div class="col-lg-3 col-12">
 							<span class="f-w-500 font-roboto">Tahun : </span>
@@ -273,7 +285,7 @@
 			<div class="card total-users">
 				<div class="card-header card-no-border">
 					<div class="d-flex justify-content-between mb-3">
-						<h6>Biaya Kerugian & Mitigasi Risiko</h6>
+						<h6>Biaya Kerugian & Mitigasi Risiko Tahun <span id="tahun-biaya-risiko-title">{{ date('Y') }}</span></h6>
 						<div class="col-lg-2">
 							<span class="f-w-500 font-roboto">Tahun : </span>
 							<select class="form-control" id="tahun-biaya-risiko">
@@ -295,7 +307,7 @@
 							<ul>
 							<li class="mt-3 pt-0">
 								<h6 class="font-primary" id="company_name">{{ Auth::user()->perusahaan->instansi }}</h6>
-								<h6 class="f-w-400" id="tahun-biaya-risiko-text">{{ date('Y') }}</h6>
+								<!-- <h6 class="f-w-400" id="tahun-biaya-risiko-title">{{ date('Y') }}</h6> -->
 							</li>
 							<li>
 								<h6 class="mb-2 f-w-400">Total IDR Kuantitatif INDHAN</h6>
@@ -603,7 +615,17 @@
 			chart4.render();
 		}
 
-		
+		$('#tahun-jumlah-risiko').change(function(){
+			const url = "{{ url('dashboard/data-jumlah-risiko') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-jumlah-risiko').val() })
+				.done(function(result) {
+					$('#tahun-jumlah-risiko-title').html($('#tahun-jumlah-risiko').val());
+					$('#jml_sumber_risiko').html(result.sumber_risiko);
+					$('#jml_risiko_korporasi').html(result.risiko_korporasi);
+					$('#jml_risiko_mitigasi').html(result.perlu_mitigasi);
+					$('#jml_risiko_selesai_mitigasi').html(result.selesai_mitigasi);
+			});
+		});
 
 		$('#tahun-risiko').change(function(){
 			$("#basic-bar").hide();
@@ -681,7 +703,7 @@
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-biaya-risiko').val() })
 				.done(function(result) {
 					// console.log("result : "+result.total_idr_indhan);
-					$('#tahun-biaya-risiko-text').html($('#tahun-biaya-risiko').val());
+					$('#tahun-biaya-risiko-title').html($('#tahun-biaya-risiko').val());
 					$('#company_name').html(result.company);
 					if(result.total_idr_indhan != null){
 						var rupiah_indhan = rupiahFormat(result.total_idr_indhan);
@@ -711,11 +733,7 @@
 						$('#biaya_mitigasi').html('Rp'+0);
 					}
 					
-					if (result.percent != 0) {
-						initBiayaRisikoChart(result);
-					} else{
-						initBiayaRisikoChart(0);
-					}
+					initBiayaRisikoChart(result);
 			});
 		});
 
