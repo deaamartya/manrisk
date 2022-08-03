@@ -74,6 +74,7 @@ class AbsDataMaster
                     'jabatan' => $request->jabatan,
                     'nip' => $request->nip,
                     'nama' => $request->name,
+                    'jenis' => $request->is_penilai_indhan ? 1 : 0,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);
@@ -89,6 +90,7 @@ class AbsDataMaster
                         'id_user' => $id,
                         'jabatan' => $request->jabatan,
                         'nip' => $request->nip,
+                        'jenis' => $request->is_penilai_indhan ? 1 : 0,
                         'nama' => $request->name,
                         'updated_at' => Carbon::now()
                     ]);
@@ -100,6 +102,7 @@ class AbsDataMaster
                         'jabatan' => $request->jabatan,
                         'nip' => $request->nip,
                         'nama' => $request->name,
+                        'jenis' => $request->is_penilai_indhan ? 1 : 0,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ]);
