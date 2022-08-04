@@ -17,6 +17,9 @@ use Redirect;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
+use Illuminate\Support\Facades\Route;
+use App\Models\ShortUrl;
+use Illuminate\Support\Str;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -142,14 +145,37 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_header.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->get();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
-            "url='risk-officer/print-risk-register-indhan/".$header->id_riskh."';".
+        $document_type = 'risk_register_indhan';
+        $url = "url='risk-officer/print-risk-register-indhan/".$header->id_riskh."';".
             "signed_by=".$header->pemeriksa.";".
             "instansi=".'Industri Pertahanan'.";".
             "tahun=".$header->tahun.";".
             "created_at=".$header->created_at.";".
-            "penyusun=".$header->penyusun.";"
+            "penyusun=".$header->penyusun.";";
+        $short_url = ShortUrl::where(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+        )->first();
+        if ($short_url) {
+            $short_url->update([
+                'url' => $url,
+            ]);
+        }
+        $short_url = ShortUrl::firstOrCreate(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+                'url' => $url,
+                'short_code' => Str::random(10),
+            ],
         );
+        $encrypted = url('document/verify/').'/'.$short_url->short_code;
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         Session::forget('is_bypass');
         $pdf = PDF::loadView('risk-officer.pdf-risk-register-indhan', compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');

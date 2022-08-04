@@ -17,6 +17,9 @@ use Redirect;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
+use Illuminate\Support\Facades\Route;
+use App\Models\ShortUrl;
+use Illuminate\Support\Str;
 
 class RiskRegisterKorporasiController extends Controller
 {
@@ -62,14 +65,37 @@ class RiskRegisterKorporasiController extends Controller
     public function print($id) {
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
-            "url='penilai-indhan/print-risk-register-korporasi/".$header->id_riskh."';".
+        $document_type = 'risk_register_penilai_indhan';
+        $url = "url='penilai-indhan/print-risk-register-korporasi/".$header->id_riskh."';".
             "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
             "instansi=".$header->perusahaan->instansi.";".
             "tahun=".$header->tahun.";".
             "created_at=".$header->created_at.";".
-            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";";
+        $short_url = ShortUrl::where(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+        )->first();
+        if ($short_url) {
+            $short_url->update([
+                'url' => $url,
+            ]);
+        }
+        $short_url = ShortUrl::firstOrCreate(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+                'url' => $url,
+                'short_code' => Str::random(10),
+            ],
         );
+        $encrypted = url('document/verify/').'/'.$short_url->short_code;
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('penilai-indhan.pdf-risk-register', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');
