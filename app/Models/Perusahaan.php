@@ -100,4 +100,9 @@ class Perusahaan extends Model
 		return intval($count_done_mitigasi / $count_mitigasi * 100);
 	}
 
+	public function sumber_risiko()
+	{
+		return $this->hasMany(SRisiko::class, 'id_s_risiko');
+	}
+
 }

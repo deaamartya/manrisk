@@ -50,4 +50,9 @@ class SRisiko extends Model
 	{
 		return $this->belongsTo(Kontek::class, 'id_konteks');
 	}
+
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
+	}
 }
