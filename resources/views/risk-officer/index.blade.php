@@ -307,11 +307,10 @@
 							<ul>
 							<li class="mt-3 pt-0">
 								<h6 class="font-primary" id="company_name">{{ Auth::user()->perusahaan->instansi }}</h6>
-								<!-- <h6 class="f-w-400" id="tahun-biaya-risiko-title">{{ date('Y') }}</h6> -->
 							</li>
 							<li>
 								<h6 class="mb-2 f-w-400">Total IDR Kuantitatif INDHAN</h6>
-								<h5 class="mb-0" id="idr_kuantitatif_indhan">Rp{{ number_format($total_idr_indhan,2,',','.') }}</h5>
+								<h5 class="mb-0" id="idr_kuantitatif_indhan">Rp</h5>
 							</li>
 							</ul>
 						</div>
@@ -319,26 +318,23 @@
 						<ul class="col-xl-12">
 						<li>
 							<div class="goal-detail">
-								<h6> <span class="font-primary">Total IDR Kuantitatif : </span><span id="idr_kuantitatif_company">Rp{{ number_format($total_idr_company,2,',','.') }}</span></h6>
+								<h6> <span class="font-primary">Total IDR Kuantitatif : </span><span id="idr_kuantitatif_company">Rp</span></h6>
 								<div class="progress sm-progress-bar progress-animate">
 									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<div class="goal-detail">
-								<h6><span class="font-primary">Total IDR Kuantitatif Residual : </span><span id="idr_kuantitatif_residu">Rp{{ number_format($total_idr_residu,2,',','.') }}</span></h6>
+								<h6><span class="font-primary">Total IDR Kuantitatif Residual : </span><span id="idr_kuantitatif_residu">Rp</span></h6>
 								<div class="progress sm-progress-bar progress-animate">
 									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<div class="goal-detail mb-0">
-								<h6><span class="font-primary">Total Biaya Mitigasi : </span><span id="biaya_mitigasi">Rp{{ number_format($total_biaya_mitigasi,2,',','.') }}</span></h6>
+								<h6><span class="font-primary">Total Biaya Mitigasi : </span><span id="biaya_mitigasi">Rp</span></h6>
 								<div class="progress sm-progress-bar progress-animate">
 									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
-						</li>
-						<li>
-							<!-- <div class="btn-download btn btn-gradient f-w-500">Risk details</div> -->
 						</li>
 						</ul>
 					</div>

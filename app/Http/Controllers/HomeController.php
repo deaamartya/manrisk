@@ -58,48 +58,10 @@ class HomeController extends Controller
                     ->whereNull('risk_header.deleted_at')
                     ->count('d.id_riskd');
                 $company = Perusahaan::where('company_id', Auth::user()->company_id)->get();
-                $total_idr_indhan = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->first();
-
-                $total_idr_company = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->first();
-
-                $total_idr_residu = RiskHeader::selectRaw('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
-                    ->first();
-                
-                $total_biaya_mitigasi = RiskHeader::selectRaw('SUM(biaya_penanganan) as biaya_mitigasi')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(biaya_penanganan) as biaya_mitigasi')
-                    ->first();
-                    // dd($sum_idr_company);
-
-                $percent =  intval($total_idr_company / $total_idr_indhan * 100);
-                // dd($percent);
-
+            
                 $company_code = Perusahaan::where('company_id', Auth::user()->company_id)->pluck('company_code')->first();
 
-                return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company", "total_idr_indhan", "total_idr_company", "total_idr_residu", "total_biaya_mitigasi", "percent", "company_code"));
+                return view('risk-officer.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company", "company_code"));
             }
             if (Auth::user()->is_penilai_indhan) {
                 $counts_risiko = SRisiko::where('status_s_risiko', 1)->whereNull('deleted_at')->count('id_s_risiko');
@@ -151,45 +113,7 @@ class HomeController extends Controller
                     ->whereNull('risk_header.deleted_at')
                     ->count('d.id_riskd');
                 $company = Perusahaan::where('company_code', '!=', 'INHAN')->get();
-                
-                $total_idr_indhan = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                ->where('rd.tahun', date('Y'))
-                ->whereNull('rd.deleted_at')
-                ->whereNull('risk_header.deleted_at')
-                ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                ->first();
-
-                $total_idr_company = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    // ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
-                    ->first();
-
-                $total_idr_residu = RiskHeader::selectRaw('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    // ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
-                    ->first();
-                
-                $total_biaya_mitigasi = RiskHeader::selectRaw('SUM(biaya_penanganan) as biaya_mitigasi')
-                    ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-                    // ->where('rd.company_id', Auth::user()->company_id)
-                    ->where('rd.tahun', date('Y'))
-                    ->whereNull('rd.deleted_at')
-                    ->whereNull('risk_header.deleted_at')
-                    ->pluck('SUM(biaya_penanganan) as biaya_mitigasi')
-                    ->first();
-                    // dd($sum_idr_company);
-
-                $percent =  intval($total_idr_company / $total_idr_indhan * 100);
-                return view('admin.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company", "total_idr_indhan", "total_idr_company", "total_idr_residu", "total_biaya_mitigasi", "percent"));
+                return view('admin.index', compact("counts_risiko", "count_risiko", "count_mitigasi", "count_done_mitigasi", "company"));
             }
         } else {
             return redirect()->route('login');
