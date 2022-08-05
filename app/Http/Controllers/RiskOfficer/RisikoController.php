@@ -15,6 +15,9 @@ use App\Models\RiskDetail;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
+use Illuminate\Support\Facades\Route;
+use App\Models\ShortUrl;
+use Illuminate\Support\Str;
 
 class RisikoController extends Controller
 {
@@ -125,16 +128,39 @@ class RisikoController extends Controller
     }
 
     public function print($id) {
+        $document_type = 'risk_register';
         $header = RiskHeader::where('id_riskh', '=', $id)->first();
-        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
-            "url='risk-officer/risiko/print/".$header->id_riskh."';".
+        $url = "url='risk-officer/risiko/print/".$header->id_riskh."';".
             "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
             "instansi=".$header->perusahaan->instansi.";".
             "tahun=".$header->tahun.";".
             "created_at=".$header->created_at.";".
-            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";"
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";";
+        $short_url = ShortUrl::where(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+        )->first();
+        if ($short_url) {
+            $short_url->update([
+                'url' => $url,
+            ]);
+        }
+        $short_url = ShortUrl::firstOrCreate(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+                'url' => $url,
+                'short_code' => Str::random(10),
+            ],
         );
+        $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
+        $encrypted = url('document/verify/').'/'.$short_url->short_code;
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('risk-officer.risk-header-pdf', compact('header', 'user', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');

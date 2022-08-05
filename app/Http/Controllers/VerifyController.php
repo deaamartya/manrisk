@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Session;
+use App\Models\ShortUrl;
 
 class VerifyController extends Controller
 {
@@ -22,8 +23,8 @@ class VerifyController extends Controller
     public function getDecrypted($token)
     {
         try {
-            $decrypt = Crypt::decryptString($token);
-            $data = explode(";", $decrypt);
+            $short_url = ShortUrl::where('short_code', '=', $token)->first();
+            $data = explode(";", $short_url->url);
             $url = explode('=', $data[0])[1];
             $url = str_replace("'", '', $url);
             $signed_by = explode('=', $data[1])[1];

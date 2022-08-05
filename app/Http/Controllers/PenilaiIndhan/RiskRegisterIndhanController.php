@@ -17,6 +17,9 @@ use Redirect;
 use Illuminate\Support\Facades\Crypt;
 use DNS2D;
 use Session;
+use Illuminate\Support\Facades\Route;
+use App\Models\ShortUrl;
+use Illuminate\Support\Str;
 
 class RiskRegisterIndhanController extends Controller
 {
@@ -130,6 +133,36 @@ class RiskRegisterIndhanController extends Controller
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
+        $document_type = 'risk_register_indhan_penilai_indhan';
+        $url = "url='penilai-indhan/print-risk-register-indhan/".$header->id_riskh."';".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa : '-').";".
+            "instansi=".'Industri Pertahanan'.";".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".($header->penyusun ? $header->penyusun : '-').";";
+        $short_url = ShortUrl::where(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+        )->first();
+        if ($short_url) {
+            $short_url->update([
+                'url' => $url,
+            ]);
+        }
+        $short_url = ShortUrl::firstOrCreate(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+                'url' => $url,
+                'short_code' => Str::random(10),
+            ],
+        );
         $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh')
                 ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
@@ -139,14 +172,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->get();
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
-        $encrypted = url('document/verify/').'/'.Crypt::encryptString(
-            "url='penilai-indhan/print-risk-register-indhan/".$header->id_riskh."';".
-            "signed_by=".($header->pemeriksa ? $header->pemeriksa : '-').";".
-            "instansi=".'Industri Pertahanan'.";".
-            "tahun=".$header->tahun.";".
-            "created_at=".$header->created_at.";".
-            "penyusun=".($header->penyusun ? $header->penyusun : '-').";"
-        );
+        $encrypted = url('document/verify/').'/'.$short_url->short_code;
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('penilai-indhan.pdf-risk-register-indhan', compact('header', 'user', 'qrcode', 'detail_risk'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');
