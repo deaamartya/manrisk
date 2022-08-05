@@ -272,7 +272,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-xl-3 risk-col xl-100 box-col-12">
+		<div class="col-xl-12 risk-col xl-100 box-col-12">
 			<div class="card total-users">
 				<div class="card-header card-no-border">
 					<div class="d-flex justify-content-between mb-3">
@@ -769,10 +769,10 @@
 								if (Number(result.data[j].id_proses) >= Number(data.id_proses)) {
 									code = code + 'btn-green" '; 
 								} else {
-									code = code + 'btn-primary" ';
+									code = code + 'btn-gray" ';
 								}
 							} else {
-								code = code + 'btn-primary" ';
+								code = code + 'btn-gray" ';
 							}
 							code = code + 'href="#">' + Number(i + 1) + '</a>'
 							code = code + '<p>' + data.nama_proses + '</p>'
