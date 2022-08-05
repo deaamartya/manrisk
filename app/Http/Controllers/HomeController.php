@@ -606,6 +606,7 @@ class HomeController extends Controller
         $data = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
             ->where('company_id', '=', Auth::user()->company_id)
             ->where('tahun', '=', $request->tahun)
+            ->orderBy('status_proses.created_at', 'DESC')
             ->first();
         return response()->json([ "success" => true, "data" => $data, "list" => $proses_list ]);
     }
@@ -619,6 +620,7 @@ class HomeController extends Controller
             $data[$i] = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')
                 ->where('company_id', '=', $c->company_id)
                 ->where('tahun', '=', $request->tahun)
+                ->orderBy('status_proses.created_at', 'DESC')
                 ->first();
             $i++;
         }

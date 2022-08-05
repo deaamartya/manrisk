@@ -232,6 +232,18 @@ label {
     font-size: 25px;
 }
 
+.btn-gray {
+    background-color: #d1d1d1 !important;
+    border-color: #d1d1d1 !important;
+    color: black;
+}
+
+.apexcharts-radial-series path {
+    stroke-width: 10px;
+    stroke-dasharray: 10, 20;
+    stroke-linecap: round;
+}
+
 @mixin modal-fullscreen() {
     padding: 0 !important; // override inline padding-right added from js
     .modal-dialog {

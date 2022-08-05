@@ -755,10 +755,10 @@
 							if (Number(result.data.id_proses) >= Number(data.id_proses)) {
 								code = code + 'btn-green" '; 
 							} else {
-								code = code + 'btn-primary" ';
+								code = code + 'btn-gray" ';
 							}
 						} else {
-							code = code + 'btn-primary" ';
+							code = code + 'btn-gray" ';
 						}
 						code = code + 'href="#">' + Number(i + 1) + '</a>'
 						code = code + '<p>' + data.nama_proses + '</p>'
