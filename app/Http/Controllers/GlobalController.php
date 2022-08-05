@@ -247,11 +247,13 @@ class GlobalController extends Controller
         ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
         ->where('dp.id_user', Auth::user()->id_user)
         ->where('status_s_risiko', 1)
+        ->whereNull('s_risiko.deleted_at')
         ->pluck('s_risiko.id_s_risiko');
         // dd($s_risk_dinilai);
         $jml_risk = SRisiko::where('status_s_risiko', 1)
             ->where('s_risiko.company_id', Auth::user()->company_id)
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->whereNull('s_risiko.deleted_at')
             ->count('s_risiko.id_s_risiko');
         // dd($jml_risk);
 
@@ -299,11 +301,13 @@ class GlobalController extends Controller
                         ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
                         ->where('dp.id_user', Auth::user()->id_user)
                         ->where('status_s_risiko', 1)
+                        ->whereNull('s_risiko.deleted_at')
                         ->pluck('s_risiko.id_s_risiko');
         // dd($s_risk_dinilai);
         $jml_risk = SRisiko::where('status_s_risiko', 1)
                     ->where('s_risiko.company_id', Auth::user()->company_id)
                     ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+                    ->whereNull('s_risiko.deleted_at')
                     ->count('s_risiko.id_s_risiko');
         // dd($jml_risk);
 
@@ -343,11 +347,13 @@ class GlobalController extends Controller
         ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
         ->where('dp.id_user', Auth::user()->id_user)
         ->where('status_s_risiko', 1)
+        ->whereNull('s_risiko.deleted_at')
         ->pluck('s_risiko.id_s_risiko');
         // dd($s_risk_dinilai);
         $jml_risk = SRisiko::where('status_s_risiko', 1)
             ->where('s_risiko.company_id', Auth::user()->company_id)
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->whereNull('s_risiko.deleted_at')
             ->count('s_risiko.id_s_risiko');
         // dd($jml_risk);
 
@@ -370,12 +376,14 @@ class GlobalController extends Controller
         ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
         ->where('dp.id_user', Auth::user()->id_user)
         ->where('status_indhan', 1)
+        ->whereNull('s_risiko.deleted_at')
         ->pluck('s_risiko.id_s_risiko');
 
         // dd($s_risk_dinilai);
         $jml_risk = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
             ->where('status_indhan', 1)
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+            ->whereNull('s_risiko.deleted_at')
             ->count('s_risiko.id_s_risiko');
         // dd($jml_risk);
 
