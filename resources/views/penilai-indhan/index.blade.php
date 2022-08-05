@@ -766,13 +766,13 @@
 								if (Number(result.data[j].id_proses) >= Number(data.id_proses)) {
 									code = code + 'btn-green" '; 
 								} else {
-									code = code + 'btn-primary" ';
+									code = code + 'btn-gray" ';
 								}
 							} else {
-								code = code + 'btn-primary" ';
+								code = code + 'btn-gray" ';
 							}
 							code = code + 'href="#">' + Number(i + 1) + '</a>'
-							code = code + '<p>' + data.nama_proses + '</p>'
+							code = code + '<p>' + data.nama_proses + '</p></div>'
 							$('#status-proses-'+result.company[j].company_id).append(code);
 						}
 					}

@@ -775,7 +775,7 @@
 								code = code + 'btn-gray" ';
 							}
 							code = code + 'href="#">' + Number(i + 1) + '</a>'
-							code = code + '<p>' + data.nama_proses + '</p>'
+							code = code + '<p>' + data.nama_proses + '</p></div>'
 							$('#status-proses-'+result.company[j].company_id).append(code);
 						}
 					}
