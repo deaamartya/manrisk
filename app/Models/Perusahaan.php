@@ -105,4 +105,8 @@ class Perusahaan extends Model
 		return $this->hasMany(SRisiko::class, 'id_s_risiko');
 	}
 
+	public function status_proses()
+	{
+		return $this->hasMany(StatusProses::class, 'id_status_proses');
+	}
 }

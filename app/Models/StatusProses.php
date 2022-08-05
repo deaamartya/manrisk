@@ -23,4 +23,8 @@ class StatusProses extends Model
 		return $this->belongsTo(ProsesManrisk::class, 'id_proses');
 	}
 	
+	public function perusahaan()
+	{
+		return $this->belongsTo(Perusahaan::class, 'company_id');
+	}
 }

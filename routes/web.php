@@ -52,6 +52,7 @@ Route::get('deadline-mitigasi', [GlobalController::class, 'deadlineMitigasi'])->
 Route::get('status-proses', [GlobalController::class, 'statusProses'])->name('status-proses.index');
 Route::post('insert-status-proses', [GlobalController::class, 'storeStatusProses'])->name('status-proses.store');
 Route::put('edit-status-proses/{id}', [GlobalController::class, 'updateStatusProses'])->name('status-proses.update');
+Route::delete('delete-status-proses/{id}', [GlobalController::class, 'destroyStatusProses'])->name('status-proses.destroy');
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {

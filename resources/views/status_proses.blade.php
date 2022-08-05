@@ -32,20 +32,29 @@
                         <thead>
                             <tr>
                                 <th>Tahun</th>
+                                @if(Auth::user()->is_admin)
+                                <th>Perusahaan</th>
+                                @endif
                                 <th>Proses Terkini</th>
-                                <th>Aksi</th>
+                                <th>Tanggal Input</th>
+                                <!-- <th>Aksi</th> -->
                             </tr>
                         </thead>
                         <tbody>
                         @foreach($status_proses as $s)
                         <tr>
                             <td>{{ $s->tahun }}</td>
+                            @if(Auth::user()->is_admin)
+                            <td>{{ $s->perusahaan->instansi }}</td>
+                            @endif
                             <td>{{ $s->proses_manrisk->nama_proses }}</td>
-                            <td>
+                            <td>{{ date('d-m-Y', strtotime($s->created_at)) }}</td>
+                            <!-- <td>
                                 <div class="flex" style="justify-content: center;">
-                                    <button class="btn btn-warning btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_status_proses }}"><i class="fa fa-pencil"></i> Edit Status</button>
+                                    <button class="btn btn-warning btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#edit_{{ $s->id_status_proses }}"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-danger btn-xs" type="button" data-bs-toggle="modal" data-bs-target="#delete_{{ $s->id_status_proses }}"><i class="fa fa-trash"></i></button>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         @endforeach
                         </tbody>
@@ -138,6 +147,30 @@
                 <div class="modal-footer">
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
                     <button class="btn btn-primary" type="submit">Simpan</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="delete_{{ $s->id_status_proses}}" tabindex="-1" role="dialog" aria-labelledby="deleteStatusProses" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Hapus Status Proses</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form method="POST" action="{{route('status-proses.destroy', $s->id_status_proses) }}">
+                    @method('DELETE')
+                    @csrf    
+                    Apakah Anda yakin ingin menghapus data Status Proses <b>{{ $s->proses_manrisk->nama_proses}}</b> ?
+                    <br>
+                    <div class="text-red">Data yang dihapus tidak dapat dikembalikan.</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Ya, hapus!</button>
                 </div>
                 </form>
             </div>

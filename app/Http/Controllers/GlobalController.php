@@ -468,8 +468,14 @@ class GlobalController extends Controller
 
     public function statusProses()
     {
-        $status_proses = StatusProses::where('company_id', '=', Auth::user()->company_id)->get();
+        if(Auth::user()->is_admin){
+            $status_proses = StatusProses::all();
+        }else{
+            $status_proses = StatusProses::where('company_id', '=', Auth::user()->company_id)->get();
+        }
+        
         $proses = ProsesManrisk::all();
+        // dd($status_proses);
         return view('status_proses', compact('status_proses', 'proses'));
     }
 
@@ -504,5 +510,11 @@ class GlobalController extends Controller
       ]);
 
       return redirect()->route('status-proses.index')->with(['success-swal' => 'Status proses terkini berhasil diubah!']);
+    }
+
+    public function destroyStatusProses($id)
+    {
+      StatusProses::find($id)->delete();
+      return redirect()->route('status-proses.index')->with(['success-swal' => 'Status proses terkini telah dihapus!']);
     }
 }
