@@ -281,7 +281,7 @@
 		</div>
 	</div>
 	<div class="row second-chart-list third-news-update">
-		<div class="col-xl-3 risk-col xl-100 box-col-12">
+		<div class="col-xl-12 risk-col xl-100 box-col-12">
 			<div class="card total-users">
 				<div class="card-header card-no-border">
 					<div class="d-flex justify-content-between mb-3">
