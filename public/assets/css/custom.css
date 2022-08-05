@@ -244,6 +244,10 @@ label {
     stroke-linecap: round;
 }
 
+.stepwizard .stepwizard-row:before {
+    height: 4px;
+}
+
 @mixin modal-fullscreen() {
     padding: 0 !important; // override inline padding-right added from js
     .modal-dialog {
