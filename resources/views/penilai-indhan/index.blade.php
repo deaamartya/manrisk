@@ -25,12 +25,24 @@
 		<div class="col-xl-6 col-12 pb-0 h-100">
 			<div class="card o-hidden">
 				<div class="card-body">
+					<div class="d-flex justify-content-between">
+						<h6>Jumlah Risiko Tahun <span id="tahun-jumlah-risiko-title">{{ date('Y') }}</span></h6>
+						<div>
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-jumlah-risiko">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-6 col-12 py-4">
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Sumber Risiko INDHAN</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $counts_risiko }}</span></h4>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_sumber_risiko">{{ $counts_risiko }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-pencil-square" aria-hidden="true"></i></div>
 							</div>
@@ -39,7 +51,7 @@
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko INDHAN</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_risiko }}</span></h4>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_indhan">{{ $count_risiko }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-file" aria-hidden="true"></i></div>
 							</div>
@@ -48,7 +60,7 @@
 							<div class="ecommerce-widgets media">
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Perlu Mitigasi Tahun Ini</span></p>
-									<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_mitigasi }}</span></h4>
+									<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_mitigasi">{{ $count_mitigasi }}</span></h4>
 								</div>
 								<div class="ecommerce-box light-bg-primary"><i class="fa fa-filter" aria-hidden="true"></i></div>
 							</div>
@@ -58,7 +70,7 @@
 								<div class="media-body">
 									<p class="f-w-500 font-roboto">Jumlah Risiko Selesai Mitigasi</p>
 									<div class="progress-box">
-										<h4 class="f-w-500 mb-0 f-26"><span class="counter">{{ $count_done_mitigasi }}</span></h4>
+										<h4 class="f-w-500 mb-0 f-26"><span class="counter" id="jml_risiko_selesai_mitigasi">{{ $count_done_mitigasi }}</span></h4>
 									</div>
 									@if($count_mitigasi > 0)
 									<div class="progress sm-progress-bar progress-animate app-right d-flex justify-content-end">
@@ -605,6 +617,18 @@
 					chart4[index].render();
 			
 		}
+
+		$('#tahun-jumlah-risiko').change(function(){
+			const url = "{{ url('dashboard/data-jumlah-risiko-indhan') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-jumlah-risiko').val() })
+				.done(function(result) {
+					$('#tahun-jumlah-risiko-title').html($('#tahun-jumlah-risiko').val());
+					$('#jml_sumber_risiko').html(result.sumber_risiko);
+					$('#jml_risiko_indhan').html(result.risiko_indhan);
+					$('#jml_risiko_mitigasi').html(result.perlu_mitigasi);
+					$('#jml_risiko_selesai_mitigasi').html(result.selesai_mitigasi);
+			});
+		});
 
 		$('#tahun-risiko').change(function(){
 			$("#basic-bar").hide();
