@@ -278,7 +278,13 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <textarea class="form-control" name="sasaran_kinerja" placeholder="Masukkan Sasaran Kinerja"></textarea>
+                    <select class="select2" name="sasaran_kinerja" required>
+                      @if(count($sasaran) > 0)
+                        @foreach($sasaran as $val)
+                          <option value="{{ $val }}">{{ $val }}</option>
+                        @endforeach
+                      @endif
+                    </select>
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
@@ -302,7 +308,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
+                    <input type="text" id="idr_kuantitatif" required class="form-control" name="dampak_kuantitatif" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -365,7 +371,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" min="0" class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
+                    <input type="text" id="idr_kuantitatif_residu" required class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
@@ -411,7 +417,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
-                    <input type="text" class="form-control" readonly value="{{ $data->sumber_risiko->s_risiko }}">
+                    <input type="text" class="form-control" readonly value="{{ $data->s_risiko }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>PPKH</label>
@@ -523,11 +529,20 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea>
+                    <select class="select2" name="sasaran_kinerja" required>
+                      @if(count($sasaran) > 0)
+                        @foreach($sasaran as $val)
+                          <option value="{{ $val }}" @if($data->sasaran_kinerja == $val) selected @endif>{{ $val }}</option>
+                        @endforeach
+                      @endif
+                    </select>
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
-                    <select id="select-risk-edit-{{ $data->id_riskd }}" class="select2 select-edit-risiko" data-id="{{ $data->id_riskd }}" name="id_s_risiko" required>
+                    <select class="select2" name="id_s_risiko" required id="select-risiko">
+                      @foreach($pilihan_s_risiko as $p)
+                      <option value="{{ $p->id_s_risiko }}">{{ $p->tahun }} - {{ $p->s_risiko }}</option>
+                      @endforeach
                     </select>
                   </div>
                   <div class="form-group pt-2">
@@ -544,7 +559,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif }}"> 
+                    <input type="text" id="idr_kuantitatif_edit_{{ $data->id_riskd }}" onkeyup="idr_kuantitatif_to_currency({{ $data->id_riskd }})" name="dampak_kuantitatif" class="form-control" value="{{ $data->dampak_kuantitatif }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -601,14 +616,13 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <!-- <input type="date" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}"> -->
                     <div class="date-picker">
                           <input class="datepicker-here form-control digits" type="text" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
                         </div>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="number" min="0" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}">
+                    <input type="text" id="idr_kuantitatif_residu_edit_{{ $data->id_riskd }}" onkeyup="idr_kuantitatif_residu_to_currency({{ $data->id_riskd }})" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}" name="dampak_kuantitatif_residu">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
@@ -644,7 +658,7 @@
           @method('DELETE')
           @csrf
           <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus risk detail dengan risiko {{ $data->sumber_risiko->s_risiko }}?</p>
+            <p>Apakah Anda yakin ingin menghapus risk detail dengan risiko <b>{{ $data->s_risiko }}</b>?</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
@@ -726,6 +740,47 @@
       )
     });
   });
+
+  // format rupiah uang idr kuantitatif
+    var idr = document.getElementById("idr_kuantitatif");
+    idr.addEventListener("keyup", function(e) {
+      idr.value = convertRupiah(this.value, "");
+    });
+
+    var idr_residu = document.getElementById("idr_kuantitatif_residu");
+    idr_residu.addEventListener("keyup", function(e) {
+      idr_residu.value = convertRupiah(this.value, "");
+    });
+    
+    // window.id_risk = null
+    function idr_kuantitatif_to_currency(id_risk){
+        var idr_edit = document.getElementById("idr_kuantitatif_edit_"+id_risk)
+        console.log("idr edit : "+idr_edit);
+        idr_edit.value = convertRupiah(idr_edit.value, '')
+        console.log("idr edit value : "+idr_edit.value);
+       
+    }
+    function idr_kuantitatif_residu_to_currency(id_risk){
+        var idr_edit = document.getElementById("idr_kuantitatif_residu_edit_"+id_risk)
+        idr_edit.value = convertRupiah(idr_edit.value, '')
+    }
+
+    function convertRupiah(angka, prefix) {
+      var number_string = angka.replace(/[^,\d]/g, "").toString(),
+        split = number_string.split(","),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+      if (ribuan) {
+        separator = sisa ? "." : "";
+        rupiah += separator + ribuan.join(".");
+      }
+
+      rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+      return prefix == undefined ? rupiah : rupiah ? rupiah : "";
+    }
+
   function cal() {
     var lawal = parseFloat($('#l_awal').val());
     var cawal = parseFloat($('#c_awal').val());

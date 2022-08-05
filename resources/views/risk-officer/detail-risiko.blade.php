@@ -538,7 +538,6 @@
                   <hr class="hr-custom">
                   <div class="form-group pt-2">
                     <label>Sasaran Kinerja</label>
-                    <!-- <textarea class="form-control" name="sasaran_kinerja">{{ $data->sasaran_kinerja }}</textarea> -->
                     <select class="select2" name="sasaran_kinerja" required>
                       @if(count($sasaran) > 0)
                         @foreach($sasaran as $val)
@@ -566,7 +565,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif</label>
-                    <input type="text" id="idr_kuantitatif_edit_{{ $data->id_riskd }}" onkeydown="idr_kuantitatif_to_currency()" name="dampak_kuantitatif" class="form-control" value="{{ $data->dampak_kuantitatif }}">
+                    <input type="text" id="idr_kuantitatif_edit_{{ $data->id_riskd }}" onkeyup="idr_kuantitatif_to_currency()" name="dampak_kuantitatif" class="form-control" value="{{ $data->dampak_kuantitatif }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko</label>
@@ -623,14 +622,13 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <!-- <input type="date" class="form-control" name="jadwal" placeholder="Jadwal Pelaksanaan" value="{{ $data->jadwal }}"> -->
                     <div class="date-picker">
                           <input class="datepicker-here form-control digits" type="text" placeholder="Pilih Tanggal" value="{{ $data->jadwal }}" data-language="en" name="jadwal">
                         </div>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
-                    <input type="text" id="idr_kuantitatif_residu_edit_{{ $data->id_riskd }}" onkeydown="idr_kuantitatif_residu_to_currency()" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}" name="dampak_kuantitatif_residu">
+                    <input type="text" id="idr_kuantitatif_residu_edit_{{ $data->id_riskd }}" onkeyup="idr_kuantitatif_residu_to_currency()" class="form-control" value="{{ $data->dampak_kuantitatif_residu }}" name="dampak_kuantitatif_residu">
                   </div>
                   <div class="form-group pt-2">
                     <label>Dampak Risiko Residual</label>
@@ -755,50 +753,52 @@
 
   // format rupiah uang idr kuantitatif
     var idr = document.getElementById("idr_kuantitatif");
-    idr.addEventListener("keydown", function(e) {
+    idr.addEventListener("keyup", function(e) {
       idr.value = convertRupiah(this.value, "");
     });
 
+    var idr_residu = document.getElementById("idr_kuantitatif_residu");
+    idr_residu.addEventListener("keyup", function(e) {
+      idr_residu.value = convertRupiah(this.value, "");
+    });
+
     // var idr_edit = document.getElementById("idr_kuantitatif_edit");
-    // idr_edit.addEventListener("keydown", function(e) {
+    // idr_edit.addEventListener("keyup", function(e) {
     //   // console.log("masuk js");
     //   idr_edit.value = convertRupiah(this.value, "");
+    // });
+
+    // var idr_residu_edit = document.getElementById("idr_kuantitatif_residu_edit");
+    // idr_residu_edit.addEventListener("keyup", function(e) {
+    //   idr_residu_edit.value = convertRupiah(this.value, "");
     // });
     window.id_risk = null
     function idr_kuantitatif_to_currency(){
         var idr_edit = document.getElementById("idr_kuantitatif_edit_"+window.id_risk)
-        idr_edit.value = convertRupiah(idr_edit.value, "")
+        // console.log("idr edit : "+idr_edit);
+        idr_edit.value = convertRupiah(idr_edit.value, '')
     }
     function idr_kuantitatif_residu_to_currency(){
         var idr_edit = document.getElementById("idr_kuantitatif_residu_edit_"+window.id_risk)
-        idr_edit.value = convertRupiah(idr_edit.value, "")
+        idr_edit.value = convertRupiah(idr_edit.value, '')
     }
 
-    var idr_residu = document.getElementById("idr_kuantitatif_residu");
-    idr_residu.addEventListener("keydown", function(e) {
-      idr_residu.value = convertRupiah(this.value, "");
-    });
+    
+  function convertRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+      split = number_string.split(","),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-    // var idr_residu_edit = document.getElementById("idr_kuantitatif_residu_edit");
-    // idr_residu_edit.addEventListener("keydown", function(e) {
-    //   idr_residu_edit.value = convertRupiah(this.value, "");
-    // });
-
-    function convertRupiah(angka, prefix) {
-      var number_string = angka.replace(/[^,\d]/g, "").toString(),
-        split  = number_string.split(","),
-        sisa   = split[0].length % 3,
-        rupiah = split[0].substr(0, sisa),
-        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-      if (ribuan) {
-        separator = sisa ? "." : "";
-        rupiah += separator + ribuan.join(".");
-      }
-
-      rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-      return prefix == undefined ? rupiah : rupiah ? prefix + rupiah : "";
+    if (ribuan) {
+      separator = sisa ? "." : "";
+      rupiah += separator + ribuan.join(".");
     }
+
+    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+    return prefix == undefined ? rupiah : rupiah ? rupiah : "";
+  }
 
   function cal() {
     var lawal = $('#l_awal').val();
