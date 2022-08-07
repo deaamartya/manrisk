@@ -260,7 +260,7 @@
 							<i data-feather="sidebar"></i>
 							<span>Mitigasi Plan Indhan</span>
 							@if(Auth::user()->is_admin)
-								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
+								<label class="badge badge-secondary hasil-mitigasi-indhan-notif" style="float: right;"></label>
 							@endif
 						</a>
 					</li>

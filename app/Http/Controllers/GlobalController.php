@@ -412,6 +412,14 @@ class GlobalController extends Controller
         $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)
                                     ->where('status_h', 1)->count();
         $approval_hasil_mitigasi = DB::table('mitigasi_logs')->where('is_approved', 0)->count();
+        $mitigasi_logs = DB::raw("(
+            SELECT id_riskd FROM mitigasi_logs WHERE is_approved != 2 AND realisasi < 100
+        ) as mitigasi_logs");
+        $hasil_mitigasi_indhan = DB::table('risk_detail')
+                                        ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+                                        ->where(['status_indhan' => 1, 'company_id' => 6])
+                                        ->groupBy('risk_detail.id_riskd')
+                                        ->count();
 
         $data = [];
         if($approval_srisiko_indhan > 0){
@@ -440,6 +448,13 @@ class GlobalController extends Controller
                 'title' => 'Terdapat hasil mitigasi yang belum disetujui sebanyak ',
                 'jumlah' => $approval_hasil_mitigasi,
                 'link' => url('/')."/admin/approval-hasil-mitigasi"
+            ];
+        }
+        if($hasil_mitigasi_indhan > 0){
+            $data[] = [
+                'title' => 'Terdapat mitigasi indhan yang kurang dari 100% sebanyak ',
+                'jumlah' => $hasil_mitigasi_indhan,
+                'link' => url('/')."admin/mitigasi-plan-indhan/index"
             ];
         }
 
@@ -481,7 +496,7 @@ class GlobalController extends Controller
         }else{
             $status_proses = StatusProses::where('company_id', '=', Auth::user()->company_id)->get();
         }
-        
+
         $proses = ProsesManrisk::all();
         // dd($status_proses);
         return view('status_proses', compact('status_proses', 'proses'));
