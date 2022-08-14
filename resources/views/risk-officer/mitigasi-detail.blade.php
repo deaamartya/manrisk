@@ -11,7 +11,8 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">Detail Mitigasi Plan</li>
+<li class="breadcrumb-item">Mitigasi Plan</li>
+<li class="breadcrumb-item active">Detail Mitigasi Plan</li>
 @endsection
 
 @section('content')

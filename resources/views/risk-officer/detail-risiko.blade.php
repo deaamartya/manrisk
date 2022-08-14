@@ -7,11 +7,12 @@
 @endsection
 
 @section('page-title')
-<h3>Risk Register Korporasi</h3>
+<h3>Detail Risk Register Korporasi</h3>
 @endsection
 
 @section('breadcrumb')
 <li class="breadcrumb-item">Risk Register Korporasi</li>
+<li class="breadcrumb-item active">Detail Risk Register Korporasi</li>
 @endsection
 
 @section('content')

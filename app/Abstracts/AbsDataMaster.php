@@ -82,6 +82,7 @@ class AbsDataMaster
             $results['messages'] = ['success-swal' => 'User berhasil disimpan!'];
         }
         else{
+            // dd($params);
             DefendidUser::where('id_user', $id)->update($params);
             if($request->melakukan_penilaian == 1){
                 if(DefendidPengukur::where('id_user', $id)->exists()){

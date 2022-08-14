@@ -7,11 +7,12 @@
 @endsection
 
 @section('page-title')
-<h3>Detail Mitigasi Plan</h3>
+<h3>Detail Mitigasi Plan Indhan</h3>
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">Detail Mitigasi Plan</li>
+<li class="breadcrumb-item">Mitigasi Plan Indhan</li>
+<li class="breadcrumb-item active">Detail Mitigasi Plan Indhan</li>
 @endsection
 
 @section('content')

@@ -192,7 +192,7 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <embed src="{{ asset('document/lampiran-mitigasi/'.$dt->dokumen) }}" width="100%" height="500"/>
+            <embed src="{{ asset('document/mitigasi-progress/'.$dt->dokumen) }}" width="100%" height="500"/>
           </div>
       </div>
     </div>

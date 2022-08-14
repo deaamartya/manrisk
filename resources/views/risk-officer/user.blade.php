@@ -6,6 +6,7 @@
 @endsection
 
 @section('breadcrumb-items')
+<li class="breadcrumb-item">Master Data</li>
 <li class="breadcrumb-item active">User</li>
 @endsection
 
@@ -190,7 +191,7 @@
                 <div class="row melakukan_penilaian">
                     <label class="col-md-3 col-sm-3 col-xs-12" for="noarsip">Melakukan Penilaian?</label>
                     <div class='col-md-9 col-sm-9 col-xs-12'>
-                        <input type="hidden" name="melakukan_penilaian" id="formMelakukanPenilaianHidden">
+                        <input type="hidden" name="melakukan_penilaian" id="formMelakukanPenilaianHidden" value="0">
                         <input type="checkbox" name="melakukan_penilaian" value="0" id="formMelakukanPenilaian">
                         <label for="">No</label>
                     </div>

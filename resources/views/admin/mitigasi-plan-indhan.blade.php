@@ -1,12 +1,12 @@
 @extends('layouts.user.table')
-@section('title', 'Mitigasi Plan')
+@section('title', 'Mitigasi Plan Indhan')
 
 @section('breadcrumb-title')
-<h3>Mitigasi Plan</h3>
+<h3>Mitigasi Plan Indhan</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Mitigasi Plan</li>
+<li class="breadcrumb-item active">Mitigasi Plan Indhan</li>
 @endsection
 
 @section('content')

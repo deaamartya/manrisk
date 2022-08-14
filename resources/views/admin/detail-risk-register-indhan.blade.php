@@ -11,7 +11,8 @@
 @endsection
 
 @section('breadcrumb')
-<li class="breadcrumb-item">Detail Risk Register INDHAN</li>
+<li class="breadcrumb-item">Risk Register INDHAN</li>
+<li class="breadcrumb-item active">Detail Risk Register INDHAN</li>
 @endsection
 
 @section('content')

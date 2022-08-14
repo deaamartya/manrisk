@@ -94,7 +94,7 @@
                             </li>
 							@if(Auth::user()->is_risk_officer)
 							<li>
-								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
+								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.sumber-risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.sumber-risiko.index')}}">
 									<span>Sumber Risiko</span>
 								</a>
 							</li>
@@ -113,7 +113,6 @@
                             </li>
                             <li>
                                 <a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.konteks' ? 'active' : '' }}" href="{{route('admin.konteks')}}">
-
                                     <span>Konteks</span>
                                 </a>
                             </li>
@@ -129,13 +128,13 @@
                     </li>
 					@endif
 					<li class="sidebar-list">
-						@if(Auth::user()->is_risk_officer)
+						@if(Auth::user()->is_risk_officer && Auth::user()->is_assessment)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
 							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
 						</a>
-						@elseif(Auth::user()->is_risk_owner)
+						@elseif(Auth::user()->is_risk_owner && Auth::user()->is_assessment)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-owner.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
@@ -150,7 +149,6 @@
 						@endif
 					</li>
 					@if(Auth::user()->is_penilai_indhan)
-						@if(!Auth::user()->is_risk_officer && !Auth::user()->is_risk_owner && !Auth::user()->is_penilai && !Auth::user()->is_admin)
 						<li class="sidebar-list">
 							<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
 								<i data-feather="edit"></i>
@@ -158,7 +156,6 @@
 								<label class="badge badge-secondary pengukuran-risiko-indhan-notif" style="float: right;"></label>
 							</a>
 						</li>
-						@endif
 					@endif
 					@if(Auth::user()->is_risk_officer)
 					<li class="sidebar-list">

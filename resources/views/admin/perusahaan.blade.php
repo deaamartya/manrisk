@@ -6,6 +6,7 @@
 @endsection
 
 @section('breadcrumb-items')
+<li class="breadcrumb-item">Master Data</li>
 <li class="breadcrumb-item active">Perusahaan</li>
 @endsection
 
