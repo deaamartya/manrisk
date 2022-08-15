@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/chartist.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/date-picker.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/progress-master.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css')}}">
 @endsection
 
@@ -38,11 +39,8 @@
 						</div>
 					</div>
 					<div class="chart-content">
-						<div class="stepwizard">
-							<div class="stepwizard-row setup-panel" id="status-proses">
-							</div>
-							<div id="status-proses-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
-						</div>
+						<div class="progress-bar-wrapper" id="status-proses"></div>
+						<div id="status-proses-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
 					</div>
 				</div>
 			</div>
@@ -356,6 +354,7 @@
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<script src="{{asset('assets/js/progress-bar-master/progress-bar.js')}}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var chart8;
@@ -748,23 +747,20 @@
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-status-proses').val() })
 				.done(function(result) {
 					$('#tahun-status-proses-title').html($('#tahun-status-proses').val());
+					ProgressBar.singleStepAnimation = 1500;
+					let arr = [];
+					let currentStage = '';
 					for(let i=0; i < result.list.length;i++) {
 						let data = result.list[i]
-						let code = '<div class="stepwizard-step"><a class="btn '
-						if (result.data) {
-							if (Number(result.data.id_proses) >= Number(data.id_proses)) {
-								code = code + 'btn-green" '; 
-							} else {
-								code = code + 'btn-gray" ';
-							}
-						} else {
-							code = code + 'btn-gray" ';
-						}
-						code = code + 'href="#">' + Number(i + 1) + '</a>'
-						code = code + '<p>' + data.nama_proses + '</p></div>'
-						$('#status-proses').append(code);
-						$('#status-proses').show();
+						arr.push(data.nama_proses)
 					}
+					if (result.data) currentStage = result.data.nama_proses
+					ProgressBar.init(
+						arr,
+						currentStage,
+						'progress-bar-wrapper'
+					);
+					$("#status-proses").show();
 					$("#status-proses-loading").hide();
 			});
 		});
