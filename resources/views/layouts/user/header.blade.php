@@ -17,7 +17,7 @@
       <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="align-center"></i></div>
     </div>
     <div class="nav-right col-8 pull-right right-header p-0">
-      <ul class="nav-menus">
+      <ul class="nav-menus" style="margin-right: 0px">
         <li class="onhover-dropdown">
           <div class="notification-box">
             <i data-feather="bell"></i>
@@ -28,7 +28,7 @@
               <i data-feather="bell"></i>
               <h6 class="f-18 mb-0">Notitications</h6>
             </li>
-            
+
             {{-- <li><a class="btn btn-primary" href="#">Check all notification</a></li> --}}
           </ul>
         </li>

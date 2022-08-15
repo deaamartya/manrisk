@@ -64,7 +64,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.dashboard' ? 'active' : '' }}" href="{{route('admin.dashboard')}}">
 							<i data-feather="home"></i>
 							<span>Dashboard</span>
-							<!-- <label class="badge badge-secondary total-notif" style="float: right;"></label> -->
+							<!-- <label class="badge badge-secondary total-notif blink_badge" style="float: right;"></label> -->
 						</a>
 					</li>
 					@elseif(Auth::user()->is_penilai)
@@ -120,7 +120,7 @@
 								<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.sumber-risiko-indhan' ? 'active' : '' }}" href="{{route('admin.sumber-risiko-indhan')}}">
 
 									<span>Sumber Risiko</span>
-									<label class="badge badge-secondary srisiko-indhan-notif" style="float: right;"></label>
+									<label class="badge badge-secondary srisiko-indhan-notif blink_badge" style="float: right;"></label>
 								</a>
 							</li>
                             @endif
@@ -132,19 +132,19 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-officer.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
-							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
+							<label class="badge badge-secondary pengukuran-risiko-notif blink_badge" style="float: right;"></label>
 						</a>
 						@elseif(Auth::user()->is_risk_owner && Auth::user()->is_assessment)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.pengukuran-risiko' ? 'active' : '' }}" href="{{route('risk-owner.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
-							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
+							<label class="badge badge-secondary pengukuran-risiko-notif blink_badge" style="float: right;"></label>
 						</a>
 						@elseif(Auth::user()->is_penilai)
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai.pengukuran-risiko' ? 'active' : '' }}" href="{{route('penilai.pengukuran-risiko')}}">
 							<i data-feather="edit-3"></i>
 							<span>Pengukuran Risiko</span>
-							<label class="badge badge-secondary pengukuran-risiko-notif" style="float: right;"></label>
+							<label class="badge badge-secondary pengukuran-risiko-notif blink_badge" style="float: right;"></label>
 						</a>
 						@endif
 					</li>
@@ -153,7 +153,7 @@
 							<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='penilai-indhan.pengukuran-risiko-indhan' ? 'active' : '' }}" href="{{route('penilai-indhan.pengukuran-risiko-indhan')}}">
 								<i data-feather="edit"></i>
 								<span>Pengukuran Risiko Indhan</span>
-								<label class="badge badge-secondary pengukuran-risiko-indhan-notif" style="float: right;"></label>
+								<label class="badge badge-secondary pengukuran-risiko-indhan-notif blink_badge" style="float: right;"></label>
 							</a>
 						</li>
 					@endif
@@ -162,7 +162,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
-							<label class="badge badge-secondary pengukuran-risiko-indhan-notif" style="float: right;"></label>
+							<label class="badge badge-secondary pengukuran-risiko-indhan-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -176,7 +176,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-owner.risiko.index' ? 'active' : '' }}" href="{{route('risk-owner.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
-							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
+							<label class="badge badge-secondary riskregister-korporasi-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -190,7 +190,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.risk-register-korporasi' ? 'active' : '' }}" href="{{route('admin.risk-register-korporasi')}}">
 							<i data-feather="sidebar"></i>
 							<span>Risk Register Korp. </span>
-							<label class="badge badge-secondary riskregister-korporasi-notif" style="float: right;"></label>
+							<label class="badge badge-secondary riskregister-korporasi-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -228,10 +228,10 @@
 								<i data-feather="sidebar"></i>
 								<span>Mitigasi Plan</span>
 								@if(Auth::user()->is_risk_officer)
-								<label class="badge badge-secondary mitigasi-risiko-notif" style="float: right;"></label>
+								<label class="badge badge-secondary mitigasi-risiko-notif blink_badge" style="float: right;"></label>
 								@endif
 								@if(Auth::user()->is_admin)
-								<label class="badge badge-secondary hasil-mitigasi-notif" style="float: right;"></label>
+								<label class="badge badge-secondary hasil-mitigasi-notif blink_badge" style="float: right;"></label>
 								@endif
 							</a>
 						</li>
@@ -249,7 +249,7 @@
 							</div>
 							--}}
 							<span class="me-4p">Pengajuan Mitigasi</span>
-							<label class="badge badge-secondary mitigasi-indhan-notif" style="float: right;"></label>
+							<label class="badge badge-secondary mitigasi-indhan-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
@@ -257,7 +257,7 @@
 							<i data-feather="sidebar"></i>
 							<span>Mitigasi Plan Indhan</span>
 							@if(Auth::user()->is_admin)
-								<label class="badge badge-secondary hasil-mitigasi-indhan-notif" style="float: right;"></label>
+								<label class="badge badge-secondary hasil-mitigasi-indhan-notif blink_badge" style="float: right;"></label>
 							@endif
 						</a>
 					</li>
@@ -275,7 +275,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='deadline-mitigasi.index' ? 'active' : '' }}" href="{{route('deadline-mitigasi.index')}}">
 							<i data-feather="file-text"></i>
 							<span class="me-4p">Deadline Mitigasi</span>
-                            <label class="badge badge-secondary deadline-mitigasi-notif" style="float: right;"></label>
+                            <label class="badge badge-secondary deadline-mitigasi-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
 					<li class="sidebar-list">
