@@ -185,7 +185,7 @@
                     </td>
                     @if (auth()->user()->is_admin == 1)
                     <td class="text-center">
-                        <div class="btn btn-info btn-pill btn-xs status">
+                        <div class="btn btn-warning btn-pill btn-xs status blink_badge">
                             {{ $d->need_approve }}
                         </div>
                     </td>

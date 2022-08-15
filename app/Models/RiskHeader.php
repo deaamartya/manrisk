@@ -145,4 +145,49 @@ class RiskHeader extends Model
 		return $jml;
 	}
 
+    public function getMitigasiNeedApprove() {
+        $risk_detail = DB::raw("(
+            SELECT id_riskd, id_riskh FROM risk_detail WHERE deleted_at IS NULL AND status_mitigasi = 1
+        ) as risk_detail");
+        $need_approve = DB::raw("(
+            SELECT id as need_approve, id_riskd FROM mitigasi_logs WHERE is_approved = 0
+        ) as need_approve");
+		$details = self::select(DB::raw('count(need_approve.need_approve) as need_approve'))
+			->leftJoin($risk_detail, 'risk_detail.id_riskh', 'risk_header.id_riskh')
+			->leftJoin($need_approve, 'need_approve.id_riskd', 'risk_detail.id_riskd')
+			// ->whereNull('d.deleted_at')
+			->whereNull('risk_header.deleted_at')
+			// ->where('d.status_mitigasi','=', 1)
+            ->where('risk_header.id_riskh','=', $this->id_riskh)
+            ->groupBy('risk_header.id_riskh')
+			->first();
+		return $details;
+	}
+
+    public function getAllMitigasiDetail() {
+		$wr = '1=1';
+        if(!Auth::user()->is_admin){
+            $wr .= " AND d.company_id = ".Auth::user()->company_id;
+        }
+        $mitigasi_logs = DB::raw("(
+            SELECT realisasi as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1
+        ) as mitigasi_logs");
+        $need_approve = DB::raw("(
+            SELECT id as need_approve, id_riskd FROM mitigasi_logs WHERE is_approved = 0
+        ) as need_approve");
+		$details = self::select('d.*', 'sr.*', 'k.*', DB::raw('max(mitigasi_logs.final_realisasi) as final_realisasi'), DB::raw('count(need_approve.need_approve) as need_approve'))
+			->join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
+			->join('s_risiko as sr', 'sr.id_s_risiko', '=', 'd.id_s_risiko')
+			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
+			->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'd.id_riskd')
+			->leftJoin($need_approve, 'need_approve.id_riskd', 'd.id_riskd')
+			->whereNull('d.deleted_at')
+			->whereNull('risk_header.deleted_at')
+			->where('d.status_mitigasi','=', 1)
+            ->whereRaw($wr)
+            ->groupBy('d.id_riskd')
+			->get();
+		return $details;
+	}
+
 }

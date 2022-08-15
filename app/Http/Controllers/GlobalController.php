@@ -463,28 +463,36 @@ class GlobalController extends Controller
 
     public function deadlineMitigasi()
     {
-        $temp = DB::raw("(
-            SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
-        ) as mitigasi_logs");
+        // $temp = DB::raw("(
+        //     SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1
+        // ) as mitigasi_logs");
 
-        $data = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
-        ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
-        ->leftJoin('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-        ->leftJoin('konteks', 'konteks.id_konteks', 's_risiko.id_konteks')
-        ->leftJoin('perusahaan', 'perusahaan.company_id', 'risk_detail.company_id')
-        ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
-        ->where('mitigasi_logs.final_realisasi', '<', 100)
-        ->selectRaw('
-            konteks.id_risk,
-            konteks.no_k,
-            s_risiko.s_risiko,
-            risk_detail.mitigasi,
-            risk_detail.jadwal_mitigasi,
-            mitigasi_logs.final_realisasi,
-            perusahaan.instansi,
-            risk_detail.tahun
-        ')
-        ->get();
+        // $data = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+        // ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+        // ->leftJoin('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        // ->leftJoin('konteks', 'konteks.id_konteks', 's_risiko.id_konteks')
+        // ->leftJoin('perusahaan', 'perusahaan.company_id', 'risk_detail.company_id')
+        // ->where(DB::raw("DATE_FORMAT(risk_detail.jadwal_mitigasi, '%Y-%m-%d')"), '<', Carbon::now()->format('Y-m-d'))
+        // ->where('mitigasi_logs.final_realisasi', '<', 100)
+        // ->selectRaw('
+        //     konteks.id_risk,
+        //     konteks.no_k,
+        //     s_risiko.s_risiko,
+        //     risk_detail.mitigasi,
+        //     risk_detail.jadwal_mitigasi,
+        //     mitigasi_logs.final_realisasi,
+        //     perusahaan.instansi,
+        //     risk_detail.tahun
+        // ')
+        // ->get();
+
+        $risk = RiskHeader::getAllMitigasiDetail();
+        $data = [];
+        foreach($risk as $index => $value){
+            if(date('Y-m-d', strtotime($value->jadwal_mitigasi)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
+                $data[] = $value;
+            }
+        }
 
         return view('deadline_mitigasi', compact('data'));
     }

@@ -27,6 +27,9 @@
                   <th>Target</th>
                   <th>Total Mitigasi</th>
                   <th>Selesai</th>
+                  @if(auth()->user()->is_admin == 1)
+                    <th>Perlu Approve</th>
+                  @endif
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -44,6 +47,13 @@
                   <td>
                     <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount($h->id_riskh) }}</div>
                   </td>
+                  @if (auth()->user()->is_admin == 1)
+                    <td class="text-center">
+                        <div class="btn btn-warning btn-pill btn-xs status blink_badge">
+                            {{ $h->getMitigasiNeedApprove()->need_approve }}
+                        </div>
+                    </td>
+                  @endif
                   <td>
                     <a href="{{ auth()->user()->is_admin ? route('admin.approval-hasil-mitigasi.show', $h->id_riskh) : route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">
                       <i class="fa fa-eye"></i> View

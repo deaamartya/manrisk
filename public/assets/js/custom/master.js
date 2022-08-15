@@ -57,21 +57,21 @@ $(document).ready(function() {
 
                 if (srisiko_indhan > 0) {
                     $('.srisiko-indhan-notif').html(srisiko_indhan)
-                } else if (mitigasi_indhan > 0) {
+                } if (mitigasi_indhan > 0) {
                     $('.mitigasi-indhan-notif').html(mitigasi_indhan)
-                } else if (riskregister_korporasi > 0) {
+                } if (riskregister_korporasi > 0) {
                     $('.riskregister-korporasi-notif').html(riskregister_korporasi)
-                } else if (hasil_mitigasi > 0) {
+                } if (hasil_mitigasi > 0) {
                     $('.hasil-mitigasi-notif').html(hasil_mitigasi)
-                } else if (deadline_mitigasi > 0) {
+                } if (deadline_mitigasi > 0) {
                     $('.deadline-mitigasi-notif').html(deadline_mitigasi)
-                } else if (pengukuran_risiko > 0) {
+                } if (pengukuran_risiko > 0) {
                     $('.pengukuran-risiko-notif').html(pengukuran_risiko)
-                } else if (pengukuran_risiko_indhan > 0) {
+                } if (pengukuran_risiko_indhan > 0) {
                     $('.pengukuran-risiko-indhan-notif').html(pengukuran_risiko_indhan)
-                } else if (mitigasi_risiko > 0) {
+                } if (mitigasi_risiko > 0) {
                     $('.mitigasi-risiko-notif').html(mitigasi_risiko)
-                } else if (hasil_mitigasi_indhan> 0) {
+                } if (hasil_mitigasi_indhan> 0) {
                     $('.hasil-mitigasi-indhan-notif').html(hasil_mitigasi_indhan)
                 }
 

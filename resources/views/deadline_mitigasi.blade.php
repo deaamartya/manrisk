@@ -40,8 +40,8 @@
                     <th>Jadwal Pelaksanaan</th>
                     <th>% Realisasi</th>
                     {{-- <th>Keterangan</th> --}}
-                    {{-- <th>Dokumen</th>
-                    <th></th> --}}
+                    {{-- <th>Dokumen</th> --}}
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -115,6 +115,9 @@
                         </button>
                       @endif
                     </td> --}}
+                    <td>
+                        <a href="{{ route('admin.approval-hasil-mitigasi.show', $d->id_riskh) }}"><i class="fa fa-external-link"></i></a>
+                    </td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -293,7 +296,10 @@
   $(document).ready(function(){
     // $(".select2").select2();
     $("#table-risiko").DataTable({
-      'order': [ 4, 'desc' ]
+        columnDefs: [
+            { orderable: false, targets: 7 }
+        ],
+        'order': [ 4, 'desc' ]
     });
     // var table;
     // $(document).on('click', '.open-btn', function(){
