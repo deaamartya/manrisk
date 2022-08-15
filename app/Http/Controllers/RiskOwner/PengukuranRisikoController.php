@@ -37,6 +37,8 @@ class PengukuranRisikoController extends Controller
         $s_risk_dinilai = SRisiko::join('pengukuran as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
         ->where('p.id_pengukur', '=', $id_responden)
         ->where('status_s_risiko', 1)
+        ->whereNull('p.deleted_at')
+        ->whereNull('s_risiko.deleted_at')
         ->selectRaw('s_risiko.*, p.*')
         ->pluck('id_s_risiko');
 
@@ -46,6 +48,7 @@ class PengukuranRisikoController extends Controller
             ->where('s_risiko.company_id',  Auth::user()->company_id)
             ->where('s_risiko.tahun', $tahun)
             ->where('s_risiko.status_s_risiko', 1)
+            ->whereNull('s_risiko.deleted_at')
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
             ->orderBy('s_risiko.id_s_risiko')
             ->get();

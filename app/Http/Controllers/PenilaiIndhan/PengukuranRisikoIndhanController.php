@@ -34,6 +34,8 @@ class PengukuranRisikoIndhanController extends Controller
                     ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
                     ->where('p.id_pengukur', '=', $id_responden)
                     ->where('status_indhan', 1)
+                    ->whereNull('p.deleted_at')
+                    ->whereNull('s_risiko.deleted_at')
                     ->selectRaw('s_risiko.*, p.*')
                     ->pluck('id_s_risiko');
 
@@ -43,6 +45,7 @@ class PengukuranRisikoIndhanController extends Controller
             ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
             ->where('s_risiko.tahun', $tahun)
             ->where('risk_detail.status_indhan', 1)
+            ->whereNull('s_risiko.deleted_at')
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
             ->orderBy('s_risiko.id_s_risiko')
             ->get();
