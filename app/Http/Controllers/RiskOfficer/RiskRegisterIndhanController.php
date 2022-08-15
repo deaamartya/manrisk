@@ -102,25 +102,29 @@ class RiskRegisterIndhanController extends Controller
     {
         $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
         // dd($headers);
-        $detail_risk = RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
-                ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )     
+        $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+                ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )  
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+                ->where('risk_detail.status_indhan', '=', 1)
+                ->where('risk_detail.company_id', '!=', 6)
+                ->whereNull('risk_detail.deleted_at')
+                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->get();
+        $detail_risk_indhan = RiskDetail::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+                ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+                ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
                 ->where('risk_detail.status_indhan', '=', 1)
+                ->where('risk_detail.company_id', '=', 6)
                 ->whereNull('risk_detail.deleted_at')
-                ->whereNull('risk_header.deleted_at')
-                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->where('risk_detail.tahun', '=', $headers->tahun)
                 ->get();
-        $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-        ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
-                ->where('risk_detail.status_indhan', '=', 1)
-                ->whereNull('risk_detail.deleted_at')
-                ->whereNull('risk_header.deleted_at')
-                ->where('risk_header.tahun', '=', $headers->tahun)
-                ->count();
-            // dd($detail_risk);
-        return view('risk-officer.detail-risk-register-indhan', compact('headers', 'detail_risk', 'mitigasi'));
+        return view('risk-officer.detail-risk-register-indhan', compact('headers', 'detail_risk', 'detail_risk_indhan'));
     }
 
     public function uploadLampiran(Request $request) {

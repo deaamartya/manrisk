@@ -77,9 +77,6 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-header">
-            <button type="button" class="btn btn-warning" data-bs-target="#import" data-bs-toggle="modal">Import</button>
-          </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="display" id="table-risiko">
@@ -94,7 +91,6 @@
                     <th>C</th>
                     <th>R</th>
                     <th>Status</th>
-                    <!-- <th>Aksi</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -106,36 +102,74 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
-                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_c, 2) + 0 }}</td>
+                    @php
+                      $nilai_r = number_format($d->avg_nilai_l * $d->avg_nilai_c, 2) + 0;
+                    @endphp
                     <td>
-                      @if($d->r_awal < 6)
+                      @if($nilai_r < 6)
                       <span class="badge badge-green me-2">
-                      @elseif($d->r_awal < 12)
+                      @elseif($nilai_r < 12)
                       <span class="badge badge-warning me-2">
-                      @elseif($d->r_awal < 16)
+                      @elseif($nilai_r < 16)
                       <span class="badge badge-pink me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal, 2) + 0 }}
+                      {{ number_format($nilai_r, 2) + 0 }}
                       </span>
                     </td>
                     <td>
-                      @if($d->r_awal >= 12)
-                        <span class="badge badge-primary">Perlu Mitigasi</span>
-                      @elseif($d->r_awal < 12)
-                        <span class="badge badge-success">Tidak Perlu Mitigasi</span>
+                      @if($nilai_r >= 12)
+                        <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                          Tidak Perlu Mitigasi
+                        </button> -->
+                        <span class="badge badge-primary">Ajukan Mitigasi</span>
+                      @elseif($nilai_r < 12)
+                        <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
+                          Ajukan Mitigasi
+                        </button> -->
+                        <span class="badge badge-success">Aman</span>
                       @endif
                     </td>
-                    <!-- <td>
-                      <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#edit-risk-{{ $d->id_riskd }}">
-                        <i data-feather="edit-2" class="small-icon"></i>
-                      </button>
-                      <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#delete-risk-{{ $d->id_riskd }}">
-                        <i data-feather="trash-2" class="small-icon"></i>
-                      </button>
-                    </td> -->
+                  </tr>
+                  @endforeach
+                @endif
+
+                @if($detail_risk_indhan != null )
+                  @foreach($detail_risk_indhan as $d2)
+                  <tr>
+                    <td>{{ $d2->id_risk .'-'. $d2->no_k }}</td>
+                    <td>{{ $d2->instansi }}</td>
+                    <td>{{ $d2->konteks }}</td>
+                    <td>{{ $d2->s_risiko }}</td>
+                    <td>{{ $d2->sebab }}</td>
+                    <td>{{ number_format($d2->avg_nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->avg_nilai_c, 2) + 0 }}</td>
+                    @php
+                      $nilai_r = number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0;
+                    @endphp
+                    <td>
+                      @if($nilai_r < 6)
+                      <span class="badge badge-green me-2">
+                      @elseif($nilai_r < 12)
+                      <span class="badge badge-warning me-2">
+                      @elseif($nilai_r < 16)
+                      <span class="badge badge-pink me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($nilai_r, 2) + 0 }}
+                      </span>
+                    </td>
+                    <td>
+                        @if($nilai_r >= 12)
+                          <span class="badge badge-primary">Ajukan Mitigasi</span>
+                        @elseif($nilai_r < 12)
+                          <span class="badge badge-success">Aman</span>
+                        @endif
+                    </td>
                   </tr>
                   @endforeach
                 @endif
@@ -155,7 +189,7 @@
           <h5 class="modal-title">Input Lampiran Risiko</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form method="POST" action="{{ route('risk-officer.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.upload-lampiran-risk-register-indhan') }}" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="id" value="{{ $headers->id_riskh }}">
           <div class="modal-body">
@@ -178,27 +212,6 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Import Risk Detail</h5>
-        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="{{ route('risk-officer.risk-detail.import') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-body">
-          <input type="hidden" name="id_header" value="{{ $headers->id_riskh }}">
-          <input type="file" name="file" class="form-control" required>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-success" type="submit">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>
@@ -209,18 +222,6 @@
     $("#table-risiko").DataTable({
       'order': [ 7, 'desc' ]
     });
-  })
-  function cal() {
-    var lawal = $('#l_awal').val();
-    var cawal = $('#c_awal').val();
-    var mul = lawal * cawal;
-    $('#r_awal').val(mul);
-  }
-  function calEdit(id) {
-    var lawal = $('#l_awal_'+id).val();
-    var cawal = $('#c_awal_'+id).val();
-    var mul = lawal * cawal;
-    $('#r_awal_'+id).val(mul);
-  }
+  });
 </script>
 @endsection

@@ -111,10 +111,10 @@
                     <td>{{ $d->konteks }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
-                    <td>{{ number_format($d->nilai_l, 2) + 0 }}</td>
-                    <td>{{ number_format($d->nilai_c, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_c, 2) + 0 }}</td>
                     @php
-                      $nilai_r = number_format($d->nilai_l * $d->nilai_c, 2) + 0;
+                      $nilai_r = number_format($d->avg_nilai_l * $d->avg_nilai_c, 2) + 0;
                     @endphp
                     <td>
                       @if($nilai_r < 6)
@@ -133,12 +133,12 @@
                       {{-- @if($mitigasi === 1)
                       <span>Aksi Mitigasi telah diajukan</span>
                       @else --}}
-                        @if($d->r_awal >= 12)
+                        @if($nilai_r >= 12)
                           <!-- <button class="btn btn-sm btn-pill btn-success" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Tidak Perlu Mitigasi
                           </button> -->
                           <span class="badge badge-primary">Ajukan Mitigasi</span>
-                        @elseif($d->r_awal < 12)
+                        @elseif($nilai_r < 12)
                           <!-- <button class="btn btn-sm btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#pengajuan-mitigasi-{{ $d->id_riskd }}">
                             Ajukan Mitigasi
                           </button> -->
@@ -160,25 +160,28 @@
                     <td>{{ $d2->konteks }}</td>
                     <td>{{ $d2->s_risiko }}</td>
                     <td>{{ $d2->sebab }}</td>
-                    <td>{{ number_format($d2->l_awal, 2) + 0 }}</td>
-                    <td>{{ number_format($d2->c_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->avg_nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->avg_nilai_c, 2) + 0 }}</td>
+                    @php
+                      $nilai_r = number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0;
+                    @endphp
                     <td>
-                      @if($d2->r_awal < 6)
+                      @if($nilai_r < 6)
                       <span class="badge badge-green me-2">
-                      @elseif($d2->r_awal < 12)
+                      @elseif($nilai_r < 12)
                       <span class="badge badge-warning me-2">
-                      @elseif($d2->r_awal < 16)
+                      @elseif($nilai_r < 16)
                       <span class="badge badge-pink me-2">
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d2->r_awal, 2) + 0 }}
+                      {{ number_format($nilai_r, 2) + 0 }}
                       </span>
                     </td>
                     <td>
-                        @if($d2->r_awal >= 12)
+                        @if($nilai_r >= 12)
                           <span class="badge badge-primary">Ajukan Mitigasi</span>
-                        @elseif($d2->r_awal < 12)
+                        @elseif($nilai_r < 12)
                           <span class="badge badge-success">Aman</span>
                         @endif
                     </td>
