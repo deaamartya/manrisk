@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/chartist.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/date-picker.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/progress-master.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css')}}">
 @endsection
 
@@ -171,10 +172,16 @@
 					</div>
 					<div class="chart-content">
 						@foreach($company as $p)
-						<div class="status-proses">
-							<p>Status Proses - {{ $p->instansi }}</p>
-							<div class="stepwizard">
-								<div class="stepwizard-row setup-panel" id="status-proses-{{ $p->company_id }}">
+						<div class="card status-proses">
+							<div class="card-body row">
+								<div class="col-12 col-lg-2">
+									<p>Status Proses - <strong>{{ $p->instansi }}</strong></p>
+									<img class="me-1 rounded"
+										src="{{ asset('assets/images/logo/logo_company/logo_'.$p->company_code.'.png') }}"
+										style="max-height: 30px; margin-bottom: 15px;">
+								</div>
+								<div class="col-12 col-lg-10">
+									<div class="progress-bar-wrapper-{{ $p->company_id }}"></div>
 								</div>
 							</div>
 						</div>
@@ -361,6 +368,7 @@
 <script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
 <script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
 <script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
+<script src="{{asset('assets/js/progress-bar-master/progress-bar.js')}}"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var chart8;
@@ -758,23 +766,20 @@
 				.done(function(result) {
 					$('#tahun-status-proses-title').html($('#tahun-status-proses').val());
 					for(let j=0; j < result.company.length; j++) {
-						$('#status-proses-'+result.company[j].company_id).html("");
-						for(let i=0; i < result.list.length; i++) {
+						$('.progress-bar-wrapper-'+result.company[j].company_id).html("");
+						ProgressBar.singleStepAnimation = 1500;
+						let arr = [];
+						let currentStage = '';
+						for(let i=0; i < result.list.length;i++) {
 							let data = result.list[i]
-							let code = '<div class="stepwizard-step"><a class="btn '
-							if (result.data[j]) {
-								if (Number(result.data[j].id_proses) >= Number(data.id_proses)) {
-									code = code + 'btn-green" '; 
-								} else {
-									code = code + 'btn-gray" ';
-								}
-							} else {
-								code = code + 'btn-gray" ';
-							}
-							code = code + 'href="#">' + Number(i + 1) + '</a>'
-							code = code + '<p>' + data.nama_proses + '</p></div>'
-							$('#status-proses-'+result.company[j].company_id).append(code);
+							arr.push(data.nama_proses)
 						}
+						if (result.data[j]) currentStage = result.data[j].nama_proses
+						ProgressBar.init(
+							arr,
+							currentStage,
+							'progress-bar-wrapper-'+result.company[j].company_id
+						);
 					}
 					$(".status-proses").show();
 					$("#status-proses-loading").hide();
