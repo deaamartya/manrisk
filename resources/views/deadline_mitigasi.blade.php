@@ -115,9 +115,15 @@
                         </button>
                       @endif
                     </td> --}}
+                    @if (auth()->user()->is_admin)
                     <td>
                         <a href="{{ route('admin.approval-hasil-mitigasi.show', $d->id_riskh) }}"><i class="fa fa-external-link"></i></a>
                     </td>
+                    @elseif (auth()->user()->is_risk_officer)
+                    <td>
+                        <a href="{{ route('risk-officer.mitigasi-plan.show', $d->id_riskh) }}"><i class="fa fa-external-link"></i></a>
+                    </td>
+                    @endif
                   </tr>
                   @endforeach
                 </tbody>
