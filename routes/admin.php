@@ -89,7 +89,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
   Route::resource('mitigasi-plan-indhan', MitigasiPlanIndhanController::class);
   Route::post('getProgressIndhan', [MitigasiPlanIndhanController::class, 'getProgressData']);
-  Route::post('storeProgressIndhan', [MitigasiPlanIndhanController::class, 'insertProgress'])->name('storeProgress');
+  Route::post('storeProgressIndhan', [MitigasiPlanIndhanController::class, 'insertProgress'])->name('storeProgressIndhan');
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
   Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');

@@ -71,18 +71,26 @@ class RiskHeaderIndhan extends Model
 	}
 
 	public function getMitigasiDetail() {
-		$mitigasi_logs = DB::raw("(
-				SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
-		) as mitigasi_logs");
+		// $mitigasi_logs = DB::raw("(
+		// 		SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+		// ) as mitigasi_logs");
 		$details = RiskDetail::join('s_risiko as sr', 'sr.id_s_risiko', '=', 'risk_detail.id_s_risiko')
 			->join('konteks as k', 'k.id_konteks', '=', 'sr.id_konteks')
-			->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+			// ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
 			->where('status_mitigasi', '=', 1)
 			->where('risk_detail.tahun', '=', $this->tahun)
 			->where('status_indhan', '=', 1)
 			->whereNull('risk_detail.deleted_at')
 			->get();
+		// dd($details);
 		return $details;
+	}
+
+	public function getRealisasi($id) {
+		$mitigasi_logs = MitigasiLogs::where('is_approved', 1)->where('id_riskd', $id)->orderBy('updated_at', 'DESC')->max('realisasi');
+		// dd($mitigasi_logs);
+		return $mitigasi_logs;
+
 	}
 
 	public function migrateCount($id)

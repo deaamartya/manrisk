@@ -161,9 +161,14 @@
                       @endif
                     </td>
                     <td>
+                      {{--
                         @if($d->final_realisasi === null) -
                         @else {{ $d->final_realisasi ?? $d->realisasi }}%
                         @endif
+                        --}}
+                          @if($headers->getRealisasi($d->id_riskd) === null) -
+                          @else {{ $headers->getRealisasi($d->id_riskd) ?? $d->realisasi }}%
+                          @endif
                     </td>
                     <td>{{ $d->keterangan }}</td>
                     <td>
@@ -188,7 +193,7 @@
   </div>
 </div>
 @foreach($headers->risk_detail() as $data)
-<div class="modal fade" id="edit-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+<div class="modal fade" id="edit-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="edit-mitigasi" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -274,7 +279,7 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="add-progress-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
+<div class="modal fade" id="add-progress-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="add-progress" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -284,7 +289,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
-              <form method="POST" action="{{ route('admin.storeProgress') }}" enctype="multipart/form-data">
+              <form method="POST" action="{{ route('admin.storeProgressIndhan') }}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id_riskd" value="{{ $data->id_riskd }}"/>
                 <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}"/>
@@ -364,6 +369,7 @@
     var table;
     $(document).on('click', '.open-btn', function(){
       const id = $(this).attr('data-id')
+      console.log("id : "+id);
       const url = "{{ url('admin/getProgress') }}";
       table = $("#table-progress-"+id).DataTable({
         "destroy": true,

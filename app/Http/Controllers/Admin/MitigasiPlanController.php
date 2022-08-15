@@ -93,22 +93,28 @@ class MitigasiPlanController extends Controller
     }
 
     public function insertProgress(Request $request) {
-        $filename = null;
-        if($request->dokumen) {
-            $filename = $request->file('dokumen')->getClientOriginalName();
-            $folder = '/document/mitigasi-progress/';
-            $request->file('dokumen')->storeAs($folder, $filename, 'public');
+        $extension_file = $request->file('dokumen')->extension();
+        if($extension_file == "pdf"){
+            $filename = null;
+            if($request->dokumen) {
+                $filename = $request->file('dokumen')->getClientOriginalName();
+                $folder = '/document/mitigasi-progress/';
+                $request->file('dokumen')->storeAs($folder, $filename, 'public');
+            }
+            MitigasiLogs::insert([
+                'id_riskd' => $request->id_riskd,
+                'id_user' => $request->id_user,
+                'realisasi' => $request->prosentase,
+                'dokumen' => $filename,
+                'description' => $request->description,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            return Redirect::back()->with(['success-swal' => 'Progress Mitigasi berhasil ditambahkan.']);
+        }else{
+            return Redirect::back()->with(['error-swal' => 'Progress Mitigasi gagal ditambahkan. File dokumen harus dalam format pdf. Silahkan upload ulang dokumen berekstensi .pdf']);
         }
-        MitigasiLogs::insert([
-            'id_riskd' => $request->id_riskd,
-            'id_user' => $request->id_user,
-            'realisasi' => $request->prosentase,
-            'dokumen' => $filename,
-            'description' => $request->description,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        return Redirect::back()->with(['success-swal' => 'Progress Mitigasi berhasil ditambahkan.']);
+
     }
 
     public function print($id) {
