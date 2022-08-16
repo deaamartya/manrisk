@@ -120,7 +120,7 @@ class MitigasiPlanIndhanController extends Controller
 
     public function insertProgress(Request $request) {
         $extension_file = $request->file('dokumen')->extension();
-        if($extension_file == "pdf"){
+        if($extension_file == "pdf" || $extension_file == "png" || $extension_file == "jpeg" ){
             $filename = null;
             if($request->dokumen) {
                 $filename = $request->file('dokumen')->getClientOriginalName();
@@ -139,7 +139,7 @@ class MitigasiPlanIndhanController extends Controller
             ]);
             return Redirect::back()->with(['success-swal' => 'Progress Mitigasi Indhan berhasil ditambahkan.']);
         }else{
-            return Redirect::back()->with(['error-swal' => 'Progress Mitigasi Indhan gagal ditambahkan. File dokumen harus dalam format pdf. Silahkan upload ulang dokumen berekstensi .pdf']);
+            return Redirect::back()->with(['error-swal' => 'Progress Mitigasi Indhan gagal ditambahkan. File dokumen harus dalam format pdf/png/jpeg. Silahkan upload ulang dokumen dengan format sesuai ketentuan.']);
         }
     }
 }

@@ -339,6 +339,7 @@
                   <label class="col-sm-3 col-form-label">Dokumen</label>
                   <div class="col-sm-9">
                     <input type="file" name="dokumen" class="form-control" required />
+                    <small class="text-red">Format file harus .pdf / .png / .jpeg</small>
                   </div>
                 </div>
                 <div class="mb-3 row">
