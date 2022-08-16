@@ -200,9 +200,10 @@ class GlobalController extends Controller
         }
 
         // Notif/Alert kondisi risiko yang melewati jatuh tempo
-        if(!Auth::user()->is_admin){
+        if(Auth::user()->is_admin || Auth::user()->is_risk_officer){
+            $segment = "/deadline-mitigasi";
             // if(Auth::user()->is_risk_officer){
-            //     $segment = '/risk-officer/pengukuran-risiko';
+            //     $segment = '/risk-officer/deadline-mitigasi';
             // }
             // else{
             //     if(Auth::user()->is_penilai){
@@ -215,16 +216,24 @@ class GlobalController extends Controller
             //         $segment = '/risk-owner/pengukuran-risiko';
             //     }
             // }
-            $segment = "/deadline-mitigasi";
-            $temp = DB::raw("(
-                SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
-            ) as mitigasi_logs");
-            $mitigasi_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
-            ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
-            ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
-            ->where('mitigasi_logs.final_realisasi', '<', 100)
-            ->select('risk_detail.id_riskd', 'risk_detail.mitigasi')
-            ->get();
+
+            // $temp = DB::raw("(
+            //     SELECT MAX(realisasi) as final_realisasi, id_riskd FROM mitigasi_logs WHERE is_approved = 1 ORDER BY updated_at DESC
+            // ) as mitigasi_logs");
+            // $mitigasi_jatuh_tempo = Mitigasi::leftJoin('risk_detail', 'risk_detail.id_riskd', 'mitigasi.id_riskd')
+            // ->leftJoin($temp, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+            // ->where('risk_detail.jadwal_mitigasi', '<', Carbon::now()->format('Y-m-d'))
+            // ->where('mitigasi_logs.final_realisasi', '<', 100)
+            // ->select('risk_detail.id_riskd', 'risk_detail.mitigasi')
+            // ->get();
+
+            $risk = RiskHeader::getAllMitigasiDetail();
+            $mitigasi_jatuh_tempo = [];
+            foreach($risk as $index => $value){
+                if(date('Y-m-d', strtotime($value->jadwal_mitigasi)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
+                    $mitigasi_jatuh_tempo[] = $value;
+                }
+            }
 
             Session::forget('deadline-mitigasi');
             $total_jatuh_tempo = count($mitigasi_jatuh_tempo);
