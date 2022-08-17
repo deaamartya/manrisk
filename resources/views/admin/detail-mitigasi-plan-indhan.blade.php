@@ -116,7 +116,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($headers->getMitigasiDetail() as $d)
+                @foreach($detail_risk as $d)
+                  @if($d->id_riskd)
                   <tr>
                     <td>{{ $d->id_risk .'-'. $d->no_k }}</td>
                     <td>{{ $d->s_risiko }}</td>
@@ -156,8 +157,69 @@
                       @endif
                     </td>
                     <td>
-                      @if($d->jadwal_mitigasi === null) -
-                      @else {{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}
+                      @if($d->jadwal === null) -
+                      @else {{ date('d M Y', strtotime($d->jadwal)) }}
+                      @endif
+                    </td>
+                    <td>
+                      {{--
+                        @if($d->final_realisasi === null) -
+                        @else {{ $d->final_realisasi ?? $d->realisasi }}%
+                        @endif
+                        --}}
+                          @if($headers->getRealisasi($d->id_riskd) === null) -
+                          @else {{ $headers->getRealisasi($d->id_riskd) ?? $d->realisasi }}%
+                          @endif
+                    </td>
+                    <td>{{ $d->keterangan }}</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  @endif
+                  @endforeach
+                  @foreach($detail_risk_indhan as $d)
+                  @if($d->id_riskd)
+                  <tr>
+                    <td>{{ $d->id_risk .'-'. $d->no_k }}</td>
+                    <td>{{ $d->s_risiko }}</td>
+                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
+                    <td>
+                      @if($d->r_awal < 6)
+                      <span class="badge badge-green me-2">
+                      @elseif($d->r_awal < 12)
+                      <span class="badge badge-warning me-2">
+                      @elseif($d->r_awal < 16)
+                      <span class="badge badge-pink me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($d->r_awal, 2) + 0 }}
+                      </span>
+                    </td>
+                    <td>{{ number_format($d->l_akhir, 2) + 0 }}</td>
+                    <td>{{ number_format($d->c_akhir, 2) + 0 }}</td>
+                    <td>
+                      @if($d->r_akhir < 6)
+                      <span class="badge badge-green me-2">
+                      @elseif($d->r_akhir < 12)
+                      <span class="badge badge-warning me-2">
+                      @elseif($d->r_akhir < 16)
+                      <span class="badge badge-pink me-2">
+                      @else
+                      <span class="badge badge-danger me-2">
+                      @endif
+                      {{ number_format($d->r_akhir, 2) + 0 }}
+                      </span>
+                    </td>
+                    <td>
+                      @if($d->mitigasi === null) -
+                      @else {{ $d->mitigasi }}
+                      @endif
+                    </td>
+                    <td>
+                      @if($d->jadwal === null) -
+                      @else {{ date('d M Y', strtotime($d->jadwal)) }}
                       @endif
                     </td>
                     <td>
@@ -182,6 +244,7 @@
                       </button>
                     </td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -192,7 +255,8 @@
     </div>
   </div>
 </div>
-@foreach($headers->risk_detail() as $data)
+@foreach($detail_risk_indhan as $data)
+@if($data->id_riskd)
 <div class="modal fade" id="edit-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="edit-mitigasi" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -200,7 +264,7 @@
           <h5 class="modal-title">Input Data Mitigasi</h5>
           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="{{ route('risk-officer.mitigasi-plan.update', $data->id_riskd) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.mitigasi-plan-indhan.update', $data->id_riskd) }}" method="POST" enctype="multipart/form-data">
           @method('PUT')
           @csrf
           <div class="modal-body">
@@ -209,19 +273,19 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">ID Risk</label>
 									<div class="col-sm-9">
-                    <input class="form-control" name="id_riskd" required readonly value="{{ $data->id_riskd }}">
+                    <input class="form-control" required readonly value="{{ $data->id_riskd }}">
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Level Risiko Awal</label>
 									<div class="col-sm-9">
-                    <input class="form-control" name="r_awal" required readonly value="{{ $data->r_awal }}">
+                    <input class="form-control" required readonly value="{{ $data->r_awal }}">
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Risiko</label>
 									<div class="col-sm-9">
-                    <textarea class="form-control" name="risiko" required readonly>{{ $data->sumber_risiko->s_risiko }}</textarea>
+                    <textarea class="form-control" required readonly>{{ $data->s_risiko }}</textarea>
 									</div>
 								</div>
                 <div class="mb-3 row">
@@ -234,38 +298,32 @@
 									<label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label>
 									<div class="col-sm-9">
                     <div class="date-picker">
-                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal_mitigasi" value="{{ date('Y-m-d', strtotime($data->jadwal_mitigasi)) }}">
+                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal" value="{{ date('Y-m-d', strtotime($data->jadwal)) }}">
                     </div>
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Keterangan</label>
 									<div class="col-sm-9">
-                    <textarea class="form-control" name="keterangan" required>{{ $data->keterangan }}</textarea>
+                    <textarea class="form-control" name="keterangan">{{ $data->keterangan }}</textarea>
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">L</label>
 									<div class="col-sm-9">
-                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="l_akhir_{{ $data->id_riskd }}" name="l_akhir" required value="{{ $data->l_akhir }}">
+                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="l_akhir_{{ $data->id_riskd }}" name="l_akhir" value="{{ $data->l_akhir }}">
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">C</label>
 									<div class="col-sm-9">
-                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="c_akhir_{{ $data->id_riskd }}" name="c_akhir" required value="{{ $data->c_akhir }}">
+                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="c_akhir_{{ $data->id_riskd }}" name="c_akhir" value="{{ $data->c_akhir }}">
 									</div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">R</label>
 									<div class="col-sm-9">
-                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="r_akhir_{{ $data->id_riskd }}" name="r_akhir" required value="{{ $data->r_akhir }}">
-									</div>
-								</div>
-                <div class="mb-3 row">
-									<label class="col-sm-3 col-form-label">Upload File</label>
-									<div class="col-sm-9">
-                    <input type="file" class="form-control" name="u_file">
+                    <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="r_akhir_{{ $data->id_riskd }}" name="r_akhir" value="{{ $data->r_akhir }}">
 									</div>
 								</div>
               </div>
@@ -354,6 +412,7 @@
     </div>
   </div>
 </div>
+@endif
 @endforeach
 @endsection
 @section('custom-script')

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\MitigasiLogs;
+use App\Models\RiskHeader;
 use Redirect;
 
 class MitigasiPlanIndhanController extends Controller
@@ -48,7 +49,31 @@ class MitigasiPlanIndhanController extends Controller
     public function show($id)
     {
         $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        return view('admin.detail-mitigasi-plan-indhan', compact("headers"));
+        $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+                ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )  
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+                ->where('risk_detail.status_indhan', '=', 1)
+                ->where('risk_detail.company_id', '!=', 6)
+                ->whereNull('risk_detail.deleted_at')
+                ->where('risk_header.tahun', '=', $headers->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->where('status_mitigasi', '=', 1)
+                ->get();
+        $detail_risk_indhan = RiskDetail::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+            ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
+            ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+            ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
+            ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+            ->where('risk_detail.status_indhan', '=', 1)
+            ->where('risk_detail.company_id', '=', 6)
+            ->whereNull('risk_detail.deleted_at')
+            ->where('risk_detail.tahun', '=', $headers->tahun)
+            ->where('status_mitigasi', '=', 1)
+            ->get();
+        return view('admin.detail-mitigasi-plan-indhan', compact("headers", "detail_risk" ,"detail_risk_indhan"));
     }
 
     /**
@@ -71,7 +96,10 @@ class MitigasiPlanIndhanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
+        $data = $request->except('_token');
+        $risk_detail->update($data);
+        return Redirect::back()->with(['success-swal' => 'Data Mitigasi berhasil diupdate!']);
     }
 
     /**
