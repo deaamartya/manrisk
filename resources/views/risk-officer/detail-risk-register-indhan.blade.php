@@ -139,6 +139,7 @@
 
                 @if($detail_risk_indhan != null )
                   @foreach($detail_risk_indhan as $d2)
+                  @if($d2->id_riskd)
                   <tr>
                     <td>{{ $d2->id_risk .'-'. $d2->no_k }}</td>
                     <td>{{ $d2->instansi }}</td>
@@ -171,6 +172,7 @@
                         @endif
                     </td>
                   </tr>
+                  @endif
                   @endforeach
                 @endif
                 </tbody>

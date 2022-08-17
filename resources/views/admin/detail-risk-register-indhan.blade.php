@@ -154,6 +154,7 @@
 
                 @if($detail_risk_indhan != null )
                   @foreach($detail_risk_indhan as $d2)
+                  @if($d2->id_riskd)
                   <tr>
                     <td>{{ $d2->id_risk .'-'. $d2->no_k }}</td>
                     <td>{{ $d2->instansi }}</td>
@@ -197,6 +198,7 @@
                       </button>
                     </td>
                   </tr>
+                  @endif
                   @endforeach
                 @endif
                 
@@ -402,6 +404,7 @@
 </div>
 
 @foreach($detail_risk_indhan as $data)
+@if($data->id_riskd)
 <div class="modal fade" id="detail-risk-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="create-header" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -672,6 +675,7 @@
     </div>
   </div>
 </div>
+@endif
 @endforeach
 @endsection
 @section('custom-script')
