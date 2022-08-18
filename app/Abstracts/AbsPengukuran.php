@@ -151,6 +151,7 @@ class AbsPengukuran
                 $sumber_risiko = Pengukuran::join('s_risiko', 'pengukuran.id_s_risiko', 's_risiko.id_s_risiko')
                                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                                 ->join('defendid_pengukur', 'pengukuran.id_pengukur', 'defendid_pengukur.id_pengukur')
+                                ->where('s_risiko.company_id', '=', Auth::user()->company_id)
                                 ->whereRaw($wr_sr)
                                 ->whereNull('s_risiko.deleted_at')
                                 ->whereNull('defendid_pengukur.deleted_at')

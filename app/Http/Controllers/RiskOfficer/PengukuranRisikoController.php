@@ -92,6 +92,7 @@ class PengukuranRisikoController extends Controller
                 ->join('defendid_pengukur as d', 'pengukuran.id_pengukur', 'd.id_pengukur')
                 ->join('perusahaan as p', 'd.company_id', 'p.company_id')
                 ->where('sr.status_s_risiko', '1')
+                ->where('sr.company_id', '=', Auth::user()->company_id)
                 ->groupBy('k.id_risk', 'k.konteks',  'sr.s_risiko', 'sr.id_s_risiko')
                 ->get();
         $pdf = PDF::loadView('risk-officer.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
