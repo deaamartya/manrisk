@@ -24,9 +24,7 @@ class AbsPengukuran
         else{
             $wr .= " AND defendid_pengukur.company_id = ".Auth::user()->company_id;
         }
-
         $data_pengukur = DefendidPengukur::whereRaw($wr)->get();
-
         if($filter == 'penilai_indhan'){
             // dd($data_sr);
             // foreach($data_sr as $d){
@@ -102,9 +100,10 @@ class AbsPengukuran
                 $results['data_sr'] = $data_sr;
                 $results['pengukuran_1'] = $pengukuran_1;
                 $results['pengukuran_2'] = $pengukuran_2;
+            } else {
+                $results['sr_exists'] = false;
             }
-
-        }else{
+        } else {
             $data_sr = SRisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
             // dd(Auth::user()->company_id);
             // dd($data_sr);
@@ -172,8 +171,6 @@ class AbsPengukuran
             $results['sr_exists'] = $sr_exists;
 
         }
-
-        // dd($results);
         return $results;
     }
 }
