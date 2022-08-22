@@ -328,6 +328,9 @@
                     return string;
                 }
                 }
+            },
+            series: {
+                allowPointSelect: true
             }
         },
         //series: data
@@ -343,7 +346,7 @@
             }, {
                 color: '#dc3545',
                 data: extreme
-                }]
+            }]
         });
         $('#basic-scatter-loading').hide();
     }, 3000);

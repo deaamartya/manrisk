@@ -328,6 +328,9 @@
                     return string;
                 }
                 }
+            },
+            series: {
+                allowPointSelect: true
             }
         },
         //series: data

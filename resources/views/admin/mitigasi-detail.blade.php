@@ -185,9 +185,13 @@
                     </td>
                     @if (auth()->user()->is_admin == 1)
                     <td class="text-center">
-                        <div class="btn btn-warning btn-pill btn-xs status blink_badge">
-                            {{ $d->need_approve }}
-                        </div>
+                        @if ($d->need_approve > 0)
+                            <div class="btn btn-warning btn-pill btn-xs status <?php echo ($d->need_approve > 1) ? 'blink_badge' : ''; ?>">
+                                {{ $d->need_approve }}
+                            </div>
+                        @else
+                            -
+                        @endif
                     </td>
                     @endif
                     <td>

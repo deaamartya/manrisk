@@ -48,11 +48,15 @@
                     <div class="btn btn-info btn-pill btn-xs status">{{ $h->doneMigrateCount($h->id_riskh) }}</div>
                   </td>
                   @if (auth()->user()->is_admin == 1)
-                    <td class="text-center">
-                        <div class="btn btn-warning btn-pill btn-xs status blink_badge">
+                  <td class="text-center">
+                    @if ($h->getMitigasiNeedApprove()->need_approve > 0)
+                        <div class="btn btn-warning btn-pill btn-xs status @php echo ($h->getMitigasiNeedApprove()->need_approve > 1) ? 'blink_badge' : ''; @endphp">
                             {{ $h->getMitigasiNeedApprove()->need_approve }}
                         </div>
-                    </td>
+                    @else
+                        -
+                    @endif
+                  </td>
                   @endif
                   <td>
                     <a href="{{ auth()->user()->is_admin ? route('admin.approval-hasil-mitigasi.show', $h->id_riskh) : route('risk-officer.mitigasi-plan.show', $h->id_riskh) }}" class="btn btn-info">

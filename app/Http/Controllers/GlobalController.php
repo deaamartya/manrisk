@@ -238,7 +238,7 @@ class GlobalController extends Controller
             Session::forget('deadline-mitigasi');
             $total_jatuh_tempo = count($mitigasi_jatuh_tempo);
             if($total_jatuh_tempo > 0){
-                Session::put('deadline-mitigasi', $mitigasi_jatuh_tempo);
+                Session::put('deadline-mitigasi', $total_jatuh_tempo);
                 $data[] = [
                     'title' => 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ',
                     'jumlah' => $total_jatuh_tempo,
