@@ -45,6 +45,10 @@
     .highcharts-data-table tr:hover {
     background: #f1f7ff;
     }
+
+    .highcharts-container .scatter-outline-point {
+        stroke: rgb(52, 52, 52);
+    }
 </style>
 @endsection
 
@@ -306,7 +310,7 @@
                     radius: 5,
                     states: {
                         hover: {
-                            enabled: true,
+                            enabled: false,
                             lineColor: 'rgb(100,100,100)'
                         }
                     }
@@ -328,9 +332,6 @@
                     return string;
                 }
                 }
-            },
-            series: {
-                allowPointSelect: true
             }
         },
         //series: data
@@ -347,6 +348,17 @@
                 color: '#dc3545',
                 data: extreme
             }]
+        },function(chart) {
+            var pointsGraphics
+            for (let index = 0; index < 4; index++) {
+                pointsGraphics = chart.series[index].points.map(point => {
+                    return point.graphic.element
+                })
+
+                pointsGraphics.forEach((elem, i) => {
+                        elem.classList.add('scatter-outline-point')
+                })
+            }
         });
         $('#basic-scatter-loading').hide();
     }, 3000);
