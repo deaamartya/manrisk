@@ -146,8 +146,8 @@
     const r_total = @json($r_total);
     const r_all = r_total - r_tertinggi;
     const tahun_req = @json($tahun_req);
-    // console.log(low);
-    // console.log(med);
+    console.log(low);
+    console.log(med);
     // console.log(high);
     // console.log(extreme);
     // console.log(r_tertinggi);
@@ -323,30 +323,55 @@
                     }
                 },
                 tooltip: {
-                    headerFormat: '<b>{series.name}</b><br>',
+                    // headerFormat: '<b>{series.name}</b><br>',
+                    headerFormat: '',
                     pointFormatter: function() {
-                    // console.log(this)
-                    var string = 'L : ' + this.x + '<br>';
+                        console.log(this.series.options);
+                    var string = ''
+                    // $.each(this.series.points, function(i, point) {
+                    //     if (this.series.data.indexOf( point[i] )) {
+                    //         string += `<b>${this.series.options.data[i][2]}</b><br>`;
+                    //     }
+                    //     // string += `<b>${point.series.name[i]}</b><br>`;
+                    //     // string += 'L : ' + this.x + '<br>';
+                    //     // string += 'C : ' + this.y + '<br>';
+                    //     // string += 'R : ' + this.x*this.y;
+                    // })
+                    string += `<b>${this.series.options.data[this.series.index][2]}</b><br>`;
+                    string += 'L : ' + this.x + '<br>';
                     string += 'C : ' + this.y + '<br>';
                     string += 'R : ' + this.x*this.y;
                     return string;
-                }
+                },
+                shared: true
+                // pointFormatter: function (tooltip) {
+                //     console.log(this.point);
+                //     if (this.point.isNull) {
+                //         return 'Null';
+                //     }
+                //     // If not null, use the default formatter
+                //     return tooltip.defaultFormatter.call(this, tooltip);
+                // },
                 }
             }
         },
         //series: data
         series: [{
             color: '#51bb25',
-                data: low
+                data: low.data,
+                name: low.title
             },{
                 color: '#f8d62b',
-                data: med
+                data: med.data,
+                name: med.title
             }, {
                 color: '#dd8c93',
-                data: high
+                data: high.data,
+                name: high.title
             }, {
                 color: '#dc3545',
-                data: extreme
+                data: extreme.data,
+                name: extreme.title
             }]
         },function(chart) {
             var pointsGraphics
@@ -357,6 +382,7 @@
 
                 pointsGraphics.forEach((elem, i) => {
                         elem.classList.add('scatter-outline-point')
+                        // elem.setAttribute('data-testid', 'someId-'+i)
                 })
             }
         });
