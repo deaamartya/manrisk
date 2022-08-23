@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use App\Models\SRisiko;
 use DB;
@@ -28,13 +29,13 @@ class PetaRisikoController extends Controller
         foreach($s_risiko as $s) {
             if ($s->r_awal > 0 && $s->c_awal > 0) {
                 if ($s->r_awal < 6) {
-                    $data_low[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                    $data_low[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
                 } else if ($s->r_awal < 12) {
-                    $data_med[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                    $data_med[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
                 } else if ($s->r_awal < 16) {
-                    $data_high[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                    $data_high[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
                 } else {
-                    $data_extreme[] = [ floatval($s->l_awal), floatval($s->c_awal) ];
+                    $data_extreme[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
                 }
             }
             $r_total += $s->r_awal;
@@ -42,6 +43,7 @@ class PetaRisikoController extends Controller
         }
         if (count($val_r) > 1) $r_tertinggi = floatval(max($val_r));
         $tahun_req = $req->tahun_risk;
-        return view('admin.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi', 'tahun_req'));
+        $company = Perusahaan::where('company_id', $id)->first();
+        return view('admin.peta-risiko', compact("s_risiko", "data_low", "data_med", "data_high", "data_extreme", 'r_total', 'r_tertinggi', 'tahun_req', 'company'));
     }
 }

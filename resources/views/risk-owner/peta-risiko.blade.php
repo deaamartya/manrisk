@@ -67,6 +67,7 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
+            <h5>{{ $company->instansi }}</h5>
         </div>
         <div class="card-body">
           <div>
@@ -323,13 +324,16 @@
                     }
                 },
                 tooltip: {
-                    headerFormat: '<b>{series.name}</b><br>',
+                    headerFormat: '',
                     pointFormatter: function() {
-                    // console.log(this)
-                    var string = 'L : ' + this.x + '<br>';
-                    string += 'C : ' + this.y + '<br>';
-                    string += 'R : ' + this.x*this.y;
-                    return string;
+                        var string = ''
+                        string += `<b>${this.series.points[0].series.options.data[this.index][2]}</b><br>`;
+                        string += 'L : ' + this.x + '<br>';
+                        string += 'C : ' + this.y + '<br>';
+                        string += 'R : ' + this.x*this.y;
+                        return string;
+                    },
+                    shared: true
                 }
                 }
             }
