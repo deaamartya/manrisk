@@ -326,32 +326,32 @@
                     // headerFormat: '<b>{series.name}</b><br>',
                     headerFormat: '',
                     pointFormatter: function() {
-                        console.log(this.series.options);
-                    var string = ''
-                    // $.each(this.series.points, function(i, point) {
-                    //     if (this.series.data.indexOf( point[i] )) {
-                    //         string += `<b>${this.series.options.data[i][2]}</b><br>`;
+                        console.log(this);
+                        var string = ''
+                        // $.each(this.series.points, function(i, point) {
+                        //     if (this.series.data.indexOf( point[i] )) {
+                        //         string += `<b>${this.series.options.data[i][2]}</b><br>`;
+                        //     }
+                        //     // string += `<b>${point.series.name[i]}</b><br>`;
+                        //     // string += 'L : ' + this.x + '<br>';
+                        //     // string += 'C : ' + this.y + '<br>';
+                        //     // string += 'R : ' + this.x*this.y;
+                        // })
+                        string += `<b>${this.series.points[0].series.options.data[this.index][2]}</b><br>`;
+                        string += 'L : ' + this.x + '<br>';
+                        string += 'C : ' + this.y + '<br>';
+                        string += 'R : ' + this.x*this.y;
+                        return string;
+                    },
+                    shared: true
+                    // pointFormatter: function (tooltip) {
+                    //     console.log(this.point);
+                    //     if (this.point.isNull) {
+                    //         return 'Null';
                     //     }
-                    //     // string += `<b>${point.series.name[i]}</b><br>`;
-                    //     // string += 'L : ' + this.x + '<br>';
-                    //     // string += 'C : ' + this.y + '<br>';
-                    //     // string += 'R : ' + this.x*this.y;
-                    // })
-                    string += `<b>${this.series.options.data[this.series.index][2]}</b><br>`;
-                    string += 'L : ' + this.x + '<br>';
-                    string += 'C : ' + this.y + '<br>';
-                    string += 'R : ' + this.x*this.y;
-                    return string;
-                },
-                shared: true
-                // pointFormatter: function (tooltip) {
-                //     console.log(this.point);
-                //     if (this.point.isNull) {
-                //         return 'Null';
-                //     }
-                //     // If not null, use the default formatter
-                //     return tooltip.defaultFormatter.call(this, tooltip);
-                // },
+                    //     // If not null, use the default formatter
+                    //     return tooltip.defaultFormatter.call(this, tooltip);
+                    // },
                 }
             }
         },
