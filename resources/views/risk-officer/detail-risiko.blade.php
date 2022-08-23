@@ -326,18 +326,18 @@
                     <label>Rencana Tindak Lanjut</label>
                     <textarea class="form-control" required name="tindak_lanjut" placeholder="Masukkan rencana tindak lanjut"></textarea>
                   </div>
-                  <div class="form-group pt-2">
-                    <label>Jadwal Pelaksanaan</label>
+                  <!-- <div class="form-group pt-2">
+                    <label>Jadwal Pelaksanaan</label> -->
                     <!-- <input type="date" class="form-control" name="jadwal" > -->
 
                     <!-- <div class="mb-3 row">
                       <label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label> -->
                       <!-- <div class="col-sm-9"> -->
-                        <div class="date-picker">
+                        <!-- <div class="date-picker">
                           <input class="datepicker-here form-control digits" required type="text" placeholder="Pilih Tanggal" data-language="en" name="jadwal">
-                        </div>
+                        </div> -->
                       <!-- </div> -->
-                  </div>
+                  <!-- </div> -->
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>
                     <input type="text" id="idr_kuantitatif_residu" required class="form-control" name="dampak_kuantitatif_residu" placeholder="Masukkan nominal">
@@ -456,7 +456,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Jadwal Pelaksanaan</label>
-                    <input type="text" class="form-control" name="jadwal" placeholder="Pilih Tanggal" value="{{ date('d M Y', strtotime($data->jadwal))}}" readonly>
+                    <input type="text" class="form-control" name="jadwal" placeholder="Pilih Tanggal" value="@if($data->jadwal === null) - @else {{ date('d M Y', strtotime($data->jadwal)) }} @endif" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>IDR Kuantitatif Residual</label>

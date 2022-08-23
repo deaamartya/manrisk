@@ -37,7 +37,11 @@ class AbsMitigasiPlan
         $detail = RiskDetail::where('id_riskd', '=', $id)->first();
         $id_header = $detail->id_riskh;
         $data = Arr::except($request->toArray(), ['_token', 'u_file']);
+        $inputan_biaya = preg_replace("/[^0-9]/", "", $request->biaya_penanganan);
+        $data['biaya_penanganan'] = (int) $inputan_biaya;
+       
         $detail->update($data);
+
         if ($request->u_file) {
             $filename = $request->file('u_file')->getClientOriginalName();
             $folder = '/document/lampiran-mitigasi/';
