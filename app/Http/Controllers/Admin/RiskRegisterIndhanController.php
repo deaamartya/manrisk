@@ -121,6 +121,7 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->whereNull('risk_header.deleted_at')
+                ->groupBy('id_riskd')
                 ->get();
         // dd($detail_risk[0]->avg_nilai_l  );
         
@@ -142,6 +143,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.company_id', '=', 6)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_detail.tahun', '=', $headers->tahun)
+                ->groupBy('id_riskd')
                 ->get();
         // dd($detail_risk_indhan);
         // $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
@@ -290,35 +292,41 @@ class RiskRegisterIndhanController extends Controller
         $params = [];
         $risk_detail = Excel::toArray(new RiskDetailImport, $request->file('file'));
         for ($i=0; $i < count($risk_detail[0]); $i++) {
+            $risiko = SRisiko::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+                ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+                ->where('s_risiko.id_s_risiko', '=', $risk_detail[0][$i]['id_s_risiko'])
+                ->first();
+            $nilai_l = floatval($risiko->avg_nilai_l);
+            $nilai_c = floatval($risiko->avg_nilai_c);
+            $nilai_r = floatval($risiko->avg_nilai_l) * floatval($risiko->avg_nilai_c);
             $params[] = [
                 'id_riskh' => null,
                 'company_id' => 6,
-                'tahun' => $risk_detail[0][$i]['tahun'],
                 'id_s_risiko' => $risk_detail[0][$i]['id_s_risiko'],
+                'tahun' => $risk_detail[0][$i]['tahun'],
+                'sasaran_kinerja' => $risk_detail[0][$i]['sasaran_kinerja'],
                 'ppkh' => $risk_detail[0][$i]['ppkh'],
                 'indikator' => $risk_detail[0][$i]['indikator'],
                 'sebab' => $risk_detail[0][$i]['sebab'],
+                'dampak_kuantitatif' => $risk_detail[0][$i]['dampak_kuantitatif'],
                 'dampak' => $risk_detail[0][$i]['dampak'],
                 'uc' => $risk_detail[0][$i]['uc'],
                 'pengendalian' => $risk_detail[0][$i]['pengendalian'],
-                'l_awal' => $risk_detail[0][$i]['l_awal'],
-                'c_awal' => $risk_detail[0][$i]['c_awal'],
-                'r_awal' => $risk_detail[0][$i]['r_awal'],
+                'penilaian' => $risk_detail[0][$i]['penilaian'],
+                'l_awal' => number_format($nilai_l, 2) + 0,
+                'c_awal' => number_format($nilai_c, 2) + 0,
+                'r_awal' => number_format($nilai_r, 2) + 0,
                 'peluang' => $risk_detail[0][$i]['peluang'],
                 'tindak_lanjut' => $risk_detail[0][$i]['tindak_lanjut'],
                 'jadwal' => $risk_detail[0][$i]['jadwal'],
+                'dampak_kuantitatif_residu' => $risk_detail[0][$i]['dampak_kuantitatif_residu'],
+                'dampak_residu' => $risk_detail[0][$i]['dampak_residu'],
                 'pic' => $risk_detail[0][$i]['pic'],
-                'mitigasi' => $risk_detail[0][$i]['mitigasi'],
-                'jadwal_mitigasi' => $risk_detail[0][$i]['jadwal_mitigasi'],
-                'realisasi' => $risk_detail[0][$i]['realisasi'],
-                'keterangan' => $risk_detail[0][$i]['keterangan'],
-                'l_akhir' => $risk_detail[0][$i]['l_akhir'],
-                'c_akhir' => $risk_detail[0][$i]['c_akhir'],
-                'r_akhir' => $risk_detail[0][$i]['r_akhir'],
+                'dokumen' => $risk_detail[0][$i]['dokumen'],
                 'status_indhan' => 1,
-                'status_mitigasi' => ($risk_detail[0][$i]['r_awal'] >= 12 ? 1 : 0),
+                'status_mitigasi' => ($nilai_r >= 12 ? 1 : 0),
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ];
         }
         DB::beginTransaction();

@@ -17,26 +17,23 @@ class RiskDetailImport implements ToModel, WithHeadingRow
     {
         return new RiskDetail([
             'id_s_risiko' => $row['id_s_risiko'],
+            'tahun' => $row['tahun'],
+            'sasaran_kinerja' => $row['sasaran_kinerja'],
             'ppkh' => $row['ppkh'],
             'indikator' => $row['indikator'],
             'sebab' => $row['sebab'],
+            'dampak_kuantitatif' => $row['dampak_kuantitatif'],
             'dampak' => $row['dampak'],
             'uc' => $row['uc'],
             'pengendalian' => $row['pengendalian'],
-            'l_awal' => $row['l_awal'],
-            'c_awal' => $row['c_awal'],
-            'r_awal' => $row['r_awal'],
+            'penilaian' => $row['penilaian'],
             'peluang' => $row['peluang'],
             'tindak_lanjut' => $row['tindak_lanjut'],
             'jadwal' => $row['jadwal'],
+            'dampak_kuantitatif_residu' => $row['dampak_kuantitatif_residu'],
+            'dampak_residu' => $row['dampak_residu'],
             'pic' => $row['pic'],
-            'mitigasi' => $row['mitigasi'],
-            'jadwal_mitigasi' => $row['jadwal_mitigasi'],
-            'realisasi' => $row['realisasi'],
-            'keterangan' => $row['keterangan'],
-            'l_akhir' => $row['l_akhir'],
-            'c_akhir' => $row['c_akhir'],
-            'r_akhir' => $row['r_akhir'],
+            'dokumen' => $row['dokumen'],
         ]);
     }
 }

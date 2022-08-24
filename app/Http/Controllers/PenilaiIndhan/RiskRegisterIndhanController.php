@@ -109,6 +109,7 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $headers->tahun)
                 ->whereNull('risk_header.deleted_at')
+                ->groupBy('id_riskd')
                 ->get();
         $detail_risk_indhan = RiskDetail::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
                 ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
@@ -119,6 +120,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.company_id', '=', 6)
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_detail.tahun', '=', $headers->tahun)
+                ->groupBy('id_riskd')
                 ->get();
         return view('penilai-indhan.detail-risk-register-indhan', compact('headers', 'detail_risk', 'detail_risk_indhan'));
     }
