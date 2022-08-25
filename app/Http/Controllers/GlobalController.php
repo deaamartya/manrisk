@@ -230,7 +230,7 @@ class GlobalController extends Controller
             $risk = RiskHeader::getAllMitigasiDetail();
             $mitigasi_jatuh_tempo = [];
             foreach($risk as $index => $value){
-                if(date('Y-m-d', strtotime($value->jadwal_mitigasi)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
+                if(date('Y-m-d', strtotime($value->jadwal)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
                     $mitigasi_jatuh_tempo[] = $value;
                 }
             }
@@ -498,7 +498,7 @@ class GlobalController extends Controller
         $risk = RiskHeader::getAllMitigasiDetail();
         $data = [];
         foreach($risk as $index => $value){
-            if(date('Y-m-d', strtotime($value->jadwal_mitigasi)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
+            if(date('Y-m-d', strtotime($value->jadwal)) < Carbon::now()->format('Y-m-d') && $value->final_realisasi < 100){
                 $data[] = $value;
             }
         }
