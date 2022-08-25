@@ -180,7 +180,7 @@
                     </td>
                     <td>{{ $d->keterangan }}</td>
                     <td>
-                      @if($d->mitigasi !== null || $d->jadwal !== null)
+                      @if($d->mitigasi !== null && $d->jadwal !== null)
                       <button class="btn btn-xs btn-primary p-1 flex-center open-btn" data-id="{{ $d->id_riskd }}" data-bs-toggle="modal" data-bs-target="#add-progress-{{ $d->id_riskd }}">
                         <i data-feather="plus" class="small-icon" height="13"></i>Progress
                       </button>

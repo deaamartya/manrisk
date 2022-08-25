@@ -27,7 +27,7 @@ class RiskController extends Controller
      */
     public function index()
     {
-        $headers = RiskHeader::where('company_id', '=', Auth::user()->company_id)->get();
+        $headers = RiskHeader::where('company_id', '=', Auth::user()->company_id)->whereNull('deleted_at')->get();
         return view('risk-owner.risk', compact("headers"));
     }
 

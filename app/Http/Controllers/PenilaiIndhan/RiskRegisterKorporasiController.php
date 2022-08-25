@@ -32,6 +32,7 @@ class RiskRegisterKorporasiController extends Controller
     {
         $data_headers= RiskHeader::join('defendid_user', 'risk_header.id_user', 'defendid_user.id_user')
                         ->join('perusahaan', 'defendid_user.company_id', 'perusahaan.company_id')
+                        ->whereNull('risk_header.deleted_at')
                         ->orderBy('risk_header.id_riskh')
                         ->get();
         $tahun = RiskHeader::select('tahun')->orderBy('tahun')->distinct()->get();
