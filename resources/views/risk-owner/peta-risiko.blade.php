@@ -335,7 +335,6 @@
                     },
                     shared: true
                 }
-                }
             }
         },
         //series: data
