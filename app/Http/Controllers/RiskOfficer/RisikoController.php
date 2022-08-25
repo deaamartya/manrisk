@@ -28,8 +28,7 @@ class RisikoController extends Controller
      */
     public function index()
     {
-        // $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->get();
-        $headers = RiskHeader::where('company_id', '=', Auth::user()->company_id)->whereNull('deleted_at')->get();
+        $headers = RiskHeader::where('id_user', '=', Auth::user()->id_user)->where('company_id', '=', Auth::user()->company_id)->whereNull('deleted_at')->get();
         $risk_owner = DefendidUser::where('company_id', Auth::user()->company_id)->where('is_risk_owner', '=', TRUE)->first();
         return view('risk-officer.risiko', compact("headers", "risk_owner"));
     }
@@ -68,7 +67,7 @@ class RisikoController extends Controller
      */
     public function show($id)
     {
-        $headers = RiskHeader::where('id_riskh', '=', $id)->where('company_id', '=', Auth::user()->company_id)->whereNull('deleted_at')->first();
+        $headers = RiskHeader::where('id_riskh', '=', $id)->first();
         $s_risk_diinput = RiskDetail::where([
             ['company_id', '=', Auth::user()->company_id],
             ['deleted_at', '=', null],
@@ -84,7 +83,7 @@ class RisikoController extends Controller
 
         // dd($pilihan_s_risiko);
 
-        $target = RiskHeader::where('id_riskh', '=', $id)->whereNull('deleted_at')->pluck('target')->first();
+        $target = RiskHeader::where('id_riskh', '=', $id)->pluck('target')->first();
         $sasaran = explode("\r\n", $target); 
         //  dd(count($sasaran));
 
