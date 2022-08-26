@@ -61,7 +61,7 @@ class RiskRegisterIndhanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   
+
 
     /**
      * Update the specified resource in storage.
@@ -100,7 +100,7 @@ class RiskRegisterIndhanController extends Controller
         // dd($headers);
         $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
                 ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )  
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                 ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
@@ -169,13 +169,17 @@ class RiskRegisterIndhanController extends Controller
                 'short_code' => Str::random(10),
             ],
         );
-        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh')
+        $detail_risk = RiskHeader::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code")
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh')
                 ->join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+                ->join('risk', 'konteks.id_risk', 'risk.id_risk' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
                 ->whereNull('risk_header.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
+                ->orderBy('konteks.no_k', 'ASC')
+                ->orderBy('konteks.id_risk', 'ASC')
                 ->get();
         $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
         $encrypted = url('document/verify/').'/'.$short_url->short_code;

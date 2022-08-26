@@ -119,7 +119,7 @@ $bulan = array (
 	// var 0 = tanggal
 	// var 1 = bulan
 	// var 2 = tahun
-}		
+}
 @endphp
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
@@ -350,7 +350,7 @@ $bulan = array (
 		@foreach($detail_risk as $rd)
 		<tr class="content">
 			<td width="4%" class="center f-11">
-				{{ $rd->id_risk }}
+				{{ $rd->risk_code }}
 			</td>
 			<td width="4%" class="center f-11">
 				{{ $rd->sasaran_kinerja}}

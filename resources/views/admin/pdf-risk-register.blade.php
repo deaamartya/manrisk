@@ -355,25 +355,25 @@ $bulan = array (
 				(21)
 			</td>
 		</tr>
-		@foreach($header->risk_detail as $rd)
+		@foreach($header->getMitigasiDetail() as $rd)
 		<tr class="content">
 			<td width="4%" class="center f-11">
-				{{ $rd->sumber_risiko->konteks->id_risk }}
+				{{ $rd->risk_code }}
 			</td>
 			<td width="4%" class="center f-11">
 				{{ $rd->sasaran_kinerja }}
 			</td>
 			<td width="4%" class="center f-12">
-				{{ $rd->sumber_risiko->konteks->risk->risk }}
+				{{ $rd->risk }}
 			</td>
 			<td width="4%" class="f-12">
-				{{ $rd->sumber_risiko->konteks->konteks }}
+				{{ $rd->konteks }}
 			</td>
 			<td width="4%" class="f-10">
 				{{ $rd->ppkh }}
 			</td>
 			<td width="4%" class="f-12">
-				{!! wordwrap(nl2br($rd->sumber_risiko->s_risiko), 14, '<br />', true) !!}
+				{!! wordwrap(nl2br($rd->s_risiko), 14, '<br />', true) !!}
 			</td>
 			<td width="4%" class="f-12">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}

@@ -72,7 +72,7 @@ class RiskRegisterIndhanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-   
+
 
     /**
      * Update the specified resource in storage.
@@ -112,7 +112,7 @@ class RiskRegisterIndhanController extends Controller
         // dd($headers);
         $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
                 ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )  
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
                 ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
@@ -124,7 +124,7 @@ class RiskRegisterIndhanController extends Controller
                 ->groupBy('id_riskd')
                 ->get();
         // dd($detail_risk[0]->avg_nilai_l  );
-        
+
         // $detail_risk_indhan = RiskDetail::join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
         //         ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
         //         ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
@@ -157,7 +157,7 @@ class RiskRegisterIndhanController extends Controller
         // $s_risk_diinput = RiskDetail::where([
         //         ['company_id', '=', 6],
         //     ])->pluck('id_s_risiko');
-        
+
         // $pilihan_s_risiko = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where([
         //         ['status_indhan', '=', 0],
         //     ])->where('s_risiko.tahun', '=', $headers->tahun)
@@ -165,8 +165,8 @@ class RiskRegisterIndhanController extends Controller
         //     ->whereNotIn('s_risiko.id_s_risiko', $s_risk_diinput)
         //     ->groupBy('risk_detail.id_s_risiko')
         //     ->orderBy('s_risiko.id_s_risiko')->get();
-        
-        $s_risk_diinput = RiskDetail::where([ 
+
+        $s_risk_diinput = RiskDetail::where([
                 ['company_id', '=', 6],
             ])->whereNull('deleted_at')->pluck('id_s_risiko');
 
@@ -185,7 +185,7 @@ class RiskRegisterIndhanController extends Controller
         // dd($headers->tahun);
 
         $target = RiskHeaderIndhan::where('id_riskh', '=', $id)->pluck('target')->first();
-        $sasaran = explode("\r\n", $target); 
+        $sasaran = explode("\r\n", $target);
 
         if($s_risiko != null){
             $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risiko->id_s_risiko)->avg('nilai_L');
@@ -222,7 +222,7 @@ class RiskRegisterIndhanController extends Controller
         ]);
         return redirect()->route('admin.risk-register-indhan.show', $id)->with(['success-swal' => 'Lampiran berhasil diupload!']);
     }
-    
+
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
@@ -257,7 +257,8 @@ class RiskRegisterIndhanController extends Controller
             ],
         );
         // dd($headers);
-        $detail_risk = RiskHeader::join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        $detail_risk = RiskHeader::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code")
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->join('risk', 'konteks.id_risk', 'risk.id_risk' )
@@ -265,6 +266,8 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_detail.deleted_at')
                 ->where('risk_header.tahun', '=', $header->tahun)
                 ->whereNull('risk_header.deleted_at')
+                ->orderBy('konteks.no_k', 'ASC')
+                ->orderBy('konteks.id_risk', 'ASC')
                 ->get();
             // dd($detail_risk);
         // $user = Auth::user();
@@ -274,7 +277,7 @@ class RiskRegisterIndhanController extends Controller
         Session::forget('is_bypass');
         // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
         return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
-       
+
     }
 
     // public function approval($id)

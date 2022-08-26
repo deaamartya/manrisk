@@ -265,10 +265,10 @@ $bulan = array (
 				(10)
 			</td>
 		</tr>
-	@foreach($header->risk_detail as $rd)
+	@foreach($header->getMitigasiDetail() as $rd)
 	<tr class="content">
 		<td width="5%" class="center f-11">
-			{{ $rd->sumber_risiko->konteks->id_risk }}
+			{{ $rd->risk_code }}
 		</td>
 		<td class="center f-11">
 			{{ $rd->indikator }}
