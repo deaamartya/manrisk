@@ -354,7 +354,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row second-chart-list third-news-update">
+	<!-- <div class="row second-chart-list third-news-update">
 		<div class="col-xl-12 risk-col xl-100 box-col-12">
 			<div class="card total-users">
 				<div class="card-header card-no-border">
@@ -415,7 +415,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
