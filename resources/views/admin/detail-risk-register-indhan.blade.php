@@ -339,7 +339,7 @@
                     <label>Penilaian</label>
                     <textarea class="form-control" name="penilaian" placeholder="Masukkan penilaian"></textarea>
                   </div>
-                  <div class="form-group pt-2">
+                  <!-- <div class="form-group pt-2">
                     <label>L</label>
                     <input type="number" class="form-control" min="1" max="5" onkeyup="cal()" step="0.01" name="l_awal" id="l_awal" placeholder="Nilai L" value="{{ number_format($nilai_l, 2) + 0 }}">
                   </div>
@@ -350,7 +350,7 @@
                   <div class="form-group pt-2">
                     <label>R</label>
                     <input type="number" class="form-control" min="1" max="5" name="r_awal" id="r_awal" placeholder="Nilai R" readonly value="{{ number_format($nilai_l * $nilai_c, 2) + 0 }}">
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="row pt-5">
@@ -464,15 +464,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" name="l_awal" id="l_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" name="l_awal" id="l_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->avg_nilai_l, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" name="c_awal" id="c_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" name="c_awal" id="c_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($d2->avg_nilai_c, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) + 0 }}">
+                    <input type="number" class="form-control" name="r_awal" placeholder="Nilai R" readonly value="{{ number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0 }}">
                   </div>
                 </div>
               </div>
@@ -591,7 +591,7 @@
                     <label>Penilaian</label>
                     <textarea class="form-control" name="penilaian">{{ $data->penilaian }}</textarea>
                   </div>
-                  <div class="form-group pt-2">
+                  <!-- <div class="form-group pt-2">
                     <label>L</label>
                     <input type="text" class="form-control" onkeyup="calEdit({{ $data->id_riskd }})" step="0.01" name="l_awal" id="l_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}">
                   </div>
@@ -602,7 +602,7 @@
                   <div class="form-group pt-2">
                     <label>R</label>
                     <input type="text" class="form-control" name="r_awal" id="r_awal_{{ $data->id_riskd }}" step="0.01" placeholder="Nilai R" value="{{ number_format($data->r_awal, 2) + 0 }}" readonly>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="row pt-5">

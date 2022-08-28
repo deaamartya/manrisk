@@ -9,6 +9,7 @@ use App\Models\RiskDetail;
 use App\Models\MitigasiLogs;
 use App\Models\RiskHeader;
 use Redirect;
+use Illuminate\Support\Arr;
 
 class MitigasiPlanIndhanController extends Controller
 {
@@ -99,9 +100,21 @@ class MitigasiPlanIndhanController extends Controller
     public function update(Request $request, $id)
     {
         $risk_detail = RiskDetail::where('id_riskd', '=', $id)->first();
-        $data = $request->except('_token');
+        $data = Arr::except($request->toArray(), ['_token', 'u_file']);
+        $inputan_biaya = preg_replace("/[^0-9]/", "", $request->biaya_penanganan);
+        $data['biaya_penanganan'] = (int) $inputan_biaya;
         $risk_detail->update($data);
-        return Redirect::back()->with(['success-swal' => 'Data Mitigasi berhasil diupdate!']);
+
+        if ($request->u_file) {
+            $filename = $request->file('u_file')->getClientOriginalName();
+            $folder = '/document/lampiran-mitigasi/';
+            $request->file('u_file')->storeAs($folder, $filename, 'public');
+            $risk_detail->update([
+                'u_file' => $filename,
+            ]);
+        }
+
+        return Redirect::back()->with(['success-swal' => 'Data Mitigasi Plan Indhan berhasil diupdate!']);
     }
 
     /**

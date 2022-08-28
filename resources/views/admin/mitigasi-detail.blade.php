@@ -166,8 +166,8 @@
                       @endif
                     </td>
                     <td>
-                      @if($d->jadwal_mitigasi === null) -
-                      @else {{ date('d M Y', strtotime($d->jadwal_mitigasi)) }}
+                      @if($d->jadwal === null) -
+                      @else {{ date('d M Y', strtotime($d->jadwal)) }}
                       @endif
                     </td>
                     <td>
@@ -258,7 +258,7 @@
 									<label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label>
 									<div class="col-sm-9">
                     <div class="date-picker">
-                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal_mitigasi" value="{{ date('Y-m-d', strtotime($data->jadwal_mitigasi)) }}">
+                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal_mitigasi" value="{{ $data->jadwal }}">
                     </div>
 									</div>
 								</div>

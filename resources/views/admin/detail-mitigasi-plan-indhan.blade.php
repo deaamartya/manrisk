@@ -300,9 +300,15 @@
 									<label class="col-sm-3 col-form-label">Jadwal Pelaksanaan</label>
 									<div class="col-sm-9">
                     <div class="date-picker">
-                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal" value="{{ date('Y-m-d', strtotime($data->jadwal)) }}">
+                      <input class="datepicker-here form-control digits" type="text" data-language="en" name="jadwal" value="{{ $data->jadwal }}">
                     </div>
 									</div>
+								</div>
+                <div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Biaya Penanganan</label>
+									<div class="col-sm-9">
+                    <input type="text" id="biaya_{{ $data->id_riskd }}" onkeyup="biaya_to_currency({{ $data->id_riskd }})"  class="form-control" name="biaya_penanganan" required value="{{ $data->biaya_penanganan }}">
+                  </div>
 								</div>
                 <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Keterangan</label>
@@ -326,6 +332,12 @@
 									<label class="col-sm-3 col-form-label">R</label>
 									<div class="col-sm-9">
                     <input type="number" class="form-control" onkeyup="cal({{ $data->id_riskd }})" id="r_akhir_{{ $data->id_riskd }}" name="r_akhir" value="{{ $data->r_akhir }}">
+									</div>
+								</div>
+                <div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Upload File</label>
+									<div class="col-sm-9">
+                    <input type="file" class="form-control" name="u_file">
 									</div>
 								</div>
               </div>
@@ -446,6 +458,30 @@
       })
     })
   })
+
+  
+  function biaya_to_currency(id_risk){
+        var biaya = document.getElementById("biaya_"+id_risk)
+        // console.log("biaya : "+biaya);
+        biaya.value = convertRupiah(biaya.value, '')
+    }
+    
+  function convertRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+      split = number_string.split(","),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    if (ribuan) {
+      separator = sisa ? "." : "";
+      rupiah += separator + ribuan.join(".");
+    }
+
+    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+    return prefix == undefined ? rupiah : rupiah ? rupiah : "";
+  }
+
   function cal(id) {
     var lawal = $('#l_akhir_'+id).val();
     var cawal = $('#c_akhir_'+id).val();
