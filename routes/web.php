@@ -42,6 +42,7 @@ Route::post('dashboard/data-petarisiko-korporasi', [HomeController::class, 'data
 Route::post('dashboard/data-petarisiko-indhan', [HomeController::class, 'dataPetaRisikoIndhan']);
 Route::post('dashboard/data-biaya-risiko-korporasi', [HomeController::class, 'dataBiayaRisikoKorporasi']);
 Route::post('dashboard/data-biaya-risiko-indhan', [HomeController::class, 'dataBiayaRisikoIndhan']);
+Route::post('dashboard/data-biaya-risiko-selected-indhan', [HomeController::class, 'dataBiayaRisikoSelectedIndhan']);
 Route::post('dashboard/data-status-proses', [HomeController::class, 'dataStatusProses']);
 Route::post('dashboard/data-status-proses-indhan', [HomeController::class, 'dataStatusProsesIndhan']);
 

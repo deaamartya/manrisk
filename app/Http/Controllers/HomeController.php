@@ -601,6 +601,53 @@ class HomeController extends Controller
         return response()->json([ "success" => true, "total_idr_indhan" => $total_idr_indhan, "total_idr_company" => $total_idr_company , "total_idr_residu" => $total_idr_residu , "total_biaya_mitigasi" => $total_biaya_mitigasi , "percent" => $percent, "companies" => $companies ]);
     }
 
+    public function dataBiayaRisikoSelectedIndhan(Request $req) {
+        $total_idr_indhan = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
+            ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+            ->where('rd.tahun','=', $req->tahun)
+            ->whereNull('rd.deleted_at')
+            ->whereNull('risk_header.deleted_at')
+            ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
+            ->first();
+        $total_idr_selected = RiskHeader::selectRaw('SUM(dampak_kuantitatif) as idr_kuantitatif')
+            ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+            ->where('rd.status_indhan', 1)
+            ->where('rd.tahun', $req->tahun)
+            ->whereNull('rd.deleted_at')
+            ->whereNull('risk_header.deleted_at')
+            ->pluck('SUM(dampak_kuantitatif) as idr_kuantitatif')
+            ->first();
+
+        $total_idr_residu = RiskHeader::selectRaw('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
+            ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+            ->where('rd.status_indhan', 1)
+            ->where('rd.tahun', $req->tahun)
+            ->whereNull('rd.deleted_at')
+            ->whereNull('risk_header.deleted_at')
+            ->pluck('SUM(dampak_kuantitatif_residu) as idr_kuantitatif_residu')
+            ->first();
+        
+        $total_biaya_mitigasi = RiskHeader::selectRaw('SUM(biaya_penanganan) as biaya_mitigasi')
+            ->join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
+            ->where('rd.status_indhan', 1)
+            ->where('rd.tahun', $req->tahun)
+            ->whereNull('rd.deleted_at')
+            ->whereNull('risk_header.deleted_at')
+            ->pluck('SUM(biaya_penanganan) as biaya_mitigasi')
+            ->first();
+            // dd($sum_idr_company);
+        
+        if($total_idr_indhan != 0 ){
+            $percent =  intval($total_idr_selected/ $total_idr_indhan * 100);
+        }else{
+            $percent =  0;
+        }
+
+        $company = Perusahaan::where('company_id', 6)->pluck('instansi')->first();
+
+        return response()->json([ "success" => true, "total_idr_indhan" => $total_idr_indhan, "total_idr_selected" => $total_idr_selected , "total_idr_residu" => $total_idr_residu , "total_biaya_mitigasi" => $total_biaya_mitigasi , "percent" => $percent, "company" => $company ]);
+    }
+
     public function dataStatusProses(Request $request) {
         $proses_list = ProsesManrisk::all();
         $data = StatusProses::join('proses_manrisks as pm', 'status_proses.id_proses', '=', 'pm.id_proses')

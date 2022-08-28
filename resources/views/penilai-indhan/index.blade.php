@@ -354,6 +354,68 @@
 			</div>
 		</div>
 	</div>
+	<div class="row second-chart-list third-news-update">
+		<div class="col-xl-12 risk-col xl-100 box-col-12">
+			<div class="card total-users">
+				<div class="card-header card-no-border">
+					<div class="d-flex justify-content-between mb-3">
+						<h6>Biaya Kerugian & Mitigasi Risiko INDHAN Tahun <span id="tahun-biaya-risiko-indhan-title">{{ date('Y') }}</span></h6>
+						<div class="col-lg-2">
+							<span class="f-w-500 font-roboto">Tahun : </span>
+							<select class="form-control" id="tahun-biaya-risiko-indhan">
+								@for($i=0; $i<10; $i++)
+									@php $tahun = intval(2022 + $i); @endphp
+									<option value="{{ $tahun }}">{{ $tahun }}</option>
+								@endfor
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="card-body pt-0">
+					<div class="apex-chart-container goal-status text-center row">
+						<div class="rate-card col-xl-12">
+						<div class="goal-chart">
+							<div id="riskfactorchart"></div>
+						</div>
+						<div class="goal-end-point">
+							<ul>
+							<li class="mt-3 pt-0">
+								<h6 class="font-primary" id="company_name">INDUSTRI PERTAHANAN</h6>
+							</li>
+							<li>
+								<h6 class="mb-2 f-w-400">Total IDR Kuantitatif INDHAN</h6>
+								<h5 class="mb-0" id="idr_kuantitatif_indhan">Rp</h5>
+							</li>
+							</ul>
+						</div>
+						</div>
+						<ul class="col-xl-12">
+						<li>
+							<div class="goal-detail">
+								<h6> <span class="font-primary">Total IDR Kuantitatif : </span><span id="idr_kuantitatif_company">Rp</span></h6>
+								<div class="progress sm-progress-bar progress-animate">
+									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="goal-detail">
+								<h6><span class="font-primary">Total IDR Kuantitatif Residual : </span><span id="idr_kuantitatif_residu">Rp</span></h6>
+								<div class="progress sm-progress-bar progress-animate">
+									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="goal-detail mb-0">
+								<h6><span class="font-primary">Total Biaya Mitigasi : </span><span id="biaya_mitigasi">Rp</span></h6>
+								<div class="progress sm-progress-bar progress-animate">
+									<div class="progress-gradient-primary" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+						</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
@@ -375,6 +437,7 @@
 		var chart3;
 		var chart9;
 		var chart4 = [];
+		var chart5;
 		function initBarChart(data) {
 			var options3 = {
 					chart: {
@@ -626,6 +689,85 @@
 			
 		}
 
+		function initBiayaRisikoIndhanChart(data) {
+			var options5 = {
+				series: [data.percent],
+				chart: {
+					height: 350,
+					type: 'radialBar',
+					offsetY: -10,
+				},
+
+				plotOptions: {
+					radialBar: {
+						startAngle: -135,
+						endAngle: 135,
+						inverseOrder: true,
+						hollow: {
+							margin: 6,
+							size: '50%',
+							image: '../assets/images/dashboard-2/radial-image.png',
+							imageWidth: 140,
+							imageHeight: 140,
+							imageClipped: false,
+						},
+						track: {
+							opacity: 0.4,
+							colors: CubaAdminConfig.primary
+						},
+						dataLabels: {
+							enabled: false,
+							enabledOnSeries: undefined,
+							formatter: function(val, opts) {
+								return val + "%"
+							},
+							textAnchor: 'middle',
+							distributed: false,
+							offsetX: 0,
+							offsetY: 0,
+
+							style: {
+								fontSize: '14px',
+								fontFamily: 'Helvetica, Arial, sans-serif',
+								fill: ['#2b2b2b'],
+
+							},
+						},
+					}
+				},
+
+				fill: {
+					type: 'gradient',
+					gradient: {
+						shade: 'light',
+						shadeIntensity: 0.15,
+						inverseColors: false,
+						opacityFrom: 1,
+						opacityTo: 1,
+						stops: [0, 100],
+						gradientToColors: ['#a927f9'],
+						type: 'horizontal'
+					},
+				},
+				stroke: {
+					dashArray: 15,
+					strokecolor: ['#ffffff']
+				},
+
+				labels: ['Risk loss rate'],
+				colors: [CubaAdminConfig.primary],
+			};
+			
+
+			if (chart5) chart5.destroy();
+			chart5 = new ApexCharts(
+				document.querySelector("#riskfactorchart"),
+				options5
+			);
+
+			chart5.render();
+		}
+
 		$('#tahun-jumlah-risiko').change(function(){
 			const url = "{{ url('dashboard/data-jumlah-risiko-indhan') }}"
 			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-jumlah-risiko').val() })
@@ -751,6 +893,46 @@
 			});
 		});
 
+		$('#tahun-biaya-risiko-indhan').change(function(){
+			// console.log("tahun : "+$('#tahun-biaya-risiko').val());
+			const url = "{{ url('dashboard/data-biaya-risiko-selected-indhan') }}"
+			$.post(url, { _token: "{{ csrf_token() }}", tahun: $('#tahun-biaya-risiko-indhan').val() })
+				.done(function(result) {
+					// console.log("result : "+result.total_idr_indhan);
+					$('#tahun-biaya-risiko-indhan-title').html($('#tahun-biaya-risiko-indhan').val());
+					$('#company_name').html(result.company);
+					if(result.total_idr_indhan != null){
+						var rupiah_indhan = rupiahFormat(result.total_idr_indhan);
+						$('#idr_kuantitatif_indhan').html(rupiah_indhan);
+					}else{
+						$('#idr_kuantitatif_indhan').html('Rp'+0);
+					}
+
+					if(result.total_idr_selected != null){
+						var rupiah_company = rupiahFormat(result.total_idr_selected);
+						$('#idr_kuantitatif_company').html(rupiah_company);
+					}else{
+						$('#idr_kuantitatif_company').html('Rp'+0);
+					}
+
+					if(result.total_idr_residu != null){
+						var rupiah_residu = rupiahFormat(result.total_idr_residu);
+						$('#idr_kuantitatif_residu').html(rupiah_residu);
+					}else{
+						$('#idr_kuantitatif_residu').html('Rp'+0);
+					}
+
+					if(result.total_biaya_mitigasi != null){
+						var rupiah_mitigasi = rupiahFormat(result.total_biaya_mitigasi);
+						$('#biaya_mitigasi').html(rupiah_mitigasi);
+					}else{
+						$('#biaya_mitigasi').html('Rp'+0);
+					}
+					
+					initBiayaRisikoIndhanChart(result);
+			});
+		});
+
 		function rupiahFormat(number){
 			const format = number.toString().split('').reverse().join('');
 			const convert = format.match(/\d{1,3}/g);
@@ -795,6 +977,8 @@
 		$('#tahun-level-risiko').change();
 		$('#tahun-biaya-risiko').val(date.getUTCFullYear());
 		$('#tahun-biaya-risiko').change();
+		$('#tahun-biaya-risiko-indhan').val(date.getUTCFullYear());
+		$('#tahun-biaya-risiko-indhan').change();
 		$('#tahun-status-proses').val(date.getUTCFullYear());
 		$('#tahun-status-proses').change();
 	});
