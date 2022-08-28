@@ -130,13 +130,13 @@ $bulan = array (
 	<table class="table-header" cellspacing="0" width="100%">
 		<tr>
 			<td width="15%">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 			<td height="40">
 				<b>RISK REGISTER {{ $header->perusahaan->instansi }} </b>
 			</td>
 			<td width="171">
-				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
+				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 		</tr>
 	</table>
@@ -207,15 +207,21 @@ $bulan = array (
 			<td class="f-13 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AWAL
 			</td>
-			<td class="f-13 center border-top-none"></td>
+			<td class="f-13 center border-top-none" rowspan="3">
+				PELUANG
+			</td>
 			<td class="f-13 center border-top-none" colspan="2">
 				PENANGANAN
 			</td>
 			<td class="f-13 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AKHIR
 			</td>
-			<td class="border-top-none"></td>
-			<td class="border-top-none"></td>
+			<td class="f-13 center border-top-none" rowspan="3">
+				PIC
+			</td>
+			<td class="f-13 center border-top-none" rowspan="3">
+				Dokumen Terkait
+			</td>
 		</tr>
 		<tr>
 			<td class="center f-11" rowspan="2">
@@ -224,7 +230,7 @@ $bulan = array (
 			<td class="center f-12" rowspan="2">
 				Sasaran Kinerja
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Jenis Kategori Risiko
 			</td>
 			<td class="center f-12" rowspan="2">
@@ -233,16 +239,16 @@ $bulan = array (
 			<td class="center f-10" rowspan="2">
 				Persyaratan Perundangan, Kebutuhan dan Harapan
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Peristiwa Risiko (Risk Event)
 			</td>
 			<td class="center f-12" rowspan="2">
 				Penyebab Risiko
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Dampak Risiko (IDR Kuantitatif)
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Penjelasan Dampak Risiko
 			</td>
 			<td class="center f-11" rowspan="2">
@@ -258,9 +264,6 @@ $bulan = array (
 				Level Risiko Awal
 			</td>
 			<td class="center f-11" rowspan="2">
-				PELUANG
-			</td>
-			<td class="center f-11" rowspan="2">
 				Rencana Penangan Risiko
 			</td>
 			<td class="center f-10" rowspan="2">
@@ -269,17 +272,11 @@ $bulan = array (
 			<td class="center f-11 p-0" colspan="3">
 				Level Risiko Residual
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Dampak Risiko Kuantitatif (Residual)
 			</td>
 			<td class="center f-12" rowspan="2">
 				Penjelasan Dampak Risiko (Residual)
-			</td>
-			<td class="center f-11" rowspan="2">
-				PIC
-			</td>
-			<td class="center f-11" rowspan="2">
-				Dokumen Terkait
 			</td>
 		</tr>
 		<tr class="custom-tr">
@@ -306,7 +303,7 @@ $bulan = array (
 			<td class="center f-12">
 				(5)
 			</td>
-			<td class="center f-12">
+			<td class="center f-11">
 				(6)
 			</td>
 			<td class="center f-12">
@@ -363,7 +360,7 @@ $bulan = array (
 			<td width="4%" class="center f-11">
 				{{ $rd->sasaran_kinerja }}
 			</td>
-			<td width="4%" class="center f-12">
+			<td width="4%" class="center f-11">
 				{{ $rd->risk }}
 			</td>
 			<td width="4%" class="f-12">
@@ -372,14 +369,14 @@ $bulan = array (
 			<td width="4%" class="f-10">
 				{{ $rd->ppkh }}
 			</td>
-			<td width="4%" class="f-12">
+			<td width="4%" class="f-11">
 				{!! wordwrap(nl2br($rd->s_risiko), 14, '<br />', true) !!}
 			</td>
 			<td width="4%" class="f-12">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="center f-12">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
-			<td width="4%" class="f-12">
+			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
+			<td width="4%" class="f-11">
 				{!! nl2br($rd->dampak) !!}
 			</td>
 			<td width="2%" class="center f-11">
@@ -418,7 +415,7 @@ $bulan = array (
 			<td width="1%" class="center f-11">
 				{{ number_format($rd->r_akhir, 2) + 0 }}
 			</td>
-			<td width="4%" class="center f-12">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
+			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
 			<td width="4%" class="f-12">{!! nl2br($rd->dampak_residu) !!}</td>
 			<td width="4%" class="center f-11" style="white-space: pre-line">
 				{{ $rd->pic }}
