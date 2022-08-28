@@ -53,6 +53,7 @@ class AbsPengukuran
             $data_sr = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where('status_indhan', 1)->get();
             // dd($data_pengukur);
             if(count($data_sr) > 0){
+                $sr_exists = true;
                 $pengukuran_1 = [];
                 $pengukuran_2 = [];
 
@@ -101,8 +102,9 @@ class AbsPengukuran
                 $results['pengukuran_1'] = $pengukuran_1;
                 $results['pengukuran_2'] = $pengukuran_2;
             } else {
-                $results['sr_exists'] = false;
+                $sr_exists = false;
             }
+            $results['sr_exists'] = $sr_exists;
         } else {
             $data_sr = SRisiko::where('company_id', Auth::user()->company_id)->where('status_s_risiko', 1)->get();
             // dd(Auth::user()->company_id);
