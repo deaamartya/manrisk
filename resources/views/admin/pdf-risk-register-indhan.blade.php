@@ -402,13 +402,13 @@ $bulan = array (
 				{!! wordwrap(nl2br($rd->jadwal), 10, '<br />', true) !!}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->l_akhir, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_l, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->c_akhir, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_c, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->r_akhir, 2) + 0 }}
+				{{ number_format(($rd->avg_nilai_l * $rd->avg_nilai_c), 2) + 0 }}
 			</td>
 			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
 			<td width="4%" class="f-12">{!! nl2br($rd->dampak_residu) !!}</td>
