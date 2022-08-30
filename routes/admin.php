@@ -95,7 +95,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
   Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
 
-  Route::resource('ajukan-mitigasi', PengajuanAdminController::class);
+  Route::resource('pengajuan-admin', PengajuanAdminController::class);
 });
 
 Route::middleware(['cekAdmin'])->name('admin.')->group(function () {

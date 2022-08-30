@@ -270,7 +270,7 @@
         @endif
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="{{ route('admin.ajukan-mitigasi.store') }}">
+      <form method="POST" action="{{ route('admin.pengajuan-admin.store') }}">
         @csrf
         <input type="hidden" value="{{ $data->id_riskd }}" name="id_risk_detail">
         <input type="hidden" value="{{ $data->company_id }}" name="company_id">

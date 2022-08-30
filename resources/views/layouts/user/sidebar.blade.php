@@ -238,7 +238,7 @@
 					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.ajukan-mitigasi.index' ? 'active' : '' }}" href="{{route('admin.ajukan-mitigasi.index')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.pengajuan-admin.index' ? 'active' : '' }}" href="{{route('admin.pengajuan-admin.index')}}">
 							<i data-feather="file-text"></i>
 							{{--
 							<div class="flex-row-between-center">
