@@ -93,6 +93,12 @@
 			.content td {
 				vertical-align: top !important;
 			}
+            .m-0 {
+				margin: 0;
+			}
+			.border-bottom-1 {
+				border-bottom: 1px solid black;
+			}
 	</style>
 </head>
 <body>
@@ -199,36 +205,42 @@ $bulan = array (
 			<td class="f-13 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AWAL
 			</td>
-			<td class="f-13 center border-top-none"></td>
+			<td class="f-12 center border-top-none" rowspan="3">
+				PELUANG
+			</td>
 			<td class="f-13 center border-top-none" colspan="2">
 				PENANGANAN
 			</td>
 			<td class="f-13 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AKHIR
 			</td>
-			<td class="border-top-none"></td>
-			<td class="border-top-none"></td>
+			<td class="f-11 center border-top-none" rowspan="3">
+				PIC
+			</td>
+			<td class="f-11 center border-top-none" rowspan="3">
+				Dokumen Terkait
+			</td>
 		</tr>
 		<tr>
 			<td class="center f-11" rowspan="2">
 				ID Risk
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11 p-0" rowspan="2">
 				Sasaran Kinerja
 			</td>
-			<td class="center f-11" rowspan="2">
+			<td class="center f-11 p-0" rowspan="2">
 				Jenis Kategori Risiko
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11 p-0" rowspan="2">
 				Konteks Organisasi
 			</td>
-			<td class="center f-10" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Persyaratan Perundangan, Kebutuhan dan Harapan
 			</td>
 			<td class="center f-11" rowspan="2">
 				Peristiwa Risiko (Risk Event)
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Penyebab Risiko
 			</td>
 			<td class="center f-11" rowspan="2">
@@ -250,12 +262,9 @@ $bulan = array (
 				Level Risiko Awal
 			</td>
 			<td class="center f-11" rowspan="2">
-				PELUANG
-			</td>
-			<td class="center f-11" rowspan="2">
 				Rencana Penangan Risiko
 			</td>
-			<td class="center f-10" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Target Waktu Penanganan
 			</td>
 			<td class="center f-11 p-0" colspan="3">
@@ -264,44 +273,38 @@ $bulan = array (
 			<td class="center f-11" rowspan="2">
 				Dampak Risiko Kuantitatif (Residual)
 			</td>
-			<td class="center f-12" rowspan="2">
+			<td class="center f-11" rowspan="2">
 				Penjelasan Dampak Risiko (Residual)
-			</td>
-			<td class="center f-11" rowspan="2">
-				PIC
-			</td>
-			<td class="center f-11" rowspan="2">
-				Dokumen Terkait
 			</td>
 		</tr>
 		<tr class="custom-tr">
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">L</td>
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">C</td>
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">R</td>
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">L</td>
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">C</td>
-			<td style="height: 10px;" width="1.5%" class="center p-0 f-10">R</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">L</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">C</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">R</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">L</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">C</td>
+			<td style="height: 10px;" width="1.5%" class="center p-0 f-11">R</td>
 		</tr>
 		<tr>
 			<td class="center f-11">
 				(1)
 			</td>
-			<td class="center f-12">
+			<td class="center f-11">
 				(2)
 			</td>
-			<td class="center f-10">
+			<td class="center f-11">
 				(3)
 			</td>
-			<td class="center f-12">
+			<td class="center f-11 p-0">
 				(4)
 			</td>
-			<td class="center f-12">
+			<td class="center f-11">
 				(5)
 			</td>
 			<td class="center f-11">
 				(6)
 			</td>
-			<td class="center f-12">
+			<td class="center f-11">
 				(7)
 			</td>
 			<td class="center f-11">
@@ -358,16 +361,16 @@ $bulan = array (
 			<td width="4%" class="center f-11">
 				{{ $rd->risk }}
 			</td>
-			<td width="4%" class="f-12">
+			<td width="3%" class="f-11 p-0">
 				{{ $rd->konteks }}
 			</td>
-			<td width="4%" class="f-10">
+			<td width="4%" class="f-11">
 				{{ $rd->ppkh }}
 			</td>
 			<td width="4%" class="f-11">
 				{!! wordwrap(nl2br($rd->s_risiko), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="f-12">
+			<td width="4%" class="f-11">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}
 			</td>
 			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
@@ -402,17 +405,17 @@ $bulan = array (
 				{!! wordwrap(nl2br($rd->jadwal), 10, '<br />', true) !!}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->l_akhir, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_l, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->c_akhir, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_c, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-11">
-				{{ number_format($rd->r_akhir, 2) + 0 }}
+				{{ number_format(($rd->avg_nilai_l * $rd->avg_nilai_c), 2) + 0 }}
 			</td>
 			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
-			<td width="4%" class="f-12">{!! nl2br($rd->dampak_residu) !!}</td>
-			<td width="4%" class="center f-11" style="white-space: pre-line">
+			<td width="4%" class="f-11">{!! nl2br($rd->dampak_residu) !!}</td>
+			<td class="center f-11 p-0" style="white-space: pre-line">
 				{{ $rd->pic }}
 			</td>
 			<td width="4%" class="center f-11">
