@@ -287,7 +287,7 @@
 					@endif
 					@if(Auth::user()->is_risk_officer)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengajuan-mitigasi.index' ? 'active' : '' }}" href="{{route('risk-officer.pengajuan-mitigasi.index')}}">
+						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengajuan-mitigasi-admin.index' ? 'active' : '' }}" href="{{route('risk-officer.pengajuan-mitigasi-admin.index')}}">
 							<i data-feather="file-text"></i>
 							<span class="me-4p">Mitigasi Diajukan</span>
 						</a>

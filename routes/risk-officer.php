@@ -12,6 +12,7 @@ use \App\Http\Controllers\RiskOfficer\{
   MitigasiPlanController,
   RiskRegisterIndhanController,
   PetaRisikoController,
+  PengajuanAdminController,
 };
 
 use \App\Http\Controllers\{
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::post('risiko/upload-lampiran', [RisikoController::class, 'uploadLampiran'])->name('risiko.upload-lampiran');
   Route::resource('risiko-indhan', RiskRegisterIndhanController::class);
   Route::resource('pengajuan-mitigasi', PengajuanMitigasiController::class);
+  Route::resource('pengajuan-mitigasi-admin', PengajuanAdminController::class);
   Route::resource('risk-detail', RiskDetailController::class);
   Route::resource('mitigasi-plan', MitigasiPlanController::class);
   Route::get('kuesioner', [HomeController::class, 'index'])->name('kuesioner');

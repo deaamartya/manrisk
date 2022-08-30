@@ -32,7 +32,7 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $pengajuan = PengajuanMitigasi::where('arah_pengajuan', 1)->get();
+        $pengajuan = PengajuanMitigasi::where('arah_pengajuan', 1)->orderBy('status', 'ASC')->orderBy('created_at', 'ASC')->get();
         return view('admin.pengajuan-mitigasi', compact("pengajuan"));
     }
 
@@ -50,6 +50,7 @@ class MitigasiPlanController extends Controller
         $pengajuan->update($request->except('_token'));
         $pengajuan->update([
             'updated_at' => now(),
+            'id_responden' => Auth::user()->id_user,
         ]);
         if ($request->is_approved == 1) {
             $risk_detail->update([
