@@ -93,7 +93,7 @@
                   <tr>
                     <th>Id Risk</th>
                     <th>INDHAN</th>
-                    <th>Mitigasi</th>                  
+                    <th>Mitigasi</th>
                     <th>Konteks Organisasi</th>
                     <th>Indikator</th>
                     <th>Risiko</th>

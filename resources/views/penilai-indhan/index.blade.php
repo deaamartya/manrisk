@@ -172,6 +172,7 @@
 					</div>
 					<div class="chart-content">
 						@foreach($company as $p)
+						@if($p->company_id != 6)
 						<div class="card status-proses">
 							<div class="card-body row">
 								<div class="col-12 col-lg-2">
@@ -185,6 +186,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						@endforeach
 						<div id="status-proses-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
 					</div>
@@ -299,6 +301,7 @@
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
 						<div class="row d-flex justify-content-center">
 						@foreach($company as $p)
+						@if($p->company_id != 6)
 						<div class="col-xxl-4 col-lg-6">
 							<div class="project-box">
 								<div class="media d-flex justify-content-center">
@@ -347,6 +350,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						@endforeach
 						</div>
 					</div>
@@ -354,7 +358,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="row second-chart-list third-news-update">
+	<div class="row second-chart-list third-news-update">
 		<div class="col-xl-12 risk-col xl-100 box-col-12">
 			<div class="card total-users">
 				<div class="card-header card-no-border">
@@ -415,7 +419,7 @@
 				</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 </div>
 <script type="text/javascript">
 	var session_layout = '{{ session()->get('layout') }}';
@@ -610,6 +614,9 @@
 		}
 
 		function initBiayaRisikoChart(data, index) {
+			// console.log('data.percent init :'+data.percent);
+			// console.log('index init :'+index);
+			// console.log('data.percent[index] init :'+data.percent[index]);
 				var options4 = {
 					series: [data.percent[index]],
 					chart: {
@@ -678,7 +685,7 @@
 					colors: [CubaAdminConfig.primary],
 				};
 				
-				console.log('data.companies[index].companyid : '+data.companies[index].company_id);
+				// console.log('data.companies[index].companyid : '+data.companies[index].company_id);
 				
 				if (chart4[index]) chart4[index].destroy();
 					chart4[index] = new ApexCharts(
@@ -967,7 +974,7 @@
 					$("#status-proses-loading").hide();
 			});
 		});
-		
+
 		const date = new Date();
 		$('#tahun-risiko').val(date.getUTCFullYear());
 		$('#tahun-risiko').change();

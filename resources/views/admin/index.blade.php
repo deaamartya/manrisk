@@ -172,6 +172,7 @@
 					</div>
 					<div class="chart-content">
 						@foreach($company as $p)
+						@if($p->company_id != 6)
 						<div class="card status-proses">
 							<div class="card-body row">
 								<div class="col-12 col-lg-2">
@@ -185,6 +186,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						@endforeach
 						<div id="status-proses-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
 					</div>
@@ -299,6 +301,7 @@
 					<div class="tab-pane fade show active" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
 						<div class="row d-flex justify-content-center">
 						@foreach($company as $p)
+						@if($p->company_id != 6)
 						<div class="col-xxl-4 col-lg-6">
 							<div class="project-box">
 								<div class="media d-flex justify-content-center">
@@ -347,6 +350,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 						@endforeach
 						</div>
 					</div>
