@@ -32,7 +32,7 @@ class MitigasiPlanController extends Controller
      */
     public function index()
     {
-        $pengajuan = PengajuanMitigasi::get();
+        $pengajuan = PengajuanMitigasi::where('arah_pengajuan', 1)->get();
         return view('admin.pengajuan-mitigasi', compact("pengajuan"));
     }
 

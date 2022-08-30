@@ -14,6 +14,7 @@ use \App\Http\Controllers\Admin\{
     MitigasiPlanController,
     MitigasiPlanIndhanController,
     PetaRisikoController,
+    PengajuanAdminController,
 };
 
 use \App\Http\Controllers\{
@@ -93,6 +94,8 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::post('getProgress', [MitigasiPlanController::class, 'getProgressData']);
   Route::post('storeProgress', [MitigasiPlanController::class, 'insertProgress'])->name('storeProgress');
   Route::get('peta-risiko/{id}', [PetaRisikoController::class, 'show'])->name('peta-risiko');
+
+  Route::resource('ajukan-mitigasi', PengajuanAdminController::class);
 });
 
 Route::middleware(['cekAdmin'])->name('admin.')->group(function () {

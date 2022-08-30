@@ -132,30 +132,15 @@
                         @endif
                     </td>
                     <td>
-                        @if($d->status_mitigasi == 0)
-                          <span class="badge badge-green me-2">Tidak Mitigasi</span>
-                        @else
-                          <span class="badge badge-danger me-2">Perlu Mitigasi</span>
-                        @endif
-                    {{--
-                        @if($d->status_mitigasi == 0)
-                        <form action="{{ route('admin.mitigation', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-green d-flex align-items-center">
-                            <i class="fa fa-times me-2"></i> Tidak Mitigasi
-                          </button>
-                        </form>
-                        @else
-                        <form action="{{ route('admin.not-mitigation', $d->id_riskd) }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="id_risk" value="{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k  }}">
-                          <button type="submit" class="btn btn-sm btn-pill btn-danger d-flex align-items-center">
-                            <i class="fa fa-check me-2"></i> Perlu Mitigasi
-                          </button>
-                        </form>
-                        @endif
-                      --}}
+                      @if($d->status_mitigasi == 0)
+                        <button class="btn btn-sm btn-pill btn-green d-flex align-items-center" data-bs-target="#ajukan-mitigasi-{{ $d->id_riskd }}" data-bs-toggle="modal">
+                          <i class="fa fa-times me-2"></i>Ajukan Mitigasi
+                        </button>
+                      @elseif($d->status_mitigasi == 1)
+                      <button class="btn btn-sm btn-pill btn-danger d-flex align-items-center" data-bs-target="#ajukan-mitigasi-{{ $d->id_riskd }}" data-bs-toggle="modal">
+                          <i class="fa fa-check me-2"></i>Ajukan Tidak Mitigasi
+                        </button>
+                      @endif
                     </td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->indikator }}</td>
@@ -268,6 +253,47 @@
         <div class="modal-footer">
           <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
           <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ajukan-mitigasi-{{ $data->id_riskd }}" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        @if ($data->status_mitigasi === 1)
+        <h5 class="modal-title">Ajukan Tidak Perlu Mitigasi pada Risk Officer</h5>
+        @elseif ($data->status_mitigasi === 0)
+        <h5 class="modal-title">Ajukan Mitigasi pada Risk Officer</h5>
+        @endif
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="{{ route('admin.ajukan-mitigasi.store') }}">
+        @csrf
+        <input type="hidden" value="{{ $data->id_riskd }}" name="id_risk_detail">
+        <input type="hidden" value="{{ $data->company_id }}" name="company_id">
+        @if ($data->status_mitigasi === 1)
+        <input type="hidden" value="0" name="tipe_pengajuan">
+        @elseif ($data->status_mitigasi === 0)
+        <input type="hidden" value="1" name="tipe_pengajuan">
+        @endif
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Alasan</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" name="alasan" required placeholder="Alasan pengajuan"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>
+          <button class="btn btn-primary" type="submit">Ajukan</button>
         </div>
       </form>
     </div>
