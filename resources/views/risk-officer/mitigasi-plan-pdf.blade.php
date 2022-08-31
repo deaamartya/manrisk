@@ -276,10 +276,10 @@
             <td class="center f-11">
                 {{ round(($rd->l_awal*$rd->c_awal), 0) }}
             </td>
-			<td width="6%" class="center f-11">
+			<td width="6%" class="f-11">
 				{!! nl2br($rd->tindak_lanjut) !!}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-11" style="white-space: pre-line">
 				{{ $rd->pic }}
 			</td>
 			<td width="6%" class="center f-10">
