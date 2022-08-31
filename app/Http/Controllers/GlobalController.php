@@ -380,21 +380,47 @@ class GlobalController extends Controller
 
     public function notif_penilai_indhan()
     {
-        $s_risk_dinilai = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-        ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
-        ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
-        ->where('dp.id_user', Auth::user()->id_user)
-        ->where('status_indhan', 1)
-        ->whereNull('s_risiko.deleted_at')
-        ->pluck('s_risiko.id_s_risiko');
-
-        // dd($s_risk_dinilai);
-        $jml_risk = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-            ->where('status_indhan', 1)
-            ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
+        $s_risk_korporasi = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+            ->where('risk_detail.status_indhan', 1)
+            ->where('risk_detail.company_id', '!=', 6)
             ->whereNull('s_risiko.deleted_at')
-            ->count('s_risiko.id_s_risiko');
-        // dd($jml_risk);
+            ->whereNull('risk_detail.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+        
+        // get all id_s_risiko indhan
+        $s_risk_indhan = SRisiko::where('company_id', 6)
+            ->whereNull('deleted_at')
+            ->pluck('id_s_risiko')->toArray();
+
+        $s_risk_all = array_merge($s_risk_korporasi, $s_risk_indhan);
+
+        // get all id_s_risiko korporasi yang sudah dinilai
+        $s_risk_dinilai_korporasi = SRisiko::join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+            ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+            ->where('dp.id_user', Auth::user()->id_user)
+            ->whereIn('s_risiko.id_s_risiko', $s_risk_korporasi)
+            ->selectRaw('s_risiko.*, p.*')
+            ->whereNull('p.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+        
+        // get all id_s_risiko indhan yang sudah dinilai
+        $s_risk_dinilai_indhan = SRisiko::join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+            ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
+            ->where('dp.id_user', Auth::user()->id_user)
+            ->whereIn('s_risiko.id_s_risiko', $s_risk_indhan)
+            ->selectRaw('s_risiko.*, p.*')
+            ->whereNull('p.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+
+        $s_risk_dinilai = array_merge($s_risk_dinilai_korporasi, $s_risk_dinilai_indhan);
+
+        $jml_risk = SRisiko::whereIn('id_s_risiko', $s_risk_all)
+            ->whereNotIn('id_s_risiko', $s_risk_dinilai)
+            ->whereNull('deleted_at')
+            ->count('id_s_risiko');
 
         $data = [[
             'title' => 'Terdapat pengukuran risiko indhan sebanyak ',

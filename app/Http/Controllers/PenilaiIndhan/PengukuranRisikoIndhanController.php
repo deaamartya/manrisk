@@ -30,24 +30,53 @@ class PengukuranRisikoIndhanController extends Controller
         $id_responden = $request->id_responden;
         $nama_responden = $request->nama_responden;
 
-        $s_risk_dinilai = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-                    ->join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
-                    ->where('p.id_pengukur', '=', $id_responden)
-                    ->where('status_indhan', 1)
-                    ->whereNull('p.deleted_at')
-                    ->whereNull('s_risiko.deleted_at')
-                    ->selectRaw('s_risiko.*, p.*')
-                    ->pluck('id_s_risiko');
+        $s_risk_korporasi = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+            ->where('risk_detail.status_indhan', 1)
+            ->where('risk_detail.company_id', '!=', 6)
+            ->where('s_risiko.tahun', $tahun)
+            ->whereNull('s_risiko.deleted_at')
+            ->whereNull('risk_detail.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+        
+        // get all id_s_risiko indhan
+        $s_risk_indhan = SRisiko::where('company_id', 6)
+            ->where('tahun', $tahun)
+            ->whereNull('deleted_at')
+            ->pluck('id_s_risiko')->toArray();
 
-        $sumber_risiko = SRisiko::select('*')->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
+        $s_risk_all = array_merge($s_risk_korporasi, $s_risk_indhan);
+
+        // get all id_s_risiko korporasi yang sudah dinilai
+        $s_risk_dinilai_korporasi = SRisiko::join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+            ->where('p.id_pengukur', '=', $id_responden)
+            ->whereIn('s_risiko.id_s_risiko', $s_risk_korporasi)
+            ->selectRaw('s_risiko.*, p.*')
+            ->whereNull('p.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+        
+        // get all id_s_risiko indhan yang sudah dinilai
+        $s_risk_dinilai_indhan = SRisiko::join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
+            ->where('p.id_pengukur', '=', $id_responden)
+            ->whereIn('s_risiko.id_s_risiko', $s_risk_indhan)
+            ->selectRaw('s_risiko.*, p.*')
+            ->whereNull('p.deleted_at')
+            ->groupBy('s_risiko.id_s_risiko')
+            ->pluck('s_risiko.id_s_risiko')->toArray();
+
+        $s_risk_dinilai = array_merge($s_risk_dinilai_korporasi, $s_risk_dinilai_indhan);
+
+        $sumber_risiko = SRisiko::select('*')
+            ->leftJoin('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+            ->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
             ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
             ->join('risk as r', 'r.id_risk', 'k.id_risk')
-            ->join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
-            ->where('s_risiko.tahun', $tahun)
-            ->where('risk_detail.status_indhan', 1)
-            ->whereNull('s_risiko.deleted_at')
+            ->whereIn('s_risiko.id_s_risiko', $s_risk_all)
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
-            ->orderBy('s_risiko.id_s_risiko')
+            ->where('s_risiko.tahun', $tahun)
+            ->whereNull('s_risiko.deleted_at')
+            ->whereNull('risk_detail.deleted_at')
             ->get();
 
         return view('penilai-indhan.penilaian-risiko-indhan', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));
@@ -56,12 +85,12 @@ class PengukuranRisikoIndhanController extends Controller
     
     public function penilaianRisikoStore(Request $request) {
         $request->validate([
-        'tahun' => 'required',
-        'id_responden' => 'required',
-        'nama_responden' => 'required',
-        'nilai_L' => 'required',
-        'nilai_C' => 'required',
-        'id_s_risk' => 'required',
+            'tahun' => 'required',
+            'id_responden' => 'required',
+            'nama_responden' => 'required',
+            'nilai_L' => 'required',
+            'nilai_C' => 'required',
+            'id_s_risk' => 'required',
         ]);
 
         $id_s_risiko = $request->id_s_risk;
