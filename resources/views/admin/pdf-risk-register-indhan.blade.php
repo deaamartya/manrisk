@@ -68,6 +68,9 @@
 				font-size: 10px;
 				line-height: 10px;
 			}
+			.f-7 {
+				font-size: 7px;
+			}
 			.p-0 {
 				padding: 0;
 			}
@@ -199,25 +202,25 @@ $bulan = array (
 	</table>
 	<table class="table-4" cellspacing="0" width="100%">
 		<tr>
-			<td class="f-13 center border-top-none" colspan="10">
+			<td class="f-12 center border-top-none" colspan="10">
 				IDENTIFIKASI
 			</td>
-			<td class="f-13 center border-top-none" colspan="5">
+			<td class="f-12 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AWAL
 			</td>
 			<td class="f-12 center border-top-none" rowspan="3">
 				PELUANG
 			</td>
-			<td class="f-13 center border-top-none" colspan="2">
+			<td class="f-12 center border-top-none" colspan="2">
 				PENANGANAN
 			</td>
-			<td class="f-13 center border-top-none" colspan="5">
+			<td class="f-12 center border-top-none" colspan="5">
 				PENGENDALIAN DAN PENILAIAN AKHIR
 			</td>
-			<td class="f-11 center border-top-none" rowspan="3">
+			<td class="f-12 center border-top-none" rowspan="3">
 				PIC
 			</td>
-			<td class="f-11 center border-top-none" rowspan="3">
+			<td class="f-12 center border-top-none" rowspan="3">
 				Dokumen Terkait
 			</td>
 		</tr>
@@ -322,7 +325,7 @@ $bulan = array (
 			<td class="center f-11">
 				(12)
 			</td>
-			<td class="center f-10" colspan="3">
+			<td class="center f-11" colspan="3">
 				(13)
 			</td>
 			<td class="center f-11">
@@ -337,7 +340,7 @@ $bulan = array (
 			<td class="center f-11" colspan="3">
 				(17)
 			</td>
-			<td class="center f-10">
+			<td class="center f-11">
 				(18)
 			</td>
 			<td class="center f-11">
@@ -352,73 +355,73 @@ $bulan = array (
 		</tr>
 		@foreach($detail_risk as $rd)
 		<tr class="content">
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-7">
 				{{ $rd->risk_code }}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="f-7">
 				{{ $rd->sasaran_kinerja}}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-7">
 				{{ $rd->risk }}
 			</td>
-			<td width="3%" class="f-11 p-0">
+			<td width="3%" class="f-7 p-0">
 				{{ $rd->konteks }}
 			</td>
-			<td width="4%" class="f-11">
+			<td width="4%" class="f-7">
 				{{ $rd->ppkh }}
 			</td>
-			<td width="4%" class="f-11">
+			<td width="4%" class="f-7">
 				{!! wordwrap(nl2br($rd->s_risiko), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="f-11">
+			<td width="4%" class="f-7">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
-			<td width="4%" class="f-11">
+			<td width="4%" class="center f-7">{{ number_format($rd->dampak_kuantitatif,2,',','.') }}</td>
+			<td width="4%" class="f-7">
 				{!! nl2br($rd->dampak) !!}
 			</td>
-			<td width="2%" class="center f-11">
+			<td width="2%" class="center f-7">
 				{{ $rd->uc }}
 			</td>
-			<td width="4%" class="f-11">
+			<td width="4%" class="f-7">
 				{!! wordwrap(nl2br($rd->pengendalian), 14, '<br />', true) !!}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-7">
 				{!! wordwrap(nl2br($rd->penilaian), 14, '<br />', true) !!}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format($rd->l_awal, 2) + 0 }}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format($rd->c_awal, 2) + 0 }}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format($rd->r_awal, 2) + 0 }}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="f-7">
 				{!! nl2br($rd->peluang) !!}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="f-7">
 				{!! nl2br($rd->tindak_lanjut) !!}
 			</td>
-			<td width="4%" class="center f-10">
+			<td width="4%" class="center f-7">
 				{!! wordwrap(nl2br($rd->jadwal), 10, '<br />', true) !!}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format($rd->avg_nilai_l, 2) + 0 }}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format($rd->avg_nilai_c, 2) + 0 }}
 			</td>
-			<td width="1%" class="center f-11">
+			<td width="1%" class="center f-7">
 				{{ number_format(($rd->avg_nilai_l * $rd->avg_nilai_c), 2) + 0 }}
 			</td>
-			<td width="4%" class="center f-11">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
-			<td width="4%" class="f-11">{!! nl2br($rd->dampak_residu) !!}</td>
-			<td class="center f-11 p-0" style="white-space: pre-line">
+			<td width="4%" class="center f-7">{{ number_format($rd->dampak_kuantitatif_residu,2,',','.') }}</td>
+			<td width="4%" class="f-7">{!! nl2br($rd->dampak_residu) !!}</td>
+			<td width="4%" class="f-7 p-0" style="white-space: pre-line">
 				{{ $rd->pic }}
 			</td>
-			<td width="4%" class="center f-11">
+			<td width="4%" class="center f-7">
 				{!! nl2br($rd->dokumen) !!}
 			</td>
 		</tr>
