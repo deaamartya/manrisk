@@ -136,7 +136,7 @@ $bulan = array (
 				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_bumn.png' }}" style="max-width:120px;max-height:35px" />
 			</td>
 			<td height="40">
-				<b>RISK REGISTER {{ $header->perusahaan->instansi }} </b>
+				<b>RISK REGISTER {{ $user->perusahaan->instansi }} </b>
 			</td>
 			<td width="171">
 				<img src="{{ $_SERVER['DOCUMENT_ROOT'].'/public/assets/images/logo/logo_company/logo_'.$header->perusahaan->company_code.'.png' }}" style="max-width:120px;max-height:35px" />
@@ -355,25 +355,25 @@ $bulan = array (
 				(21)
 			</td>
 		</tr>
-		@foreach($header->getMitigasiDetail() as $rd)
+		@foreach($header->risk_detail as $rd)
 		<tr class="content">
 			<td width="4%" class="center f-7">
-				{{ $rd->risk_code }}
+				{{ $rd->sumber_risiko->konteks->id_risk }}
 			</td>
 			<td width="4%" class="f-7">
 				{{ $rd->sasaran_kinerja }}
 			</td>
 			<td width="4%" class="center f-7">
-				{{ $rd->risk }}
+				{{ $rd->sumber_risiko->konteks->risk->risk }}
 			</td>
 			<td width="4%" class="f-7">
-				{{ $rd->konteks }}
+				{{ $rd->sumber_risiko->konteks->konteks }}
 			</td>
 			<td width="4%" class="f-7">
 				{{ $rd->ppkh }}
 			</td>
 			<td width="4%" class="f-7">
-				{!! wordwrap(nl2br($rd->s_risiko), 14, '<br />', true) !!}
+				{!! wordwrap(nl2br($rd->sumber_risiko->s_risiko), 14, '<br />', true) !!}
 			</td>
 			<td width="4%" class="f-7">
 				{!! wordwrap(nl2br($rd->sebab), 14, '<br />', true) !!}
