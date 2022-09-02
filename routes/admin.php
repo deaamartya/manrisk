@@ -100,5 +100,6 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
 
 Route::middleware(['cekAdmin'])->name('admin.')->group(function () {
   Route::get('mitigasi-plan/print/{id}', [MitigasiPlanController::class, 'print'])->name('mitigasi-plan.print');
+  Route::get('mitigasi-plan-indhan/print/{id}', [MitigasiPlanIndhanController::class, 'print'])->name('mitigasi-plan-indhan.print');
 });
 

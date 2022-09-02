@@ -49,8 +49,8 @@ class RiskHeaderIndhan extends Model
 		'tahun',
 		'tanggal',
 		'target',
-		'penyusun',
-		'pemeriksa',
+		'id_penyusun',
+		'id_pemeriksa',
 		'lampiran',
 		'status_h'
 	];
@@ -68,6 +68,17 @@ class RiskHeaderIndhan extends Model
 			->whereNull('deleted_at')
 			->get();
 		return $details;
+	}
+	
+	public function penyusun()
+	{
+		return $this->belongsTo(DefendidUser::class, 'id_penyusun');
+	}
+
+
+	public function pemeriksa()
+	{
+		return $this->belongsTo(DefendidUser::class, 'id_pemeriksa');
 	}
 
 	public function getMitigasiDetail() {

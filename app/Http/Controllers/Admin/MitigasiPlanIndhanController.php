@@ -8,8 +8,14 @@ use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\MitigasiLogs;
 use App\Models\RiskHeader;
+use App\Models\DefendidUser;
 use Redirect;
 use Illuminate\Support\Arr;
+use DNS2D;
+use Session;
+use PDF;
+use App\Models\ShortUrl;
+use Illuminate\Support\Str;
 
 class MitigasiPlanIndhanController extends Controller
 {
@@ -184,5 +190,75 @@ class MitigasiPlanIndhanController extends Controller
         }else{
             return Redirect::back()->with(['error-swal' => 'Progress Mitigasi Indhan gagal ditambahkan. File dokumen harus dalam format pdf/png/jpeg. Silahkan upload ulang dokumen dengan format sesuai ketentuan.']);
         }
+    }
+
+    public function print($id) {
+        $document_type = 'mitigasi_plan_indhan_admin';
+        // $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
+        // $user = DefendidUser::where('id_user', '=', $header->id_user)->first();
+        $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
+        $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+                // ->select('DB::raw("(CONCAT(k.id_risk, '-', k.no_k)) as risk_code")')
+                ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
+                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )  
+                ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+                ->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
+                ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+                ->where('risk_detail.status_indhan', '=', 1)
+                ->where('risk_detail.company_id', '!=', 6)
+                ->whereNull('risk_detail.deleted_at')
+                ->where('risk_header.tahun', '=', $header->tahun)
+                ->whereNull('risk_header.deleted_at')
+                ->where('status_mitigasi', '=', 1)
+                ->groupBy('id_riskd')
+                ->get();
+        $detail_risk_indhan = RiskDetail::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
+            // ->select('DB::raw("(CONCAT(k.id_risk, '-', k.no_k)) as risk_code")')
+            ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
+            ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
+            ->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks' )
+            ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
+            ->where('risk_detail.status_indhan', '=', 1)
+            ->where('risk_detail.company_id', '=', 6)
+            ->whereNull('risk_detail.deleted_at')
+            ->where('risk_detail.tahun', '=', $header->tahun)
+            ->where('status_mitigasi', '=', 1)
+            ->groupBy('id_riskd')
+            ->get();
+
+        $url = "url='admin/mitigasi-plan/print/".$header->id_riskh."';".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
+            "instansi= Industri Pertahanan ;".
+            "tahun=".$header->tahun.";".
+            "created_at=".$header->created_at.";".
+            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";";
+        $short_url = ShortUrl::where(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+        )->first();
+        if ($short_url) {
+            $short_url->update([
+                'url' => $url,
+            ]);
+        }
+        $short_url = ShortUrl::firstOrCreate(
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+            ],
+            [
+                'jenis_dokumen' => $document_type,
+                'id_dokumen' => $id,
+                'url' => $url,
+                'short_code' => Str::random(10),
+            ],
+        );
+        $encrypted = url('document/verify/').'/'.$short_url->short_code;
+        $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
+        $pdf = PDF::loadView('admin.mitigasi-plan-indhan-pdf', compact('header', 'detail_risk', 'detail_risk_indhan','qrcode'))->setPaper('a4', 'landscape');
+        Session::forget('is_bypass');
+        return $pdf->stream('Hasil Mitigasi Indhan Tahun '.$header->tahun.'.pdf');
     }
 }
