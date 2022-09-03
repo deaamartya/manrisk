@@ -270,16 +270,15 @@ class RiskRegisterIndhanController extends Controller
                 ->orderBy('konteks.id_risk', 'ASC')
                 ->orderBy('konteks.no_k', 'ASC')
                 ->get();
+        // dd($detail_risk);
         foreach ($detail_risk as $key => $value) {
-            if(Pengukuran::where('id_s_risiko', '=', $value->id_s_risiko)->exists()){
-                $temp_p = Pengukuran::where('id_s_risiko', '=', $value->id_s_risiko)->selectRaw('avg(nilai_L) as avg_nilai_l, avg(nilai_C) as avg_nilai_c')->first();
-                $detail_risk[$key]->avg_nilai_l = $temp_p->avg_nilai_l;
-                $detail_risk[$key]->avg_nilai_c = $temp_p->avg_nilai_c;
-            }
-            else if(PengukuranIndhan::where('id_s_risiko', '=', $value->id_s_risiko)->exists()){
+            if ($detail_risk[$key]->company_id === 6) {
+                $detail_risk[$key]->avg_nilai_l = $detail_risk[$key]->l_awal;
+                $detail_risk[$key]->avg_nilai_c = $detail_risk[$key]->c_awal;
+            } else {
                 $temp_pi = PengukuranIndhan::where('id_s_risiko', '=', $value->id_s_risiko)->selectRaw('avg(nilai_L) as avg_nilai_l, avg(nilai_C) as avg_nilai_c')->first();
-                $detail_risk[$key]->avg_nilai_l = $temp_pi->avg_nilai_l;
-                $detail_risk[$key]->avg_nilai_c = $temp_pi->avg_nilai_c;
+                $detail_risk[$key]->avg_nilai_l = number_format($temp_pi->avg_nilai_l, 2) + 0;
+                $detail_risk[$key]->avg_nilai_c = number_format($temp_pi->avg_nilai_c, 2) + 0;
             }
         }
             // dd($detail_risk);

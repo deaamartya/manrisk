@@ -227,11 +227,11 @@ class MitigasiPlanIndhanController extends Controller
             ->get();
 
         $url = "url='admin/mitigasi-plan/print/".$header->id_riskh."';".
-            "signed_by=".($header->pemeriksa ? $header->pemeriksa->name : '-').";".
+            "signed_by=".($header->pemeriksa ? $header->pemeriksa : '-').";".
             "instansi= Industri Pertahanan ;".
             "tahun=".$header->tahun.";".
             "created_at=".$header->created_at.";".
-            "penyusun=".($header->penyusun ? $header->penyusun->name : '-').";";
+            "penyusun=".($header->penyusun ? $header->penyusun : '-').";";
         $short_url = ShortUrl::where(
             [
                 'jenis_dokumen' => $document_type,

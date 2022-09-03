@@ -9,6 +9,7 @@ use App\Models\DefendidPengukur;
 use App\Abstracts\AbsPengukuran;
 use App\Models\PengukuranIndhan;
 use App\Models\SRisiko;
+use App\Models\RiskDetail;
 use PDF;
 use DB;
 use Auth;
@@ -104,6 +105,16 @@ class PengukuranRisikoIndhanController extends Controller
                 'nilai_L' => $request->nilai_L[$i],
                 'nilai_C' => $request->nilai_C[$i],
             ]);
+            if (RiskDetail::where('id_s_risiko', '=', $request->id_s_risk[$i])->where('company_id', '=', 6)->exists()) {
+                $nilai_pengukuran = PengukuranIndhan::select(DB::raw('AVG(nilai_L) as L'), DB::raw('AVG(nilai_C) as C'))->where('id_s_risiko', '=', $request->id_s_risk[$i])->first();
+                $status_mitigasi = ($nilai_pengukuran->L * $nilai_pengukuran->C >= 12);
+                RiskDetail::where('id_s_risiko', '=', $request->id_s_risk[$i])->where('company_id', '=', 6)->update([
+                    'l_awal' => number_format($nilai_pengukuran->L, 2) + 0,
+                    'c_awal' => number_format($nilai_pengukuran->C, 2) + 0,
+                    'r_awal' => number_format($nilai_pengukuran->L * $nilai_pengukuran->C, 2) + 0,
+                    'status_mitigasi' => $status_mitigasi,
+                ]);
+            }
         }
 
         return redirect()->route('penilai-indhan.pengukuran-risiko-indhan')->with('created-alert', 'Data penilaian risiko berhasil disimpan.');
