@@ -17,7 +17,7 @@ $(document).ready(function() {
                 var mitigasi_indhan = 0;
                 var riskregister_korporasi = 0;
                 var hasil_mitigasi = 0;
-                var hasil_mitigasi_indhan = 0;
+                // var hasil_mitigasi_indhan = 0;
                 var deadline_mitigasi = 0;
                 var mitigasi_risiko = 0;
                 let element = '';
@@ -37,9 +37,9 @@ $(document).ready(function() {
                     if (data[i].title == 'Terdapat hasil mitigasi yang belum disetujui sebanyak ') {
                         hasil_mitigasi += data[i].jumlah;
                     }
-                    if (data[i].title == 'Terdapat mitigasi indhan yang kurang dari 100% sebanyak ') {
-                        hasil_mitigasi_indhan += data[i].jumlah;
-                    }
+                    // if (data[i].title == 'Terdapat mitigasi indhan yang kurang dari 100% sebanyak ') {
+                        // hasil_mitigasi_indhan += data[i].jumlah;
+                    // }
                     if (data[i].title == 'Terdapat risiko telah melewati tanggal jatuh tempo sebanyak ') {
                         deadline_mitigasi += data[i].jumlah;
                     }
@@ -71,8 +71,8 @@ $(document).ready(function() {
                     $('.pengukuran-risiko-indhan-notif').html(pengukuran_risiko_indhan)
                 } if (mitigasi_risiko > 0) {
                     $('.mitigasi-risiko-notif').html(mitigasi_risiko)
-                } if (hasil_mitigasi_indhan> 0) {
-                    $('.hasil-mitigasi-indhan-notif').html(hasil_mitigasi_indhan)
+                // } if (hasil_mitigasi_indhan> 0) {
+                    // $('.hasil-mitigasi-indhan-notif').html(hasil_mitigasi_indhan)
                 }
 
                 if (data.length > 0) {
