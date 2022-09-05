@@ -238,32 +238,17 @@
 					@endif
 					@if(Auth::user()->is_admin)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.pengajuan-admin.index' ? 'active' : '' }}" href="{{route('admin.pengajuan-admin.index')}}">
-							<i data-feather="file-text"></i>
-							{{--
-							<div class="flex-row-between-center">
-								<span class="me-4p">Pengajuan Mitigasi Anda</span>
-								@if ($counts > 0)
-									<span class="badge rounded-pill badge-danger">{{ $counts }}</span>
-								@endif
-							</div>
-							--}}
-							<span class="me-4p">Pengajuan Mitigasi Anda</span>
-							<label class="badge badge-secondary pengajuan-mitigasi-user-notif blink_badge" style="float: right;"></label>
-						</a>
-					</li>
-					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='admin.mitigasi-plan.index' ? 'active' : '' }}" href="{{route('admin.mitigasi-plan.index')}}">
 							<i data-feather="file-text"></i>
 							{{--
 							<div class="flex-row-between-center">
-								<span class="me-4p">Mitigasi Diajukan</span>
+								<span class="me-4p">Pengajuan Mitigasi</span>
 								@if ($counts > 0)
 									<span class="badge rounded-pill badge-danger">{{ $counts }}</span>
 								@endif
 							</div>
 							--}}
-							<span class="me-4p">Mitigasi Diajukan</span>
+							<span class="me-4p">Pengajuan Mitigasi</span>
 							<label class="badge badge-secondary mitigasi-indhan-notif blink_badge" style="float: right;"></label>
 						</a>
 					</li>
@@ -281,20 +266,12 @@
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengajuan-mitigasi.index' ? 'active' : '' }}" href="{{route('risk-officer.pengajuan-mitigasi.index')}}">
 							<i data-feather="file-text"></i>
-							<span class="me-4p">Pengajuan Mitigasi Anda</span>
+							<span class="me-4p">Pengajuan Mitigasi</span>
 						</a>
 					</li>
 					@endif
-					@if(Auth::user()->is_risk_officer)
+					@if(Auth::user()->is_admin || Auth::user()->is_risk_officer)
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.pengajuan-mitigasi-admin.index' ? 'active' : '' }}" href="{{route('risk-officer.pengajuan-mitigasi-admin.index')}}">
-							<i data-feather="file-text"></i>
-							<span class="me-4p">Mitigasi Diajukan</span>
-						</a>
-					</li>
-					@endif
-                    @if(Auth::user()->is_admin || Auth::user()->is_risk_officer)
-                    <li class="sidebar-list">
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='deadline-mitigasi.index' ? 'active' : '' }}" href="{{route('deadline-mitigasi.index')}}">
 							<i data-feather="file-text"></i>
 							<span class="me-4p">Deadline Mitigasi</span>
