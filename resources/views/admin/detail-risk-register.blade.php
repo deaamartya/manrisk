@@ -134,11 +134,11 @@
                     <td>
                       @if($d->status_mitigasi == 0)
                         <button class="btn btn-sm btn-pill btn-green d-flex align-items-center" data-bs-target="#ajukan-mitigasi-{{ $d->id_riskd }}" data-bs-toggle="modal">
-                          <i class="fa fa-times me-2"></i>Ajukan Mitigasi
+                        <i class="fa fa-check me-2"></i>Perlu Mitigasi
                         </button>
                       @elseif($d->status_mitigasi == 1)
                       <button class="btn btn-sm btn-pill btn-danger d-flex align-items-center" data-bs-target="#ajukan-mitigasi-{{ $d->id_riskd }}" data-bs-toggle="modal">
-                          <i class="fa fa-check me-2"></i>Ajukan Tidak Mitigasi
+                          <i class="fa fa-times me-2"></i>Tidak Mitigasi
                         </button>
                       @endif
                     </td>
@@ -264,36 +264,29 @@
     <div class="modal-content">
       <div class="modal-header">
         @if ($data->status_mitigasi === 1)
-        <h5 class="modal-title">Ajukan Tidak Perlu Mitigasi pada Risk Officer</h5>
+        <h5 class="modal-title">Tidak Perlu Mitigasi</h5>
         @elseif ($data->status_mitigasi === 0)
-        <h5 class="modal-title">Ajukan Mitigasi pada Risk Officer</h5>
+        <h5 class="modal-title">Perlu Mitigasi</h5>
         @endif
         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST" action="{{ route('admin.pengajuan-admin.store') }}">
+      @if ($data->status_mitigasi === 0)
+      <form method="POST" action="{{ url('/admin/risk-detail-mitigation', $data->id_riskd) }}">
+      @elseif ($data->status_mitigasi === 1)
+      <form method="POST" action="{{ url('/admin/risk-detail-not-mitigation', $data->id_riskd) }}">
+      @endif
         @csrf
         <input type="hidden" value="{{ $data->id_riskd }}" name="id_risk_detail">
-        <input type="hidden" value="{{ $data->company_id }}" name="company_id">
-        @if ($data->status_mitigasi === 1)
-        <input type="hidden" value="0" name="tipe_pengajuan">
-        @elseif ($data->status_mitigasi === 0)
-        <input type="hidden" value="1" name="tipe_pengajuan">
-        @endif
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Alasan</label>
-                <div class="col-sm-9">
-                  <textarea class="form-control" name="alasan" required placeholder="Alasan pengajuan"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="modal-body">Apakah Anda yakin ingin mengubah status mitigasi risiko ini menjadi
+          @if ($data->status_mitigasi === 1)
+          <strong>Tidak Perlu Mitigasi</strong>
+          @elseif ($data->status_mitigasi === 0)
+          <strong>Perlu Mitigasi</strong>
+          @endif
+        ?</div>
         <div class="modal-footer">
-          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Batal</button>
-          <button class="btn btn-primary" type="submit">Ajukan</button>
+          <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+          <button class="btn btn-primary" type="submit">Ya</button>
         </div>
       </form>
     </div>
