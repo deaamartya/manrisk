@@ -387,7 +387,7 @@ class GlobalController extends Controller
             ->whereNull('risk_detail.deleted_at')
             ->groupBy('s_risiko.id_s_risiko')
             ->pluck('s_risiko.id_s_risiko')->toArray();
-        
+
         // get all id_s_risiko indhan
         $s_risk_indhan = SRisiko::where('company_id', 6)
             ->whereNull('deleted_at')
@@ -404,7 +404,7 @@ class GlobalController extends Controller
             ->whereNull('p.deleted_at')
             ->groupBy('s_risiko.id_s_risiko')
             ->pluck('s_risiko.id_s_risiko')->toArray();
-        
+
         // get all id_s_risiko indhan yang sudah dinilai
         $s_risk_dinilai_indhan = SRisiko::join('pengukuran_indhan as p', 'p.id_s_risiko', 's_risiko.id_s_risiko')
             ->join('defendid_pengukur as dp', 'p.id_pengukur', 'dp.id_pengukur')
@@ -446,15 +446,25 @@ class GlobalController extends Controller
         $approval_pengajuan_mitigasi_indhan = PengajuanMitigasi::where('is_approved', 0)->count();
         $approval_risk_register_korporasi = RiskHeader::where('status_h_indhan', 0)
                                     ->where('status_h', 1)->count();
-        $approval_hasil_mitigasi = DB::table('mitigasi_logs')->where('is_approved', 0)->count();
-        $mitigasi_logs = DB::raw("(
-            SELECT id_riskd FROM mitigasi_logs WHERE is_approved != 2 AND realisasi < 100
-        ) as mitigasi_logs");
-        $hasil_mitigasi_indhan = DB::table('risk_detail')
-                                        ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
-                                        ->where(['status_indhan' => 1, 'company_id' => 6])
-                                        ->groupBy('risk_detail.id_riskd')
-                                        ->count();
+        $risk_detail = DB::raw("(
+            SELECT id_riskd, id_riskh FROM risk_detail WHERE deleted_at IS NULL AND status_mitigasi = 1
+        ) as risk_detail");
+        $need_approve = DB::raw("(
+            SELECT id as need_approve, id_riskd FROM mitigasi_logs WHERE is_approved = 0
+        ) as need_approve");
+        $approval_hasil_mitigasi = RiskHeader::leftJoin($risk_detail, 'risk_detail.id_riskh', 'risk_header.id_riskh')
+            ->leftJoin($need_approve, 'need_approve.id_riskd', 'risk_detail.id_riskd')
+            ->whereNull('risk_header.deleted_at')
+            ->groupBy('risk_header.id_riskh')
+            ->count('need_approve.need_approve');
+        // $mitigasi_logs = DB::raw("(
+        //     SELECT id_riskd FROM mitigasi_logs WHERE is_approved != 2 AND realisasi < 100
+        // ) as mitigasi_logs");
+        // $hasil_mitigasi_indhan = DB::table('risk_detail')
+        //                                 ->leftJoin($mitigasi_logs, 'mitigasi_logs.id_riskd', 'risk_detail.id_riskd')
+        //                                 ->where(['status_indhan' => 1, 'company_id' => 6])
+        //                                 ->groupBy('risk_detail.id_riskd')
+        //                                 ->count();
 
         $data = [];
         if($approval_srisiko_indhan > 0){
@@ -485,13 +495,13 @@ class GlobalController extends Controller
                 'link' => url('/')."/admin/approval-hasil-mitigasi"
             ];
         }
-        if($hasil_mitigasi_indhan > 0){
-            $data[] = [
-                'title' => 'Terdapat mitigasi indhan yang kurang dari 100% sebanyak ',
-                'jumlah' => $hasil_mitigasi_indhan,
-                'link' => url('/')."admin/mitigasi-plan-indhan/index"
-            ];
-        }
+        // if($hasil_mitigasi_indhan > 0){
+        //     $data[] = [
+        //         'title' => 'Terdapat mitigasi indhan yang kurang dari 100% sebanyak ',
+        //         'jumlah' => $hasil_mitigasi_indhan,
+        //         'link' => url('/')."admin/mitigasi-plan-indhan/index"
+        //     ];
+        // }
 
         return $data;
     }

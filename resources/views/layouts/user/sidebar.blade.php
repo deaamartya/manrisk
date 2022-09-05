@@ -256,9 +256,9 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName() == 'admin.mitigasi-plan-indhan.index' ? 'active' : '' }}" href="{{ route('admin.mitigasi-plan-indhan.index') }}">
 							<i data-feather="sidebar"></i>
 							<span>Mitigasi Plan Indhan</span>
-							@if(Auth::user()->is_admin)
+							{{-- @if(Auth::user()->is_admin)
 								<label class="badge badge-secondary hasil-mitigasi-indhan-notif blink_badge" style="float: right;"></label>
-							@endif
+							@endif --}}
 						</a>
 					</li>
 					@endif
