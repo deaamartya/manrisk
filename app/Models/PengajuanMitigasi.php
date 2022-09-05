@@ -27,8 +27,6 @@ class PengajuanMitigasi extends Model
 		'is_approved',
 		'alasan_admin',
 		'tipe_pengajuan',
-		'arah_pengajuan',
-		'id_responden'
 	];
 
 	public function risk_detail()
