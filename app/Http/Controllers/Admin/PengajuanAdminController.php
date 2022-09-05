@@ -41,7 +41,6 @@ class PengajuanAdminController extends Controller
         PengajuanMitigasi::insert([
             'id_user' => Auth::user()->id_user,
             'id_riskd' => $request->id_risk_detail,
-            'arah_pengajuan' => 2,
             'company_id' => $request->company_id,
             'alasan' => $request->alasan,
             'is_approved' => false,

@@ -13,9 +13,7 @@ class PengajuanAdminController extends Controller
 {
     public function index()
     {
-        $pengajuan = PengajuanMitigasi::
-            where('arah_pengajuan', 2)
-            ->where('company_id', '=', Auth::user()->company_id)
+        $pengajuan = PengajuanMitigasi::where('company_id', '=', Auth::user()->company_id)
             ->orderBy('status', 'ASC')
             ->orderBy('created_at', 'ASC')
             ->get();
@@ -36,7 +34,6 @@ class PengajuanAdminController extends Controller
         $pengajuan->update($request->except('_token'));
         $pengajuan->update([
             'updated_at' => now(),
-            'id_responden' => Auth::user()->id_user,
         ]);
         if ($request->is_approved == 1) {
             $risk_detail->update([
