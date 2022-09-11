@@ -128,7 +128,8 @@
                 <tbody>
                   @foreach($headers->getMitigasiDetail() as $d)
                   <tr>
-                    <td>{{ $d->risk_code }}</td>
+                    <!-- <td>{{ $d->risk_code }}</td> -->
+                    <td>{{ $d->id_risk .'-'. $d->no_urut }}</td>
                     <td>{{ $d->s_risiko }}</td>
                     <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
                     <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
@@ -388,7 +389,7 @@
   $(document).ready(function(){
     $(".select2").select2();
     $("#table-risiko").DataTable({
-      'order': [ 4, 'desc' ]
+      // 'order': [ 4, 'desc' ]
     });
     var table;
     $(document).on('click', '.open-btn', function(){
