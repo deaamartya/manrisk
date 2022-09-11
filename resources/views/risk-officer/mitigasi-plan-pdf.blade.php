@@ -268,7 +268,7 @@
 		@foreach($header->getMitigasiDetail() as $rd)
 		<tr class="content">
 			<td width="5%" class="center f-11">
-				{{ $rd->risk_code }}
+				{{ $rd->id_risk .'-'. $rd->no_urut }}
 			</td>
 			<td class="center f-11">
                 {{ $rd->indikator }}

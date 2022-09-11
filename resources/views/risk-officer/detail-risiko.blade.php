@@ -687,7 +687,7 @@
   $(document).ready(function(){
     $(".select2").select2();
     $("#table-risiko").DataTable({
-      'order': [ 1, 'asc' ]
+      // 'order': [ 1, 'asc' ]
     });
     $("#select-risiko").on('change', function(){
       $.post(

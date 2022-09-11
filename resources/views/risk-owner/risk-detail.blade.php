@@ -219,7 +219,7 @@
   $(document).ready(function(){
     $(".select2").select2();
     $("#table-risiko").DataTable({
-      'order': [ 6, 'desc' ]
+      // 'order': [ 6, 'desc' ]
     });
   })
   function cal() {

@@ -358,7 +358,7 @@ $bulan = array (
 		@foreach($header->risk_detail as $rd)
 		<tr class="content">
 			<td width="4%" class="center f-7">
-				{{ $rd->sumber_risiko->konteks->id_risk }}
+				{{ $rd->sumber_risiko->konteks->id_risk }}-{{ $rd->no_urut }}
 			</td>
 			<td width="4%" class="f-7">
 				{{ $rd->sasaran_kinerja}}
