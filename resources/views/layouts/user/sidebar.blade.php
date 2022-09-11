@@ -162,7 +162,7 @@
 						<a class="sidebar-link sidebar-title link-nav {{ Route::currentRouteName()=='risk-officer.risiko.index' ? 'active' : '' }}" href="{{route('risk-officer.risiko.index')}}">
 							<i data-feather="list"></i>
 							<span>Risk Register Korporasi</span>
-							<label class="badge badge-secondary pengukuran-risiko-indhan-notif blink_badge" style="float: right;"></label>
+							{{-- <label class="badge badge-secondary pengukuran-risiko-indhan-notif blink_badge" style="float: right;"></label> --}}
 						</a>
 					</li>
 					<li class="sidebar-list">

@@ -266,15 +266,22 @@ class GlobalController extends Controller
             ->count('s_risiko.id_s_risiko');
         // dd($jml_risk);
 
-        $risk_detail = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
+        $mitigasi_logs = DB::table('mitigasi_logs')->leftJoin('risk_detail as rd', 'rd.id_riskd', 'mitigasi_logs.id_riskd')
+        ->where('rd.company_id', Auth::user()->company_id)
+        ->pluck('mitigasi_logs.id_riskd')->toArray();
+        // dd($mitigasi_logs);
+        $jml_mitigasi = RiskDetail::join('s_risiko', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
                         ->select('risk_detail.id_riskd')
+                        ->where('risk_detail.company_id', Auth::user()->company_id)
                         ->whereNull('risk_detail.deleted_at')
-                        ->get();
-        $rd = [];
-        foreach ($risk_detail as $key => $value) {
-            $rd[] = $value->id_riskd;
-        }
-        $jml_mitigasi = DB::table('mitigasi_logs')->whereNotIn('id_riskd', $rd)->count();
+                        ->whereNotIn('risk_detail.id_riskd', $mitigasi_logs)
+                        ->count();
+
+        // $rd = [];
+        // foreach ($risk_detail as $key => $value) {
+        //     $rd[] = $value->id_riskd;
+        // }
+
 
         $data = [];
         if($jml_risk > 0){
