@@ -384,13 +384,13 @@ $bulan = array (
 				{!! wordwrap(nl2br($rd->penilaian), 14, '<br />', true) !!}
 			</td>
 			<td width="1%" class="center f-7">
-				{{ number_format($rd->l_awal, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_l, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-7">
-				{{ number_format($rd->c_awal, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_c, 2) + 0 }}
 			</td>
 			<td width="1%" class="center f-7">
-				{{ number_format($rd->r_awal, 2) + 0 }}
+				{{ number_format($rd->avg_nilai_l * $rd->avg_nilai_c, 2) + 0 }}
 			</td>
 			<td width="4%" class="f-7">
 				{!! nl2br($rd->peluang) !!}

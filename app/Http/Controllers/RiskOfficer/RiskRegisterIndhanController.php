@@ -10,6 +10,7 @@ use App\Models\DefendidUser;
 use App\Models\RiskHeaderIndhan;
 use App\Models\RiskDetail;
 use App\Models\SRisiko;
+use App\Models\PengukuranIndhan;
 use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 use Auth;
 use PDF;
@@ -143,18 +144,26 @@ class RiskRegisterIndhanController extends Controller
 
     public function print($id) {
         $header = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        $detail_risk = RiskHeader::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code")
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        $detail_risk = RiskDetail::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code, (SELECT 0) as avg_nilai_l, (SELECT 0) as avg_nilai_c")
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->join('risk', 'konteks.id_risk', 'risk.id_risk' )
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
-                ->whereNull('risk_header.deleted_at')
-                ->where('risk_header.tahun', '=', $header->tahun)
-                ->orderBy('konteks.no_k', 'ASC')
+                ->where('risk_detail.tahun', '=', $header->tahun)
                 ->orderBy('konteks.id_risk', 'ASC')
+                ->orderBy('konteks.no_k', 'ASC')
                 ->get();
+        foreach ($detail_risk as $key => $value) {
+            if ($detail_risk[$key]->company_id === 6) {
+                $detail_risk[$key]->avg_nilai_l = $detail_risk[$key]->l_awal;
+                $detail_risk[$key]->avg_nilai_c = $detail_risk[$key]->c_awal;
+            } else {
+                $temp_pi = PengukuranIndhan::where('id_s_risiko', '=', $value->id_s_risiko)->selectRaw('avg(nilai_L) as avg_nilai_l, avg(nilai_C) as avg_nilai_c')->first();
+                $detail_risk[$key]->avg_nilai_l = number_format($temp_pi->avg_nilai_l, 2) + 0;
+                $detail_risk[$key]->avg_nilai_c = number_format($temp_pi->avg_nilai_c, 2) + 0;
+            }
+        }
         $document_type = 'risk_register_indhan';
         $url = "url='risk-officer/print-risk-register-indhan/".$header->id_riskh."';".
             "signed_by=".$header->pemeriksa.";".

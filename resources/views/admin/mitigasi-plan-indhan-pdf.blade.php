@@ -264,89 +264,46 @@ $bulan = array (
 			</td>
 		</tr>
 	@foreach($detail_risk as $d)
-        @if($d->id_riskd)
-        <tr class="content">
-            <td width="5%" class="center f-11">
-                {{ $d->id_risk .'-'. $d->no_k }}
-            </td>
-            <td class="center f-11">
-                {{ $d->indikator }}
-            </td>
-            <td class="center f-11">
-                {{ round(($d->l_awal*$d->c_awal), 0) }}
-            </td>
-            <td width="6%" class="f-11">
-                {!! nl2br($d->tindak_lanjut) !!}
-            </td>
-            <td width="4%" class="center f-11" style="white-space: pre-line">
-                {{ $d->pic }}
-            </td>
-            <td width="6%" class="center f-10">
-                @if($d->jadwal_mitigasi)
-                    {{ date('d F Y', strtotime($d->jadwal_mitigasi)) }}
-                @else
-									-
-                @endif
-            </td>
-            <td class="center f-11">
-                @if($header->getRealisasi($d->id_riskd) === null) -
-                @else {{ $header->getRealisasi($d->id_riskd) ?? $d->realisasi }}%
-                @endif
-            </td>
-            <td class="center f-11">
-                {{ number_format($d->biaya_penanganan,2,',','.') }}
-            </td>
-            <td class="center f-11">
-                {{ round(($d->l_akhir*$d->c_akhir), 0) }}
-            </td>
-            <td class="center f-11">
-                {{ $d->keterangan }}
-            </td>
-        </tr>
-        @endif
-	@endforeach
-
-    @foreach($detail_risk_indhan as $d2)
-        @if($d2->id_riskd)
-        <tr class="content">
-            <td width="5%" class="center f-11">
-                {{ $d2->id_risk .'-'. $d2->no_k }}
-            </td>
-            <td class="center f-11">
-                {{ $d2->indikator }}
-            </td>
-            <td class="center f-11">
-                {{ round(($d2->l_awal*$d2->c_awal), 0) }}
-            </td>
-            <td width="6%" class="f-11">
-                {!! nl2br($d2->tindak_lanjut) !!}
-            </td>
-            <td width="4%" class="center f-11" style="white-space: pre-line">
-                {{ $d2->pic }}
-            </td>
-            <td width="6%" class="center f-10">
-                @if($d2->jadwal_mitigasi)
-                    {{ date('d F Y', strtotime($d2->jadwal_mitigasi)) }}
-                @else
-                        -
-                @endif
-            </td>
-            <td class="center f-11">
-                @if($header->getRealisasi($d2->id_riskd) === null) -
-                @else {{ $header->getRealisasi($d2->id_riskd) ?? $d2->realisasi }}%
-                @endif
-            </td>
-            <td class="center f-11">
-                {{ number_format($d2->biaya_penanganan,2,',','.') }}
-            </td>
-            <td class="center f-11">
-                {{ round(($d2->l_akhir*$d2->c_akhir), 0) }}
-            </td>
-            <td class="center f-11">
-                {{ $d2->keterangan }}
-            </td>
-        </tr>
-        @endif
+		@if($d->id_riskd)
+		<tr class="content">
+			<td width="5%" class="center f-11">
+				{{ $d->id_risk .'-'. $d->no_k }}
+			</td>
+			<td class="center f-11">
+				{{ $d->indikator }}
+			</td>
+			<td class="center f-11">
+				{{ number_format($d->r_awal, 2) + 0 }}
+			</td>
+			<td width="6%" class="f-11">
+				{!! nl2br($d->tindak_lanjut) !!}
+			</td>
+			<td width="4%" class="center f-11" style="white-space: pre-line">
+				{{ $d->pic }}
+			</td>
+			<td width="6%" class="center f-10">
+				@if($d->jadwal_mitigasi)
+						{{ date('d F Y', strtotime($d->jadwal_mitigasi)) }}
+				@else
+					-
+				@endif
+			</td>
+			<td class="center f-11">
+				@if($header->getRealisasi($d->id_riskd) === null) -
+				@else {{ $header->getRealisasi($d->id_riskd) ?? $d->realisasi }}%
+				@endif
+			</td>
+			<td class="center f-11">
+				{{ number_format($d->biaya_penanganan,2,',','.') }}
+			</td>
+			<td class="center f-11">
+				{{ number_format($d->r_akhir, 2) + 0 }}
+			</td>
+			<td class="center f-11">
+				{{ $d->keterangan }}
+			</td>
+		</tr>
+		@endif
 	@endforeach
 	</table>
 </body>

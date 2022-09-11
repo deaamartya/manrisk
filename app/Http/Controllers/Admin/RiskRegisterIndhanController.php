@@ -109,7 +109,6 @@ class RiskRegisterIndhanController extends Controller
     public function show($id)
     {
         $headers = RiskHeaderIndhan::where('id_riskh', '=', $id)->first();
-        // dd($headers);
         $detail_risk = RiskHeader::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
                 ->join('perusahaan', 'risk_header.company_id', 'perusahaan.company_id')
                 ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
@@ -123,17 +122,6 @@ class RiskRegisterIndhanController extends Controller
                 ->whereNull('risk_header.deleted_at')
                 ->groupBy('id_riskd')
                 ->get();
-        // dd($detail_risk[0]->avg_nilai_l  );
-
-        // $detail_risk_indhan = RiskDetail::join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
-        //         ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
-        //         ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
-        //         ->where('risk_detail.status_indhan', '=', 1)
-        //         ->where('risk_detail.company_id', '=', 6)
-        //         ->whereNull('risk_detail.deleted_at')
-        //         ->where('risk_detail.tahun', '=', $headers->tahun)
-        //         ->get();
-
         $detail_risk_indhan = RiskDetail::selectRaw('*,avg(pi.nilai_L) as avg_nilai_l, avg(pi.nilai_C) as avg_nilai_c')
                 ->join('perusahaan as p', 'p.company_id', '=', 'risk_detail.company_id')
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
@@ -145,27 +133,6 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.tahun', '=', $headers->tahun)
                 ->groupBy('id_riskd')
                 ->get();
-        // dd($detail_risk_indhan);
-        // $mitigasi = RiskDetail::join('risk_header', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
-        // ->join('pengajuan_mitigasi', 'risk_detail.id_riskd', 'pengajuan_mitigasi.id_riskd' )
-        //         ->where('risk_detail.status_indhan', '=', 1)
-        //         ->whereNull('risk_detail.deleted_at')
-        //         ->where('risk_header.tahun', '=', $headers->tahun)
-        //         ->count();
-            // dd($detail_risk);
-
-        // $s_risk_diinput = RiskDetail::where([
-        //         ['company_id', '=', 6],
-        //     ])->pluck('id_s_risiko');
-
-        // $pilihan_s_risiko = SRisiko::join('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')->where([
-        //         ['status_indhan', '=', 0],
-        //     ])->where('s_risiko.tahun', '=', $headers->tahun)
-        //     ->whereNull('risk_detail.deleted_at')
-        //     ->whereNotIn('s_risiko.id_s_risiko', $s_risk_diinput)
-        //     ->groupBy('risk_detail.id_s_risiko')
-        //     ->orderBy('s_risiko.id_s_risiko')->get();
-
         $s_risk_diinput = RiskDetail::where([
                 ['company_id', '=', 6],
             ])->whereNull('deleted_at')->pluck('id_s_risiko');
@@ -181,9 +148,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 0)
                 ->orderBy('s_risiko.id_s_risiko')
                 ->limit(1)->first();
-        // dd($s_risiko);
-        // dd($headers->tahun);
-
+                
         $target = RiskHeaderIndhan::where('id_riskh', '=', $id)->pluck('target')->first();
         $sasaran = explode("\r\n", $target);
 
@@ -201,7 +166,9 @@ class RiskRegisterIndhanController extends Controller
     public function storeDetail(Request $request)
     {
         $data = $request->except('_token');
+        $data['id_riskh'] = null;
         $data['company_id'] = 6;
+        $data['created_at'] = now();
         $data['status_mitigasi'] = ($request->r_awal >= 12) ? 1 : 0;
         $inputan_idr = preg_replace("/[^0-9]/", "", $request->dampak_kuantitatif);
         $data['dampak_kuantitatif'] = (int) $inputan_idr;
@@ -256,21 +223,16 @@ class RiskRegisterIndhanController extends Controller
                 'short_code' => Str::random(10),
             ],
         );
-        // dd($headers);
-        $detail_risk = RiskHeader::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code, (SELECT 0) as avg_nilai_l, (SELECT 0) as avg_nilai_c")
-                ->join('risk_detail', 'risk_header.id_riskh', 'risk_detail.id_riskh' )
+        $detail_risk = RiskDetail::selectRaw("risk_detail.*, s_risiko.*, konteks.*, risk.*, CONCAT(konteks.id_risk, '-', konteks.no_k) AS risk_code, (SELECT 0) as avg_nilai_l, (SELECT 0) as avg_nilai_c")
                 ->join('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko' )
                 ->join('konteks', 's_risiko.id_konteks', 'konteks.id_konteks' )
                 ->join('risk', 'konteks.id_risk', 'risk.id_risk' )
-                // ->leftJoin('pengukuran_indhan as pi', 'pi.id_s_risiko', 's_risiko.id_s_risiko')
                 ->where('risk_detail.status_indhan', '=', 1)
                 ->whereNull('risk_detail.deleted_at')
-                ->where('risk_header.tahun', '=', $header->tahun)
-                ->whereNull('risk_header.deleted_at')
+                ->where('risk_detail.tahun', '=', $header->tahun)
                 ->orderBy('konteks.id_risk', 'ASC')
                 ->orderBy('konteks.no_k', 'ASC')
                 ->get();
-        // dd($detail_risk);
         foreach ($detail_risk as $key => $value) {
             if ($detail_risk[$key]->company_id === 6) {
                 $detail_risk[$key]->avg_nilai_l = $detail_risk[$key]->l_awal;
@@ -281,13 +243,10 @@ class RiskRegisterIndhanController extends Controller
                 $detail_risk[$key]->avg_nilai_c = number_format($temp_pi->avg_nilai_c, 2) + 0;
             }
         }
-            // dd($detail_risk);
-        // $user = Auth::user();
         $encrypted = url('document/verify/').'/'.$short_url->short_code;
         $qrcode = DNS2D::getBarcodePNG($encrypted, 'QRCODE');
         $pdf = PDF::loadView('admin.pdf-risk-register-indhan', compact('header', 'detail_risk', 'qrcode'))->setPaper('a4', 'landscape');
         Session::forget('is_bypass');
-        // return $pdf->stream('Laporan Manajemen Risiko '.$user->instansi.' Tahun '.$header->tahun.'.pdf');
         return $pdf->stream('Laporan Manajemen Risiko INDHAN Tahun '.$header->tahun.'.pdf');
 
     }

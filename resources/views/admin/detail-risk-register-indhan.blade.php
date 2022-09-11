@@ -161,10 +161,10 @@
                     <td>{{ $d2->konteks }}</td>
                     <td>{{ $d2->s_risiko }}</td>
                     <td>{{ $d2->sebab }}</td>
-                    <td>{{ number_format($d2->avg_nilai_l, 2) + 0 }}</td>
-                    <td>{{ number_format($d2->avg_nilai_c, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->c_awal, 2) + 0 }}</td>
                     @php
-                      $nilai_r = number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0;
+                      $nilai_r = number_format($d2->r_awal, 2) + 0;
                     @endphp
                     <td>
                       @if($nilai_r < 6)
@@ -464,15 +464,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" name="l_awal" id="l_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->avg_nilai_l, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" name="l_awal" id="l_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" name="c_awal" id="c_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($d2->avg_nilai_c, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" name="c_awal" id="c_detail_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($d2->c_awal, 2) + 0 }}" readonly>
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" placeholder="Nilai R" readonly value="{{ number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0 }}">
+                    <input type="number" class="form-control" name="r_awal" placeholder="Nilai R" readonly value="{{ number_format($d2->r_awal, 2) + 0 }}">
                   </div>
                 </div>
               </div>

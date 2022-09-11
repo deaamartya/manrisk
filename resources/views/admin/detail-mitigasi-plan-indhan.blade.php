@@ -126,8 +126,8 @@
                   <tr>
                     <td>{{ $d->id_risk .'-'. $d->no_k }}</td>
                     <td>{{ $d->s_risiko }}</td>
-                    <td>{{ number_format($d->l_awal, 2) + 0 }}</td>
-                    <td>{{ number_format($d->c_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_l, 2) + 0 }}</td>
+                    <td>{{ number_format($d->avg_nilai_c, 2) + 0 }}</td>
                     <td>
                       @if($d->r_awal < 6)
                       <span class="badge badge-green me-2">
@@ -138,7 +138,7 @@
                       @else
                       <span class="badge badge-danger me-2">
                       @endif
-                      {{ number_format($d->r_awal, 2) + 0 }}
+                      {{ number_format($d->avg_nilai_l * $d->avg_nilai_c, 2) + 0 }}
                       </span>
                     </td>
                     <td>{{ number_format($d->l_akhir, 2) + 0 }}</td>
@@ -181,8 +181,8 @@
                     <td></td>
                   </tr>
                   @endif
-                  @endforeach
-                  @foreach($detail_risk_indhan as $d)
+                @endforeach
+                @foreach($detail_risk_indhan as $d)
                   @if($d->id_riskd)
                   <tr>
                     <td>{{ $d->id_risk .'-'. $d->no_k }}</td>
@@ -252,7 +252,7 @@
                     </td>
                   </tr>
                   @endif
-                  @endforeach
+                @endforeach
                 </tbody>
               </table>
             </div>

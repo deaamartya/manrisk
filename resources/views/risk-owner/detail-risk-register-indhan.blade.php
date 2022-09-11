@@ -146,10 +146,10 @@
                     <td>{{ $d2->konteks }}</td>
                     <td>{{ $d2->s_risiko }}</td>
                     <td>{{ $d2->sebab }}</td>
-                    <td>{{ number_format($d2->avg_nilai_l, 2) + 0 }}</td>
-                    <td>{{ number_format($d2->avg_nilai_c, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->l_awal, 2) + 0 }}</td>
+                    <td>{{ number_format($d2->c_awal, 2) + 0 }}</td>
                     @php
-                      $nilai_r = number_format($d2->avg_nilai_l * $d2->avg_nilai_c, 2) + 0;
+                      $nilai_r = number_format($d2->r_awal, 2) + 0;
                     @endphp
                     <td>
                       @if($nilai_r < 6)
