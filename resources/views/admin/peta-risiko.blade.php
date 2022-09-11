@@ -1,5 +1,5 @@
 @extends('layouts.user.table')
-@section('title', 'Sumber Risiko')
+@section('title', 'Peta Risiko')
 
 @section('custom-css')
 <style>
@@ -53,11 +53,11 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Lihat Sumber Risiko</h3>
+<h3>Lihat Peta Risiko</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Sumber Risiko</li>
+<li class="breadcrumb-item active">Peta Risiko</li>
 @endsection
 
 @section('content')

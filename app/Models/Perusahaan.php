@@ -35,27 +35,30 @@ class Perusahaan extends Model
 	];
 
 	public function getCountMitigasi() {
-		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
-			->where('d.company_id', $this->company_id)
+		return RiskDetail::where('company_id', $this->company_id)
 			->where('status_mitigasi', '=', 1)
-			->whereNull('d.deleted_at')
-			->count('d.id_riskd');
+			->whereNull('deleted_at')
+			->count('id_riskd');
 	}
 
 	public function getCountMitigasiDone() {
-		return RiskHeader::join('risk_detail as rd', 'rd.id_riskh', 'risk_header.id_riskh')
-			->join('mitigasi_logs as m', 'm.id_riskd', 'rd.id_riskd')
-			->where('rd.company_id', $this->company_id)
+		return RiskDetail::join('mitigasi_logs as m', 'm.id_riskd', 'risk_detail.id_riskd')
+			->where('risk_detail.company_id', $this->company_id)
 			->where('m.realisasi', '=', 100)
 			->where('m.is_approved', '=', 1)
-			->whereNull('rd.deleted_at')
-			->count('rd.id_riskd');
+			->whereNull('risk_detail.deleted_at')
+			->count('risk_detail.id_riskd');
 	}
 
 	public function countLow() {
+		if ($this->company_id == 6) {
+			return RiskDetail::where('company_id', $this->company_id)
+				->where('r_awal', '<', 6)
+				->whereNull('deleted_at')
+				->count('id_riskd');
+		}
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
-			->where('r_awal', '>', 1)
 			->where('r_awal', '<', 6)
 			->whereNull('risk_header.deleted_at')
 			->whereNull('d.deleted_at')
@@ -63,6 +66,13 @@ class Perusahaan extends Model
 	}
 
 	public function countMed() {
+		if ($this->company_id == 6) {
+			return RiskDetail::where('company_id', $this->company_id)
+				->where('r_awal', '>=', 6)
+				->where('r_awal', '<', 12)
+				->whereNull('deleted_at')
+				->count('id_riskd');
+		}
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
 			->where('r_awal', '>=', 6)
@@ -73,6 +83,13 @@ class Perusahaan extends Model
 	}
 
 	public function countHigh() {
+		if ($this->company_id == 6) {
+			return RiskDetail::where('company_id', $this->company_id)
+				->where('r_awal', '>=', 12)
+				->where('r_awal', '<', 16)
+				->whereNull('deleted_at')
+				->count('id_riskd');
+		}
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
 			->where('r_awal', '>=', 12)
@@ -83,6 +100,12 @@ class Perusahaan extends Model
 	}
 
 	public function countExtreme() {
+		if ($this->company_id == 6) {
+			return RiskDetail::where('company_id', $this->company_id)
+				->where('r_awal', '>=', 16)
+				->whereNull('deleted_at')
+				->count('id_riskd');
+		}
 		return RiskHeader::join('risk_detail as d','d.id_riskh','=','risk_header.id_riskh')
 			->where('d.company_id', $this->company_id)
 			->where('r_awal', '>=', 16)

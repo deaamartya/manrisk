@@ -11,17 +11,32 @@ use DB;
 class PetaRisikoController extends Controller
 {
     public function show($id, Request $req) {
-        $s_risiko = SRisiko::
-            select('s_risiko.*', 'rd.l_akhir', 'rd.c_akhir', 'rd.r_akhir', DB::raw('COALESCE(AVG(p.nilai_L), 0) as l_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) as c_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) * COALESCE(AVG(p.nilai_L), 0) as r_awal'), DB::raw("(CONCAT(k.id_risk, '-', k.no_k)) AS title"))
-            ->join('risk_detail as rd', 's_risiko.id_s_risiko', '=', 'rd.id_s_risiko')
-            ->join('pengukuran as p', 's_risiko.id_s_risiko', '=', 'p.id_s_risiko')
-            ->join('konteks as k', 'k.id_konteks', 's_risiko.id_konteks')
-            ->where('s_risiko.company_id', '=', $id)
-            ->where('s_risiko.tahun', '=', $req->tahun_risk)
-            ->whereNull('s_risiko.deleted_at')
-            ->whereNull('rd.deleted_at')
-            ->groupBy('s_risiko.id_s_risiko')
-            ->get();
+        $id = intval($id);
+        if ($id !== 6) {
+            $s_risiko = SRisiko::
+                select('s_risiko.*', 'rd.l_akhir', 'rd.c_akhir', 'rd.r_akhir', DB::raw('COALESCE(AVG(p.nilai_L), 0) as l_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) as c_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) * COALESCE(AVG(p.nilai_L), 0) as r_awal'), DB::raw("(CONCAT(k.id_risk, '-', k.no_k)) AS title"))
+                ->join('risk_detail as rd', 's_risiko.id_s_risiko', '=', 'rd.id_s_risiko')
+                ->join('pengukuran as p', 's_risiko.id_s_risiko', '=', 'p.id_s_risiko')
+                ->join('konteks as k', 'k.id_konteks', 's_risiko.id_konteks')
+                ->where('s_risiko.company_id', '=', $id)
+                ->where('s_risiko.tahun', '=', $req->tahun_risk)
+                ->whereNull('s_risiko.deleted_at')
+                ->whereNull('rd.deleted_at')
+                ->groupBy('s_risiko.id_s_risiko')
+                ->get();
+        } else {
+            $s_risiko = SRisiko::
+                select('s_risiko.*', 'rd.l_akhir', 'rd.c_akhir', 'rd.r_akhir', DB::raw('COALESCE(AVG(p.nilai_L), 0) as l_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) as c_awal'), DB::raw('COALESCE(AVG(p.nilai_C), 0) * COALESCE(AVG(p.nilai_L), 0) as r_awal'), DB::raw("(CONCAT(k.id_risk, '-', k.no_k)) AS title"))
+                ->join('risk_detail as rd', 's_risiko.id_s_risiko', '=', 'rd.id_s_risiko')
+                ->join('pengukuran_indhan as p', 's_risiko.id_s_risiko', '=', 'p.id_s_risiko')
+                ->join('konteks as k', 'k.id_konteks', 's_risiko.id_konteks')
+                ->where('s_risiko.company_id', '=', $id)
+                ->where('s_risiko.tahun', '=', $req->tahun_risk)
+                ->whereNull('s_risiko.deleted_at')
+                ->whereNull('rd.deleted_at')
+                ->groupBy('s_risiko.id_s_risiko')
+                ->get();
+        }
         $data_low = [];
         $data_med = [];
         $data_high = [];
