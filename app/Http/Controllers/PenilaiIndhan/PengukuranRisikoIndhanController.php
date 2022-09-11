@@ -69,7 +69,6 @@ class PengukuranRisikoIndhanController extends Controller
         $s_risk_dinilai = array_merge($s_risk_dinilai_korporasi, $s_risk_dinilai_indhan);
 
         $sumber_risiko = SRisiko::select('*')
-            ->leftJoin('risk_detail', 's_risiko.id_s_risiko', 'risk_detail.id_s_risiko')
             ->join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
             ->join('defendid_user as d', 'd.id_user','s_risiko.id_user')
             ->join('risk as r', 'r.id_risk', 'k.id_risk')
@@ -77,7 +76,6 @@ class PengukuranRisikoIndhanController extends Controller
             ->whereNotIn('s_risiko.id_s_risiko', $s_risk_dinilai)
             ->where('s_risiko.tahun', $tahun)
             ->whereNull('s_risiko.deleted_at')
-            ->whereNull('risk_detail.deleted_at')
             ->get();
 
         return view('penilai-indhan.penilaian-risiko-indhan', compact('tahun','id_responden','nama_responden', 'sumber_risiko'));

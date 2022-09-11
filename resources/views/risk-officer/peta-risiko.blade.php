@@ -1,5 +1,5 @@
 @extends('layouts.user.table')
-@section('title', 'Sumber Risiko')
+@section('title', 'Peta Risiko')
 
 @section('custom-css')
 <style>
@@ -53,11 +53,11 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Lihat Sumber Risiko</h3>
+<h3>Lihat Peta Risiko</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item active">Sumber Risiko</li>
+<li class="breadcrumb-item active">Peta Risiko</li>
 @endsection
 
 @section('content')
@@ -74,11 +74,15 @@
           <div class="chart-content">
             <div class="col-sm-12">
                 <div class="row">
-                    <div class="col-md-6" align="center">
+                    <div class="col-md-4" align="center">
                         <div id="basic-scatter"></div>
                         <div id="basic-scatter-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
                     </div>
-                    <div class="col-md-6" align="center">
+                    <div class="col-md-4" align="center">
+                        <div id="grafik-mitigasi"></div>
+                        <div id="grafik-mitigasi-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
+                    </div>
+                    <div class="col-md-4" align="center">
                         <div id="highcharts-donut" style="width: 350px; height: 300px"></div>
                         <div id="highcharts-donut-loading" class="spinner-border Typeahead-spinner" role="status"><span class="sr-only">Loading...</span></div>
                     </div>
@@ -143,6 +147,12 @@
     const med = @json($data_med);
     const high = @json($data_high);
     const extreme = @json($data_extreme);
+
+    const low_mitigasi = @json($data_low_mitigasi);
+    const med_mitigasi = @json($data_med_mitigasi);
+    const high_mitigasi = @json($data_high_mitigasi);
+    const extreme_mitigasi = @json($data_extreme_mitigasi);
+
     const r_tertinggi = @json($r_tertinggi);
     const r_total = @json($r_total);
     const r_all = r_total - r_tertinggi;
@@ -155,7 +165,6 @@
     console.log(r_all);
     var tahun = 'Tahun ';
     tahun += tahun_req;
-
 
     var pieColors = (function () {
         var colors = ['#0066ff', '#ff6600'];
@@ -238,7 +247,7 @@
             zoomType: 'xy'
         },
         title: {
-            text: 'Grafik Risiko Divisi',
+            text: 'Peta Risiko Awal',
             style:{
             color: '#FFFFFF'
             },
@@ -300,7 +309,6 @@
             style:{
             color: '#FFFFFF'
             },
-    //        alternateGridColor: '#FDFFD5'
         },
 
         legend: {
@@ -351,7 +359,153 @@
             }, {
                 color: '#dc3545',
                 data: extreme
-                }]
+            }]
+        },function(chart) {
+            var pointsGraphics
+            for (let index = 0; index < 4; index++) {
+                pointsGraphics = chart.series[index].points.map(point => {
+                    return point.graphic.element
+                })
+
+                pointsGraphics.forEach((elem, i) => {
+                        elem.classList.add('scatter-outline-point')
+                })
+            }
+        });
+        $('#basic-scatter-loading').hide();
+    }, 3000);
+
+    setTimeout(function(){
+        var chart3 = Highcharts.chart('grafik-mitigasi', {
+        chart: {
+        backgroundColor: {
+            linearGradient: [90, 170, 200, 0],
+            stops: [
+                [0.1, 'rgb(0, 204, 0)'],
+                [0.2, 'rgb(255, 255, 0)'],
+                [0.7, 'rgb(255, 133, 51)'],
+                [0.8, 'rgb(255, 51, 51)'],
+            ]
+            },
+            width: 350,
+            height: 300,
+            type: 'scatter',
+            zoomType: 'xy'
+        },
+        title: {
+            text: 'Peta Risiko Hasil Mitigasi',
+            style:{
+            color: '#FFFFFF'
+            },
+        },
+        subtitle: {
+            text: tahun,
+            style:{
+            color: '#FFFFFF'
+            },
+        },
+        xAxis: {
+            title: {
+                enabled: true,
+                text: 'Likelihood (Awal)',
+                style:{
+                color: '#FFFFFF'
+                },
+            },
+
+            plotLines: [{
+                color: '#d9d9d9',
+                width: 1,
+                value: 1
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 2
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 3
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 4
+            }, {
+                color: '#d9d9d9',
+                width: 1,
+                value: 5
+            }],
+
+            lineWidth:1,
+            min:0,
+            tickInterval: 1,
+            max: 5,
+        },
+        yAxis: {
+            title: {
+                text: 'Consequence (Awal)',
+                style:{
+                color: '#FFFFFF'
+                },
+            },
+
+            lineWidth:1,
+            min:0,
+            tickInterval: 1,
+            max: 5,
+            style:{
+            color: '#FFFFFF'
+            },
+        },
+
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 5,
+                    states: {
+                        hover: {
+                            enabled: false,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '',
+                    pointFormatter: function() {
+                        var string = ''
+                        string += `<b>${this.series.points[0].series.options.data[this.index][2]}</b><br>`;
+                        string += 'L : ' + this.x + '<br>';
+                        string += 'C : ' + this.y + '<br>';
+                        string += 'R : ' + this.x*this.y;
+                        return string;
+                    },
+                    shared: true
+                }
+            }
+        },
+        //series: data
+        series: [{
+            color: '#51bb25',
+                data: low_mitigasi
+            },{
+                color: '#f8d62b',
+                data: med_mitigasi
+            }, {
+                color: '#dd8c93',
+                data: high_mitigasi
+            }, {
+                color: '#dc3545',
+                data: extreme_mitigasi
+            }]
         },function(chart) {
             var pointsGraphics
             for (let index = 0; index < 4; index++) {

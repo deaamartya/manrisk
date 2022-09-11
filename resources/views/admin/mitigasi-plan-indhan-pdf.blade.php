@@ -162,8 +162,7 @@ $bulan = array (
 			<td rowspan="5" class="qrcode-row">
 				<img src="data:image/png;base64,{{ $qrcode }}" style="max-height:90px; border: 1px solid black;">
 				<p class="f-10 m-1">Ditandangani secara elektronik oleh </p>
-				<p class="f-10 m-0">{{ ($header->pemeriksa ? $header->pemeriksa->name : '') }}</p>
-				<p class="f-10 m-1">{{ ($header->pemeriksa ? $header->pemeriksa->jabatan : '') }}</p>
+				<p class="f-10 m-0">{{ ($header->pemeriksa ? $header->pemeriksa : '') }}</p>
 			</td>
 		</tr>
 		<tr>
@@ -195,7 +194,7 @@ $bulan = array (
 				Disusun Oleh
 			</td>
 			<td class="left pl-10p">
-				{{ ($header->penyusun ? $header->penyusun->name : '-') }}
+				{{ ($header->penyusun ? $header->penyusun : '-') }}
 			</td>
 		</tr>
 	</table>
