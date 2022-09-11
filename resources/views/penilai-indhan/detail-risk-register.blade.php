@@ -119,7 +119,7 @@
                 <tbody>
                   @foreach($headers->risk_detail as $d)
                   <tr>
-                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
+                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->no_urut }}</td>
                     <td>
                         @if($d->status_indhan == 0)
                           <span class="badge badge-danger me-2">Bukan INDHAN</span>
@@ -215,9 +215,9 @@
         <form action="{{ route('penilai-indhan.risk-detail-delete', $data->id_riskd) }}" method="POST">
           @method('DELETE')
           @csrf
-          <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+          <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut  }}">
           <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus data {{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }} ?</p>
+            <p>Apakah Anda yakin ingin menghapus data {{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut }} ?</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>

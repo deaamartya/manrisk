@@ -119,7 +119,7 @@
                 <tbody>
                   @foreach($headers->risk_detail as $d)
                   <tr>
-                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
+                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->no_urut }}</td>
                     <td>
                         @if($d->status_indhan == 0)
                           <button class="btn btn-sm btn-pill btn-green d-flex align-items-center" data-bs-target="#bukan-indhan-{{ $d->id_riskd }}" data-bs-toggle="modal">
@@ -226,7 +226,7 @@
       </div>
       <form method="GET" action="{{ route('admin.risk-register-korporasi.indhan', $data->id_riskd) }}">
         <div class="modal-body">
-        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut }}">
           Apakah Anda yakin menyimpan risiko ini sebagai risiko INDHAN?
         </div>
         <div class="modal-footer">
@@ -247,7 +247,7 @@
       </div>
       <form method="GET" action="{{ route('admin.risk-register-korporasi.non-indhan', $data->id_riskd) }}">
         <div class="modal-body">
-        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+        <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut }}">
           Apakah Anda yakin menyimpan risiko ini sebagai risiko BUKAN INDHAN?
         </div>
         <div class="modal-footer">
@@ -303,9 +303,9 @@
         <form action="{{ route('admin.risk-detail-delete', $data->id_riskd) }}" method="POST">
           @method('DELETE')
           @csrf
-          <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }}">
+          <input type="hidden" name="id_risk" value="{{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut }}">
           <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus data {{ $data->sumber_risiko->konteks->id_risk .'-'. $data->sumber_risiko->konteks->no_k  }} ?</p>
+            <p>Apakah Anda yakin ingin menghapus data {{ $data->sumber_risiko->konteks->id_risk .'-'. $data->no_urut }} ?</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn-link" type="button" data-bs-dismiss="modal">Cancel</button>

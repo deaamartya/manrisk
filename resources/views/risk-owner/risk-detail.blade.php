@@ -119,7 +119,7 @@
                 <tbody>
                   @foreach($headers->risk_detail as $d)
                   <tr>
-                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
+                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->no_urut }}</td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>

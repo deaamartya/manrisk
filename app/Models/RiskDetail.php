@@ -66,7 +66,8 @@ class RiskDetail extends Model
 		'status_indhan' => 'int',
 		'dampak_kuantitatif' => 'int',
 		'dampak_kuantitatif_residu' => 'int',
-		'biaya_penanganan' => 'int'
+		'biaya_penanganan' => 'int',
+		'no_urut' => 'int'
 	];
 
 	protected $dates = [
@@ -107,7 +108,8 @@ class RiskDetail extends Model
 		'status',
 		'u_file',
 		'status_mitigasi',
-		'status_indhan'
+		'status_indhan',
+		'no_urut'
 	];
 
 	public function risk_header()

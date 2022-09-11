@@ -129,7 +129,7 @@
                 <tbody>
                   @foreach($headers->risk_detail as $d)
                   <tr>
-                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->sumber_risiko->konteks->no_k }}</td>
+                    <td>{{ $d->sumber_risiko->konteks->id_risk .'-'. $d->no_urut }}</td>
                     <td>{{ $d->sumber_risiko->konteks->konteks }}</td>
                     <td>{{ $d->sumber_risiko->s_risiko }}</td>
                     <td>{{ $d->sebab }}</td>
@@ -251,6 +251,7 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>Risiko</label>
+                    <input type="hidden" name="no_urut" value=""></input>
                     <select class="select2" name="id_s_risiko" required id="select-risiko">
                       @foreach($pilihan_s_risiko as $p)
                       <option value="{{ $p->id_s_risiko }}">{{ $p->tahun }} - {{ $p->s_risiko }}</option>
