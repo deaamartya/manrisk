@@ -22,8 +22,9 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-header">
-            <div class="product-page-details">
+            <div class="product-page-details d-flex justify-content-between">
               <h5>ID HEADER # {{ $headers->id_riskh }}</h5>
+              <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#set_urut">Set Urut</button>
             </div>
           </div>
           <div class="card-body">
@@ -316,6 +317,30 @@
   </div>
 </div>
 @endforeach
+
+{{-- Konfirmasi Set No Urut Risk --}}
+<div class="modal fade" id="set_urut" tabindex="-1" role="dialog" aria-labelledby="insertResponden" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Set Nomor Urut</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" action="{{ route('admin.risk-register-korporasi.set-urut-risk') }}">
+          @csrf
+          <div class="modal-body">
+          <input type="hidden" name="id_riskh" value="{{ $headers->id_riskh }}">
+            Apakah Anda yakin ingin mengatur nomor urut risiko pada risk Register ini?
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+            <button class="btn btn-primary" type="submit">Ya, saya yakin</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
 @endsection
 @section('custom-script')
 <script src="{{asset('assets/js/select2/select2.full.min.js')}}"></script>

@@ -178,4 +178,15 @@ class RiskRegisterKorporasiController extends Controller
         return Redirect::back()->with(['success-swal' => 'Data '.$id_risk.' berhasil dihapus.']);
     }
 
+    public function setUrutRisk(Request $request)
+    {
+        $result = RiskDetail::set_no_urut($request->id_riskh, 0);
+
+        if ($result['success'] == true) {
+            return back()->with(['success-swal' => $result['message']]);
+        }
+        else{
+            return back()->with(['error-swal' => $result['message']]);
+        }
+    }
 }

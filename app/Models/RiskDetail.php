@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class RiskDetail
@@ -131,4 +132,46 @@ class RiskDetail extends Model
 	{
 		return $this->hasMany(MitigasiLogs::class, 'id_riskd');
 	}
+
+    // Untuk set nomor urut
+    public static function set_no_urut($id_riskh, $status_indhan)
+    {
+        $result = [];
+        $wr = '1=1';
+        // if(!Auth::user()->is_admin){
+        //     $wr .= ' AND risk_detail.company_id = '.Auth::user()->company_id;
+        // }
+
+        try {
+            $risk_detail = self::whereRaw($wr)
+            ->where(['id_riskh' => $id_riskh, 'tahun' => date('Y'), 'status_indhan' => $status_indhan])
+            ->orderBy('company_id', 'ASC')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+            $no = 1;
+            foreach ($risk_detail as $key => $value) {
+                // if ($key > 0) {
+                //     if ($risk_detail[$key]->company_id != $risk_detail[$key - 1]->company_id) {
+                //         $no = 1;
+                //     }
+                // }
+                RiskDetail::where('id_riskd', $value->id_riskd)->update(['no_urut' => $no]);
+                $no ++;
+            }
+        } catch (\Throwable $th) {
+            $result = [
+                'success' => false,
+                'message' => $th->getMessage()
+            ];
+            return $result;
+        }
+
+        $result = [
+            'success' => true,
+            'message' => 'Data berhasil diurutkan.'
+        ];
+
+        return $result;
+    }
 }

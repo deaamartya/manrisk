@@ -148,7 +148,7 @@ class RiskRegisterIndhanController extends Controller
                 ->where('risk_detail.status_indhan', '=', 0)
                 ->orderBy('s_risiko.id_s_risiko')
                 ->limit(1)->first();
-                
+
         $target = RiskHeaderIndhan::where('id_riskh', '=', $id)->pluck('target')->first();
         $sasaran = explode("\r\n", $target);
 
@@ -380,5 +380,17 @@ class RiskRegisterIndhanController extends Controller
         }
         RiskDetail::destroy($id);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dihapus!']);
+    }
+
+    public function setUrutRisk(Request $request)
+    {
+        $result = RiskDetail::set_no_urut($request->id_riskh, 1);
+
+        if ($result['success'] == true) {
+            return back()->with(['success-swal' => $result['message']]);
+        }
+        else{
+            return back()->with(['error-swal' => $result['message']]);
+        }
     }
 }

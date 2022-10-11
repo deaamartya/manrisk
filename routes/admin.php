@@ -60,6 +60,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('search-risk-header', [RiskRegisterKorporasiController::class, 'searchRiskHeader'])->name('search-risk-header');
   Route::get('all-risk-header', [RiskRegisterKorporasiController::class, 'allRiskHeader'])->name('all-risk-header');
   Route::get('detail-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'show'])->name('detail-risk-register');
+  Route::post('risk-register-korporasi/set-urut-risk', [RiskRegisterKorporasiController::class, 'setUrutRisk'])->name('risk-register-korporasi.set-urut-risk');
   Route::get('print-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'print'])->name('print-risk-register');
   Route::post('approval-risk-register-korporasi/{id}', [RiskRegisterKorporasiController::class, 'approval'])->name('approval-risk-register');
   Route::get('risk-detail-indhan/{id}', [RiskRegisterKorporasiController::class, 'indhan'])->name('risk-register-korporasi.indhan');
@@ -70,6 +71,7 @@ Route::middleware(['auth', 'cekAdmin'])->name('admin.')->group(function () {
   Route::get('risk-register-korporasi/approve/{id}', [RiskRegisterKorporasiController::class, 'approve'])->name('risk-register-korporasi.approve');
 
   Route::resource('risk-register-indhan', RiskRegisterIndhanController::class);
+  Route::post('risk-register-indhan/set-urut-risk', [RiskRegisterIndhanController::class, 'setUrutRisk'])->name('risk-register-indhan.set-urut-risk');
   Route::post('risk-register-indhan/import', [RiskRegisterIndhanController::class, 'import'])->name('risk-detail.import');
   Route::post('detail-risk-register-indhan/store', [RiskRegisterIndhanController::class, 'storeDetail'])->name('risk-detail.store');
   Route::post('upload-lampiran-risk-register-indhan', [RiskRegisterIndhanController::class, 'uploadLampiran'])->name('upload-lampiran-risk-register-indhan');
