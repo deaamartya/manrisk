@@ -51,30 +51,27 @@ class PetaRisikoController extends Controller
         $r_total_mitigasi = 0;
         $r_tertinggi = 0;
         foreach($s_risiko as $s) {
-            if ($s->r_awal > 0 && $s->c_awal > 0) {
-                if ($s->r_awal < 6) {
-                    $data_low[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
-                } else if ($s->r_awal < 12) {
-                    $data_med[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
-                } else if ($s->r_awal < 16) {
-                    $data_high[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
-                } else {
-                    $data_extreme[] = [ floatval($s->l_awal), floatval($s->c_awal), $s->title ];
-                }
+            if ($s->r_awal < 6) {
+                $data_low[] = [ floatval(number_format($s->l_awal, 2)), floatval(number_format($s->c_awal, 2)), $s->title ];
+            } else if ($s->r_awal < 12) {
+                $data_med[] = [ floatval(number_format($s->l_awal, 2)), floatval(number_format($s->c_awal, 2)), $s->title ];
+            } else if ($s->r_awal < 16) {
+                $data_high[] = [ floatval(number_format($s->l_awal, 2)), floatval(number_format($s->c_awal, 2)), $s->title ];
+            } else {
+                $data_extreme[] = [ floatval(number_format($s->l_awal, 2)), floatval(number_format($s->c_awal, 2)), $s->title ];
             }
+
             $r_total += $s->r_awal;
             $val_r[] = $s->r_awal;
 
-            if ($s->r_akhir > 0 && $s->c_akhir > 0) {
-                if ($s->r_akhir < 6) {
-                    $data_low_mitigasi[] = [ floatval($s->l_akhir), floatval($s->c_akhir), $s->title ];
-                } else if ($s->r_akhir < 12) {
-                    $data_med_mitigasi[] = [ floatval($s->l_akhir), floatval($s->c_akhir), $s->title ];
-                } else if ($s->r_akhir < 16) {
-                    $data_high_mitigasi[] = [ floatval($s->l_akhir), floatval($s->c_akhir), $s->title ];
-                } else {
-                    $data_extreme_mitigasi[] = [ floatval($s->l_akhir), floatval($s->c_akhir), $s->title ];
-                }
+            if ($s->r_akhir < 6) {
+                $data_low_mitigasi[] = [ floatval(number_format($s->l_akhir, 2)), floatval(number_format($s->c_akhir, 2)), $s->title ];
+            } else if ($s->r_akhir < 12) {
+                $data_med_mitigasi[] = [ floatval(number_format($s->l_akhir, 2)), floatval(number_format($s->c_akhir, 2)), $s->title ];
+            } else if ($s->r_akhir < 16) {
+                $data_high_mitigasi[] = [ floatval(number_format($s->l_akhir, 2)), floatval(number_format($s->c_akhir, 2)), $s->title ];
+            } else {
+                $data_extreme_mitigasi[] = [ floatval(number_format($s->l_akhir, 2)), floatval(number_format($s->c_akhir, 2)), $s->title ];
             }
         }
         if (count($val_r) > 1) $r_tertinggi = floatval(max($val_r));
