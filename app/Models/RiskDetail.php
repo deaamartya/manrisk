@@ -143,10 +143,14 @@ class RiskDetail extends Model
         // }
 
         try {
-            $risk_detail = self::whereRaw($wr)
-            ->where(['id_riskh' => $id_riskh, 'tahun' => date('Y'), 'status_indhan' => $status_indhan])
-            ->orderBy('company_id', 'ASC')
-            ->orderBy('created_at', 'DESC')
+            $risk_detail = self::leftJoin('s_risiko', 'risk_detail.id_s_risiko', 's_risiko.id_s_risiko')
+            ->leftJoin('konteks', 's_risiko.id_konteks', 'konteks.id_konteks')
+            ->whereRaw($wr)
+            ->where(['risk_detail.id_riskh' => $id_riskh, 'risk_detail.tahun' => date('Y'), 'risk_detail.status_indhan' => $status_indhan])
+            // ->orderBy('risk_detail.company_id', 'ASC')
+            ->orderBy('konteks.id_risk', 'ASC')
+            ->orderBy('risk_detail.created_at', 'ASC')
+            ->select('risk_detail.*', 'konteks.id_risk')
             ->get();
 
             $no = 1;
@@ -156,6 +160,11 @@ class RiskDetail extends Model
                 //         $no = 1;
                 //     }
                 // }
+                if ($key > 0) {
+                    if ($risk_detail[$key]->id_risk != $risk_detail[$key - 1]->id_risk) {
+                        $no = 1;
+                    }
+                }
                 RiskDetail::where('id_riskd', $value->id_riskd)->update(['no_urut' => $no]);
                 $no ++;
             }
