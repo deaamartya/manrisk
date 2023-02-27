@@ -27,6 +27,7 @@ Route::middleware(['auth', 'cekRiskOfficer'])->name('risk-officer.')->group(func
   Route::put('user/update-status/{id}', [UserController::class, 'update_status'])->name('user-update-status');
   Route::resource('sumber-risiko',SumberRisikoController::class);
   Route::get('pengukuran-risiko', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko');
+  Route::delete('pengukuran-risiko/{id}', [PengukuranRisikoController::class, 'destroy'])->name('pengukuran-risiko.destroy');
   Route::get('generate-pdf', [PengukuranRisikoController::class, 'generatePDF'])->name('pengukuran-generatePDF');
   Route::post('penilaian-risiko', [PengukuranRisikoController::class, 'penilaianRisiko'])->name('penilaian-risiko');
   Route::post('penilaian-risiko-store', [PengukuranRisikoController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-store');

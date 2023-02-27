@@ -109,6 +109,7 @@
                             <th>C Awal</th>
                             <th>R Awal</th>
                             <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -133,6 +134,11 @@
                                 <a role="button"><span class="badge rounded-pill badge-danger" title="Tidak Disetujui"><i class="fa fa-close"></i></span></a>
                             @endif
                         </td>
+                        <td>
+                            @if ($s->id_user == Auth::user()->id_user)
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#delete-{{ $s->id_p }}" class="btn btn-danger btn-sm">Hapus Penilaian</button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                     </tbody>
@@ -152,16 +158,41 @@
 
 
 <div class="modal fade bd-example-modal-lg" id="daftarKlasifikasi" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h6 class="modal-title">Daftar Klasifikasi Kriteria Kemungkinan dan Dampak</h6>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <embed src="{{asset('/uploads/Daftar Klasifikasi Kriteria kemungkinan dan dampak.pdf')}} " width="100%" height="700px"></embed>
-                </div>
+    <div class="modal-dialog modal-fullscreen" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h6 class="modal-title">Daftar Klasifikasi Kriteria Kemungkinan dan Dampak</h6>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <embed src="{{asset('/uploads/Daftar Klasifikasi Kriteria kemungkinan dan dampak.pdf')}} " width="100%" height="700px"></embed>
             </div>
         </div>
-    </div>            
+    </div>
+</div>
+@foreach($sumber_risiko as $s)
+<div class="modal fade" id="delete-{{ $s->id_p }}" tabindex="-1" role="dialog" aria-labelledby="daftarKlasifikasi" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Hapus Pengukuran</h6>
+            </div>
+            <form method="POST" action="{{ route('risk-officer.pengukuran-risiko.destroy', $s->id_p) }}">
+                @method('DELETE')
+                <div class="modal-body">
+                    @csrf
+                    Apakah Anda yakin ingin menghapus pengukuran #{{ $s->id_p }} untuk Sumber Risiko <strong>{{ $s->s_risiko }}</strong> tahun <strong>{{ $s->tahun}}</strong> dengan nilai L: <strong>{{ round($s->nilai_L, 2) }}</strong>, nilai C: <strong>{{ round($s->nilai_C, 2) }}</strong>, nilai R: <strong>{{ number_format(($s->nilai_L * $s->nilai_C),2) + 0 }}</strong> ?
+                    <br>
+                    Data yang sudah dihapus tidak dapat dikembalikan.
+                    <input type="hidden" name="id_p" id="id_pengukuran" value="{{ $s->id_p }}">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tidak</button>
+                    <button class="btn btn-primary" type="submit">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection

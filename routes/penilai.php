@@ -13,6 +13,7 @@ use \App\Http\Controllers\{
 Route::name('penilai.')->group(function () {
   Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
   Route::get('pengukuran-risiko', [PengukuranRisikoController::class, 'index'])->name('pengukuran-risiko');
+  Route::delete('pengukuran-risiko/{id}', [PengukuranRisikoController::class, 'destroy'])->name('pengukuran-risiko.destroy');
   Route::get('generate-pdf', [PengukuranRisikoController::class, 'generatePDF'])->name('pengukuran-generatePDF');
   Route::post('penilaian-risiko', [PengukuranRisikoController::class, 'penilaianRisiko'])->name('penilaian-risiko');
   Route::post('penilaian-risiko-store', [PengukuranRisikoController::class, 'penilaianRisikoStore'])->name('penilaian-risiko-store');

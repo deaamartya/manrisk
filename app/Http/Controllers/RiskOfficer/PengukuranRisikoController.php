@@ -4,7 +4,7 @@ namespace App\Http\Controllers\RiskOfficer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Redirect;
 use App\Abstracts\AbsPengukuran;
 use App\Models\DefendidPengukur;
 use App\Models\Pengukuran;
@@ -97,5 +97,11 @@ class PengukuranRisikoController extends Controller
                 ->get();
         $pdf = PDF::loadView('risk-officer.form_kompilasi', compact('data'))->setPaper( 'a4','landscape');
         return $pdf->stream('Hasil Kompilasi Risiko.pdf');
+    }
+
+    public function destroy($id)
+    {
+        Pengukuran::destroy($id);
+        return Redirect::back()->with(['success-swal' => 'Pengukuran berhasil dihapus!']);
     }
 }
