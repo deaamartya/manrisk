@@ -215,6 +215,9 @@ class RisikoController extends Controller
         ->whereIn('id_s_risiko', $s_risk_diinput)
         ->orderBy('id_s_risiko')->pluck('id_s_risiko');
 
-        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko,'pilihan_s_risiko' => $pilihan_s_risiko ]);
+        $nilai_l = Pengukuran::where('id_s_risiko', '=', $s_risk_selected[0])->avg('nilai_L');
+        $nilai_c = Pengukuran::where('id_s_risiko', '=', $s_risk_selected[0])->avg('nilai_C');
+
+        return response()->json(['s_risk_selected' => $s_risk_selected, 'all_s_risiko' => $all_s_risiko,'pilihan_s_risiko' => $pilihan_s_risiko, 'nilai_l' => $nilai_l, 'nilai_c' => $nilai_c, ]);
     }
 }

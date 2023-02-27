@@ -594,15 +594,15 @@
                   </div>
                   <div class="form-group pt-2">
                     <label>L</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="l_awal" id="l_awal_{{ $d->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $data->id_riskd }})" name="l_awal" id="edit_l_awal_{{ $data->id_riskd }}" placeholder="Nilai L" value="{{ number_format($data->l_awal, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>C</label>
-                    <input type="number" class="form-control" onkeyup="calEdit({{ $d->id_riskd }})" name="c_awal" id="c_awal_{{ $d->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}" readonly>
+                    <input type="number" class="form-control" onkeyup="calEdit({{ $data->id_riskd }})" name="c_awal" id="edit_c_awal_{{ $data->id_riskd }}" placeholder="Nilai C" value="{{ number_format($data->c_awal, 2) + 0 }}">
                   </div>
                   <div class="form-group pt-2">
                     <label>R</label>
-                    <input type="number" class="form-control" name="r_awal" id="r_awal_{{ $d->id_riskd }}" placeholder="Nilai R" readonly value="{{ number_format($data->r_awal, 2) + 0 }}">
+                    <input type="number" class="form-control" name="r_awal" id="edit_r_awal_{{ $data->id_riskd }}" placeholder="Nilai R" value="{{ number_format($data->r_awal, 2) + 0 }}">
                   </div>
                 </div>
               </div>
@@ -706,46 +706,28 @@
 
     $(".btn-edit").on('click', function(){
       var id_risk = $(this).attr("data-id");
-      console.log("id_risk :" + id_risk);
       $.post(
           "{{ url('risk-officer/getRisikoSelected') }}", {
             _token: "{{ csrf_token() }}",
             id:  id_risk
           }, function(result) {
-            console.log(result);
-            // console.log("cek 1 : "+result.all_s_risiko[0].id_s_risiko);
-            // console.log("cek select awal : "+  $("#select-risk-edit-"+id_risk).val());
             $('#select-risk-edit-'+id_risk).empty();
             for(var i = 0; i<result.all_s_risiko.length; i++){
-              // console.log("allrisk : "+result.all_s_risiko[i].id_s_risiko);
-              // console.log("selected : "+result.s_risk_selected )
               var is_selected = false;
               if(result.all_s_risiko[i].id_s_risiko == result.s_risk_selected ){
                 is_selected = true;
               }
-              // console.log("pilihan_s_risk : "+result.pilihan_s_risiko[i].id_s_risiko );
-              // console.log("selected : "+result.s_risk_selected )
-              // for(var j = 0; j<result.pilihan_s_risiko.length; j++){
-              //   if(result.all_s_risiko[i].id_s_risiko != result.pilihan_s_risiko[j].id_s_risiko || result.all_s_risiko[i].id_s_risiko == result.s_risk_selected ){
-              //     var text = result.all_s_risiko[i].tahun+" - "+ result.all_s_risiko[i].s_risiko;
-              //     var option = new Option(text, result.all_s_risiko[i].id_s_risiko, false, is_selected);
-              //   }
-              // }
               var cekInclude = result.pilihan_s_risiko.includes(result.all_s_risiko[i].id_s_risiko);
               if ( cekInclude == false || result.all_s_risiko[i].id_s_risiko == result.s_risk_selected ) {
                 var text = result.all_s_risiko[i].tahun+" - "+ result.all_s_risiko[i].s_risiko;
                 var option = new Option(text, result.all_s_risiko[i].id_s_risiko, false, is_selected);
                 $('#select-risk-edit-'+id_risk).append(option).trigger("change");
               }
-
-
 					  }
-            // console.log(result.pilihan_s_risiko[4].id_s_risiko);
-            // console.log(result.all_s_risiko[0].id_s_risiko);
-            // console.log("cek select akhir : "+  $("#select-risk-edit-"+id_risk).val());
-
-            // console.log("pilihan_s_risk : "+result.pilihan_s_risiko[0].id_s_risiko );
-            // console.log("allrisk : "+result.all_s_risiko[5].id_s_risiko);
+            $("#edit_l_awal_"+id_risk).val(parseFloat(result.nilai_l).toFixed(2))
+            $("#edit_c_awal_"+id_risk).val(parseFloat(result.nilai_c).toFixed(2))
+            let mul = parseFloat(result.nilai_l) * parseFloat(result.nilai_c);
+            $('#edit_r_awal_'+id_risk).val(mul.toFixed(2));
           }
         )
         window.id_risk = id_risk
@@ -809,10 +791,10 @@
     $('#r_awal').val(mul);
   }
   function calEdit(id) {
-    var lawal = $('#l_awal_'+id).val();
-    var cawal = $('#c_awal_'+id).val();
+    var lawal = $('#edit_l_awal_'+id).val();
+    var cawal = $('#edit_c_awal_'+id).val();
     var mul = lawal * cawal;
-    $('#r_awal_'+id).val(mul);
+    $('#edit_r_awal_'+id).val(mul);
   }
 </script>
 @endsection
