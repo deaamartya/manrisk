@@ -33,25 +33,25 @@ class RiskDetailController extends Controller
         $get_konteks = SRisiko::join('konteks as k', 's_risiko.id_konteks', 'k.id_konteks')
             ->where('id_s_risiko', '=', $data['id_s_risiko'])
             ->pluck('k.id_risk');
-        // dd($get_konteks);
+        
         $cek_konteks = RiskDetail::join('s_risiko as s', 'risk_detail.id_s_risiko', 's.id_s_risiko')
         ->join('konteks as k', 's.id_konteks', 'k.id_konteks')
         ->where('k.id_risk', '=', $get_konteks)
+        ->where('id_riskh', $request->id_riskh)
         ->exists();
-        // dd($cek_konteks);
+        
         if($cek_konteks){
             $no_urut = RiskDetail::join('s_risiko as s', 'risk_detail.id_s_risiko', 's.id_s_risiko')
             ->join('konteks as k', 's.id_konteks', 'k.id_konteks')
             ->where('k.id_risk', '=', $get_konteks)
+            ->where('id_riskh', $request->id_riskh)
             ->max('no_urut');
-            // dd($no_urut);
+            
             $data['no_urut'] = (int) $no_urut + 1;
         }else{
             $data['no_urut'] = 1;
         }
-
-        // dd($data['no_urut']);
-
+        
         RiskDetail::insert($data);
         return Redirect::back()->with(['success-swal' => 'Risk Detail berhasil dibuat!']);
     }
